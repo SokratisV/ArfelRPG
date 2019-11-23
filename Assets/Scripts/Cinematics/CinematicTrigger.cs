@@ -11,11 +11,9 @@ namespace RPG.Cinematics
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                print("Trigger by: " + other.name);
                 GetComponent<PlayableDirector>().Play();
                 hasBeenPlayed = true;
             }
-
         }
     }
 }

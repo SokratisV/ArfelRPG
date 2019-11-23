@@ -40,7 +40,5 @@ namespace RPG.SceneManagement
         {
             GetComponent<SavingSystem>().Load(SAVE_FILE);
         }
-
-
     }
 }
