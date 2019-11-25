@@ -9,6 +9,7 @@ namespace RPG.Cinematics
 
         private void OnTriggerEnter(Collider other)
         {
+            if (hasBeenPlayed) return;
             if (other.gameObject.CompareTag("Player"))
             {
                 GetComponent<PlayableDirector>().Play();
