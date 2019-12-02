@@ -3,6 +3,7 @@ using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
 using RPG.Saving;
+using RPG.Stats;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -71,14 +72,15 @@ namespace RPG.Combat
         // Animation Event
         void Hit()
         {
+            float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
             if (target == null) return;
             if (currentWeapon.HasProjectile())
             {
-                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject);
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, damage);
             }
             else
             {
-                target.TakeDamage(gameObject, currentWeapon.WeaponDamage);
+                target.TakeDamage(gameObject, damage);
             }
         }
 

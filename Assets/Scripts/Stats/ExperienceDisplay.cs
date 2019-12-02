@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace RPG.Resources
+namespace RPG.Stats
 {
     public class ExperienceDisplay : MonoBehaviour
     {
