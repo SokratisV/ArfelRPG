@@ -8,14 +8,11 @@ namespace RPG.Combat
     {
         [SerializeField] AnimatorOverrideController animatorOverride = null;
         [SerializeField] GameObject equippedPrefab = null;
-        [SerializeField] float weaponRange = 2f, weaponDamage = 5f;
+        [SerializeField] float weaponRange = 2f, weaponDamage = 5f, weaponPercentageBonus = 0;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectile = null;
 
         const string weaponName = "Weapon";
-
-        public float WeaponDamage { get => weaponDamage; set => weaponDamage = value; }
-        public float WeaponRange { get => weaponRange; set => weaponRange = value; }
 
         public bool HasProjectile()
         {
@@ -68,6 +65,19 @@ namespace RPG.Combat
             if (isRightHanded) handTransform = rightHand;
             else handTransform = leftHand;
             return handTransform;
+        }
+
+        public float GetDamage()
+        {
+            return weaponDamage;
+        }
+        public float GetRange()
+        {
+            return weaponRange;
+        }
+        public float GetPercentageBonus()
+        {
+            return weaponPercentageBonus;
         }
     }
 }

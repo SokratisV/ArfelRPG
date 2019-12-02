@@ -10,7 +10,7 @@ namespace RPG.Control
         RaycastHit[] hits;
         Health health;
 
-        private void Start()
+        private void Awake()
         {
             health = GetComponent<Health>();
         }
