@@ -1,6 +1,7 @@
 using System;
 using RPG.Core;
 using RPG.Movement;
+using RPG.Resources;
 using RPG.Saving;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -29,6 +30,11 @@ namespace RPG.Combat
             currentWeapon = weapon;
             Animator animator = GetComponent<Animator>();
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
+        }
+
+        public Health GetTarget()
+        {
+            return target;
         }
 
         private void Update()
@@ -68,11 +74,11 @@ namespace RPG.Combat
             if (target == null) return;
             if (currentWeapon.HasProjectile())
             {
-                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target);
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject);
             }
             else
             {
-                target.TakeDamage(currentWeapon.WeaponDamage);
+                target.TakeDamage(gameObject, currentWeapon.WeaponDamage);
             }
         }
 
@@ -119,7 +125,7 @@ namespace RPG.Combat
 
         public void RestoreState(object state)
         {
-            currentWeapon = Resources.Load<Weapon>((string)state);
+            currentWeapon = UnityEngine.Resources.Load<Weapon>((string)state);
             EquipWeapon(currentWeapon);
         }
     }

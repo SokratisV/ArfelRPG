@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\Cinematics\CinematicControlRemover.cs" />
      <Compile Include="Assets\Scripts\Cinematics\CinematicTrigger.cs" />
      <Compile Include="Assets\Scripts\Combat\CombatTarget.cs" />
+     <Compile Include="Assets\Scripts\Combat\EnemyHealthDisplay.cs" />
      <Compile Include="Assets\Scripts\Combat\Fighter.cs" />
      <Compile Include="Assets\Scripts\Combat\Projectile.cs" />
      <Compile Include="Assets\Scripts\Combat\Weapon.cs" />
@@ -58,10 +59,13 @@
      <Compile Include="Assets\Scripts\Core\ActionScheduler.cs" />
      <Compile Include="Assets\Scripts\Core\DestroyAfterEffect.cs" />
      <Compile Include="Assets\Scripts\Core\FollowCamera.cs" />
-     <Compile Include="Assets\Scripts\Core\Health.cs" />
      <Compile Include="Assets\Scripts\Core\IAction.cs" />
      <Compile Include="Assets\Scripts\Core\PersistentObjectSpawner.cs" />
      <Compile Include="Assets\Scripts\Movement\Mover.cs" />
+     <Compile Include="Assets\Scripts\Resources\Experience.cs" />
+     <Compile Include="Assets\Scripts\Resources\ExperienceDisplay.cs" />
+     <Compile Include="Assets\Scripts\Resources\Health.cs" />
+     <Compile Include="Assets\Scripts\Resources\HealthDisplay.cs" />
      <Compile Include="Assets\Scripts\Saving\ISaveable.cs" />
      <Compile Include="Assets\Scripts\Saving\SaveableEntity.cs" />
      <Compile Include="Assets\Scripts\Saving\SavingSystem.cs" />
@@ -69,9 +73,31 @@
      <Compile Include="Assets\Scripts\SceneManagement\Fader.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\Portal.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\SavingWrapper.cs" />
+     <Compile Include="Assets\Scripts\Stats\BaseStats.cs" />
+     <Compile Include="Assets\Scripts\Stats\CharacterClass.cs" />
+     <Compile Include="Assets\Scripts\Stats\Progression.cs" />
+     <Compile Include="Assets\Scripts\Stats\Stats.cs" />
      <None Include="Assets\Asset Packs\Synty - Polygon Student Sample\README - Usage Rights for these assets.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\Asset Packs\SimpleFX\Materials\UnlitVertexColour_Alpha.shader" />
      <None Include="Assets\Asset Packs\Animations by Explosive\README - Usage Rights for these assets 1.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
