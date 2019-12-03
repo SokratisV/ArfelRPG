@@ -55,6 +55,8 @@
      <Compile Include="Assets\Scripts\Combat\Weapon.cs" />
      <Compile Include="Assets\Scripts\Combat\WeaponPickup.cs" />
      <Compile Include="Assets\Scripts\Control\AIController.cs" />
+     <Compile Include="Assets\Scripts\Control\CursorType.cs" />
+     <Compile Include="Assets\Scripts\Control\IRaycastable.cs" />
      <Compile Include="Assets\Scripts\Control\PatrolPath.cs" />
      <Compile Include="Assets\Scripts\Control\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Core\ActionScheduler.cs" />
