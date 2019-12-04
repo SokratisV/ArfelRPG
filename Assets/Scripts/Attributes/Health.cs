@@ -1,3 +1,4 @@
+using System;
 using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Saving;
@@ -11,6 +12,7 @@ namespace RPG.Attributes
     {
         [SerializeField] float regenerationPercentage = 70;
         [SerializeField] TakeDamageEvent takeDamage;
+        [SerializeField] UnityEvent onDie;
 
         [System.Serializable]
         public class TakeDamageEvent : UnityEvent<float>
@@ -35,6 +37,11 @@ namespace RPG.Attributes
         private float GetInitialHealth()
         {
             return GetComponent<BaseStats>().GetStat(Stat.Health);
+        }
+
+        internal void Heal(float healthToRestore)
+        {
+            healthPoints.value = Mathf.Min(healthPoints.value + healthToRestore, GetMaxHealthPoints());
         }
 
         private void OnEnable()
@@ -64,6 +71,7 @@ namespace RPG.Attributes
             takeDamage.Invoke(damage);
             if (healthPoints.value == 0)
             {
+                onDie.Invoke();
                 Die();
                 AwardExperience(instigator);
             }
