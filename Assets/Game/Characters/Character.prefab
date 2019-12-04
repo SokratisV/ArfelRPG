@@ -10,14 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2165176163035486390}
   - component: {fileID: 2165176163035486388}
+  - component: {fileID: 3211224056665034830}
   - component: {fileID: 2165176163035486378}
-  - component: {fileID: 2165176163035486379}
   - component: {fileID: 704220060066086866}
+  - component: {fileID: 2165176163035486379}
   - component: {fileID: 4339557145984695365}
   - component: {fileID: 1544227862947980035}
   - component: {fileID: 5540589571492298495}
   - component: {fileID: 7833633318110227214}
-  - component: {fileID: 3211224056665034830}
   - component: {fileID: 3264097160167645682}
   m_Layer: 0
   m_Name: Character
@@ -36,7 +36,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.85, y: 1, z: 19.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2051514496692203678}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -79,6 +80,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!54 &3211224056665034830
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2165176163035486376}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!195 &2165176163035486378
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -101,19 +118,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2165176163035486379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2165176163035486376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fe7154ddbb564334beef9c5145bebf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSpeed: 6
 --- !u!95 &704220060066086866
 Animator:
   serializedVersion: 3
@@ -133,6 +137,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2165176163035486379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2165176163035486376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fe7154ddbb564334beef9c5145bebf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!114 &4339557145984695365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +190,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be998821512e4cb3b0bffb51b9ba1b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 100
+  regenerationPercentage: 70
+  takeDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1459037897340393046}
+        m_MethodName: Spawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7833633318110227214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,22 +218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueIdentifier: 
---- !u!54 &3211224056665034830
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2165176163035486376}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &3264097160167645682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,3 +233,57 @@ MonoBehaviour:
   startingLevel: 1
   characterClass: 1
   progression: {fileID: 11400000, guid: c913e387992fa404aa33491bcad6c24c, type: 2}
+  levelUpParticleEffect: {fileID: 0}
+  shouldUseModifiers: 0
+--- !u!1001 &1881165007668830591
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2165176163035486390}
+    m_Modifications:
+    - target: {fileID: 460295197974712801, guid: 65a519c7bf0eda74c89ba4c5cb68d0ca,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460295197974712801, guid: 65a519c7bf0eda74c89ba4c5cb68d0ca,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460295197974712801, guid: 65a519c7bf0eda74c89ba4c5cb68d0ca,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460295197974712801, guid: 65a519c7bf0eda74c89ba4c5cb68d0ca,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2372445480759458288, guid: 65a519c7bf0eda74c89ba4c5cb68d0ca,
+        type: 3}
+      propertyPath: m_Name
+      value: Damage Text Spawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 65a519c7bf0eda74c89ba4c5cb68d0ca, type: 3}
+--- !u!4 &2051514496692203678 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 460295197974712801, guid: 65a519c7bf0eda74c89ba4c5cb68d0ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 1881165007668830591}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1459037897340393046 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1019140245363390249, guid: 65a519c7bf0eda74c89ba4c5cb68d0ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 1881165007668830591}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a9ae1dcd25d41d46ae2dfe6251506b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
