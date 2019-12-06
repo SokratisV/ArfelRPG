@@ -18,22 +18,19 @@ namespace RPG.Core
             OnEnterArea(area);
         }
 
-        public void ExitPreviousArea()
+        public void ExitArea(Areas area)
         {
-            if (areasCurrentlyIn.Peek() == Areas.None)
-            {
-                Areas area = areasCurrentlyIn.Pop();
-                currentArea = area;
-                OnEnterArea(area);
-            }
-            else
+            if (areasCurrentlyIn.Peek() == area)
             {
                 areasCurrentlyIn.Pop();
+                return;
             }
-
+            Areas previousArea = areasCurrentlyIn.Pop();
+            currentArea = previousArea;
+            OnEnterArea(previousArea);
         }
 
-        private void Start()
+        private void Awake()
         {
             areasCurrentlyIn = new Stack<Areas>();
         }

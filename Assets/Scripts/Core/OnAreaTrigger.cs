@@ -15,7 +15,7 @@ namespace RPG.Core
         private void OnTriggerExit(Collider other)
         {
             if (!other.CompareTag("Player")) return;
-            GetComponentInParent<AreaEventManager>().ExitPreviousArea();
+            GetComponentInParent<AreaEventManager>().ExitArea(area);
         }
     }
 }
