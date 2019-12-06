@@ -119,6 +119,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1242687290578955905, guid: 314bb5e4fd2f949768bc9164b4106fdd,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.6865
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242687290578955905, guid: 314bb5e4fd2f949768bc9164b4106fdd,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.6865
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242687290578955905, guid: 314bb5e4fd2f949768bc9164b4106fdd,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.6865
+      objectReference: {fileID: 0}
     - target: {fileID: 6787721288270128489, guid: 314bb5e4fd2f949768bc9164b4106fdd,
         type: 3}
       propertyPath: m_RootOrder
@@ -128,6 +143,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fireball Pickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8800573041124356721, guid: 314bb5e4fd2f949768bc9164b4106fdd,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8800573041124356721, guid: 314bb5e4fd2f949768bc9164b4106fdd,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8800573041124356721, guid: 314bb5e4fd2f949768bc9164b4106fdd,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 314bb5e4fd2f949768bc9164b4106fdd, type: 3}

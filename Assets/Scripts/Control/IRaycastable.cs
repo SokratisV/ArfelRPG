@@ -4,5 +4,6 @@
     {
         CursorType GetCursorType();
         bool HandleRaycast(PlayerController callingController);
+        float InteractableRange();
     }
 }

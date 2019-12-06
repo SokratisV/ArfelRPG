@@ -9,7 +9,7 @@ namespace RPG.Combat
     public class WeaponPickup : MonoBehaviour, IRaycastable
     {
         [SerializeField] WeaponConfig weapon = null;
-        [SerializeField] float respawnTime = 5, healthToRestore = 0;
+        [SerializeField] float respawnTime = 5, healthToRestore = 0, pickupRange = 1f;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -19,8 +19,9 @@ namespace RPG.Combat
             }
         }
 
-        private void Pickup(GameObject subject)
+        private bool Pickup(GameObject subject)
         {
+            if (Vector3.Distance(transform.position, subject.transform.position) > InteractableRange()) return false;
             if (weapon != null)
             {
                 subject.GetComponent<Fighter>().EquipWeapon(weapon);
@@ -30,6 +31,7 @@ namespace RPG.Combat
                 subject.GetComponent<Health>().Heal(healthToRestore);
             }
             StartCoroutine(HideForSeconds(respawnTime));
+            return true;
         }
 
         private IEnumerator HideForSeconds(float seconds)
@@ -52,7 +54,10 @@ namespace RPG.Combat
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Pickup(callingController.gameObject);
+                if (!Pickup(callingController.gameObject))
+                {
+                    return false;
+                }
             }
             return true;
         }
@@ -60,6 +65,11 @@ namespace RPG.Combat
         public CursorType GetCursorType()
         {
             return CursorType.Pickup;
+        }
+
+        public float InteractableRange()
+        {
+            return pickupRange;
         }
     }
 }

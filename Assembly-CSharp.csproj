@@ -72,6 +72,8 @@
      <Compile Include="Assets\Scripts\Core\IAction.cs" />
      <Compile Include="Assets\Scripts\Core\OnAreaTrigger.cs" />
      <Compile Include="Assets\Scripts\Core\PersistentObjectSpawner.cs" />
+     <Compile Include="Assets\Scripts\Interactions\RandomWeaponDrop.cs" />
+     <Compile Include="Assets\Scripts\Interactions\TreasureOpen.cs" />
      <Compile Include="Assets\Scripts\Movement\Mover.cs" />
      <Compile Include="Assets\Scripts\Saving\ISaveable.cs" />
      <Compile Include="Assets\Scripts\Saving\SaveableEntity.cs" />

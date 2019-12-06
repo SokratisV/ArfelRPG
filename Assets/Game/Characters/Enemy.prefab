@@ -31,7 +31,7 @@ MonoBehaviour:
   wayPointTolerance: 1
   wayPointDwellTime: 3
   aggroCooldownTime: 5
-  shoutDistance: 10000
+  shoutDistance: 10
   patrolPath: {fileID: 0}
   patrolSpeedFraction: 0.2
 --- !u!114 &8930283256544814967
@@ -305,7 +305,7 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 3177d12e4bf264f938c959a4a183c6d7,
+      objectReference: {fileID: 11400000, guid: 1a0a60306aba148c799d0bc0a2300223,
         type: 2}
     - target: {fileID: 4339557145984695365, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
@@ -361,6 +361,16 @@ PrefabInstance:
         type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025411881502464688, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.488
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205849808503109497, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.488
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9fc1e5f9753845c2b3bdff05b8cb07f, type: 3}
