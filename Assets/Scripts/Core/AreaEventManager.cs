@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,6 +32,11 @@ namespace RPG.Core
         private void Awake()
         {
             areasCurrentlyIn = new Stack<Areas>();
+        }
+
+        private void Start()
+        {
+            OnEnterArea(currentArea);
         }
 
         [System.Serializable]

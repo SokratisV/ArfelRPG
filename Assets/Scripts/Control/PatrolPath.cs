@@ -8,15 +8,15 @@ namespace RPG.Control
     {
         const float wayPointGizmosRadius = .5f;
 
-        private void OnDrawGizmos()
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                int j = GetNextIndex(i);
-                Gizmos.DrawSphere(transform.GetChild(i).position, wayPointGizmosRadius);
-                Gizmos.DrawLine(GetWaypoint(i), GetWaypoint(j));
-            }
-        }
+        // private void OnDrawGizmos()
+        // {
+        //     for (int i = 0; i < transform.childCount; i++)
+        //     {
+        //         int j = GetNextIndex(i);
+        //         Gizmos.DrawSphere(transform.GetChild(i).position, wayPointGizmosRadius);
+        //         Gizmos.DrawLine(GetWaypoint(i), GetWaypoint(j));
+        //     }
+        // }
 
         public int GetNextIndex(int i)
         {

@@ -72,8 +72,9 @@
      <Compile Include="Assets\Scripts\Core\IAction.cs" />
      <Compile Include="Assets\Scripts\Core\OnAreaTrigger.cs" />
      <Compile Include="Assets\Scripts\Core\PersistentObjectSpawner.cs" />
+     <Compile Include="Assets\Scripts\Interactions\Collector.cs" />
      <Compile Include="Assets\Scripts\Interactions\RandomWeaponDrop.cs" />
-     <Compile Include="Assets\Scripts\Interactions\TreasureOpen.cs" />
+     <Compile Include="Assets\Scripts\Interactions\Treasure.cs" />
      <Compile Include="Assets\Scripts\Movement\Mover.cs" />
      <Compile Include="Assets\Scripts\Saving\ISaveable.cs" />
      <Compile Include="Assets\Scripts\Saving\SaveableEntity.cs" />
@@ -81,6 +82,7 @@
      <Compile Include="Assets\Scripts\Saving\SerializableVector3.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\Fader.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\Portal.cs" />
+     <Compile Include="Assets\Scripts\SceneManagement\RestartScene.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\SavingWrapper.cs" />
      <Compile Include="Assets\Scripts\Stats\BaseStats.cs" />
      <Compile Include="Assets\Scripts\Stats\CharacterClass.cs" />

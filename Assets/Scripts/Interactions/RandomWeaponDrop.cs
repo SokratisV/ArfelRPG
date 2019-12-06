@@ -7,23 +7,26 @@ namespace RPG.Interactions
     public class RandomWeaponDrop : ScriptableObject
     {
         [SerializeField] WeaponPickup[] lootTable = null;
-        Transform pickupManager;
-        private void Start()
-        {
-            pickupManager = GameObject.FindWithTag("PickupManager").transform;
-        }
-        public void GenerateLoot(Transform[] dropLocations)
+
+        public void GenerateLoot(Transform[] dropLocations, Transform pickupParentObject)
         {
             if (lootTable.Length == 0) return;
             if (dropLocations.Length == 0) return;
             WeaponPickup weapon = lootTable[Random.Range(0, lootTable.Length)];
             Transform dropLocation = dropLocations[Random.Range(0, dropLocations.Length)];
-            Spawn(weapon, dropLocation);
+            Spawn(weapon, dropLocation, pickupParentObject);
         }
 
-        private void Spawn(WeaponPickup weapon, Transform dropLocation)
+        private void Spawn(WeaponPickup weapon, Transform dropLocation, Transform parent)
         {
-            Instantiate(weapon, dropLocation).transform.parent = pickupManager;
+            if (parent != null)
+            {
+                Instantiate(weapon, dropLocation).transform.parent = parent;
+            }
+            else
+            {
+                Instantiate(weapon, dropLocation);
+            }
         }
     }
 }

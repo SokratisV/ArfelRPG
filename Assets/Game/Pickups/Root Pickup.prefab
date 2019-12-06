@@ -59,7 +59,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: 3177d12e4bf264f938c959a4a183c6d7, type: 2}
-  respawnTime: 5
+  respawnTime: 0
+  healthToRestore: 0
+  pickupRange: 2
 --- !u!1001 &6413314948378314184
 PrefabInstance:
   m_ObjectHideFlags: 0

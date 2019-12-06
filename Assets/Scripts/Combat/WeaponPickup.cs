@@ -21,7 +21,7 @@ namespace RPG.Combat
 
         private bool Pickup(GameObject subject)
         {
-            if (Vector3.Distance(transform.position, subject.transform.position) > InteractableRange()) return false;
+            if (Vector3.Distance(transform.position, subject.transform.position) > GetInteractionRange()) return false;
             if (weapon != null)
             {
                 subject.GetComponent<Fighter>().EquipWeapon(weapon);
@@ -30,14 +30,21 @@ namespace RPG.Combat
             {
                 subject.GetComponent<Health>().Heal(healthToRestore);
             }
-            StartCoroutine(HideForSeconds(respawnTime));
+
+            if (respawnTime > 0)
+            {
+                StartCoroutine(HideForSeconds(respawnTime));
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
             return true;
         }
 
         private IEnumerator HideForSeconds(float seconds)
         {
             TogglePickup(false);
-            if (Mathf.Approximately(seconds, 0)) yield return null;
             yield return new WaitForSeconds(seconds);
             TogglePickup(true);
         }
@@ -68,7 +75,7 @@ namespace RPG.Combat
             return CursorType.Pickup;
         }
 
-        public float InteractableRange()
+        public float GetInteractionRange()
         {
             return pickupRange;
         }

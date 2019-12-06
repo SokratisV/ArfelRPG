@@ -23,7 +23,7 @@ namespace RPG.Combat
             return true;
         }
 
-        public float InteractableRange()
+        public float GetInteractionRange()
         {
             return 0f;
         }
