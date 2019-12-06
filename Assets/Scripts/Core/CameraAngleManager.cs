@@ -23,6 +23,7 @@ namespace RPG.Core
 
         Dictionary<Areas, Vector3> areaToAngleDictionary;
         Vector3 position;
+        Coroutine runningCoroutine = null;
 
         [System.Serializable]
         private class AreaAngles
@@ -43,18 +44,24 @@ namespace RPG.Core
         public void ChangeCameraAngles(Areas area)
         {
             areaToAngleDictionary.TryGetValue(area, out position);
-            StartCoroutine(ChangeAngles());
+            if (runningCoroutine != null)
+            {
+                StopCoroutine(runningCoroutine);
+            }
+            runningCoroutine = StartCoroutine(ChangeAngles());
         }
 
         private IEnumerator ChangeAngles()
         {
+            Quaternion b = Quaternion.Euler(position);
             while (true)
             {
                 // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(position), Time.deltaTime * speed);
-                transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, Quaternion.Euler(position), speed * Time.deltaTime);
-                float angle = Quaternion.Angle(transform.rotation, Quaternion.Euler(position));
-                if (angle < 0.66f)
+                transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, b, speed * Time.deltaTime);
+                float angle = Quaternion.Angle(transform.rotation, b);
+                if (angle < 1f)
                 {
+                    runningCoroutine = null;
                     break;
                 }
                 yield return null;

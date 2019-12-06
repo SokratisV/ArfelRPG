@@ -40,6 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxNavMeshProjectionDistance: 1
+  raycastRadius: 1
   cursorMappings:
   - type: 0
     texture: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621, type: 3}
@@ -152,8 +153,7 @@ PrefabInstance:
         type: 3}
       propertyPath: levelUpParticleEffect
       value: 
-      objectReference: {fileID: 3675383590214867092, guid: b0e02ffba095f2849b69b6936563b58b,
-        type: 3}
+      objectReference: {fileID: 175590, guid: a529d2c768fab7149b0e4bf373417ffe, type: 3}
     - target: {fileID: 3264097160167645682, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: shouldUseModifiers

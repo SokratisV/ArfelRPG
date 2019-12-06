@@ -15,7 +15,6 @@ namespace RPG.Interactions
         {
             return CursorType.Pickup;
         }
-
         public bool HandleRaycast(PlayerController callingController)
         {
             if (Input.GetMouseButtonDown(0))
@@ -39,13 +38,18 @@ namespace RPG.Interactions
         {
             if (Vector3.Distance(transform.position, callingController.transform.position) > InteractableRange()) return false;
             isOpened = true;
-            lootTable.GenerateLoot(dropLocations);
+            // lootTable.GenerateLoot(dropLocations);
             Animator animator = GetComponentInChildren<Animator>();
             if (animator != null)
             {
                 animator.enabled = true;
             }
             return true;
+        }
+        // Called by animation event
+        public void DropLoot()
+        {
+            lootTable.GenerateLoot(dropLocations);
         }
 
         public void RestoreState(object state)

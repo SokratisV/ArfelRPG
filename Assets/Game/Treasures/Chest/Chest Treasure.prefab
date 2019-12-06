@@ -60,6 +60,25 @@ Transform:
   m_Father: {fileID: 7630900744216543042}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2183853211693982427
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3139261356081455691}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3a66d98105568f944bc0d212f8fbff05, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2031522799575195037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,6 +203,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 699f9856c633bac4684c8bcdb34a913e, type: 3}
+--- !u!1 &3139261356081455691 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4008642009090883542, guid: 699f9856c633bac4684c8bcdb34a913e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2031522799575195037}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4028580068956630243 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3159573121060155774, guid: 699f9856c633bac4684c8bcdb34a913e,
@@ -253,6 +278,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4569189799453095522, guid: 430d2976b4dc9064c964ae047af4527c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569189799453095526, guid: 430d2976b4dc9064c964ae047af4527c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -44.335445
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569189799453095526, guid: 430d2976b4dc9064c964ae047af4527c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569189799453095526, guid: 430d2976b4dc9064c964ae047af4527c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0

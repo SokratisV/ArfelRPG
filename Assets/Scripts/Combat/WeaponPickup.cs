@@ -11,13 +11,13 @@ namespace RPG.Combat
         [SerializeField] WeaponConfig weapon = null;
         [SerializeField] float respawnTime = 5, healthToRestore = 0, pickupRange = 1f;
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                Pickup(other.gameObject);
-            }
-        }
+        // private void OnTriggerEnter(Collider other)
+        // {
+        //     if (other.CompareTag("Player"))
+        //     {
+        //         Pickup(other.gameObject);
+        //     }
+        // }
 
         private bool Pickup(GameObject subject)
         {
@@ -37,6 +37,7 @@ namespace RPG.Combat
         private IEnumerator HideForSeconds(float seconds)
         {
             TogglePickup(false);
+            if (Mathf.Approximately(seconds, 0)) yield return null;
             yield return new WaitForSeconds(seconds);
             TogglePickup(true);
         }

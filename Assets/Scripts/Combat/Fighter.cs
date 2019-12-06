@@ -34,7 +34,7 @@ namespace RPG.Combat
 
         private Weapon SetupDefaultWeapon()
         {
-            return AttachWeapon(defaultWeapon); ;
+            return AttachWeapon(defaultWeapon);
         }
 
         public void EquipWeapon(WeaponConfig weapon)

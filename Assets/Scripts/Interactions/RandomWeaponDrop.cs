@@ -7,7 +7,11 @@ namespace RPG.Interactions
     public class RandomWeaponDrop : ScriptableObject
     {
         [SerializeField] WeaponPickup[] lootTable = null;
-
+        Transform pickupManager;
+        private void Start()
+        {
+            pickupManager = GameObject.FindWithTag("PickupManager").transform;
+        }
         public void GenerateLoot(Transform[] dropLocations)
         {
             if (lootTable.Length == 0) return;
@@ -19,7 +23,7 @@ namespace RPG.Interactions
 
         private void Spawn(WeaponPickup weapon, Transform dropLocation)
         {
-            Instantiate(weapon, dropLocation).transform.parent = null;
+            Instantiate(weapon, dropLocation).transform.parent = pickupManager;
         }
     }
 }
