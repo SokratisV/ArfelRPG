@@ -11,7 +11,6 @@ namespace RPG.Combat
         [SerializeField] float weaponRange = 2f, weaponDamage = 5f, weaponPercentageBonus = 0;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectile = null;
-        [SerializeField] AnimationClip attackAnimation;
 
         const string weaponName = "Weapon";
 
@@ -81,12 +80,6 @@ namespace RPG.Combat
         public float GetPercentageBonus()
         {
             return weaponPercentageBonus;
-        }
-
-        public float GetAttackAnimationDuration()
-        {
-            if (attackAnimation == null) return 1f;
-            return attackAnimation.length;
         }
     }
 }

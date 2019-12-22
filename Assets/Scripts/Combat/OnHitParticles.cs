@@ -1,16 +1,19 @@
-﻿using UnityEngine;
-
-public class OnHitParticles : MonoBehaviour
+﻿namespace Combat
 {
-    [SerializeField] GameObject onHitParticles;
-    [SerializeField] float lifeAfterImpact;
+    using UnityEngine;
 
-    public void SpawnParticles()
+    public class OnHitParticles : MonoBehaviour
     {
-        print(transform.name);
-        if (onHitParticles != null)
+        [SerializeField] GameObject onHitParticles;
+        [SerializeField] float lifeAfterImpact;
+
+        public void SpawnParticles()
         {
-            Destroy(Instantiate(onHitParticles, transform.position, Random.rotation).gameObject, lifeAfterImpact);
+            if (onHitParticles != null)
+            {
+                Destroy(Instantiate(onHitParticles, transform.position, Random.rotation).gameObject, lifeAfterImpact);
+            }
         }
     }
 }
+

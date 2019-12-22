@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class TrainingDummy : MonoBehaviour
+﻿namespace Combat
 {
-    [SerializeField] GameObject trainingDummyPrefab;
+    using UnityEngine;
 
-    public void Respawn()
+    public class TrainingDummy : MonoBehaviour
     {
-        Instantiate(trainingDummyPrefab);
-        Destroy(gameObject);
+        [SerializeField] GameObject trainingDummyPrefab;
+
+        public void Respawn()
+        {
+            Instantiate(trainingDummyPrefab);
+            Destroy(gameObject);
+        }
     }
 }

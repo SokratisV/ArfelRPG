@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 752130efc96294aa3ae70f790754e58a, type: 3}
-  m_Name: Unnarmed
+  m_Name: Unarmed
   m_EditorClassIdentifier: 
   animatorOverride: {fileID: 0}
   equippedPrefab: {fileID: 8588511950748160044, guid: 8fa976fe57f59ed408f0dcc64889099e,
@@ -20,3 +20,4 @@ MonoBehaviour:
   weaponPercentageBonus: 0
   isRightHanded: 1
   projectile: {fileID: 0}
+  attackAnimation: {fileID: 0}
