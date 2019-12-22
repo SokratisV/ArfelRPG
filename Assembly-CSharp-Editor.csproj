@@ -45,19 +45,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\BOXOPHOBIC\Utils\Editor\BConst.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\Editor\BEditorGUI.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\Editor\BEditorUtils.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\Editor\BVersion.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BBannerDrawer.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BCategoryAttributeDrawer.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BCategoryDrawer.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BInteractiveAttributeDrawer.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BInteractiveDrawer.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BMessageAttributeDrawer.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BMessageDrawer.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BRangeOptionsAttributeDrawer.cs" />
-     <Compile Include="Assets\BOXOPHOBIC\Utils\PropertyDrawers\Editor\BRangeSimpleAttributeDrawer.cs" />
+     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\GerstnerDisplaceEditor.cs" />
+     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\PlanarReflectionEditor.cs" />
+     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\SpecularLightingEditor.cs" />
+     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\WaterBaseEditor.cs" />
+     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\WaterEditorUtility.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

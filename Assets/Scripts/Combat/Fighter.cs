@@ -46,6 +46,8 @@ namespace RPG.Combat
         private Weapon AttachWeapon(WeaponConfig weapon)
         {
             Animator animator = GetComponent<Animator>();
+            // Set animation speed based on timeBetweenAttacks
+            animator.SetFloat("attackAnimSpeed", weapon.GetAttackAnimationDuration() / timeBetweenAttacks);
             return weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
 
