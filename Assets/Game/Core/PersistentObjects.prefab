@@ -290,6 +290,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 4159312418653268977, guid: 698d85d5f4d6a654487e0ffadab088b4,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
+        type: 3}
+      propertyPath: musicAreaToMusic._keyValues.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
+        type: 3}
+      propertyPath: musicAreaToMusic._values.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
         type: 3}
       propertyPath: areaToBossMusic.isExpanded
@@ -299,6 +314,31 @@ PrefabInstance:
         type: 3}
       propertyPath: areaToBossMusic.reorderableList.isExpanded
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
+        type: 3}
+      propertyPath: areaToMusicArea.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
+        type: 3}
+      propertyPath: areaToMusicArea.reorderableList.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
+        type: 3}
+      propertyPath: musicAreaToMusic.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
+        type: 3}
+      propertyPath: musicAreaToMusic.reorderableList.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
+        type: 3}
+      propertyPath: musicAreaToMusic._keyValues.Array.data[3]
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8895372699916990816, guid: 698d85d5f4d6a654487e0ffadab088b4,
         type: 3}

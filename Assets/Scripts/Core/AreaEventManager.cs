@@ -1,16 +1,24 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace RPG.Core
 {
     public class AreaEventManager : MonoBehaviour
     {
-        //TODO CHANGE TO NORMAL EVENT FOR PERSISTANT OBJECT
-        [System.Serializable] public class EnterArea : UnityEvent<Areas> { }
-        [SerializeField] EnterArea onEnterArea;
+        public static event Action<Areas> onEnterArea = delegate { };
         [SerializeField] Areas currentArea = Areas.None;
         Stack<Areas> areasCurrentlyIn;
+
+        private void Awake()
+        {
+            areasCurrentlyIn = new Stack<Areas>();
+        }
+
+        private void Start()
+        {
+            OnEnterArea(currentArea);
+        }
 
         public void EnterNewArea(Areas area)
         {
@@ -31,21 +39,9 @@ namespace RPG.Core
             OnEnterArea(previousArea);
         }
 
-        private void Awake()
-        {
-            areasCurrentlyIn = new Stack<Areas>();
-        }
-
-        private void Start()
-        {
-            // onEnterArea.AddListener(GameObject.Find("Follow Camera").GetComponent<CameraAngleManager>().ChangeCameraAngles);
-            OnEnterArea(currentArea);
-        }
-
-
         private void OnEnterArea(Areas area)
         {
-            onEnterArea.Invoke(area);
+            onEnterArea(area);
         }
     }
 }

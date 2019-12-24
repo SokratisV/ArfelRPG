@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using RotaryHeart.Lib.SerializableDictionary;
+using RPG.Attributes;
+using RPG.Control;
 using UnityEngine;
 
 namespace RPG.Core
@@ -8,7 +10,8 @@ namespace RPG.Core
     {
         Forest,
         Town,
-        Hill
+        Hill,
+        Death
     }
     public enum CombatMusicAreas
     {
@@ -41,22 +44,34 @@ namespace RPG.Core
         private void Awake()
         {
             m_audio = GetComponent<AudioSource>();
-            print("GOT IT");
         }
-        //Unity event call
+        private void OnEnable()
+        {
+            AIController.onPlayerAggro += ToggleCombatMusic;
+            AreaEventManager.onEnterArea += PlayAreaMusic;
+            Health.onPlayerDeath += PlayDeathMusic;
+        }
+        private void OnDisable()
+        {
+            AIController.onPlayerAggro -= ToggleCombatMusic;
+            AreaEventManager.onEnterArea -= PlayAreaMusic;
+            Health.onPlayerDeath -= PlayDeathMusic;
+        }
         public void PlayAreaMusic(Areas area)
         {
+            if (combatMusicCoroutine != null) { return; }
+
             AudioClip music;
-            areaToMusicArea.TryGetValue(area, out currentMusicArea);
-            musicAreaToMusic.TryGetValue(currentMusicArea, out music);
-            print("!(GOT IT)");
-            Destroy(gameObject);
-            print($"{gameObject.name} name + {transform.parent.name} parent");
-            // m_audio.clip = music; // TODO: Fade out/in
-            // m_audio.Play();
+            MusicAreas musicArea;
+            areaToMusicArea.TryGetValue(area, out musicArea);
+            if (currentMusicArea == musicArea) { return; }
+
+            currentMusicArea = musicArea;
+            musicAreaToMusic.TryGetValue(musicArea, out music);
+            m_audio.clip = music; // TODO: Fade out/in
+            m_audio.Play();
         }
-        //Unity event call
-        public void ToggleCombatMusic(bool combat)
+        private void ToggleCombatMusic(bool combat)
         {
             if (combat)
             {
@@ -66,9 +81,7 @@ namespace RPG.Core
             {
                 EndCombatMusic();
             }
-
         }
-
         private void PlayCombatMusic()
         {
             enemiesInCombatWith++;
@@ -89,7 +102,6 @@ namespace RPG.Core
         private void EndCombatMusic()
         {
             enemiesInCombatWith--;
-            print(enemiesInCombatWith);
             if (enemiesInCombatWith == 0)
             {
                 AudioClip music;
@@ -98,6 +110,16 @@ namespace RPG.Core
                 m_audio.Play();
                 combatMusicCoroutine = null;
             }
+        }
+        private void PlayDeathMusic()
+        {
+            enemiesInCombatWith = 0;
+            combatMusicCoroutine = null;
+
+            AudioClip music;
+            musicAreaToMusic.TryGetValue(MusicAreas.Death, out music);
+            m_audio.clip = music; // TODO: Fade out/in
+            m_audio.Play();
         }
         public void LowerVolume(float volumeLevel)
         {

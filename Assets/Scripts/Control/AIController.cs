@@ -5,7 +5,6 @@ using RPG.Movement;
 using RPG.Attributes;
 using UnityEngine;
 using System;
-using UnityEngine.Events;
 
 namespace RPG.Control
 {
@@ -14,9 +13,8 @@ namespace RPG.Control
         [SerializeField] float chaseDistance = 5f, suspicionTime = 3f, wayPointTolerance = 1f, wayPointDwellTime = 3f, aggroCooldownTime = 5f, shoutDistance = 0f;
         [SerializeField] PatrolPath patrolPath = default;
         [Range(0, 1)] [SerializeField] float patrolSpeedFraction = 0.2f;
-        //TODO CHANGE TO NORMAL EVENT FOR PERSISTANT OBJECT
-        [System.Serializable] public class PlayerAggro : UnityEvent<bool> { }
-        [SerializeField] PlayerAggro onPlayerAggro;
+
+        public static event Action<bool> onPlayerAggro = delegate { };
 
         GameObject player;
         Health health;
@@ -48,7 +46,7 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (health.IsDead()) return;
+            if (IsDead()) return;
 
             if (IsAggrevated() && fighter.CanAttack(player))
             {
@@ -66,19 +64,34 @@ namespace RPG.Control
             UpdateTimers();
         }
 
-        private bool IsSuspicious()
+        private bool IsDead()
         {
-            if (timeSinceLastSawPlayer < suspicionTime) { return true; }
-            if (hasInformedPlayerOfAggro == true)
+            if (health.IsDead())
             {
-                onPlayerAggro.Invoke(false);
-                print("invoked false");
-                hasInformedPlayerOfAggro = false;
+                if (hasInformedPlayerOfAggro == true)
+                {
+                    onPlayerAggro(false);
+                    hasInformedPlayerOfAggro = false;
+                }
+                return true;
             }
             return false;
         }
 
-        // Event call
+        private bool IsSuspicious()
+        {
+            if (timeSinceLastSawPlayer < suspicionTime) { return true; }
+            else
+            {
+                if (hasInformedPlayerOfAggro == true)
+                {
+                    onPlayerAggro(false);
+                    hasInformedPlayerOfAggro = false;
+                }
+                return false;
+            }
+        }
+
         public void Aggrevate()
         {
             timeSinceAggrevated = 0;
@@ -133,10 +146,10 @@ namespace RPG.Control
 
         private void AttackBehaviour()
         {
-            if (!hasInformedPlayerOfAggro)
+            if (hasInformedPlayerOfAggro == false)
             {
-                print("invoked true");
-                onPlayerAggro.Invoke(true);
+                hasInformedPlayerOfAggro = true;
+                onPlayerAggro(true);
             }
             timeSinceLastSawPlayer = 0;
             fighter.Attack(player);

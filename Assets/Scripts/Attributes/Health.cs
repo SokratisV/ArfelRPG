@@ -1,3 +1,4 @@
+using System;
 using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Saving;
@@ -12,6 +13,8 @@ namespace RPG.Attributes
         [SerializeField] float regenerationPercentage = 70;
         [SerializeField] TakeDamageEvent takeDamage;
         [SerializeField] UnityEvent onDie;
+        //TODO Move everything to C# event
+        public static event Action onPlayerDeath = delegate { };
 
         [System.Serializable]
         public class TakeDamageEvent : UnityEvent<float>
@@ -27,6 +30,15 @@ namespace RPG.Attributes
         {
             healthPoints = new LazyValue<float>(GetInitialHealth);
         }
+        private void OnEnable()
+        {
+            GetComponent<BaseStats>().onLevelUp += RestoreHealth;
+        }
+
+        private void OnDisable()
+        {
+            GetComponent<BaseStats>().onLevelUp -= RestoreHealth;
+        }
 
         private void Start()
         {
@@ -41,16 +53,6 @@ namespace RPG.Attributes
         internal void Heal(float healthToRestore)
         {
             healthPoints.value = Mathf.Min(healthPoints.value + healthToRestore, GetMaxHealthPoints());
-        }
-
-        private void OnEnable()
-        {
-            GetComponent<BaseStats>().onLevelUp += RestoreHealth;
-        }
-
-        private void OnDisable()
-        {
-            GetComponent<BaseStats>().onLevelUp -= RestoreHealth;
         }
 
         private void RestoreHealth()
@@ -71,6 +73,12 @@ namespace RPG.Attributes
             if (healthPoints.value == 0)
             {
                 onDie.Invoke();
+                //TODO: Remove from health (add in different script only for player and call it through unity event?)
+                if (tag.Equals("Player"))
+                {
+                    onPlayerDeath();
+                }
+                //
                 Die();
                 AwardExperience(instigator);
             }

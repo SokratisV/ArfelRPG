@@ -35,6 +35,16 @@ namespace RPG.Core
         {
             DictionaryInit();
         }
+        private void OnEnable()
+        {
+            AreaEventManager.onEnterArea += ChangeCameraAngles;
+
+        }
+        private void OnDisable()
+        {
+            AreaEventManager.onEnterArea -= ChangeCameraAngles;
+
+        }
 
         private void DictionaryInit()
         {
@@ -45,7 +55,6 @@ namespace RPG.Core
             }
         }
 
-        // Unity event call
         public void ChangeCameraAngles(Areas area)
         {
             if (areaToAngleDictionary == null)
