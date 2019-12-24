@@ -38,13 +38,17 @@ namespace RPG.Interactions
 
         public void OpenTreasure()
         {
-            // lootTable.GenerateLoot(dropLocations);
             Animator animator = GetComponentInChildren<Animator>();
             if (animator != null)
             {
                 animator.enabled = true;
             }
             if (isOpened) return;
+            // Drop loot in animation event
+        }
+
+        public void DropLoot()
+        {
             lootTable.GenerateLoot(dropLocations, pickupManager);
             isOpened = true;
             GetComponent<Collider>().enabled = false;

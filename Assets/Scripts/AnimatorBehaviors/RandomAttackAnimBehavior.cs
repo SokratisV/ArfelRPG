@@ -1,4 +1,4 @@
-﻿namespace AnimatorBehaviors
+﻿namespace RPG.AnimatorBehaviors
 {
     using UnityEngine;
 

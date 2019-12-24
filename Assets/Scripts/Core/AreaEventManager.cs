@@ -6,6 +6,8 @@ namespace RPG.Core
 {
     public class AreaEventManager : MonoBehaviour
     {
+        //TODO CHANGE TO NORMAL EVENT FOR PERSISTANT OBJECT
+        [System.Serializable] public class EnterArea : UnityEvent<Areas> { }
         [SerializeField] EnterArea onEnterArea;
         [SerializeField] Areas currentArea = Areas.None;
         Stack<Areas> areasCurrentlyIn;
@@ -36,14 +38,10 @@ namespace RPG.Core
 
         private void Start()
         {
+            // onEnterArea.AddListener(GameObject.Find("Follow Camera").GetComponent<CameraAngleManager>().ChangeCameraAngles);
             OnEnterArea(currentArea);
         }
 
-        [System.Serializable]
-        public class EnterArea : UnityEvent<Areas>
-        {
-
-        }
 
         private void OnEnterArea(Areas area)
         {

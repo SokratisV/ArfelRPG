@@ -1,4 +1,4 @@
-﻿namespace Combat
+﻿namespace RPG.Combat
 {
     using UnityEngine;
 

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using RPG.Saving;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace RPG.Core
 {
@@ -14,7 +13,7 @@ namespace RPG.Core
         ForestEntrance,
         ForestExit,
         HillClimbing,
-        HillTop,
+        HillTop
     }
     public class CameraAngleManager : MonoBehaviour
     {
@@ -34,6 +33,11 @@ namespace RPG.Core
 
         private void Awake()
         {
+            DictionaryInit();
+        }
+
+        private void DictionaryInit()
+        {
             areaToAngleDictionary = new Dictionary<Areas, Vector3>();
             foreach (var angle in areaAngles)
             {
@@ -41,8 +45,13 @@ namespace RPG.Core
             }
         }
 
+        // Unity event call
         public void ChangeCameraAngles(Areas area)
         {
+            if (areaToAngleDictionary == null)
+            {
+                DictionaryInit();
+            }
             areaToAngleDictionary.TryGetValue(area, out position);
             if (runningCoroutine != null)
             {

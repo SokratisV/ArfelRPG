@@ -5,6 +5,7 @@ using RPG.Movement;
 using RPG.Attributes;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 namespace RPG.Control
 {
@@ -13,6 +14,9 @@ namespace RPG.Control
         [SerializeField] float chaseDistance = 5f, suspicionTime = 3f, wayPointTolerance = 1f, wayPointDwellTime = 3f, aggroCooldownTime = 5f, shoutDistance = 0f;
         [SerializeField] PatrolPath patrolPath = default;
         [Range(0, 1)] [SerializeField] float patrolSpeedFraction = 0.2f;
+        //TODO CHANGE TO NORMAL EVENT FOR PERSISTANT OBJECT
+        [System.Serializable] public class PlayerAggro : UnityEvent<bool> { }
+        [SerializeField] PlayerAggro onPlayerAggro;
 
         GameObject player;
         Health health;
@@ -21,6 +25,7 @@ namespace RPG.Control
         LazyValue<Vector3> guardPosition;
         float timeSinceLastSawPlayer = Mathf.Infinity, timeSinceArrivedAtWaypoint = Mathf.Infinity, timeSinceAggrevated = Mathf.Infinity;
         int currentWayPointIndex = 0;
+        bool hasInformedPlayerOfAggro = false;
 
         private void Awake()
         {
@@ -49,7 +54,7 @@ namespace RPG.Control
             {
                 AttackBehaviour();
             }
-            else if (timeSinceLastSawPlayer < suspicionTime)
+            else if (IsSuspicious())
             {
                 SuspicionBehaviour();
             }
@@ -60,6 +65,19 @@ namespace RPG.Control
 
             UpdateTimers();
         }
+
+        private bool IsSuspicious()
+        {
+            if (timeSinceLastSawPlayer < suspicionTime) { return true; }
+            if (hasInformedPlayerOfAggro == true)
+            {
+                onPlayerAggro.Invoke(false);
+                print("invoked false");
+                hasInformedPlayerOfAggro = false;
+            }
+            return false;
+        }
+
         // Event call
         public void Aggrevate()
         {
@@ -115,6 +133,11 @@ namespace RPG.Control
 
         private void AttackBehaviour()
         {
+            if (!hasInformedPlayerOfAggro)
+            {
+                print("invoked true");
+                onPlayerAggro.Invoke(true);
+            }
             timeSinceLastSawPlayer = 0;
             fighter.Attack(player);
 

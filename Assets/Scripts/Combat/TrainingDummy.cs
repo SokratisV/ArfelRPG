@@ -1,4 +1,4 @@
-﻿namespace Combat
+﻿namespace RPG.Combat
 {
     using UnityEngine;
 
@@ -8,7 +8,7 @@
 
         public void Respawn()
         {
-            Instantiate(trainingDummyPrefab);
+            Instantiate(trainingDummyPrefab, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }

@@ -80,8 +80,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e605c65410be9224285e2b376b1e96d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  areaAngles: []
+  speed: 2.5
+  areaAngles:
+  - area: 0
+    angles:
+      x: 41
+      y: 0.5
+      z: 0
+  - area: 1
+    angles:
+      x: 18
+      y: -22.5
+      z: 0
+  - area: 2
+    angles:
+      x: 33
+      y: -22
+      z: 0
+  - area: 3
+    angles:
+      x: 41
+      y: -52
+      z: 0
+  - area: 4
+    angles:
+      x: 35.5
+      y: 24
+      z: 0
+  - area: 5
+    angles:
+      x: 16
+      y: 14
+      z: 0
+  - area: 6
+    angles:
+      x: 40
+      y: 0
+      z: 0
 --- !u!1 &4274947372079205871
 GameObject:
   m_ObjectHideFlags: 0

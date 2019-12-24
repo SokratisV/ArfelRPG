@@ -64,7 +64,7 @@ PrefabInstance:
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
       propertyPath: areaAngles.Array.size
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
@@ -104,12 +104,12 @@ PrefabInstance:
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
       propertyPath: areaAngles.Array.data[0].angles.x
-      value: 36
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
       propertyPath: areaAngles.Array.data[0].angles.y
-      value: 8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
@@ -119,12 +119,12 @@ PrefabInstance:
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
       propertyPath: areaAngles.Array.data[1].angles.x
-      value: 100
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
       propertyPath: areaAngles.Array.data[1].angles.y
-      value: 10
+      value: -22.5
       objectReference: {fileID: 0}
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
@@ -134,12 +134,72 @@ PrefabInstance:
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
       propertyPath: areaAngles.Array.data[2].angles.x
-      value: 150
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
       propertyPath: areaAngles.Array.data[2].angles.z
-      value: 25
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[2].angles.y
+      value: -22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[3].area
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[3].angles.x
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[3].angles.y
+      value: -52
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[4].area
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[4].angles.x
+      value: 35.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[4].angles.y
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[5].area
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[5].angles.x
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[5].angles.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[6].area
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446398703315233649, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
+        type: 3}
+      propertyPath: areaAngles.Array.data[6].angles.x
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4274947371637543657, guid: 33d4a55acfb4b4f6c9e06c08dc31e447,
         type: 3}
@@ -280,6 +340,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508670818910924255, guid: c51614e0caef2456ca330cadd5c96f32,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c51614e0caef2456ca330cadd5c96f32, type: 3}
