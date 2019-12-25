@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6067114160988039824}
   - component: {fileID: 6425794885073542650}
   - component: {fileID: -3243404930642017543}
+  - component: {fileID: 4821590401497324671}
   m_Layer: 0
   m_Name: Treasure
   m_TagString: Untagged
@@ -74,3 +75,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueIdentifier: 
+--- !u!114 &4821590401497324671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4008642009090883542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectChildren: 1
+  outlineMode: 1
+  outlineColor: {r: 0.9810273, g: 1, b: 0.13679248, a: 1}
+  outlineWidth: 1.5
+  precomputeOutline: 1
+  bakeKeys: []
+  bakeValues: []

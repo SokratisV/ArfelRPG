@@ -39,6 +39,7 @@ namespace RPG.Interactions
         public void OpenTreasure()
         {
             Animator animator = GetComponentInChildren<Animator>();
+            GetComponentInChildren<AudioSource>().Play();
             if (animator != null)
             {
                 animator.enabled = true;
@@ -69,6 +70,22 @@ namespace RPG.Interactions
         public float GetInteractionRange()
         {
             return interactionRange;
+        }
+        private void ToggleOutline(bool toggle)
+        {
+            Outline outline;
+            if (outline = GetComponentInChildren<Outline>())
+            {
+                outline.enabled = toggle;
+            }
+        }
+        private void OnMouseEnter()
+        {
+            ToggleOutline(true);
+        }
+        private void OnMouseExit()
+        {
+            ToggleOutline(false);
         }
     }
 }

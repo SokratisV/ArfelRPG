@@ -73,6 +73,7 @@ namespace RPG.Control
                     onPlayerAggro(false);
                     hasInformedPlayerOfAggro = false;
                 }
+                GetComponent<Collider>().enabled = false;
                 return true;
             }
             return false;

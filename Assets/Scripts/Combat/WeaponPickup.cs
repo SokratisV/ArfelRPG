@@ -10,14 +10,14 @@ namespace RPG.Combat
     {
         [SerializeField] WeaponConfig weapon = null;
         [SerializeField] float respawnTime = 5, healthToRestore = 0, pickupRange = 1f;
-
-        // private void OnTriggerEnter(Collider other)
-        // {
-        //     if (other.CompareTag("Player"))
-        //     {
-        //         Pickup(other.gameObject);
-        //     }
-        // }
+        //TODO: Remove and fix to pickup on first click
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                Pickup(other.gameObject);
+            }
+        }
 
         private bool Pickup(GameObject subject)
         {
@@ -68,6 +68,23 @@ namespace RPG.Combat
                 }
             }
             return true;
+        }
+
+        private void ToggleOutline(bool toggle)
+        {
+            Outline outline;
+            if (outline = GetComponentInChildren<Outline>())
+            {
+                outline.enabled = toggle;
+            }
+        }
+        private void OnMouseEnter()
+        {
+            ToggleOutline(true);
+        }
+        private void OnMouseExit()
+        {
+            ToggleOutline(false);
         }
 
         public CursorType GetCursorType()
