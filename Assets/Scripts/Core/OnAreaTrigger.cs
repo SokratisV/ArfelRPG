@@ -1,7 +1,7 @@
+using UnityEngine;
+
 namespace RPG.Core
 {
-    using UnityEngine;
-
     public class OnAreaTrigger : MonoBehaviour
     {
         [SerializeField] Areas area;

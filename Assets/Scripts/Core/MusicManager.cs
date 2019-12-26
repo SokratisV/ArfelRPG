@@ -15,9 +15,9 @@ namespace RPG.Core
     }
     public enum CombatMusicAreas
     {
+        CombatNormal,
         BossVillage,
-        BossTroll,
-        CombatNormal
+        BossTroll
     }
 
     [RequireComponent(typeof(AudioSource))]
@@ -71,23 +71,32 @@ namespace RPG.Core
             m_audio.clip = music; // TODO: Fade out/in
             m_audio.Play();
         }
-        private void ToggleCombatMusic(bool combat)
+        private void ToggleCombatMusic(bool combat, CombatMusicAreas combatMusic = CombatMusicAreas.CombatNormal)
         {
             if (combat)
             {
-                PlayCombatMusic();
+                PlayCombatMusic(combatMusic);
             }
             else
             {
                 EndCombatMusic();
             }
         }
-        private void PlayCombatMusic()
+        private void PlayCombatMusic(CombatMusicAreas combatMusic)
         {
             enemiesInCombatWith++;
             if (combatMusicCoroutine == null)
             {
-                combatMusicCoroutine = StartCoroutine(_PlayCombatMusic(CombatMusicAreas.CombatNormal));
+                combatMusicCoroutine = StartCoroutine(_PlayCombatMusic(combatMusic));
+            }
+            else
+            {
+                if (combatMusic != CombatMusicAreas.CombatNormal)
+                {
+                    // StopCoroutine(combatMusicCoroutine);
+                    // combatMusicCoroutine = null;
+                    combatMusicCoroutine = StartCoroutine(_PlayCombatMusic(combatMusic));
+                }
             }
         }
         private IEnumerator _PlayCombatMusic(CombatMusicAreas area)
@@ -118,6 +127,16 @@ namespace RPG.Core
 
             AudioClip music;
             musicAreaToMusic.TryGetValue(MusicAreas.Death, out music);
+            m_audio.clip = music; // TODO: Fade out/in
+            m_audio.Play();
+        }
+        public void ResetMusicPlayer()
+        {
+            enemiesInCombatWith = 0;
+            combatMusicCoroutine = null;
+
+            AudioClip music;
+            musicAreaToMusic.TryGetValue(MusicAreas.Town, out music);
             m_audio.clip = music; // TODO: Fade out/in
             m_audio.Play();
         }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4274947371637543670}
   - component: {fileID: 4274947371637543671}
   - component: {fileID: 2446398703315233649}
+  - component: {fileID: 1663378247792120652}
   m_Layer: 0
   m_Name: Follow Camera
   m_TagString: Untagged
@@ -117,6 +118,19 @@ MonoBehaviour:
       x: 40
       y: 0
       z: 0
+--- !u!114 &1663378247792120652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4274947371637543657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e575b81482b3084faf6f5e7f12feeba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomSpeed: 2
 --- !u!1 &4274947372079205871
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,8 +222,8 @@ MonoBehaviour:
   m_YDamping: 0.5
   m_ZDamping: 0.5
   m_ScreenX: 0.5
-  m_ScreenY: 0.51107
-  m_CameraDistance: 17
+  m_ScreenY: 0.5
+  m_CameraDistance: 18
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0

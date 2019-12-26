@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using RPG.Attributes;
 using RPG.Control;
 using UnityEngine;
@@ -10,6 +9,7 @@ namespace RPG.Combat
     {
         [SerializeField] WeaponConfig weapon = null;
         [SerializeField] float respawnTime = 5, healthToRestore = 0, pickupRange = 1f;
+
         //TODO: Remove and fix to pickup on first click
         private void OnTriggerEnter(Collider other)
         {
@@ -51,7 +51,7 @@ namespace RPG.Combat
 
         private void TogglePickup(bool shouldShow)
         {
-            GetComponent<SphereCollider>().enabled = shouldShow;
+            GetComponent<Collider>().enabled = shouldShow;
             foreach (Transform children in transform)
             {
                 children.gameObject.SetActive(shouldShow);

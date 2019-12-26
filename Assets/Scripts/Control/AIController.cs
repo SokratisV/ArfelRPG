@@ -14,7 +14,7 @@ namespace RPG.Control
         [SerializeField] PatrolPath patrolPath = default;
         [Range(0, 1)] [SerializeField] float patrolSpeedFraction = 0.2f;
 
-        public static event Action<bool> onPlayerAggro = delegate { };
+        public static event Action<bool, CombatMusicAreas> onPlayerAggro = delegate { };
 
         GameObject player;
         Health health;
@@ -24,6 +24,7 @@ namespace RPG.Control
         float timeSinceLastSawPlayer = Mathf.Infinity, timeSinceArrivedAtWaypoint = Mathf.Infinity, timeSinceAggrevated = Mathf.Infinity;
         int currentWayPointIndex = 0;
         bool hasInformedPlayerOfAggro = false;
+        [SerializeField] CombatMusicAreas combatMusic;
 
         private void Awake()
         {
@@ -70,7 +71,7 @@ namespace RPG.Control
             {
                 if (hasInformedPlayerOfAggro == true)
                 {
-                    onPlayerAggro(false);
+                    onPlayerAggro(false, combatMusic);
                     hasInformedPlayerOfAggro = false;
                 }
                 GetComponent<Collider>().enabled = false;
@@ -86,7 +87,7 @@ namespace RPG.Control
             {
                 if (hasInformedPlayerOfAggro == true)
                 {
-                    onPlayerAggro(false);
+                    onPlayerAggro(false, combatMusic);
                     hasInformedPlayerOfAggro = false;
                 }
                 return false;
@@ -150,7 +151,7 @@ namespace RPG.Control
             if (hasInformedPlayerOfAggro == false)
             {
                 hasInformedPlayerOfAggro = true;
-                onPlayerAggro(true);
+                onPlayerAggro(true, combatMusic);
             }
             timeSinceLastSawPlayer = 0;
             fighter.Attack(player);

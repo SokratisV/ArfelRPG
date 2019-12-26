@@ -93,7 +93,7 @@ MonoBehaviour:
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
     isExpanded: 0
-    _keyValues: 010000000000000002000000
+    _keyValues: 01000000000000000200000002000000
     _keys: 01000000000000000200000003000000
     _values:
     - {fileID: 8300000, guid: 9283265aee105f746998debbc119dda2, type: 3}
@@ -107,7 +107,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 0
+      isExpanded: 1
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -122,13 +122,13 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 0
+    isExpanded: 1
     _keyValues: 000000000100000002000000
     _keys: 000000000100000002000000
     _values:
+    - {fileID: 8300000, guid: aba6ed4a8711f63478e87aea5c95fa29, type: 3}
     - {fileID: 8300000, guid: 66b315e37ecf3f942bc1cb0e59c775b7, type: 3}
     - {fileID: 8300000, guid: 827f48a268387bc4ea8b5ec681360628, type: 3}
-    - {fileID: 8300000, guid: aba6ed4a8711f63478e87aea5c95fa29, type: 3}
 --- !u!82 &4159312418653268977
 AudioSource:
   m_ObjectHideFlags: 0
