@@ -18,13 +18,11 @@ namespace RPG.Movement
             navMeshAgent = GetComponent<NavMeshAgent>();
             health = GetComponent<Health>();
         }
-
         void Update()
         {
             navMeshAgent.enabled = !health.IsDead();
             UpdateAnimator();
         }
-
         private void UpdateAnimator()
         {
             Vector3 velocity = navMeshAgent.velocity;
@@ -32,14 +30,12 @@ namespace RPG.Movement
             float speed = localVelocity.z;
             GetComponent<Animator>().SetFloat("forwardSpeed", speed);
         }
-
         public void MoveTo(Vector3 destination, float speedFraction)
         {
             navMeshAgent.destination = destination;
             navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
             navMeshAgent.isStopped = false;
         }
-
         public bool CanMoveTo(Vector3 destination)
         {
             NavMeshPath path = new NavMeshPath();
@@ -49,7 +45,6 @@ namespace RPG.Movement
             if (GetPathLength(path) > maxNavPathLength) return false;
             return true;
         }
-
         private float GetPathLength(NavMeshPath path)
         {
             float total = 0f;
@@ -65,18 +60,15 @@ namespace RPG.Movement
         {
             navMeshAgent.isStopped = true;
         }
-
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             GetComponent<ActionScheduler>().StartAction(this);
             MoveTo(destination, speedFraction);
         }
-
         public object CaptureState()
         {
             return new SerializableVector3(transform.position);
         }
-
         public void RestoreState(object state)
         {
             SerializableVector3 position = (SerializableVector3)state;

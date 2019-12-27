@@ -39,6 +39,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea7fd4b78bd692499ca040b423dc78c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6623706442341413652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844280258488175269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80c6c2066329184c8b3e8916495aaf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feedbackObject: {fileID: 6200502595424741400, guid: c13aaa1dfde48c84ab629e04950bb950,
+    type: 3}
 --- !u!114 &8017370810023816683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,11 +90,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 704220060066086866, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1106979884372746780, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: m_RootOrder
@@ -106,6 +115,12 @@ PrefabInstance:
       propertyPath: maxNavPathLength
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 2165176163035486379, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: movementFeedbackPrefab
+      value: 
+      objectReference: {fileID: 6200502595424741400, guid: c13aaa1dfde48c84ab629e04950bb950,
+        type: 3}
     - target: {fileID: 2165176163035486390, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: m_LocalPosition.x

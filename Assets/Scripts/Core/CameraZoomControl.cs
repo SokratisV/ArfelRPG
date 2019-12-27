@@ -26,7 +26,8 @@ namespace RPG.Core
             if (mouseScroll < 0 || mouseScroll > 0)
             {
                 zoom -= mouseScroll * zoomSpeed;
-                cm_Cam.m_CameraDistance = Mathf.Clamp(zoom, 5f, 20f);
+                zoom = Mathf.Clamp(zoom, 5f, 20f);
+                cm_Cam.m_CameraDistance = zoom;
             }
         }
     }

@@ -10,7 +10,9 @@ namespace RPG.Control
     public class PlayerController : MonoBehaviour
     {
         RaycastHit[] hits;
+        RaycastHit movementRaycast;
         Health health;
+        SpawnFeedback movementFeedbackPrefab;
         [SerializeField] float maxNavMeshProjectionDistance = 1f, raycastRadius = 1f;
 
         [System.Serializable]
@@ -26,6 +28,7 @@ namespace RPG.Control
         private void Awake()
         {
             health = GetComponent<Health>();
+            movementFeedbackPrefab = GetComponent<SpawnFeedback>();
         }
 
         private void Update()
@@ -94,6 +97,7 @@ namespace RPG.Control
                 {
                     GetComponent<Mover>().StartMoveAction(target, 1f);
                 }
+                if (Input.GetMouseButtonDown(0)) { MovementFeedback(target); }
                 SetCursor(CursorType.Movement);
                 return true;
             }
@@ -104,20 +108,26 @@ namespace RPG.Control
         {
             target = new Vector3();
 
-            RaycastHit hit;
-            bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
+            bool hasHit = Physics.Raycast(GetMouseRay(), out movementRaycast);
             if (!hasHit) return false;
 
             NavMeshHit navMeshHit;
             bool hasCastToNavMesh = NavMesh.SamplePosition(
-                hit.point, out navMeshHit, maxNavMeshProjectionDistance, NavMesh.AllAreas);
+                movementRaycast.point, out navMeshHit, maxNavMeshProjectionDistance, NavMesh.AllAreas);
             if (!hasCastToNavMesh) return false;
 
             target = navMeshHit.position;
 
             if (!GetComponent<Mover>().CanMoveTo(target)) return false;
-
             return true;
+        }
+
+        private void MovementFeedback(Vector3 target)
+        {
+            if (movementFeedbackPrefab != null)
+            {
+                movementFeedbackPrefab.Spawn(target, movementRaycast.normal);
+            }
         }
 
         private void SetCursor(CursorType type)
