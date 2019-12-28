@@ -14,6 +14,8 @@ namespace RPG.Movement
         Health health;
         [SerializeField] float maxSpeed = 6f;
         [SerializeField] float maxNavPathLength = 40f;
+        private bool completeCoroutineStarted = false;
+        private Coroutine completeCoroutine = null;
 
         private void Awake()
         {
@@ -36,11 +38,20 @@ namespace RPG.Movement
         {
             navMeshAgent.destination = destination;
             navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
-            StartCoroutine(_CompleteMove(destination));
+            //TODO: Remove from common (Player/AI) code
+            if (gameObject.CompareTag("Player"))
+            {
+                if (completeCoroutineStarted)
+                {
+                    StopCoroutine(completeCoroutine);
+                }
+                completeCoroutine = StartCoroutine(_CompleteMove(destination));
+            }
             navMeshAgent.isStopped = false;
         }
         private IEnumerator _CompleteMove(Vector3 destination)
         {
+            completeCoroutineStarted = true;
             float range = GetComponent<Fighter>().GetWeaponConfig().GetRange();
             // Not precise, but cheaper(?)
             // while ((transform.position - destination).sqrMagnitude > range * range)
@@ -49,6 +60,7 @@ namespace RPG.Movement
             // } 
             while (Vector3.Distance(transform.position, destination) > 0.1f) { yield return null; }
             Complete();
+            completeCoroutineStarted = false;
         }
         public bool CanMoveTo(Vector3 destination)
         {
