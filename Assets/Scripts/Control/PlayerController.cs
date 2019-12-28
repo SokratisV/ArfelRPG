@@ -93,14 +93,14 @@ namespace RPG.Control
             if (hasHit)
             {
                 if (!GetComponent<Mover>().CanMoveTo(target)) return false;
-                CheckControlsPressed(target);
+                CheckPressedButtons(target);
                 SetCursor(CursorType.Movement);
                 return true;
             }
             return false;
         }
 
-        private void CheckControlsPressed(Vector3 target)
+        private void CheckPressedButtons(Vector3 target)
         {
             if (Input.GetKey(KeyCode.LeftControl))
             {

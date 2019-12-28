@@ -17,7 +17,6 @@ namespace RPG.Interactions
         {
             pickupManager = GameObject.FindGameObjectWithTag("PickupManager").transform;
         }
-
         public CursorType GetCursorType()
         {
             return CursorType.Pickup;
@@ -27,15 +26,28 @@ namespace RPG.Interactions
             if (!isOpened)
             {
                 if (!callingController.GetComponent<Collector>().CanCollect(gameObject)) return false;
-                if (Input.GetMouseButtonDown(0))
-                {
-                    callingController.GetComponent<Collector>().Collect(this);
-                }
+                CheckPressedButtons(callingController);
                 return true;
             }
             return false;
         }
-
+        private void CheckPressedButtons(PlayerController callingController)
+        {
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    callingController.GetComponent<Collector>().QueueCollectAction(gameObject);
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    callingController.GetComponent<Collector>().Collect(this);
+                }
+            }
+        }
         public void OpenTreasure()
         {
             Animator animator = GetComponentInChildren<Animator>();
@@ -47,14 +59,12 @@ namespace RPG.Interactions
             if (isOpened) return;
             // Drop loot in animation event
         }
-
         public void DropLoot()
         {
             lootTable.GenerateLoot(dropLocations, pickupManager);
             isOpened = true;
             GetComponent<Collider>().enabled = false;
         }
-
         public void RestoreState(object state)
         {
             isOpened = (bool)state;

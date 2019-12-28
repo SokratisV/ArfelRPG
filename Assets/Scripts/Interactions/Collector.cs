@@ -25,6 +25,7 @@ namespace RPG.Interactions
         {
             transform.LookAt(collectible.transform);
             collectible.OpenTreasure();
+            collectible = null;
             Complete();
         }
         public void Collect(Treasure collectible)
@@ -46,9 +47,12 @@ namespace RPG.Interactions
         {
             return (Vector3.Distance(transform.position, targetTransform.position) < targetTransform.GetComponent<Treasure>().GetInteractionRange());
         }
+        public void QueueCollectAction(GameObject gameObject)
+        {
+            GetComponent<ActionScheduler>().EnqueueAction(new PickableActionData(this, gameObject.transform));
+        }
         public void Complete()
         {
-            print("Complete collector");
             GetComponent<ActionScheduler>().CompleteAction();
         }
         public void ExecuteAction(ActionData data)

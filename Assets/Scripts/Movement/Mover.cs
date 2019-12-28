@@ -42,10 +42,12 @@ namespace RPG.Movement
         private IEnumerator _CompleteMove(Vector3 destination)
         {
             float range = GetComponent<Fighter>().GetWeaponConfig().GetRange();
-            while ((transform.position - destination).sqrMagnitude > range * range)
-            {
-                yield return null;
-            }
+            // Not precise, but cheaper(?)
+            // while ((transform.position - destination).sqrMagnitude > range * range)
+            // {
+            //     yield return null;
+            // } 
+            while (Vector3.Distance(transform.position, destination) > 0.1f) { yield return null; }
             Complete();
         }
         public bool CanMoveTo(Vector3 destination)
@@ -79,7 +81,7 @@ namespace RPG.Movement
         }
         public void QueueMoveAction(Vector3 destination, float speedFraction)
         {
-            GetComponent<ActionScheduler>().QueueAction(new MoverActionData(this, destination, speedFraction));
+            GetComponent<ActionScheduler>().EnqueueAction(new MoverActionData(this, destination, speedFraction));
         }
         public object CaptureState()
         {

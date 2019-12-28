@@ -67,7 +67,6 @@ namespace RPG.Core
             {
                 currentAction.Cancel();
             }
-            print("started");
             currentAction = action;
         }
         private void ClearActionsQueue()
@@ -81,17 +80,17 @@ namespace RPG.Core
         {
             StartAction(null);
         }
-        public void QueueAction(ActionData moveData)
+        public void EnqueueAction(ActionData actionData)
         {
-            print("Enqueued");
-            if (actionsQueue.Count == 0)
+            if (actionsQueue.Count == 0 && currentAction == null)
             {
-                print("Start immediately");
-                StartNextAction(moveData.GetAction(), moveData);
+                StartNextAction(actionData.GetAction(), actionData);
             }
-            actionsQueue.Enqueue(moveData);
+            else
+            {
+                actionsQueue.Enqueue(actionData);
+            }
         }
-
         private void DequeueAction(out IAction action, out ActionData data)
         {
             action = null;
@@ -101,17 +100,15 @@ namespace RPG.Core
             data = actionsQueue.Dequeue();
             action = data.GetAction();
         }
-
         public void CompleteAction()
         {
+            currentAction = null;
             if (actionsQueue.Count == 0) return;
-
             IAction action;
             ActionData data;
             DequeueAction(out action, out data);
             StartNextAction(action, data);
         }
-
         private void StartNextAction(IAction action, ActionData data)
         {
             currentAction = action;

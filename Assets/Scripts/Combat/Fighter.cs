@@ -25,30 +25,25 @@ namespace RPG.Combat
         {
             currentWeapon.ForceInit();
         }
-
         private void Awake()
         {
             currentWeaponConfig = defaultWeapon;
             currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
         }
-
         private Weapon SetupDefaultWeapon()
         {
             return AttachWeapon(defaultWeapon);
         }
-
         public void EquipWeapon(WeaponConfig weapon)
         {
             currentWeaponConfig = weapon;
             currentWeapon.value = AttachWeapon(weapon);
         }
-
         private Weapon AttachWeapon(WeaponConfig weapon)
         {
             Animator animator = GetComponent<Animator>();
             return weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
-
         public Health GetTarget()
         {
             return target;
@@ -57,13 +52,13 @@ namespace RPG.Combat
         {
             return currentWeaponConfig;
         }
-
         private void Update()
         {
             timeSinceLastAttack += Time.deltaTime;
 
             if (target == null) { return; }
             if (target.IsDead()) { Complete(); target = null; return; }
+            if (GetComponent<TrainingDummy>()) return; //TODO: Remove
             if (!IsInRange(target.transform))
             {
                 GetComponent<Mover>().MoveTo(target.transform.position, 1f);
@@ -74,7 +69,6 @@ namespace RPG.Combat
                 AttackBehavior();
             }
         }
-
         private void AttackBehavior()
         {
             transform.LookAt(target.transform);
@@ -82,7 +76,6 @@ namespace RPG.Combat
             TriggerAttack();
             timeSinceLastAttack = 0;
         }
-
         private void TriggerAttack()
         {
             GetComponent<Animator>().ResetTrigger("stopAttack");
@@ -106,12 +99,10 @@ namespace RPG.Combat
                 target.TakeDamage(gameObject, damage);
             }
         }
-
         void Shoot()
         {
             Hit();
         }
-
         public bool CanAttack(GameObject target)
         {
             if (target == null) return false;
@@ -121,42 +112,39 @@ namespace RPG.Combat
             Health targetToTest = target.GetComponent<Health>();
             return targetToTest != null && !targetToTest.IsDead();
         }
-
         private bool IsInRange(Transform targetTransform)
         {
             return Vector3.Distance(transform.position, targetTransform.position) < currentWeaponConfig.GetRange();
         }
-
         public void Attack(GameObject combatTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
             target = combatTarget.GetComponent<Health>();
         }
-
+        public void QueueAttackAction(GameObject gameObject)
+        {
+            GetComponent<ActionScheduler>().EnqueueAction(new FighterActionData(this, gameObject));
+        }
         public void Cancel()
         {
             StopAttack();
             GetComponent<Mover>().Cancel();
             target = null;
         }
-
         private void StopAttack()
         {
             GetComponent<Animator>().ResetTrigger("attack");
             GetComponent<Animator>().SetTrigger("stopAttack");
         }
-
         public object CaptureState()
         {
             return currentWeaponConfig.name;
         }
-
         public void RestoreState(object state)
         {
             currentWeaponConfig = UnityEngine.Resources.Load<WeaponConfig>((string)state);
             EquipWeapon(currentWeaponConfig);
         }
-
         public IEnumerable<float> GetAdditiveModifiers(Stat stat)
         {
             if (stat == Stat.Damage)
@@ -164,7 +152,6 @@ namespace RPG.Combat
                 yield return currentWeaponConfig.GetDamage();
             }
         }
-
         public IEnumerable<float> GetPercentageModifiers(Stat stat)
         {
             if (stat == Stat.Damage)
@@ -172,19 +159,16 @@ namespace RPG.Combat
                 yield return currentWeaponConfig.GetPercentageBonus();
             }
         }
-
         public void Complete()
         {
-            print("Completed fighter");
             GetComponent<ActionScheduler>().CompleteAction();
         }
-
         public void ExecuteAction(ActionData data)
         {
             target = ((FighterActionData)data).target.GetComponent<Health>();
-            if (target = null)
+            if (target == null)
             {
-                print("NULL");
+                print("Null combat target (already dead).");
                 GetComponent<ActionScheduler>().CompleteAction();
             }
         }

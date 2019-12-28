@@ -9,7 +9,7 @@
         public void Respawn()
         {
             Instantiate(trainingDummyPrefab, transform.position, transform.rotation);
-            Destroy(gameObject);
+            Destroy(gameObject, 0.1f);
         }
     }
 }
