@@ -93,15 +93,30 @@ namespace RPG.Control
             if (hasHit)
             {
                 if (!GetComponent<Mover>().CanMoveTo(target)) return false;
-                if (Input.GetMouseButton(0))
-                {
-                    GetComponent<Mover>().StartMoveAction(target, 1f);
-                }
-                if (Input.GetMouseButtonDown(0)) { MovementFeedback(target); }
+                CheckControlsPressed(target);
                 SetCursor(CursorType.Movement);
                 return true;
             }
             return false;
+        }
+
+        private void CheckControlsPressed(Vector3 target)
+        {
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    GetComponent<Mover>().QueueMoveAction(target, 1f);
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    GetComponent<Mover>().StartMoveAction(target, 1f);
+                }
+            }
+            if (Input.GetMouseButtonDown(0)) { MovementFeedback(target); }
         }
 
         private bool RaycastNavMesh(out Vector3 target)

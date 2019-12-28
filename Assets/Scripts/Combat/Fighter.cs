@@ -53,13 +53,17 @@ namespace RPG.Combat
         {
             return target;
         }
+        public WeaponConfig GetWeaponConfig()
+        {
+            return currentWeaponConfig;
+        }
 
         private void Update()
         {
             timeSinceLastAttack += Time.deltaTime;
 
-            if (target == null) return;
-            if (target.IsDead()) return;
+            if (target == null) { return; }
+            if (target.IsDead()) { Complete(); target = null; return; }
             if (!IsInRange(target.transform))
             {
                 GetComponent<Mover>().MoveTo(target.transform.position, 1f);
@@ -166,6 +170,22 @@ namespace RPG.Combat
             if (stat == Stat.Damage)
             {
                 yield return currentWeaponConfig.GetPercentageBonus();
+            }
+        }
+
+        public void Complete()
+        {
+            print("Completed fighter");
+            GetComponent<ActionScheduler>().CompleteAction();
+        }
+
+        public void ExecuteAction(ActionData data)
+        {
+            target = ((FighterActionData)data).target.GetComponent<Health>();
+            if (target = null)
+            {
+                print("NULL");
+                GetComponent<ActionScheduler>().CompleteAction();
             }
         }
     }

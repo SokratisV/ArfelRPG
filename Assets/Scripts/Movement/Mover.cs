@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using RPG.Saving;
 using RPG.Attributes;
+using System.Collections;
+using RPG.Combat;
 
 namespace RPG.Movement
 {
@@ -34,7 +36,17 @@ namespace RPG.Movement
         {
             navMeshAgent.destination = destination;
             navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
+            StartCoroutine(_CompleteMove(destination));
             navMeshAgent.isStopped = false;
+        }
+        private IEnumerator _CompleteMove(Vector3 destination)
+        {
+            float range = GetComponent<Fighter>().GetWeaponConfig().GetRange();
+            while ((transform.position - destination).sqrMagnitude > range * range)
+            {
+                yield return null;
+            }
+            Complete();
         }
         public bool CanMoveTo(Vector3 destination)
         {
@@ -65,6 +77,10 @@ namespace RPG.Movement
             GetComponent<ActionScheduler>().StartAction(this);
             MoveTo(destination, speedFraction);
         }
+        public void QueueMoveAction(Vector3 destination, float speedFraction)
+        {
+            GetComponent<ActionScheduler>().QueueAction(new MoverActionData(this, destination, speedFraction));
+        }
         public object CaptureState()
         {
             return new SerializableVector3(transform.position);
@@ -75,6 +91,17 @@ namespace RPG.Movement
             GetComponent<NavMeshAgent>().enabled = false;
             transform.position = position.ToVector();
             GetComponent<NavMeshAgent>().enabled = true;
+        }
+        public void Complete()
+        {
+            GetComponent<ActionScheduler>().CompleteAction();
+        }
+        public void ExecuteAction(ActionData data)
+        {
+            Vector3 destination = ((MoverActionData)data).destination;
+            float speed = ((MoverActionData)data).speed;
+
+            MoveTo(destination, speed);
         }
     }
 }
