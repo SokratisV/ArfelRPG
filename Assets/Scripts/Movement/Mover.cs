@@ -53,11 +53,6 @@ namespace RPG.Movement
         {
             completeCoroutineStarted = true;
             float range = GetComponent<Fighter>().GetWeaponConfig().GetRange();
-            // Not precise, but cheaper(?)
-            // while ((transform.position - destination).sqrMagnitude > range * range)
-            // {
-            //     yield return null;
-            // } 
             while (Vector3.Distance(transform.position, destination) > 0.1f) { yield return null; }
             Complete();
             completeCoroutineStarted = false;

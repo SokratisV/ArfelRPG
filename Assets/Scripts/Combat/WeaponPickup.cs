@@ -41,14 +41,12 @@ namespace RPG.Combat
             }
             return true;
         }
-
         private IEnumerator HideForSeconds(float seconds)
         {
             TogglePickup(false);
             yield return new WaitForSeconds(seconds);
             TogglePickup(true);
         }
-
         private void TogglePickup(bool shouldShow)
         {
             GetComponent<Collider>().enabled = shouldShow;
@@ -57,7 +55,6 @@ namespace RPG.Combat
                 children.gameObject.SetActive(shouldShow);
             }
         }
-
         public bool HandleRaycast(PlayerController callingController)
         {
             if (Input.GetMouseButtonDown(0))
@@ -69,7 +66,6 @@ namespace RPG.Combat
             }
             return true;
         }
-
         private void ToggleOutline(bool toggle)
         {
             Outline outline;
@@ -86,12 +82,10 @@ namespace RPG.Combat
         {
             ToggleOutline(false);
         }
-
         public CursorType GetCursorType()
         {
             return CursorType.Pickup;
         }
-
         public float GetInteractionRange()
         {
             return pickupRange;
