@@ -1,5 +1,3 @@
-using System;
-using RPG.Attributes;
 using TMPro;
 using UnityEngine;
 
@@ -7,25 +5,26 @@ namespace RPG.Combat
 {
     public class EnemyHealthDisplay : MonoBehaviour
     {
-        Fighter fighter;
+        private Fighter _fighter;
+        private TextMeshProUGUI _text;
 
         private void Awake()
         {
-            fighter = GameObject.FindWithTag("Player").GetComponent<Fighter>();
+            _fighter = GameObject.FindWithTag("Player").GetComponent<Fighter>();
+            _text = GetComponent<TextMeshProUGUI>();
         }
 
         private void Update()
         {
-            if (fighter.GetTarget() == null)
+            if(_fighter.GetTarget() == null)
             {
-                GetComponent<TextMeshProUGUI>().text = "N/A";
+                _text.SetText("N/A");
             }
             else
             {
-                Health health = fighter.GetTarget();
-                GetComponent<TextMeshProUGUI>().text = String.Format("{0:0}/{1:0}", health.GetHealthPoints(), health.GetMaxHealthPoints());
+                var health = _fighter.GetTarget();
+                _text.SetText($"{health.GetHealthPoints():0}/{health.GetMaxHealthPoints():0}");
             }
-
         }
     }
 }

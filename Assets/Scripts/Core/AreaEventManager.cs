@@ -6,42 +6,38 @@ namespace RPG.Core
 {
     public class AreaEventManager : MonoBehaviour
     {
-        public static event Action<Areas> onEnterArea = delegate { };
-        [SerializeField] Areas currentArea = Areas.None;
-        Stack<Areas> areasCurrentlyIn;
+        public static event Action<Areas> OnEnterArea = delegate {};
+        [SerializeField] private Areas currentArea = Areas.None;
+        private Stack<Areas> _areasCurrentlyIn;
 
         private void Awake()
         {
-            areasCurrentlyIn = new Stack<Areas>();
+            _areasCurrentlyIn = new Stack<Areas>();
         }
 
         private void Start()
         {
-            OnEnterArea(currentArea);
+            OnEnterArea?.Invoke(currentArea);
         }
 
         public void EnterNewArea(Areas area)
         {
-            areasCurrentlyIn.Push(currentArea);
+            _areasCurrentlyIn.Push(currentArea);
             currentArea = area;
-            OnEnterArea(area);
+            OnEnterArea?.Invoke(area);
         }
 
         public void ExitArea(Areas area)
         {
-            if (areasCurrentlyIn.Peek() == area)
+            if(_areasCurrentlyIn.Peek() == area)
             {
-                areasCurrentlyIn.Pop();
+                _areasCurrentlyIn.Pop();
                 return;
             }
-            Areas previousArea = areasCurrentlyIn.Pop();
-            currentArea = previousArea;
-            OnEnterArea(previousArea);
-        }
 
-        private void OnEnterArea(Areas area)
-        {
-            onEnterArea(area);
+            var previousArea = _areasCurrentlyIn.Pop();
+            currentArea = previousArea;
+            OnEnterArea?.Invoke(previousArea);
         }
     }
 }

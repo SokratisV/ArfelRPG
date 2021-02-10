@@ -6,32 +6,35 @@ namespace RPG.SceneManagement
 {
     public class SavingWrapper : MonoBehaviour
     {
-        const string SAVE_FILE = "save";
-        [SerializeField] float fadeInTime = .2f;
+        private const string SaveFile = "save";
+        [SerializeField] private float fadeInTime = .2f;
+        private SavingSystem _saving;
 
         private void Awake()
         {
+            _saving = GetComponent<SavingSystem>();
             StartCoroutine(LoadLastScene());
         }
+
         private IEnumerator LoadLastScene()
         {
-            yield return GetComponent<SavingSystem>().LoadLastScene(SAVE_FILE);
-            Fader fader = FindObjectOfType<Fader>();
+            yield return _saving.LoadLastScene(SaveFile);
+            var fader = FindObjectOfType<Fader>();
             fader.FadeOutImmediate();
             yield return fader.FadeIn(fadeInTime);
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.L))
+            if(Input.GetKeyDown(KeyCode.L))
             {
                 Load();
             }
-            else if (Input.GetKeyDown(KeyCode.S))
+            else if(Input.GetKeyDown(KeyCode.S))
             {
                 Save();
             }
-            else if (Input.GetKeyDown(KeyCode.Delete))
+            else if(Input.GetKeyDown(KeyCode.Delete))
             {
                 Delete();
             }
@@ -39,17 +42,17 @@ namespace RPG.SceneManagement
 
         public void Save()
         {
-            GetComponent<SavingSystem>().Save(SAVE_FILE);
+            _saving.Save(SaveFile);
         }
 
         public void Load()
         {
-            GetComponent<SavingSystem>().Load(SAVE_FILE);
+            _saving.Load(SaveFile);
         }
 
         public void Delete()
         {
-            GetComponent<SavingSystem>().Delete(SAVE_FILE);
+            _saving.Delete(SaveFile);
         }
     }
 }

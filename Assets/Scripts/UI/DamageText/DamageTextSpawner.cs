@@ -4,14 +4,21 @@ namespace RPG.UI.DamageText
 {
     public class DamageTextSpawner : MonoBehaviour
     {
-        [SerializeField] float additionalHeight = .5f;
-        [SerializeField] DamageText damageTextPrefab = null;
+        [SerializeField] private float additionalHeight = .5f;
+        [SerializeField] private DamageText damageTextPrefab = null;
+        private CapsuleCollider _collider;
+
+        private void Awake()
+        {
+            _collider = GetComponentInParent<CapsuleCollider>();
+        }
 
         public void Spawn(float damageAmount)
         {
-            DamageText instance = Instantiate(damageTextPrefab, transform);
-            Vector3 vector3 = instance.transform.position + Vector3.up * (GetComponentInParent<CapsuleCollider>().height + additionalHeight);
-            instance.transform.position = vector3;
+            var instance = Instantiate(damageTextPrefab, transform);
+            var transform1 = instance.transform;
+            var vector3 = transform1.position + Vector3.up * (_collider.height + additionalHeight);
+            transform1.position = vector3;
             instance.SetValue(damageAmount);
         }
     }

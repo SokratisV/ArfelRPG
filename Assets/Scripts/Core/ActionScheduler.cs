@@ -3,115 +3,126 @@ using UnityEngine;
 
 namespace RPG.Core
 {
-    public interface ActionData
+    public interface IActionData
     {
         IAction GetAction();
     }
-    public struct MoverActionData : ActionData
+
+    public struct MoverActionData : IActionData
     {
-        IAction action;
-        public Vector3 destination;
-        public float speed;
+        private IAction _action;
+        public Vector3 Destination;
+        public float Speed;
 
         public MoverActionData(IAction action, Vector3 destination, float speed)
         {
-            this.action = action;
-            this.destination = destination;
-            this.speed = speed;
+            _action = action;
+            Destination = destination;
+            Speed = speed;
         }
+
         public IAction GetAction()
         {
-            return action;
+            return _action;
         }
     }
-    public struct FighterActionData : ActionData
+
+    public struct FighterActionData : IActionData
     {
-        IAction action;
-        public GameObject target;
+        private IAction _action;
+        public GameObject Target;
 
         public FighterActionData(IAction action, GameObject target)
         {
-            this.action = action;
-            this.target = target;
+            _action = action;
+            Target = target;
         }
+
         public IAction GetAction()
         {
-            return action;
+            return _action;
         }
     }
-    public struct PickableActionData : ActionData
+
+    public struct PickableActionData : IActionData
     {
-        IAction action;
-        public Transform treasure;
+        private IAction _action;
+        public Transform Treasure;
 
         public PickableActionData(IAction action, Transform treasure)
         {
-            this.action = action;
-            this.treasure = treasure;
+            _action = action;
+            Treasure = treasure;
         }
+
         public IAction GetAction()
         {
-            return action;
+            return _action;
         }
     }
+
     public class ActionScheduler : MonoBehaviour
     {
-        IAction currentAction;
-        Queue<ActionData> actionsQueue = new Queue<ActionData>();
+        private IAction _currentAction;
+        private Queue<IActionData> _actionsQueue = new Queue<IActionData>();
 
         public void StartAction(IAction action)
         {
             ClearActionsQueue();
-            if (currentAction == action) return;
-            if (currentAction != null)
-            {
-                currentAction.Cancel();
-            }
-            currentAction = action;
+            if(_currentAction == action) return;
+            _currentAction?.Cancel();
+            _currentAction = action;
         }
+
         private void ClearActionsQueue()
         {
-            if (actionsQueue.Count > 0)
+            if(_actionsQueue.Count > 0)
             {
-                actionsQueue.Clear();
+                _actionsQueue.Clear();
             }
         }
+
         public void CancelCurrentAction()
         {
             StartAction(null);
         }
-        public void EnqueueAction(ActionData actionData)
+
+        public void EnqueueAction(IActionData actionData)
         {
-            if (actionsQueue.Count == 0 && currentAction == null)
+            if(_actionsQueue.Count == 0 && _currentAction == null)
             {
                 StartNextAction(actionData.GetAction(), actionData);
             }
             else
             {
-                actionsQueue.Enqueue(actionData);
+                _actionsQueue.Enqueue(actionData);
             }
         }
-        private void DequeueAction(out IAction action, out ActionData data)
+
+        private void DequeueAction(out IAction action, out IActionData data)
         {
             action = null;
             data = null;
-            if (actionsQueue.Count == 0) { return; }
+            if(_actionsQueue.Count == 0)
+            {
+                return;
+            }
 
-            data = actionsQueue.Dequeue();
+            data = _actionsQueue.Dequeue();
             action = data.GetAction();
         }
+
         public void CompleteAction()
         {
-            currentAction = null;
-            if (actionsQueue.Count == 0) return;
-            IAction action;
-            ActionData data;
-            DequeueAction(out action, out data);
+            _currentAction = null;
+            if(_actionsQueue.Count == 0) return;
+            DequeueAction(out var action, out var data);
             StartNextAction(action, data);
         }
-        private void StartNextAction(IAction action, ActionData data)
+
+        private void StartNextAction(IAction action, IActionData data)
         {
-            currentAction = action;
+            _currentAction = action;
             action.ExecuteAction(data);
         }
     }

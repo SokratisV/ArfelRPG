@@ -4,15 +4,16 @@ namespace RPG.Core
 {
     public class CameraFacing : MonoBehaviour
     {
-        Transform mainCamera;
+        private Transform _mainCamera;
 
         private void Start()
         {
-            mainCamera = Camera.main.transform;
+            _mainCamera = Camera.main.transform;
         }
+
         private void LateUpdate()
         {
-            transform.forward = mainCamera.forward;
+            transform.forward = _mainCamera.forward;
         }
     }
 }

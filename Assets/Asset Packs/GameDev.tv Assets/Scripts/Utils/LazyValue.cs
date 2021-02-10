@@ -30,7 +30,7 @@
         /// Note that setting the value before initialisation will initialise 
         /// the class.
         /// </remarks>
-        public T value
+        public T Value
         {
             get
             {

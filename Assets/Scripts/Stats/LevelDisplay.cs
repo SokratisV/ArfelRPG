@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -6,16 +5,18 @@ namespace RPG.Stats
 {
     public class LevelDisplay : MonoBehaviour
     {
-        BaseStats stats;
+        private BaseStats _stats;
+        private TextMeshProUGUI _text;
 
         private void Awake()
         {
-            stats = GameObject.FindWithTag("Player").GetComponent<BaseStats>();
+            _stats = GameObject.FindWithTag("Player").GetComponent<BaseStats>();
+            _text = GetComponent<TextMeshProUGUI>();
         }
 
         private void Update()
         {
-            GetComponent<TextMeshProUGUI>().text = String.Format("{0:0}", stats.CalculateLevel());
+            _text.SetText($"{_stats.CalculateLevel():0}");
         }
     }
 }

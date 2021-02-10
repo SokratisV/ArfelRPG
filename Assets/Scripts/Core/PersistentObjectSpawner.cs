@@ -4,21 +4,19 @@ namespace RPG.Core
 {
     public class PersistentObjectSpawner : MonoBehaviour
     {
-        [SerializeField] GameObject persistentObjectPrefab;
-        static bool hasSpawned;
+        [SerializeField] private GameObject persistentObjectPrefab;
+        private static bool HasSpawned;
 
         private void Awake()
         {
-            if (hasSpawned) return;
-
+            if(HasSpawned) return;
             SpawnPersistentObjects();
-
-            hasSpawned = true;
+            HasSpawned = true;
         }
 
         private void SpawnPersistentObjects()
         {
-            GameObject persistentObject = Instantiate(persistentObjectPrefab);
+            var persistentObject = Instantiate(persistentObjectPrefab);
             DontDestroyOnLoad(persistentObject);
         }
     }

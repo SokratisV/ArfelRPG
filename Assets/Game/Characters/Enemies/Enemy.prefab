@@ -800,7 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111da27aa14f04d908412e562618983e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1619639798822882698
+--- !u!1001 &1379612859330531891
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -857,17 +857,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
---- !u!4 &1619639798822804102 stripped
+--- !u!4 &1379612859330348351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 481036, guid: 30cf93deff988e74e88a144bd2127c18,
     type: 3}
-  m_PrefabInstance: {fileID: 1619639798822882698}
+  m_PrefabInstance: {fileID: 1379612859330531891}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1619639798822746756 stripped
+--- !u!4 &1379612859330422077 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 423694, guid: 30cf93deff988e74e88a144bd2127c18,
     type: 3}
-  m_PrefabInstance: {fileID: 1619639798822882698}
+  m_PrefabInstance: {fileID: 1379612859330531891}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3109090614425580439
 PrefabInstance:
@@ -1066,12 +1066,12 @@ PrefabInstance:
         type: 3}
       propertyPath: leftHandTransform
       value: 
-      objectReference: {fileID: 1619639798822804102}
+      objectReference: {fileID: 1379612859330348351}
     - target: {fileID: 4339557145984695365, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: rightHandTransform
       value: 
-      objectReference: {fileID: 1619639798822746756}
+      objectReference: {fileID: 1379612859330422077}
     - target: {fileID: 5448673772567559303, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: health

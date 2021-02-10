@@ -5,29 +5,30 @@ namespace RPG.Core
 {
     public class CameraZoomControl : MonoBehaviour
     {
-        [SerializeField] float zoomSpeed = 3f;
+        [SerializeField] private float zoomSpeed = 3f;
 
-        float zoom = 18f;
-        CinemachineFramingTransposer cm_Cam;
+        private float _zoom = 18f;
+        private CinemachineFramingTransposer _cmCam;
 
         private void Awake()
         {
-            cm_Cam = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>();
-            zoom = cm_Cam.m_CameraDistance;
+            _cmCam = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>();
+            _zoom = _cmCam.m_CameraDistance;
         }
+
         private void LateUpdate()
         {
-            float mouseScroll = Input.mouseScrollDelta.y;
+            var mouseScroll = Input.mouseScrollDelta.y;
             // if (!Mathf.Approximately(mouseScroll, 0))
             // {
             //     zoom += mouseScroll;
             //     cm_Cam.m_CameraDistance = Mathf.Clamp(zoom, 5f, 20f);
             // }
-            if (mouseScroll < 0 || mouseScroll > 0)
+            if(mouseScroll < 0 || mouseScroll > 0)
             {
-                zoom -= mouseScroll * zoomSpeed;
-                zoom = Mathf.Clamp(zoom, 5f, 20f);
-                cm_Cam.m_CameraDistance = zoom;
+                _zoom -= mouseScroll*zoomSpeed;
+                _zoom = Mathf.Clamp(_zoom, 5f, 20f);
+                _cmCam.m_CameraDistance = _zoom;
             }
         }
     }

@@ -4,16 +4,15 @@
 
     public class OnHitParticles : MonoBehaviour
     {
-        [SerializeField] GameObject onHitParticles;
-        [SerializeField] float lifeAfterImpact;
+        [SerializeField] private GameObject onHitParticles;
+        [SerializeField] private float lifeAfterImpact;
 
         public void SpawnParticles()
         {
-            if (onHitParticles != null)
+            if(onHitParticles != null)
             {
                 Destroy(Instantiate(onHitParticles, transform.position, Random.rotation).gameObject, lifeAfterImpact);
             }
         }
     }
 }
-

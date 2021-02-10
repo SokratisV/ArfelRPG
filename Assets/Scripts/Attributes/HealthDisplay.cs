@@ -6,16 +6,18 @@ namespace RPG.Attributes
 {
     public class HealthDisplay : MonoBehaviour
     {
-        Health health;
+        private Health _health;
+        private TextMeshProUGUI _text;
 
         private void Awake()
         {
-            health = GameObject.FindWithTag("Player").GetComponent<Health>();
+            _health = GameObject.FindWithTag("Player").GetComponent<Health>();
+            _text = GetComponent<TextMeshProUGUI>();
         }
 
         private void Update()
         {
-            GetComponent<TextMeshProUGUI>().text = String.Format("{0:0}/{1:0}", health.GetHealthPoints(), health.GetMaxHealthPoints());
+            _text.SetText($"{_health.GetHealthPoints():0}/{_health.GetMaxHealthPoints():0}");
         }
     }
 }

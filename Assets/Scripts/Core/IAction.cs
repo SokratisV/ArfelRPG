@@ -4,6 +4,6 @@ namespace RPG.Core
     {
         void Cancel();
         void Complete();
-        void ExecuteAction(ActionData data);
+        void ExecuteAction(IActionData data);
     }
 }

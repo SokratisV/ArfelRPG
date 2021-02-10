@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RPG.Control
 {
     public class PatrolPath : MonoBehaviour
     {
-        const float wayPointGizmosRadius = .5f;
+        private const float WayPointGizmosRadius = .5f;
 
         // private void OnDrawGizmos()
         // {
@@ -20,11 +18,12 @@ namespace RPG.Control
 
         public int GetNextIndex(int i)
         {
-            if (i + 1 >= transform.childCount)
+            if(i+1 >= transform.childCount)
             {
                 return 0;
             }
-            return i + 1;
+
+            return i+1;
         }
 
         public Vector3 GetWaypoint(int i)

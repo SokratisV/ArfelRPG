@@ -15,14 +15,15 @@ namespace RPG.Core
         HillClimbing,
         HillTop
     }
+
     public class CameraAngleManager : MonoBehaviour
     {
-        [SerializeField] float speed = 1f;
-        [SerializeField] AreaAngles[] areaAngles;
+        [SerializeField] private float speed = 1f;
+        [SerializeField] private AreaAngles[] areaAngles;
 
-        Dictionary<Areas, Vector3> areaToAngleDictionary;
-        Vector3 position;
-        Coroutine runningCoroutine = null;
+        private Dictionary<Areas, Vector3> _areaToAngleDictionary;
+        private Vector3 _position;
+        private Coroutine _runningCoroutine = null;
 
         [System.Serializable]
         private class AreaAngles
@@ -35,53 +36,58 @@ namespace RPG.Core
         {
             DictionaryInit();
         }
+
         private void OnEnable()
         {
-            AreaEventManager.onEnterArea += ChangeCameraAngles;
-
+            AreaEventManager.OnEnterArea += ChangeCameraAngles;
         }
+
         private void OnDisable()
         {
-            AreaEventManager.onEnterArea -= ChangeCameraAngles;
-
+            AreaEventManager.OnEnterArea -= ChangeCameraAngles;
         }
 
         private void DictionaryInit()
         {
-            areaToAngleDictionary = new Dictionary<Areas, Vector3>();
-            foreach (var angle in areaAngles)
+            _areaToAngleDictionary = new Dictionary<Areas, Vector3>();
+            foreach(var angle in areaAngles)
             {
-                areaToAngleDictionary.Add(angle.area, angle.angles.ToVector());
+                _areaToAngleDictionary.Add(angle.area, angle.angles.ToVector());
             }
         }
 
         public void ChangeCameraAngles(Areas area)
         {
-            if (areaToAngleDictionary == null)
+            if(_areaToAngleDictionary == null)
             {
                 DictionaryInit();
             }
-            areaToAngleDictionary.TryGetValue(area, out position);
-            if (runningCoroutine != null)
+
+            _areaToAngleDictionary.TryGetValue(area, out _position);
+            if(_runningCoroutine != null)
             {
-                StopCoroutine(runningCoroutine);
+                StopCoroutine(_runningCoroutine);
             }
-            runningCoroutine = StartCoroutine(ChangeAngles());
+
+            _runningCoroutine = StartCoroutine(ChangeAngles());
         }
 
         private IEnumerator ChangeAngles()
         {
-            Quaternion b = Quaternion.Euler(position);
-            while (true)
+            var b = Quaternion.Euler(_position);
+            while(true)
             {
                 // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(position), Time.deltaTime * speed);
-                transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, b, speed * Time.deltaTime);
-                float angle = Quaternion.Angle(transform.rotation, b);
-                if (angle < 1f)
+                var rotation = transform.rotation;
+                rotation = Quaternion.SlerpUnclamped(rotation, b, speed*Time.deltaTime);
+                transform.rotation = rotation;
+                var angle = Quaternion.Angle(rotation, b);
+                if(angle < 1f)
                 {
-                    runningCoroutine = null;
+                    _runningCoroutine = null;
                     break;
                 }
+
                 yield return null;
             }
         }

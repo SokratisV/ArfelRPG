@@ -7,8 +7,8 @@ namespace RPG.Saving
     [ExecuteAlways]
     public class SaveableEntity : MonoBehaviour
     {
-        [SerializeField] string uniqueIdentifier = "";
-        static Dictionary<string, SaveableEntity> globalLookup = new Dictionary<string, SaveableEntity>();
+        [SerializeField] private string uniqueIdentifier = "";
+        private static Dictionary<string, SaveableEntity> GlobalLookup = new Dictionary<string, SaveableEntity>();
 
         public string GetUniqueIdentifier()
         {
@@ -17,21 +17,22 @@ namespace RPG.Saving
 
         public object CaptureState()
         {
-            Dictionary<string, object> state = new Dictionary<string, object>();
-            foreach (ISaveable saveable in GetComponents<ISaveable>())
+            var state = new Dictionary<string, object>();
+            foreach(var saveable in GetComponents<ISaveable>())
             {
                 state[saveable.GetType().ToString()] = saveable.CaptureState();
             }
+
             return state;
         }
 
         public void RestoreState(object state)
         {
-            Dictionary<string, object> stateDict = (Dictionary<string, object>)state;
-            foreach (ISaveable saveable in GetComponents<ISaveable>())
+            var stateDict = (Dictionary<string, object>)state;
+            foreach(var saveable in GetComponents<ISaveable>())
             {
-                string typeString = saveable.GetType().ToString();
-                if (stateDict.ContainsKey(typeString))
+                var typeString = saveable.GetType().ToString();
+                if(stateDict.ContainsKey(typeString))
                 {
                     saveable.RestoreState(stateDict[typeString]);
                 }
@@ -41,37 +42,37 @@ namespace RPG.Saving
 #if UNITY_EDITOR
         private void Update()
         {
-            if (Application.IsPlaying(gameObject)) return;
-            if (string.IsNullOrEmpty(gameObject.scene.path)) return;
+            if(Application.IsPlaying(gameObject)) return;
+            if(string.IsNullOrEmpty(gameObject.scene.path)) return;
 
-            SerializedObject serializedObject = new SerializedObject(this);
-            SerializedProperty property = serializedObject.FindProperty("uniqueIdentifier");
+            var serializedObject = new SerializedObject(this);
+            var property = serializedObject.FindProperty("uniqueIdentifier");
 
-            if (string.IsNullOrEmpty(property.stringValue) || !IsUnique(property.stringValue))
+            if(string.IsNullOrEmpty(property.stringValue) || !IsUnique(property.stringValue))
             {
                 property.stringValue = System.Guid.NewGuid().ToString();
                 serializedObject.ApplyModifiedProperties();
             }
 
-            globalLookup[property.stringValue] = this;
+            GlobalLookup[property.stringValue] = this;
         }
 #endif
 
         private bool IsUnique(string candidate)
         {
-            if (!globalLookup.ContainsKey(candidate)) return true;
+            if(!GlobalLookup.ContainsKey(candidate)) return true;
 
-            if (globalLookup[candidate] == this) return true;
+            if(GlobalLookup[candidate] == this) return true;
 
-            if (globalLookup[candidate] == null)
+            if(GlobalLookup[candidate] == null)
             {
-                globalLookup.Remove(candidate);
+                GlobalLookup.Remove(candidate);
                 return true;
             }
 
-            if (globalLookup[candidate].GetUniqueIdentifier() != candidate)
+            if(GlobalLookup[candidate].GetUniqueIdentifier() != candidate)
             {
-                globalLookup.Remove(candidate);
+                GlobalLookup.Remove(candidate);
                 return true;
             }
 

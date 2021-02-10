@@ -6,58 +6,78 @@ namespace RPG.Interactions
 {
     public class Collector : MonoBehaviour, IAction
     {
-        Treasure collectible;
+        private Treasure _collectible;
+        private Mover _mover;
+        private ActionScheduler _actionScheduler;
+
+        private void Awake()
+        {
+            _mover = GetComponent<Mover>();
+            _actionScheduler = GetComponent<ActionScheduler>();
+        }
 
         private void Update()
         {
-            if (collectible == null) { return; }
-            if (!IsInRange(collectible.transform))
+            if(_collectible == null)
             {
-                GetComponent<Mover>().MoveTo(collectible.transform.position, 1f);
+                return;
+            }
+
+            if(!IsInRange(_collectible.transform))
+            {
+                _mover.MoveTo(_collectible.transform.position, 1f);
             }
             else
             {
-                GetComponent<Mover>().Cancel();
+                _mover.Cancel();
                 CollectBehavior();
             }
         }
+
         private void CollectBehavior()
         {
-            transform.LookAt(collectible.transform);
-            collectible.OpenTreasure();
-            collectible = null;
+            transform.LookAt(_collectible.transform);
+            _collectible.OpenTreasure();
+            _collectible = null;
             Complete();
         }
+
         public void Collect(Treasure collectible)
         {
-            GetComponent<ActionScheduler>().StartAction(this);
-            this.collectible = collectible;
+            _actionScheduler.StartAction(this);
+            _collectible = collectible;
         }
+
         public void Cancel()
         {
-            collectible = null;
+            _collectible = null;
         }
+
         public bool CanCollect(GameObject collectible)
         {
-            if (collectible == null) return false;
+            if(collectible == null) return false;
             // TODO check for range like in fighter
             return true;
         }
+
         private bool IsInRange(Transform targetTransform)
         {
-            return (Vector3.Distance(transform.position, targetTransform.position) < targetTransform.GetComponent<Treasure>().GetInteractionRange());
+            return Vector3.Distance(transform.position, targetTransform.position) < targetTransform.GetComponent<Treasure>().GetInteractionRange();
         }
-        public void QueueCollectAction(GameObject gameObject)
+
+        public void QueueCollectAction(GameObject obj)
         {
-            GetComponent<ActionScheduler>().EnqueueAction(new PickableActionData(this, gameObject.transform));
+            _actionScheduler.EnqueueAction(new PickableActionData(this, obj.transform));
         }
+
         public void Complete()
         {
-            GetComponent<ActionScheduler>().CompleteAction();
+            _actionScheduler.CompleteAction();
         }
-        public void ExecuteAction(ActionData data)
+
+        public void ExecuteAction(IActionData data)
         {
-            collectible = ((PickableActionData)data).treasure.GetComponent<Treasure>();
+            _collectible = ((PickableActionData)data).Treasure.GetComponent<Treasure>();
         }
     }
 }

@@ -6,93 +6,103 @@ namespace RPG.Interactions
 {
     public class Treasure : MonoBehaviour, IRaycastable, ISaveable
     {
-        [SerializeField] Transform[] dropLocations;
-        [SerializeField] RandomWeaponDrop lootTable;
-        [SerializeField] float interactionRange = 1f;
+        [SerializeField] private Transform[] dropLocations;
+        [SerializeField] private RandomWeaponDrop lootTable;
+        [SerializeField] private float interactionRange = 1f;
 
-        Transform pickupManager;
-        bool isOpened = false;
+        private Transform _pickupManager;
+        private bool _isOpened = false;
 
         private void Start()
         {
-            pickupManager = GameObject.FindGameObjectWithTag("PickupManager").transform;
+            _pickupManager = GameObject.FindGameObjectWithTag("PickupManager").transform;
         }
+
         public CursorType GetCursorType()
         {
             return CursorType.Pickup;
         }
+
         public bool HandleRaycast(PlayerController callingController)
         {
-            if (!isOpened)
+            if(!_isOpened)
             {
-                if (!callingController.GetComponent<Collector>().CanCollect(gameObject)) return false;
+                if(!callingController.GetComponent<Collector>().CanCollect(gameObject)) return false;
                 CheckPressedButtons(callingController);
                 return true;
             }
+
             return false;
         }
+
         private void CheckPressedButtons(PlayerController callingController)
         {
-            if (Input.GetKey(KeyCode.LeftControl))
+            if(Input.GetKey(KeyCode.LeftControl))
             {
-                if (Input.GetMouseButtonDown(0))
+                if(Input.GetMouseButtonDown(0))
                 {
                     callingController.GetComponent<Collector>().QueueCollectAction(gameObject);
                 }
             }
             else
             {
-                if (Input.GetMouseButtonDown(0))
+                if(Input.GetMouseButtonDown(0))
                 {
                     callingController.GetComponent<Collector>().Collect(this);
                 }
             }
         }
+
         public void OpenTreasure()
         {
-            Animator animator = GetComponentInChildren<Animator>();
+            var animator = GetComponentInChildren<Animator>();
             GetComponentInChildren<AudioSource>().Play();
-            if (animator != null)
+            if(animator != null)
             {
                 animator.enabled = true;
             }
-            if (isOpened) return;
+
+            if(_isOpened) return;
             // Drop loot in animation event
         }
+
         public void DropLoot()
         {
-            lootTable.GenerateLoot(dropLocations, pickupManager);
-            isOpened = true;
+            lootTable.GenerateLoot(dropLocations, _pickupManager);
+            _isOpened = true;
             GetComponent<Collider>().enabled = false;
         }
+
         public void RestoreState(object state)
         {
-            isOpened = (bool)state;
-            if (isOpened == true)
+            _isOpened = (bool)state;
+            if(_isOpened)
             {
                 GetComponentInChildren<Animator>().enabled = true;
             }
         }
+
         public object CaptureState()
         {
-            return isOpened;
+            return _isOpened;
         }
+
         public float GetInteractionRange()
         {
             return interactionRange;
         }
+
         private void ToggleOutline(bool toggle)
         {
-            Outline outline;
-            if (outline = GetComponentInChildren<Outline>())
-            {
+            if (TryGetComponent(out Outline outline))
                 outline.enabled = toggle;
-            }
         }
+
         private void OnMouseEnter()
         {
             ToggleOutline(true);
         }
+
         private void OnMouseExit()
         {
             ToggleOutline(false);

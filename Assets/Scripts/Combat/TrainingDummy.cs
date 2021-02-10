@@ -4,7 +4,7 @@
 
     public class TrainingDummy : MonoBehaviour
     {
-        [SerializeField] GameObject trainingDummyPrefab;
+        [SerializeField] private GameObject trainingDummyPrefab;
 
         public void Respawn()
         {

@@ -6,60 +6,65 @@ namespace RPG.Combat
 {
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] float speed = 1f, maxLifeTime = 5f, lifeAfterImpact = 2f;
-        [SerializeField] bool isHoming = false;
-        [SerializeField] GameObject hitEffect = null;
-        [SerializeField] GameObject[] destroyOnHit = null;
-        [SerializeField] UnityEvent onHit;
-        Health target = null;
-        GameObject instigator = null;
-        float weaponDamage = 0f, arrowDamage = 1f;
+        [SerializeField] private float speed = 1f, maxLifeTime = 5f, lifeAfterImpact = 2f;
+        [SerializeField] private bool isHoming = false;
+        [SerializeField] private GameObject hitEffect = null;
+        [SerializeField] private GameObject[] destroyOnHit = null;
+        [SerializeField] private UnityEvent onHit;
+        private Health _target = null;
+        private GameObject _instigator = null;
+        private float _weaponDamage = 0f, _arrowDamage = 1f;
 
         private void Start()
         {
             transform.LookAt(GetAimLocation());
         }
-        void Update()
+
+        private void Update()
         {
-            if (target == null) return;
-            if (isHoming && !target.IsDead())
+            if(_target == null) return;
+            if(isHoming && !_target.IsDead())
             {
                 transform.LookAt(GetAimLocation());
             }
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+            transform.Translate(Vector3.forward * (speed * Time.deltaTime));
         }
 
         public void SetTarget(Health target, GameObject instigator, float damage)
         {
-            this.weaponDamage = damage;
-            this.target = target;
-            this.instigator = instigator;
+            _weaponDamage = damage;
+            _target = target;
+            _instigator = instigator;
 
             Destroy(gameObject, maxLifeTime);
         }
 
         private Vector3 GetAimLocation()
         {
-            if (target.GetComponent<CapsuleCollider>() == null)
+            var capsuleCollider = _target.GetComponent<CapsuleCollider>();
+            if(capsuleCollider == null)
             {
-                return target.transform.position;
+                return _target.transform.position;
             }
-            return target.transform.position + Vector3.up * (target.GetComponent<CapsuleCollider>().height / 2);
+
+            return _target.transform.position + Vector3.up * (capsuleCollider.height / 2);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<Health>() == target)
+            if(other.GetComponent<Health>() == _target)
             {
-                if (target.IsDead()) return;
-                target.TakeDamage(instigator, CalculateDamage());
+                if(_target.IsDead()) return;
+                _target.TakeDamage(_instigator, CalculateDamage());
                 speed = 0;
                 onHit.Invoke();
-                if (hitEffect != null)
+                if(hitEffect != null)
                 {
                     Instantiate(hitEffect, GetAimLocation(), transform.rotation);
                 }
-                foreach (var toDestroy in destroyOnHit)
+
+                foreach(var toDestroy in destroyOnHit)
                 {
                     Destroy(toDestroy);
                 }
@@ -70,7 +75,7 @@ namespace RPG.Combat
 
         private float CalculateDamage()
         {
-            return weaponDamage * arrowDamage;
+            return _weaponDamage * _arrowDamage;
         }
     }
 }

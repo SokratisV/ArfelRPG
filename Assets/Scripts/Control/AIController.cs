@@ -10,29 +10,39 @@ namespace RPG.Control
 {
     public class AIController : MonoBehaviour
     {
-        [SerializeField] float chaseDistance = 5f, suspicionTime = 3f, wayPointTolerance = 1f, wayPointDwellTime = 3f, aggroCooldownTime = 5f, shoutDistance = 0f;
-        [SerializeField] PatrolPath patrolPath = default;
-        [Range(0, 1)] [SerializeField] float patrolSpeedFraction = 0.2f;
+        [SerializeField] private float chaseDistance = 5f,
+            suspicionTime = 3f,
+            wayPointTolerance = 1f,
+            wayPointDwellTime = 3f,
+            aggroCooldownTime = 5f,
+            shoutDistance = 0f;
 
-        public static event Action<bool, CombatMusicAreas> onPlayerAggro = delegate { };
+        [SerializeField] private PatrolPath patrolPath = default;
+        [Range(0, 1)] [SerializeField] private float patrolSpeedFraction = 0.2f;
 
-        GameObject player;
-        Health health;
-        Fighter fighter;
-        Mover mover;
-        LazyValue<Vector3> guardPosition;
-        float timeSinceLastSawPlayer = Mathf.Infinity, timeSinceArrivedAtWaypoint = Mathf.Infinity, timeSinceAggrevated = Mathf.Infinity;
-        int currentWayPointIndex = 0;
-        bool hasInformedPlayerOfAggro = false;
-        [SerializeField] CombatMusicAreas combatMusic;
+        public static event Action<bool, CombatMusicAreas> OnPlayerAggro = delegate {};
+
+        private GameObject _player;
+        private Health _health;
+        private Fighter _fighter;
+        private Mover _mover;
+        private LazyValue<Vector3> _guardPosition;
+
+        private float _timeSinceLastSawPlayer = Mathf.Infinity,
+            _timeSinceArrivedAtWaypoint = Mathf.Infinity,
+            _timeSinceAggrevated = Mathf.Infinity;
+
+        private int _currentWayPointIndex = 0;
+        private bool _hasInformedPlayerOfAggro = false;
+        [SerializeField] private CombatMusicAreas combatMusic;
 
         private void Awake()
         {
-            player = GameObject.FindWithTag("Player");
-            fighter = GetComponent<Fighter>();
-            health = GetComponent<Health>();
-            mover = GetComponent<Mover>();
-            guardPosition = new LazyValue<Vector3>(GetGuardPosition);
+            _player = GameObject.FindWithTag("Player");
+            _fighter = GetComponent<Fighter>();
+            _health = GetComponent<Health>();
+            _mover = GetComponent<Mover>();
+            _guardPosition = new LazyValue<Vector3>(GetGuardPosition);
         }
 
         private Vector3 GetGuardPosition()
@@ -42,18 +52,18 @@ namespace RPG.Control
 
         private void Start()
         {
-            guardPosition.ForceInit();
+            _guardPosition.ForceInit();
         }
 
         private void Update()
         {
-            if (IsDead()) return;
+            if(IsDead()) return;
 
-            if (IsAggrevated() && fighter.CanAttack(player))
+            if(IsAggrevated() && _fighter.CanAttack(_player))
             {
                 AttackBehaviour();
             }
-            else if (IsSuspicious())
+            else if(IsSuspicious())
             {
                 SuspicionBehaviour();
             }
@@ -67,77 +77,83 @@ namespace RPG.Control
 
         private bool IsDead()
         {
-            if (health.IsDead())
+            if(_health.IsDead())
             {
-                if (hasInformedPlayerOfAggro == true)
+                if(_hasInformedPlayerOfAggro)
                 {
-                    onPlayerAggro(false, combatMusic);
-                    hasInformedPlayerOfAggro = false;
+                    OnPlayerAggro(false, combatMusic);
+                    _hasInformedPlayerOfAggro = false;
                 }
+
                 GetComponent<Collider>().enabled = false;
                 return true;
             }
+
             return false;
         }
 
         private bool IsSuspicious()
         {
-            if (timeSinceLastSawPlayer < suspicionTime) { return true; }
-            else
+            if(_timeSinceLastSawPlayer < suspicionTime)
             {
-                if (hasInformedPlayerOfAggro == true)
-                {
-                    onPlayerAggro(false, combatMusic);
-                    hasInformedPlayerOfAggro = false;
-                }
-                return false;
+                return true;
             }
+
+            if(_hasInformedPlayerOfAggro)
+            {
+                OnPlayerAggro(false, combatMusic);
+                _hasInformedPlayerOfAggro = false;
+            }
+
+            return false;
         }
 
         public void Aggrevate()
         {
-            timeSinceAggrevated = 0;
+            _timeSinceAggrevated = 0;
         }
 
         private void UpdateTimers()
         {
-            timeSinceLastSawPlayer += Time.deltaTime;
-            timeSinceArrivedAtWaypoint += Time.deltaTime;
-            timeSinceAggrevated += Time.deltaTime;
+            _timeSinceLastSawPlayer += Time.deltaTime;
+            _timeSinceArrivedAtWaypoint += Time.deltaTime;
+            _timeSinceAggrevated += Time.deltaTime;
         }
 
         private void PatrolBehaviour()
         {
-            Vector3 nextPosition = guardPosition.value;
+            var nextPosition = _guardPosition.Value;
 
-            if (patrolPath != null)
+            if(patrolPath != null)
             {
-                if (AtWaypoint())
+                if(AtWaypoint())
                 {
-                    timeSinceArrivedAtWaypoint = 0;
+                    _timeSinceArrivedAtWaypoint = 0;
                     CycleWaypoint();
                 }
+
                 nextPosition = GetCurrentWaypoint();
             }
-            if (timeSinceArrivedAtWaypoint > wayPointDwellTime)
+
+            if(_timeSinceArrivedAtWaypoint > wayPointDwellTime)
             {
-                mover.StartMoveAction(nextPosition, patrolSpeedFraction);
+                _mover.StartMoveAction(nextPosition, patrolSpeedFraction);
             }
         }
 
         private Vector3 GetCurrentWaypoint()
         {
-            return patrolPath.GetWaypoint(currentWayPointIndex);
+            return patrolPath.GetWaypoint(_currentWayPointIndex);
         }
 
         private void CycleWaypoint()
         {
-            currentWayPointIndex = patrolPath.GetNextIndex(currentWayPointIndex);
+            _currentWayPointIndex = patrolPath.GetNextIndex(_currentWayPointIndex);
         }
 
         private bool AtWaypoint()
         {
-            float distanceToWayPoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
+            var distanceToWayPoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
             return distanceToWayPoint < wayPointTolerance;
         }
 
@@ -148,34 +164,32 @@ namespace RPG.Control
 
         private void AttackBehaviour()
         {
-            if (hasInformedPlayerOfAggro == false)
+            if(_hasInformedPlayerOfAggro == false)
             {
-                hasInformedPlayerOfAggro = true;
-                onPlayerAggro(true, combatMusic);
+                _hasInformedPlayerOfAggro = true;
+                OnPlayerAggro(true, combatMusic);
             }
-            timeSinceLastSawPlayer = 0;
-            fighter.Attack(player);
+
+            _timeSinceLastSawPlayer = 0;
+            _fighter.Attack(_player);
 
             AggrevateNearbyEnemies();
         }
 
         private void AggrevateNearbyEnemies()
         {
-            RaycastHit[] hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0);
-            AIController ai;
-            foreach (RaycastHit hit in hits)
+            var hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0);
+            foreach(var hit in hits)
             {
-                if (ai = hit.transform.GetComponent<AIController>())
-                {
+                if(hit.transform.TryGetComponent(out AIController ai))
                     ai.Aggrevate();
-                }
             }
         }
 
         private bool IsAggrevated()
         {
-            float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-            return (distanceToPlayer < chaseDistance) || (timeSinceAggrevated < aggroCooldownTime);
+            var distanceToPlayer = Vector3.Distance(_player.transform.position, transform.position);
+            return distanceToPlayer < chaseDistance || _timeSinceAggrevated < aggroCooldownTime;
         }
 
         private void OnDrawGizmosSelected()
@@ -184,5 +198,4 @@ namespace RPG.Control
             Gizmos.DrawWireSphere(transform.position, chaseDistance);
         }
     }
-
 }

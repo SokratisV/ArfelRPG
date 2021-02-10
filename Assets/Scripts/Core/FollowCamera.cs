@@ -4,7 +4,7 @@ namespace RPG.Core
 {
     public class FollowCamera : MonoBehaviour
     {
-        [SerializeField] Transform target = default;
+        [SerializeField] private Transform target = default;
 
         private void LateUpdate()
         {

@@ -6,13 +6,14 @@ using UnityEngine;
 
 namespace RPG.Core
 {
-    enum MusicAreas
+    internal enum MusicAreas
     {
         Forest,
         Town,
         Hill,
         Death
     }
+
     public enum CombatMusicAreas
     {
         CombatNormal,
@@ -24,56 +25,72 @@ namespace RPG.Core
     public class MusicManager : MonoBehaviour
     {
         [System.Serializable]
-        class AreaToMusicAreaDictionary : SerializableDictionaryBase<Areas, MusicAreas> { }
+        private class AreaToMusicAreaDictionary : SerializableDictionaryBase<Areas, MusicAreas>
+        {
+        }
 
         [System.Serializable]
-        class MusicAreaToMusicDictionary : SerializableDictionaryBase<MusicAreas, AudioClip> { }
+        private class MusicAreaToMusicDictionary : SerializableDictionaryBase<MusicAreas, AudioClip>
+        {
+        }
 
         [System.Serializable]
-        class CombatMusicAreaToMusicDictionary : SerializableDictionaryBase<CombatMusicAreas, AudioClip> { }
+        private class CombatMusicAreaToMusicDictionary : SerializableDictionaryBase<CombatMusicAreas, AudioClip>
+        {
+        }
 
-        [SerializeField] AreaToMusicAreaDictionary areaToMusicArea = new AreaToMusicAreaDictionary();
-        [SerializeField] MusicAreaToMusicDictionary musicAreaToMusic = new MusicAreaToMusicDictionary();
-        [SerializeField] CombatMusicAreaToMusicDictionary areaToBossMusic = new CombatMusicAreaToMusicDictionary();
+        [SerializeField] private AreaToMusicAreaDictionary areaToMusicArea = new AreaToMusicAreaDictionary();
+        [SerializeField] private MusicAreaToMusicDictionary musicAreaToMusic = new MusicAreaToMusicDictionary();
 
-        AudioSource m_audio;
-        MusicAreas currentMusicArea;
-        private Coroutine combatMusicCoroutine;
-        static int enemiesInCombatWith = 0;
+        [SerializeField]
+        private CombatMusicAreaToMusicDictionary areaToBossMusic = new CombatMusicAreaToMusicDictionary();
+
+        private AudioSource _mAudio;
+        private MusicAreas _currentMusicArea;
+        private Coroutine _combatMusicCoroutine;
+        private static int EnemiesInCombatWith = 0;
 
         private void Awake()
         {
-            m_audio = GetComponent<AudioSource>();
+            _mAudio = GetComponent<AudioSource>();
         }
+
         private void OnEnable()
         {
-            AIController.onPlayerAggro += ToggleCombatMusic;
-            AreaEventManager.onEnterArea += PlayAreaMusic;
-            Health.onPlayerDeath += PlayDeathMusic;
+            AIController.OnPlayerAggro += ToggleCombatMusic;
+            AreaEventManager.OnEnterArea += PlayAreaMusic;
+            Health.OnPlayerDeath += PlayDeathMusic;
         }
+
         private void OnDisable()
         {
-            AIController.onPlayerAggro -= ToggleCombatMusic;
-            AreaEventManager.onEnterArea -= PlayAreaMusic;
-            Health.onPlayerDeath -= PlayDeathMusic;
+            AIController.OnPlayerAggro -= ToggleCombatMusic;
+            AreaEventManager.OnEnterArea -= PlayAreaMusic;
+            Health.OnPlayerDeath -= PlayDeathMusic;
         }
+
         public void PlayAreaMusic(Areas area)
         {
-            if (combatMusicCoroutine != null) { return; }
+            if(_combatMusicCoroutine != null)
+            {
+                return;
+            }
 
-            AudioClip music;
-            MusicAreas musicArea;
-            areaToMusicArea.TryGetValue(area, out musicArea);
-            if (currentMusicArea == musicArea) { return; }
+            areaToMusicArea.TryGetValue(area, out var musicArea);
+            if(_currentMusicArea == musicArea)
+            {
+                return;
+            }
 
-            currentMusicArea = musicArea;
-            musicAreaToMusic.TryGetValue(musicArea, out music);
-            m_audio.clip = music; // TODO: Fade out/in
-            m_audio.Play();
+            _currentMusicArea = musicArea;
+            musicAreaToMusic.TryGetValue(musicArea, out var music);
+            _mAudio.clip = music; // TODO: Fade out/in
+            _mAudio.Play();
         }
+
         private void ToggleCombatMusic(bool combat, CombatMusicAreas combatMusic = CombatMusicAreas.CombatNormal)
         {
-            if (combat)
+            if(combat)
             {
                 PlayCombatMusic(combatMusic);
             }
@@ -82,71 +99,74 @@ namespace RPG.Core
                 EndCombatMusic();
             }
         }
+
         private void PlayCombatMusic(CombatMusicAreas combatMusic)
         {
-            enemiesInCombatWith++;
-            if (combatMusicCoroutine == null)
+            EnemiesInCombatWith++;
+            if(_combatMusicCoroutine == null)
             {
-                combatMusicCoroutine = StartCoroutine(_PlayCombatMusic(combatMusic));
+                _combatMusicCoroutine = StartCoroutine(_PlayCombatMusic(combatMusic));
             }
             else
             {
-                if (combatMusic != CombatMusicAreas.CombatNormal)
+                if(combatMusic != CombatMusicAreas.CombatNormal)
                 {
                     // StopCoroutine(combatMusicCoroutine);
                     // combatMusicCoroutine = null;
-                    combatMusicCoroutine = StartCoroutine(_PlayCombatMusic(combatMusic));
+                    _combatMusicCoroutine = StartCoroutine(_PlayCombatMusic(combatMusic));
                 }
             }
         }
+
         private IEnumerator _PlayCombatMusic(CombatMusicAreas area)
         {
-            AudioClip music;
-            areaToBossMusic.TryGetValue(area, out music);
+            areaToBossMusic.TryGetValue(area, out var music);
 
-            m_audio.clip = music; // TODO: Fade out/in
-            m_audio.Play();
+            _mAudio.clip = music; // TODO: Fade out/in
+            _mAudio.Play();
             yield return null;
         }
+
         private void EndCombatMusic()
         {
-            enemiesInCombatWith--;
-            if (enemiesInCombatWith == 0)
+            EnemiesInCombatWith--;
+            if(EnemiesInCombatWith == 0)
             {
-                AudioClip music;
-                musicAreaToMusic.TryGetValue(currentMusicArea, out music);
-                m_audio.clip = music; // TODO: Fade out/in
-                m_audio.Play();
-                combatMusicCoroutine = null;
+                musicAreaToMusic.TryGetValue(_currentMusicArea, out var music);
+                _mAudio.clip = music; // TODO: Fade out/in
+                _mAudio.Play();
+                _combatMusicCoroutine = null;
             }
         }
+
         private void PlayDeathMusic()
         {
-            enemiesInCombatWith = 0;
-            combatMusicCoroutine = null;
+            EnemiesInCombatWith = 0;
+            _combatMusicCoroutine = null;
 
-            AudioClip music;
-            musicAreaToMusic.TryGetValue(MusicAreas.Death, out music);
-            m_audio.clip = music; // TODO: Fade out/in
-            m_audio.Play();
+            musicAreaToMusic.TryGetValue(MusicAreas.Death, out var music);
+            _mAudio.clip = music; // TODO: Fade out/in
+            _mAudio.Play();
         }
+
         public void ResetMusicPlayer()
         {
-            enemiesInCombatWith = 0;
-            combatMusicCoroutine = null;
+            EnemiesInCombatWith = 0;
+            _combatMusicCoroutine = null;
 
-            AudioClip music;
-            musicAreaToMusic.TryGetValue(MusicAreas.Town, out music);
-            m_audio.clip = music; // TODO: Fade out/in
-            m_audio.Play();
+            musicAreaToMusic.TryGetValue(MusicAreas.Town, out var music);
+            _mAudio.clip = music; // TODO: Fade out/in
+            _mAudio.Play();
         }
+
         public void LowerVolume(float volumeLevel)
         {
-            m_audio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
+            _mAudio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
         }
+
         public void IncreaseVolume(float volumeLevel)
         {
-            m_audio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
+            _mAudio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
         }
     }
 }

@@ -3,44 +3,47 @@ using UnityEngine;
 
 public class SpawnFeedback : MonoBehaviour
 {
-    [SerializeField] GameObject feedbackObject;
-    Animator animator;
-    Coroutine spawnCoroutine;
-    WaitForSeconds spawnDelay;
-    Transform objectTransform;
-    bool coroutineRunning = false;
+    [SerializeField] private GameObject feedbackObject;
+    private Animator _animator;
+    private Coroutine _spawnCoroutine;
+    private WaitForSeconds _spawnDelay;
+    private Transform _objectTransform;
+    private bool _coroutineRunning = false;
 
     private void Awake()
     {
         Debug.Assert(feedbackObject, "Movement Feedback Object is not set.");
-        spawnDelay = new WaitForSeconds(.3f); // Length of animation
-        objectTransform = Instantiate(feedbackObject, new Vector3(500, 500, 500), Quaternion.identity).transform;
-        animator = objectTransform.GetComponent<Animator>();
+        _spawnDelay = new WaitForSeconds(.3f); // Length of animation
+        _objectTransform = Instantiate(feedbackObject, new Vector3(500, 500, 500), Quaternion.identity).transform;
+        _animator = _objectTransform.GetComponent<Animator>();
     }
+
     public void Spawn(Vector3 position, Vector3 normal)
     {
-        if (coroutineRunning)
+        if(_coroutineRunning)
         {
-            StopCoroutine(spawnCoroutine);
-            spawnCoroutine = StartCoroutine(_Spawn(position, normal));
+            StopCoroutine(_spawnCoroutine);
+            _spawnCoroutine = StartCoroutine(_Spawn(position, normal));
         }
         else
         {
-            spawnCoroutine = StartCoroutine(_Spawn(position, normal));
+            _spawnCoroutine = StartCoroutine(_Spawn(position, normal));
         }
     }
+
     private IEnumerator _Spawn(Vector3 position, Vector3 normal)
     {
-        coroutineRunning = true;
-        objectTransform.position = position;
-        objectTransform.rotation = Quaternion.FromToRotation(Vector3.up, normal);
-        animator.Play("MovementFeedback", -1, 0f);
-        yield return spawnDelay;
+        _coroutineRunning = true;
+        _objectTransform.position = position;
+        _objectTransform.rotation = Quaternion.FromToRotation(Vector3.up, normal);
+        _animator.Play("MovementFeedback", -1, 0f);
+        yield return _spawnDelay;
         Despawn();
     }
+
     private void Despawn()
     {
-        objectTransform.position = new Vector3(500, 500, 500);
-        coroutineRunning = false;
+        _objectTransform.position = new Vector3(500, 500, 500);
+        _coroutineRunning = false;
     }
 }

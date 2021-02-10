@@ -11,45 +11,48 @@ namespace RPG.Combat
         {
             return CursorType.Combat;
         }
+
         public bool HandleRaycast(PlayerController callingController)
         {
-            if (!callingController.GetComponent<Fighter>().CanAttack(gameObject)) return false;
+            if(!callingController.GetComponent<Fighter>().CanAttack(gameObject)) return false;
             CheckPressedButtons(callingController);
             return true;
         }
+
         private void CheckPressedButtons(PlayerController callingController)
         {
-            if (Input.GetKey(KeyCode.LeftControl))
+            if(Input.GetKey(KeyCode.LeftControl))
             {
-                if (Input.GetMouseButtonDown(0))
+                if(Input.GetMouseButtonDown(0))
                 {
                     callingController.GetComponent<Fighter>().QueueAttackAction(gameObject);
                 }
             }
             else
             {
-                if (Input.GetMouseButton(0))
+                if(Input.GetMouseButton(0))
                 {
                     callingController.GetComponent<Fighter>().Attack(gameObject);
                 }
             }
         }
+
         public float GetInteractionRange()
         {
             return 0f;
         }
+
         private void ToggleOutline(bool toggle)
         {
-            Outline outline;
-            if (outline = GetComponentInChildren<Outline>())
-            {
+            if(TryGetComponent(out Outline outline))
                 outline.enabled = toggle;
-            }
         }
+
         private void OnMouseEnter()
         {
             ToggleOutline(true);
         }
+
         private void OnMouseExit()
         {
             ToggleOutline(false);

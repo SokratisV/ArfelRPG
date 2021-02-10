@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class RestartScene : MonoBehaviour
 {
-    [SerializeField] GameObject canvas;
+    [SerializeField] private GameObject canvas;
+
     public void Restart()
     {
         StartCoroutine(LoadScene());
@@ -21,12 +22,13 @@ public class RestartScene : MonoBehaviour
     {
         FindObjectOfType<SavingWrapper>().Delete();
         FindObjectOfType<MusicManager>().ResetMusicPlayer();
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        var asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 
-        while (!asyncLoad.isDone)
+        while(!asyncLoad.isDone)
         {
             yield return null;
         }
+
         canvas.SetActive(false);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -6,16 +5,18 @@ namespace RPG.Stats
 {
     public class ExperienceDisplay : MonoBehaviour
     {
-        Experience experience;
+        private Experience _experience;
+        private TextMeshProUGUI _text;
 
         private void Awake()
         {
-            experience = GameObject.FindWithTag("Player").GetComponent<Experience>();
+            _experience = GameObject.FindWithTag("Player").GetComponent<Experience>();
+            _text = GetComponent<TextMeshProUGUI>();
         }
 
         private void Update()
         {
-            GetComponent<TextMeshProUGUI>().text = String.Format("{0:0}", experience.GetPoints());
+            _text.SetText($"{_experience.GetPoints():0}");
         }
     }
 }
