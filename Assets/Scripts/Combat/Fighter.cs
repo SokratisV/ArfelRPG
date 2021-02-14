@@ -3,6 +3,7 @@ using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Attributes;
+using RPG.Control;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
@@ -128,10 +129,7 @@ namespace RPG.Combat
             }
         }
 
-        private void Shoot()
-        {
-            Hit();
-        }
+        private void Shoot() => Hit();
 
         public bool CanAttack(GameObject target)
         {
@@ -141,10 +139,7 @@ namespace RPG.Combat
             return targetToTest != null && !targetToTest.IsDead;
         }
 
-        private bool IsInRange(Transform targetTransform)
-        {
-            return Vector3.Distance(transform.position, targetTransform.position) < _currentWeaponConfig.GetRange();
-        }
+        private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _currentWeaponConfig.GetRange());
 
         public void Attack(GameObject combatTarget)
         {
@@ -152,10 +147,7 @@ namespace RPG.Combat
             _target = combatTarget.GetComponent<Health>();
         }
 
-        public void QueueAttackAction(GameObject gameObject)
-        {
-            _actionScheduler.EnqueueAction(new FighterActionData(this, gameObject));
-        }
+        public void QueueAttackAction(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
 
         public void Cancel()
         {
@@ -170,10 +162,7 @@ namespace RPG.Combat
             _animator.SetTrigger(StopAttackHash);
         }
 
-        public object CaptureState()
-        {
-            return _currentWeaponConfig.name;
-        }
+        public object CaptureState() => _currentWeaponConfig.name;
 
         public void RestoreState(object state)
         {
@@ -197,17 +186,13 @@ namespace RPG.Combat
             }
         }
 
-        public void Complete()
-        {
-            _actionScheduler.CompleteAction();
-        }
+        public void Complete() => _actionScheduler.CompleteAction();
 
         public void ExecuteAction(IActionData data)
         {
             _target = ((FighterActionData)data).Target.GetComponent<Health>();
             if(_target == null)
             {
-                Debug.Log("Null combat target (already dead).");
                 _actionScheduler.CompleteAction();
             }
         }

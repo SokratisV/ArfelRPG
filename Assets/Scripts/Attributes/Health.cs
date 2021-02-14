@@ -35,30 +35,15 @@ namespace RPG.Attributes
             _baseStats = GetComponent<BaseStats>();
         }
 
-        private void OnEnable()
-        {
-            _baseStats.OnLevelUp += RestoreHealth;
-        }
+        private void OnEnable() => _baseStats.OnLevelUp += RestoreHealth;
 
-        private void OnDisable()
-        {
-            _baseStats.OnLevelUp -= RestoreHealth;
-        }
+        private void OnDisable() => _baseStats.OnLevelUp -= RestoreHealth;
 
-        private void Start()
-        {
-            _healthPoints.ForceInit();
-        }
+        private void Start() => _healthPoints.ForceInit();
 
-        private float GetInitialHealth()
-        {
-            return _baseStats.GetStat(Stat.Health);
-        }
+        private float GetInitialHealth() => _baseStats.GetStat(Stat.Health);
 
-        internal void Heal(float healthToRestore)
-        {
-            _healthPoints.Value = Mathf.Min(_healthPoints.Value + healthToRestore, GetMaxHealthPoints());
-        }
+        internal void Heal(float healthToRestore) => _healthPoints.Value = Mathf.Min(_healthPoints.Value + healthToRestore, GetMaxHealthPoints());
 
         private void RestoreHealth()
         {
@@ -85,15 +70,9 @@ namespace RPG.Attributes
             }
         }
 
-        public float GetHealthPoints()
-        {
-            return _healthPoints.Value;
-        }
+        public float GetHealthPoints() => _healthPoints.Value;
 
-        public float GetMaxHealthPoints()
-        {
-            return _baseStats.GetStat(Stat.Health);
-        }
+        public float GetMaxHealthPoints() => _baseStats.GetStat(Stat.Health);
 
         private void AwardExperience(GameObject instigator)
         {
@@ -101,15 +80,9 @@ namespace RPG.Attributes
                 experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
         }
 
-        public float GetPercentage()
-        {
-            return 100 * GetFraction();
-        }
+        public float GetPercentage() => 100 * GetFraction();
 
-        public float GetFraction()
-        {
-            return _healthPoints.Value / _baseStats.GetStat(Stat.Health);
-        }
+        public float GetFraction() => _healthPoints.Value / _baseStats.GetStat(Stat.Health);
 
         private void Die()
         {
@@ -125,9 +98,6 @@ namespace RPG.Attributes
             if(_healthPoints.Value == 0) Die();
         }
 
-        public object CaptureState()
-        {
-            return _healthPoints.Value;
-        }
+        public object CaptureState() => _healthPoints.Value;
     }
 }

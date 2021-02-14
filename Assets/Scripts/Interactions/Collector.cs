@@ -48,10 +48,7 @@ namespace RPG.Interactions
             _collectible = collectible;
         }
 
-        public void Cancel()
-        {
-            _collectible = null;
-        }
+        public void Cancel() => _collectible = null;
 
         public bool CanCollect(GameObject collectible)
         {
@@ -60,24 +57,12 @@ namespace RPG.Interactions
             return true;
         }
 
-        private bool IsInRange(Transform targetTransform)
-        {
-            return Vector3.Distance(transform.position, targetTransform.position) < targetTransform.GetComponent<Treasure>().GetInteractionRange();
-        }
+        private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, targetTransform.GetComponent<Treasure>().GetInteractionRange());
 
-        public void QueueCollectAction(GameObject obj)
-        {
-            _actionScheduler.EnqueueAction(new PickableActionData(this, obj.transform));
-        }
+        public void QueueCollectAction(GameObject obj) => _actionScheduler.EnqueueAction(new PickableActionData(this, obj.transform));
 
-        public void Complete()
-        {
-            _actionScheduler.CompleteAction();
-        }
+        public void Complete() => _actionScheduler.CompleteAction();
 
-        public void ExecuteAction(IActionData data)
-        {
-            _collectible = ((PickableActionData)data).Treasure.GetComponent<Treasure>();
-        }
+        public void ExecuteAction(IActionData data) => _collectible = ((PickableActionData)data).Treasure.GetComponent<Treasure>();
     }
 }

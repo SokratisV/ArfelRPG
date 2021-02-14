@@ -785,6 +785,7 @@ MonoBehaviour:
   wayPointDwellTime: 3
   aggroCooldownTime: 5
   shoutDistance: 10
+  aggroShoutPeriod: 0.4
   patrolPath: {fileID: 0}
   patrolSpeedFraction: 0.2
   combatMusic: 0
@@ -969,6 +970,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Speed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2165176163035486379, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2165176163035486379, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}

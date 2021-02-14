@@ -174,9 +174,6 @@ namespace RPG.Control
             return cursorMappings[0];
         }
 
-        private Ray GetMouseRay()
-        {
-            return _mainCamera.ScreenPointToRay(Input.mousePosition);
-        }
+        private Ray GetMouseRay() => _mainCamera.ScreenPointToRay(Input.mousePosition);
     }
 }

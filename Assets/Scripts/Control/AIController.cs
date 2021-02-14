@@ -15,7 +15,8 @@ namespace RPG.Control
             wayPointTolerance = 1f,
             wayPointDwellTime = 3f,
             aggroCooldownTime = 5f,
-            shoutDistance = 0f;
+            shoutDistance = 0f,
+            aggroShoutInterval = .4f;
 
         [SerializeField] private PatrolPath patrolPath = default;
         [Range(0, 1)] [SerializeField] private float patrolSpeedFraction = 0.2f;
@@ -30,7 +31,8 @@ namespace RPG.Control
 
         private float _timeSinceLastSawPlayer = Mathf.Infinity,
             _timeSinceArrivedAtWaypoint = Mathf.Infinity,
-            _timeSinceAggrevated = Mathf.Infinity;
+            _timeSinceAggrevated = Mathf.Infinity,
+            _timeSinceNotifiedOthers = 0;
 
         private int _currentWayPointIndex = 0;
         private bool _hasInformedPlayerOfAggro = false;
@@ -45,15 +47,9 @@ namespace RPG.Control
             _guardPosition = new LazyValue<Vector3>(GetGuardPosition);
         }
 
-        private Vector3 GetGuardPosition()
-        {
-            return transform.position;
-        }
+        private Vector3 GetGuardPosition() => transform.position;
 
-        private void Start()
-        {
-            _guardPosition.ForceInit();
-        }
+        private void Start() => _guardPosition.ForceInit();
 
         private void Update()
         {
@@ -108,16 +104,14 @@ namespace RPG.Control
             return false;
         }
 
-        public void Aggrevate()
-        {
-            _timeSinceAggrevated = 0;
-        }
+        public void Aggrevate() => _timeSinceAggrevated = 0;
 
         private void UpdateTimers()
         {
             _timeSinceLastSawPlayer += Time.deltaTime;
             _timeSinceArrivedAtWaypoint += Time.deltaTime;
             _timeSinceAggrevated += Time.deltaTime;
+            _timeSinceNotifiedOthers += Time.deltaTime;
         }
 
         private void PatrolBehaviour()
@@ -141,21 +135,11 @@ namespace RPG.Control
             }
         }
 
-        private Vector3 GetCurrentWaypoint()
-        {
-            return patrolPath.GetWaypoint(_currentWayPointIndex);
-        }
+        private Vector3 GetCurrentWaypoint() => patrolPath.GetWaypoint(_currentWayPointIndex);
 
-        private void CycleWaypoint()
-        {
-            _currentWayPointIndex = patrolPath.GetNextIndex(_currentWayPointIndex);
-        }
+        private void CycleWaypoint() => _currentWayPointIndex = patrolPath.GetNextIndex(_currentWayPointIndex);
 
-        private bool AtWaypoint()
-        {
-            var distanceToWayPoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
-            return distanceToWayPoint < wayPointTolerance;
-        }
+        private bool AtWaypoint() => Helper.IsWithinDistance(transform.position, GetCurrentWaypoint(), wayPointTolerance);
 
         private void SuspicionBehaviour()
         {
@@ -178,6 +162,9 @@ namespace RPG.Control
 
         private void AggrevateNearbyEnemies()
         {
+            if(_timeSinceNotifiedOthers <= aggroShoutInterval) return;
+            _timeSinceNotifiedOthers = 0f;
+
             var hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0);
             foreach(var hit in hits)
             {
@@ -186,12 +173,7 @@ namespace RPG.Control
             }
         }
 
-        private bool IsAggrevated()
-        {
-            // return(_player.transform.position - transform.position).sqrMagnitude < chaseDistance * chaseDistance;
-            var distanceToPlayer = Vector3.Distance(_player.transform.position, transform.position);
-            return distanceToPlayer < chaseDistance || _timeSinceAggrevated < aggroCooldownTime;
-        }
+        private bool IsAggrevated() => Helper.IsWithinDistance(_player.transform, transform, chaseDistance);
 
         private void OnDrawGizmosSelected()
         {

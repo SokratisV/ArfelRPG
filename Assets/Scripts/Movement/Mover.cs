@@ -67,7 +67,7 @@ namespace RPG.Movement
         {
             _completeCoroutineStarted = true;
             var range = GetComponent<Fighter>().GetWeaponConfig().GetRange();
-            while(Vector3.Distance(transform.position, destination) > 0.1f)
+            while(!Helper.IsWithinDistance(transform.position, destination, 0.1f))
             {
                 yield return null;
             }
@@ -97,10 +97,7 @@ namespace RPG.Movement
             return total;
         }
 
-        public void Cancel()
-        {
-            _navMeshAgent.isStopped = true;
-        }
+        public void Cancel() => _navMeshAgent.isStopped = true;
 
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
@@ -108,15 +105,9 @@ namespace RPG.Movement
             MoveTo(destination, speedFraction);
         }
 
-        public void QueueMoveAction(Vector3 destination, float speedFraction)
-        {
-            _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction));
-        }
+        public void QueueMoveAction(Vector3 destination, float speedFraction) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction));
 
-        public object CaptureState()
-        {
-            return new SerializableVector3(transform.position);
-        }
+        public object CaptureState() => new SerializableVector3(transform.position);
 
         public void RestoreState(object state)
         {
@@ -126,10 +117,7 @@ namespace RPG.Movement
             _agent.enabled = true;
         }
 
-        public void Complete()
-        {
-            _actionScheduler.CompleteAction();
-        }
+        public void Complete() => _actionScheduler.CompleteAction();
 
         public void ExecuteAction(IActionData data)
         {

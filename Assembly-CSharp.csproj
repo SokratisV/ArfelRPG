@@ -124,6 +124,7 @@
      <Compile Include="Assets\Scripts\Attributes\HealthBar.cs" />
      <Compile Include="Assets\Scripts\Stats\IModifierProvider.cs" />
      <Compile Include="Assets\Scripts\Cinematics\CinematicControlRemover.cs" />
+     <Compile Include="Assets\Scripts\Control\Helper.cs" />
      <Compile Include="Assets\Scripts\Combat\Fighter.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\Hose.cs" />
      <Compile Include="Assets\Scripts\Control\CursorType.cs" />
@@ -759,8 +760,14 @@
  <Reference Include="com.unity.cinemachine.editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
  </Reference>
+ <Reference Include="com.unity.quicksearch">
+ <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/com.unity.quicksearch.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VisualStudio.Editor">
+ <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
@@ -774,17 +781,11 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
- <Reference Include="com.unity.quicksearch">
- <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/com.unity.quicksearch.dll</HintPath>
- </Reference>
- <Reference Include="Unity.VisualStudio.Editor">
- <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using RPG.Attributes;
 using RPG.Control;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -12,10 +13,7 @@ namespace RPG.Combat
 
         private Collider _collider;
 
-        private void Awake()
-        {
-            _collider = GetComponent<Collider>();
-        }
+        private void Awake() => _collider = GetComponent<Collider>();
 
         //TODO: Remove and fix to pickup on first click
         private void OnTriggerEnter(Collider other)
@@ -28,7 +26,7 @@ namespace RPG.Combat
 
         private bool Pickup(GameObject subject)
         {
-            if(Vector3.Distance(transform.position, subject.transform.position) > GetInteractionRange()) return false;
+            if(!Helper.IsWithinDistance(transform, subject.transform, GetInteractionRange())) return false;
             if(weapon != null)
             {
                 subject.GetComponent<Fighter>().EquipWeapon(weapon);
@@ -86,24 +84,12 @@ namespace RPG.Combat
                 outline.enabled = toggle;
         }
 
-        private void OnMouseEnter()
-        {
-            ToggleOutline(true);
-        }
+        private void OnMouseEnter() => ToggleOutline(true);
 
-        private void OnMouseExit()
-        {
-            ToggleOutline(false);
-        }
+        private void OnMouseExit() => ToggleOutline(false);
 
-        public CursorType GetCursorType()
-        {
-            return CursorType.Pickup;
-        }
+        public CursorType GetCursorType() => CursorType.Pickup;
 
-        public float GetInteractionRange()
-        {
-            return pickupRange;
-        }
+        public float GetInteractionRange() => pickupRange;
     }
 }
