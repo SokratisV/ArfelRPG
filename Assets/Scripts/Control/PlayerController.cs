@@ -39,7 +39,7 @@ namespace RPG.Control
         {
             // Unnecessary for now
             // if (InteractWithUI()) { return; }
-            if(_health.IsDead())
+            if(_health.IsDead)
             {
                 SetCursor(CursorType.None);
                 return;

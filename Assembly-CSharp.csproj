@@ -759,14 +759,8 @@
  <Reference Include="com.unity.cinemachine.editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
  </Reference>
- <Reference Include="com.unity.quicksearch">
- <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/com.unity.quicksearch.dll</HintPath>
- </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.VisualStudio.Editor">
- <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
@@ -780,11 +774,17 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <Reference Include="com.unity.quicksearch">
+ <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/com.unity.quicksearch.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VisualStudio.Editor">
+ <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

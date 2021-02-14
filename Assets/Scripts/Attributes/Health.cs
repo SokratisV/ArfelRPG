@@ -26,7 +26,7 @@ namespace RPG.Attributes
 
         private LazyValue<float> _healthPoints;
 
-        private bool _isDead = false;
+        public bool IsDead {get;private set;}
         private static readonly int DieHash = Animator.StringToHash("die");
 
         private void Awake()
@@ -64,11 +64,6 @@ namespace RPG.Attributes
         {
             var regenHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health) * (regenerationPercentage / 100);
             _healthPoints.Value = Mathf.Max(_healthPoints.Value, regenHealthPoints);
-        }
-
-        public bool IsDead()
-        {
-            return _isDead;
         }
 
         public void TakeDamage(GameObject instigator, float damage)
@@ -118,11 +113,10 @@ namespace RPG.Attributes
 
         private void Die()
         {
-            if(_isDead) return;
-
-            _isDead = true;
+            if(IsDead) return;
             GetComponent<Animator>().SetTrigger(DieHash);
             GetComponent<ActionScheduler>().CancelCurrentAction();
+            IsDead = true;
         }
 
         public void RestoreState(object state)

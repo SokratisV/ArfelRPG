@@ -75,7 +75,7 @@ namespace RPG.Combat
                 return;
             }
 
-            if(_target.IsDead())
+            if(_target.IsDead)
             {
                 Complete();
                 _target = null;
@@ -138,7 +138,7 @@ namespace RPG.Combat
             if(target == null) return false;
             if(!_mover.CanMoveTo(target.transform.position) && !IsInRange(target.transform)) return false;
             var targetToTest = target.GetComponent<Health>();
-            return targetToTest != null && !targetToTest.IsDead();
+            return targetToTest != null && !targetToTest.IsDead;
         }
 
         private bool IsInRange(Transform targetTransform)

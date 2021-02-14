@@ -77,7 +77,7 @@ namespace RPG.Control
 
         private bool IsDead()
         {
-            if(_health.IsDead())
+            if(_health.IsDead)
             {
                 if(_hasInformedPlayerOfAggro)
                 {
@@ -188,6 +188,7 @@ namespace RPG.Control
 
         private bool IsAggrevated()
         {
+            // return(_player.transform.position - transform.position).sqrMagnitude < chaseDistance * chaseDistance;
             var distanceToPlayer = Vector3.Distance(_player.transform.position, transform.position);
             return distanceToPlayer < chaseDistance || _timeSinceAggrevated < aggroCooldownTime;
         }

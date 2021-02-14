@@ -23,7 +23,7 @@ namespace RPG.Combat
         private void Update()
         {
             if(_target == null) return;
-            if(isHoming && !_target.IsDead())
+            if(isHoming && !_target.IsDead)
             {
                 transform.LookAt(GetAimLocation());
             }
@@ -55,7 +55,7 @@ namespace RPG.Combat
         {
             if(other.GetComponent<Health>() == _target)
             {
-                if(_target.IsDead()) return;
+                if(_target.IsDead) return;
                 _target.TakeDamage(_instigator, CalculateDamage());
                 speed = 0;
                 onHit.Invoke();

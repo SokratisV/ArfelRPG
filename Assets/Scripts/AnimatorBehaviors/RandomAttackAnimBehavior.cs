@@ -1,7 +1,7 @@
-﻿namespace RPG.AnimatorBehaviors
-{
-    using UnityEngine;
+﻿using UnityEngine;
 
+namespace RPG.AnimatorBehaviors
+{
     public class RandomAttackAnimBehavior : StateMachineBehaviour
     {
         [SerializeField] private int amountOfAnimations;
