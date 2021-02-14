@@ -11,7 +11,7 @@ namespace RPG.Movement
 	[SelectionBase]
 	public class Mover : MonoBehaviour, IAction, ISaveable
 	{
-		public event Action OnComplete;
+		public event Action OnActionComplete;
 
 		private float _distanceBeforeReachingDestination;
 		private NavMeshAgent _navMeshAgent;
@@ -20,7 +20,7 @@ namespace RPG.Movement
 		private Health _health;
 		[SerializeField] private float maxSpeed = 6f;
 		[SerializeField] private float maxNavPathLength = 40f;
-		private Coroutine _thisCoroutine;
+		private Coroutine _selfUpdateRoutine;
 		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 
 		private void Awake()
@@ -35,7 +35,7 @@ namespace RPG.Movement
 		{
 			Health.OnPlayerDeath += DisableMover;
 			_health.OnDeath += DisableMover;
-			_thisCoroutine = StartCoroutine(UpdateMover());
+			_selfUpdateRoutine = _selfUpdateRoutine.StartCoroutine(this, UpdateMover());
 		}
 
 		private void OnDisable()
@@ -45,11 +45,7 @@ namespace RPG.Movement
 			DisableMover();
 		}
 
-		private void DisableMover()
-		{
-			StopCoroutine(_thisCoroutine);
-			_navMeshAgent.enabled = false;
-		}
+		private void DisableMover() => _selfUpdateRoutine.StopCoroutine(this);
 
 		private IEnumerator UpdateMover()
 		{
@@ -67,7 +63,7 @@ namespace RPG.Movement
 			{
 				if(Helper.IsWithinDistance(transform.position, _navMeshAgent.destination, _distanceBeforeReachingDestination))
 				{
-					Complete();
+					CompleteAction();
 				}
 			}
 		}
@@ -80,7 +76,7 @@ namespace RPG.Movement
 			_animator.SetFloat(ForwardSpeed, speed);
 		}
 
-		private void MoveTo(Vector3 destination, float speedFraction = 1f)
+		private void MoveTowards(Vector3 destination, float speedFraction = 1f)
 		{
 			_navMeshAgent.destination = destination;
 			_navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
@@ -108,13 +104,13 @@ namespace RPG.Movement
 			return total;
 		}
 
-		public void Cancel() => _navMeshAgent.isStopped = true;
+		public void CancelAction() => _navMeshAgent.isStopped = true;
 
 		public IAction StartMoveAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
 			_actionScheduler.StartAction(this);
 			_distanceBeforeReachingDestination = withinDistance;
-			MoveTo(destination, speedFraction);
+			MoveTowards(destination, speedFraction);
 			return this;
 		}
 
@@ -130,11 +126,11 @@ namespace RPG.Movement
 			_navMeshAgent.enabled = true;
 		}
 
-		public void Complete()
+		public void CompleteAction()
 		{
 			_navMeshAgent.isStopped = true;
 			_actionScheduler.CompleteAction();
-			OnComplete?.Invoke();
+			OnActionComplete?.Invoke();
 		}
 
 		public void ExecuteAction(IActionData data)
@@ -142,7 +138,7 @@ namespace RPG.Movement
 			var destination = ((MoverActionData)data).Destination;
 			var speed = ((MoverActionData)data).Speed;
 
-			MoveTo(destination, speed);
+			MoveTowards(destination, speed);
 		}
 	}
 }

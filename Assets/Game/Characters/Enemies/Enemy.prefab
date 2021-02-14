@@ -785,7 +785,7 @@ MonoBehaviour:
   wayPointDwellTime: 3
   aggroCooldownTime: 5
   shoutDistance: 10
-  aggroShoutPeriod: 0.4
+  aggroShoutInterval: 0.4
   patrolPath: {fileID: 0}
   patrolSpeedFraction: 0.2
   combatMusic: 0
@@ -1096,7 +1096,7 @@ PrefabInstance:
     - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}

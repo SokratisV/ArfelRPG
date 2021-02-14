@@ -7,7 +7,7 @@ namespace RPG.Interactions
 {
 	public class Collector : MonoBehaviour, IAction
 	{
-		public event Action OnComplete;
+		public event Action OnActionComplete;
 		private bool _isInRange;
 		private Treasure _collectible;
 		private Mover _mover;
@@ -32,7 +32,7 @@ namespace RPG.Interactions
 			transform.LookAt(_collectible.transform);
 			_collectible.OpenTreasure();
 			_collectible = null;
-			Complete();
+			CompleteAction();
 		}
 
 		public void Collect(Treasure collectible)
@@ -43,10 +43,10 @@ namespace RPG.Interactions
 			void Action()
 			{
 				StartCollectAction();
-				_mover.OnComplete -= Action;
+				_mover.OnActionComplete -= Action;
 			}
 
-			_mover.StartMoveAction(collectible.transform.position, withinDistance: collectible.GetInteractionRange()).OnComplete += Action;
+			_mover.StartMoveAction(collectible.transform.position, withinDistance: collectible.GetInteractionRange()).OnActionComplete += Action;
 		}
 		
 		private void StartCollectAction()
@@ -55,7 +55,7 @@ namespace RPG.Interactions
 			_isInRange = true;
 		}
 
-		public void Cancel() => _collectible = null;
+		public void CancelAction() => _collectible = null;
 
 		public bool CanCollect(GameObject collectible)
 		{
@@ -68,9 +68,9 @@ namespace RPG.Interactions
 
 		public void QueueCollectAction(GameObject obj) => _actionScheduler.EnqueueAction(new PickableActionData(this, obj.transform));
 
-		public void Complete()
+		public void CompleteAction()
 		{
-			OnComplete?.Invoke();
+			OnActionComplete?.Invoke();
 			_actionScheduler.CompleteAction();
 		}
 

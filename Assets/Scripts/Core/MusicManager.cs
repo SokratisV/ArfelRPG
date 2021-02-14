@@ -102,7 +102,7 @@ namespace RPG.Core
             EnemiesInCombatWith++;
             if(_combatMusicCoroutine == null)
             {
-                _combatMusicCoroutine = StartCoroutine(_PlayCombatMusic(combatMusic));
+                _combatMusicCoroutine = _combatMusicCoroutine.StartCoroutine(this,_PlayCombatMusic(combatMusic));
             }
             else
             {
@@ -110,7 +110,7 @@ namespace RPG.Core
                 {
                     // StopCoroutine(combatMusicCoroutine);
                     // combatMusicCoroutine = null;
-                    _combatMusicCoroutine = StartCoroutine(_PlayCombatMusic(combatMusic));
+                    _combatMusicCoroutine = _combatMusicCoroutine.StartCoroutine(this, _PlayCombatMusic(combatMusic));
                 }
             }
         }

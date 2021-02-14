@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RPG.Core;
 using UnityEngine;
 
 public class SpawnFeedback : MonoBehaviour
@@ -8,7 +9,7 @@ public class SpawnFeedback : MonoBehaviour
     private Coroutine _spawnCoroutine;
     private WaitForSeconds _spawnDelay;
     private Transform _objectTransform;
-    private bool _coroutineRunning = false;
+    private bool _isCoroutineRunning = false;
 
     private void Awake()
     {
@@ -18,22 +19,11 @@ public class SpawnFeedback : MonoBehaviour
         _animator = _objectTransform.GetComponent<Animator>();
     }
 
-    public void Spawn(Vector3 position, Vector3 normal)
-    {
-        if(_coroutineRunning)
-        {
-            StopCoroutine(_spawnCoroutine);
-            _spawnCoroutine = StartCoroutine(_Spawn(position, normal));
-        }
-        else
-        {
-            _spawnCoroutine = StartCoroutine(_Spawn(position, normal));
-        }
-    }
+    public void Spawn(Vector3 position, Vector3 normal) => _spawnCoroutine = _spawnCoroutine.StartCoroutine(this, _Spawn(position, normal));
 
     private IEnumerator _Spawn(Vector3 position, Vector3 normal)
     {
-        _coroutineRunning = true;
+        _isCoroutineRunning = true;
         _objectTransform.position = position;
         _objectTransform.rotation = Quaternion.FromToRotation(Vector3.up, normal);
         _animator.Play("MovementFeedback", -1, 0f);
@@ -44,6 +34,6 @@ public class SpawnFeedback : MonoBehaviour
     private void Despawn()
     {
         _objectTransform.position = new Vector3(500, 500, 500);
-        _coroutineRunning = false;
+        _isCoroutineRunning = false;
     }
 }

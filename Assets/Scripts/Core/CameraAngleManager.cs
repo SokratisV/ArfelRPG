@@ -64,12 +64,7 @@ namespace RPG.Core
             }
 
             _areaToAngleDictionary.TryGetValue(area, out _position);
-            if(_runningCoroutine != null)
-            {
-                StopCoroutine(_runningCoroutine);
-            }
-
-            _runningCoroutine = StartCoroutine(ChangeAngles());
+            _runningCoroutine = _runningCoroutine.StartCoroutine(this, ChangeAngles());
         }
 
         private IEnumerator ChangeAngles()

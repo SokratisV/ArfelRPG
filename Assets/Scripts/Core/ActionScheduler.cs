@@ -62,7 +62,7 @@ namespace RPG.Core
         {
             ClearActionsQueue();
             if(_currentAction == action) return;
-            _currentAction?.Cancel();
+            _currentAction?.CancelAction();
             _currentAction = action;
         }
 

@@ -12,7 +12,7 @@ namespace RPG.Combat
 {
 	public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
 	{
-		public event Action OnComplete;
+		public event Action OnActionComplete;
 
 		[SerializeField] private float timeBetweenAttacks = 1f; //When changing, change RandomAttackAnimBehavior as well
 		[SerializeField] private Transform rightHandTransform = null;
@@ -25,6 +25,7 @@ namespace RPG.Combat
 		private Animator _animator;
 		private LazyValue<Weapon> _currentWeapon;
 		private Health _target;
+		private BaseStats _stats;
 		private bool _isInRange;
 		private float _timeSinceLastAttack = Mathf.Infinity;
 		private static readonly int StopAttackHash = Animator.StringToHash("stopAttack");
@@ -39,6 +40,7 @@ namespace RPG.Combat
 			_animator = GetComponent<Animator>();
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_mover = GetComponent<Mover>();
+			_stats = GetComponent<BaseStats>();
 		}
 
 		private Weapon SetupDefaultWeapon() => AttachWeapon(defaultWeapon);
@@ -59,19 +61,23 @@ namespace RPG.Combat
 		{
 			_timeSinceLastAttack += Time.deltaTime;
 
-			if(_target == null)
-				return;
+			if(_target == null) return;
 
 			if(_target.IsDead)
 			{
-				Complete();
+				CompleteAction();
 				_target = null;
 				return;
 			}
 
+			_isInRange = IsInRange(_target.transform);
 			if(_isInRange)
 			{
 				AttackBehavior();
+			}
+			else
+			{
+				_mover.StartMoveAction(_target.transform.position, withinDistance:GetWeaponConfig().GetRange());
 			}
 		}
 
@@ -79,11 +85,11 @@ namespace RPG.Combat
 		{
 			transform.LookAt(_target.transform);
 			if(!(_timeSinceLastAttack > timeBetweenAttacks)) return;
-			TriggerAttack();
+			AttackAnimation();
 			_timeSinceLastAttack = 0;
 		}
 
-		private void TriggerAttack()
+		private void AttackAnimation()
 		{
 			_animator.ResetTrigger(StopAttackHash);
 			_animator.SetTrigger(AttackHash);
@@ -92,7 +98,7 @@ namespace RPG.Combat
 		// Animation Event
 		private void Hit()
 		{
-			var damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
+			var damage = _stats.GetStat(Stat.Damage);
 			if(_currentWeapon.Value != null)
 			{
 				_currentWeapon.Value.OnHit();
@@ -123,30 +129,16 @@ namespace RPG.Combat
 
 		public void Attack(GameObject combatTarget)
 		{
-			_isInRange = false;
-			_target = combatTarget.GetComponent<Health>();
-
-			void Action()
-			{
-				StartAttackAction();
-				_mover.OnComplete -= Action;
-			}
-
-			_mover.StartMoveAction(combatTarget.transform.position, withinDistance: GetWeaponConfig().GetRange()).OnComplete += Action;
-		}
-
-		private void StartAttackAction()
-		{
 			_actionScheduler.StartAction(this);
-			_isInRange = true;
+			_target ??= combatTarget.GetComponent<Health>();
 		}
-
+		
 		public void QueueAttackAction(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
 
-		public void Cancel()
+		public void CancelAction()
 		{
 			StopAttack();
-			_mover.Cancel();
+			_mover.CancelAction();
 			_target = null;
 		}
 
@@ -180,9 +172,9 @@ namespace RPG.Combat
 			}
 		}
 
-		public void Complete()
+		public void CompleteAction()
 		{
-			OnComplete?.Invoke();
+			OnActionComplete?.Invoke();
 			_actionScheduler.CompleteAction();
 		}
 

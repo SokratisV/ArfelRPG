@@ -1,4 +1,5 @@
 using System.Collections;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.SceneManagement
@@ -36,12 +37,7 @@ namespace RPG.SceneManagement
 
         public Coroutine Fade(float target, float time)
         {
-            if(_currentActiveFade != null)
-            {
-                StopCoroutine(_currentActiveFade);
-            }
-
-            _currentActiveFade = StartCoroutine(FadeRoutine(target, time));
+            _currentActiveFade = _currentActiveFade.StartCoroutine(this, FadeRoutine(target, time));
             return _currentActiveFade;
         }
 

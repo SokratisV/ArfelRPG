@@ -4,9 +4,9 @@ namespace RPG.Core
 {
     public interface IAction
     {
-        event Action OnComplete;
-        void Cancel();
-        void Complete();
+        event Action OnActionComplete;
+        void CancelAction();
+        void CompleteAction();
         void ExecuteAction(IActionData data);
     }
 }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trainingDummyPrefab: {fileID: 3782659656829733649}
+  aggroDistance: 400
 --- !u!1 &5075727357449342862
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,6 +284,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
         type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
+        type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -298,12 +304,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
         type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
+        type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: Respawn
       objectReference: {fileID: 0}
     - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
         type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 3774793451373058941}
+    - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: AggroEverything
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: RPG.Combat.TrainingDummy, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
+        type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
