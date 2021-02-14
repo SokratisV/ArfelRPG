@@ -50,10 +50,7 @@ namespace RPG.Core
         private Coroutine _combatMusicCoroutine;
         private static int EnemiesInCombatWith = 0;
 
-        private void Awake()
-        {
-            _mAudio = GetComponent<AudioSource>();
-        }
+        private void Awake() => _mAudio = GetComponent<AudioSource>();
 
         private void OnEnable()
         {
@@ -159,14 +156,8 @@ namespace RPG.Core
             _mAudio.Play();
         }
 
-        public void LowerVolume(float volumeLevel)
-        {
-            _mAudio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
-        }
+        public void LowerVolume(float volumeLevel) => _mAudio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
 
-        public void IncreaseVolume(float volumeLevel)
-        {
-            _mAudio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
-        }
+        public void IncreaseVolume(float volumeLevel) => _mAudio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
     }
 }

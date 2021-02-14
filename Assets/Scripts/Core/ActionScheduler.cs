@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,10 +22,7 @@ namespace RPG.Core
             Speed = speed;
         }
 
-        public IAction GetAction()
-        {
-            return _action;
-        }
+        public IAction GetAction() => _action;
     }
 
     public struct FighterActionData : IActionData
@@ -38,10 +36,7 @@ namespace RPG.Core
             Target = target;
         }
 
-        public IAction GetAction()
-        {
-            return _action;
-        }
+        public IAction GetAction() => _action;
     }
 
     public struct PickableActionData : IActionData
@@ -55,10 +50,7 @@ namespace RPG.Core
             Treasure = treasure;
         }
 
-        public IAction GetAction()
-        {
-            return _action;
-        }
+        public IAction GetAction() => _action;
     }
 
     public class ActionScheduler : MonoBehaviour
@@ -76,16 +68,10 @@ namespace RPG.Core
 
         private void ClearActionsQueue()
         {
-            if(_actionsQueue.Count > 0)
-            {
-                _actionsQueue.Clear();
-            }
+            if(_actionsQueue.Count > 0) _actionsQueue.Clear();
         }
 
-        public void CancelCurrentAction()
-        {
-            StartAction(null);
-        }
+        public void CancelCurrentAction() => StartAction(null);
 
         public void EnqueueAction(IActionData actionData)
         {
@@ -104,9 +90,7 @@ namespace RPG.Core
             action = null;
             data = null;
             if(_actionsQueue.Count == 0)
-            {
                 return;
-            }
 
             data = _actionsQueue.Dequeue();
             action = data.GetAction();

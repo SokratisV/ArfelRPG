@@ -13,15 +13,9 @@ namespace RPG.Interactions
         private Transform _pickupManager;
         private bool _isOpened = false;
 
-        private void Start()
-        {
-            _pickupManager = GameObject.FindGameObjectWithTag("PickupManager").transform;
-        }
+        private void Start() => _pickupManager = GameObject.FindGameObjectWithTag("PickupManager").transform;
 
-        public CursorType GetCursorType()
-        {
-            return CursorType.Pickup;
-        }
+        public CursorType GetCursorType() => CursorType.Pickup;
 
         public bool HandleRaycast(PlayerController callingController)
         {
@@ -82,15 +76,9 @@ namespace RPG.Interactions
             }
         }
 
-        public object CaptureState()
-        {
-            return _isOpened;
-        }
+        public object CaptureState() => _isOpened;
 
-        public float GetInteractionRange()
-        {
-            return interactionRange;
-        }
+        public float GetInteractionRange() => interactionRange;
 
         private void ToggleOutline(bool toggle)
         {
@@ -98,14 +86,8 @@ namespace RPG.Interactions
                 outline.enabled = toggle;
         }
 
-        private void OnMouseEnter()
-        {
-            ToggleOutline(true);
-        }
+        private void OnMouseEnter() => ToggleOutline(true);
 
-        private void OnMouseExit()
-        {
-            ToggleOutline(false);
-        }
+        private void OnMouseExit() => ToggleOutline(false);
     }
 }

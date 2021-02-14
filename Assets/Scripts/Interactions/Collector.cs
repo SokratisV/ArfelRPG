@@ -1,68 +1,79 @@
+using System;
 using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
 
 namespace RPG.Interactions
 {
-    public class Collector : MonoBehaviour, IAction
-    {
-        private Treasure _collectible;
-        private Mover _mover;
-        private ActionScheduler _actionScheduler;
+	public class Collector : MonoBehaviour, IAction
+	{
+		public event Action OnComplete;
+		private bool _isInRange;
+		private Treasure _collectible;
+		private Mover _mover;
+		private ActionScheduler _actionScheduler;
 
-        private void Awake()
-        {
-            _mover = GetComponent<Mover>();
-            _actionScheduler = GetComponent<ActionScheduler>();
-        }
+		private void Awake()
+		{
+			_mover = GetComponent<Mover>();
+			_actionScheduler = GetComponent<ActionScheduler>();
+		}
 
-        private void Update()
-        {
-            if(_collectible == null)
-            {
-                return;
-            }
+		private void Update()
+		{
+			if(_isInRange && _collectible != null)
+			{
+				CollectBehavior();
+			}
+		}
 
-            if(!IsInRange(_collectible.transform))
-            {
-                _mover.MoveTo(_collectible.transform.position, 1f);
-            }
-            else
-            {
-                _mover.Cancel();
-                CollectBehavior();
-            }
-        }
+		private void CollectBehavior()
+		{
+			transform.LookAt(_collectible.transform);
+			_collectible.OpenTreasure();
+			_collectible = null;
+			Complete();
+		}
 
-        private void CollectBehavior()
-        {
-            transform.LookAt(_collectible.transform);
-            _collectible.OpenTreasure();
-            _collectible = null;
-            Complete();
-        }
+		public void Collect(Treasure collectible)
+		{
+			_isInRange = false;
+			_collectible = collectible;
 
-        public void Collect(Treasure collectible)
-        {
-            _actionScheduler.StartAction(this);
-            _collectible = collectible;
-        }
+			void Action()
+			{
+				StartCollectAction();
+				_mover.OnComplete -= Action;
+			}
 
-        public void Cancel() => _collectible = null;
+			_mover.StartMoveAction(collectible.transform.position, withinDistance: collectible.GetInteractionRange()).OnComplete += Action;
+		}
+		
+		private void StartCollectAction()
+		{
+			_actionScheduler.StartAction(this);
+			_isInRange = true;
+		}
 
-        public bool CanCollect(GameObject collectible)
-        {
-            if(collectible == null) return false;
-            // TODO check for range like in fighter
-            return true;
-        }
+		public void Cancel() => _collectible = null;
 
-        private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, targetTransform.GetComponent<Treasure>().GetInteractionRange());
+		public bool CanCollect(GameObject collectible)
+		{
+			if(collectible == null) return false;
+			// TODO check for range like in fighter
+			return true;
+		}
 
-        public void QueueCollectAction(GameObject obj) => _actionScheduler.EnqueueAction(new PickableActionData(this, obj.transform));
+		private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, targetTransform.GetComponent<Treasure>().GetInteractionRange());
 
-        public void Complete() => _actionScheduler.CompleteAction();
+		public void QueueCollectAction(GameObject obj) => _actionScheduler.EnqueueAction(new PickableActionData(this, obj.transform));
 
-        public void ExecuteAction(IActionData data) => _collectible = ((PickableActionData)data).Treasure.GetComponent<Treasure>();
-    }
+		public void Complete()
+		{
+			OnComplete?.Invoke();
+			_actionScheduler.CompleteAction();
+		}
+
+		public void ExecuteAction(IActionData data) => _collectible = ((PickableActionData)data).Treasure.GetComponent<Treasure>();
+	}
 }

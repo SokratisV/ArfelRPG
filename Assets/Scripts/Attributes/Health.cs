@@ -17,7 +17,8 @@ namespace RPG.Attributes
         private BaseStats _baseStats;
 
         //TODO Move everything to C# event
-        public static event Action OnPlayerDeath = delegate {};
+        public static event Action OnPlayerDeath;
+        public event Action OnDeath;
 
         [Serializable]
         public class TakeDamageEvent : UnityEvent<float>
@@ -61,7 +62,11 @@ namespace RPG.Attributes
                 //TODO: Remove from health (add in different script only for player and call it through unity event?)
                 if(tag.Equals("Player"))
                 {
-                    OnPlayerDeath();
+                    OnPlayerDeath?.Invoke();
+                }
+                else
+                {
+                    OnDeath?.Invoke();
                 }
 
                 //

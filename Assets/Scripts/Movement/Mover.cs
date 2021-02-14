@@ -1,130 +1,148 @@
 ﻿using System;
+using System.Collections;
 using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
 using RPG.Saving;
 using RPG.Attributes;
-using System.Collections;
-using RPG.Combat;
 
 namespace RPG.Movement
 {
-    public class Mover : MonoBehaviour, IAction, ISaveable
-    {
-        private NavMeshAgent _navMeshAgent;
-        private Health _health;
-        private Animator _animator;
-        private ActionScheduler _actionScheduler;
-        private NavMeshAgent _agent;
-        [SerializeField] private float maxSpeed = 6f;
-        [SerializeField] private float maxNavPathLength = 40f;
-        private bool _completeCoroutineStarted = false;
-        private Coroutine _completeCoroutine = null;
-        private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
+	[SelectionBase]
+	public class Mover : MonoBehaviour, IAction, ISaveable
+	{
+		public event Action OnComplete;
 
-        private void Awake()
-        {
-            _navMeshAgent = GetComponent<NavMeshAgent>();
-            _health = GetComponent<Health>();
-            _animator = GetComponent<Animator>();
-            _actionScheduler = GetComponent<ActionScheduler>();
-            _agent = GetComponent<NavMeshAgent>();
-        }
+		private float _distanceBeforeReachingDestination;
+		private NavMeshAgent _navMeshAgent;
+		private Animator _animator;
+		private ActionScheduler _actionScheduler;
+		private Health _health;
+		[SerializeField] private float maxSpeed = 6f;
+		[SerializeField] private float maxNavPathLength = 40f;
+		private Coroutine _thisCoroutine;
+		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 
-        private void Update()
-        {
-            _navMeshAgent.enabled = !_health.IsDead;
-            UpdateAnimator();
-        }
+		private void Awake()
+		{
+			_navMeshAgent = GetComponent<NavMeshAgent>();
+			_animator = GetComponent<Animator>();
+			_actionScheduler = GetComponent<ActionScheduler>();
+			_health = GetComponent<Health>();
+		}
 
-        private void UpdateAnimator()
-        {
-            var velocity = _navMeshAgent.velocity;
-            var localVelocity = transform.InverseTransformDirection(velocity);
-            var speed = localVelocity.z;
-            _animator.SetFloat(ForwardSpeed, speed);
-        }
+		private void OnEnable()
+		{
+			Health.OnPlayerDeath += DisableMover;
+			_health.OnDeath += DisableMover;
+			_thisCoroutine = StartCoroutine(UpdateMover());
+		}
 
-        public void MoveTo(Vector3 destination, float speedFraction)
-        {
-            _navMeshAgent.destination = destination;
-            _navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
-            //TODO: Remove from common (Player/AI) code
-            if(gameObject.CompareTag("Player"))
-            {
-                if(_completeCoroutineStarted)
-                {
-                    StopCoroutine(_completeCoroutine);
-                }
+		private void OnDisable()
+		{
+			Health.OnPlayerDeath -= DisableMover;
+			_health.OnDeath -= DisableMover;
+			DisableMover();
+		}
 
-                _completeCoroutine = StartCoroutine(_CompleteMove(destination));
-            }
+		private void DisableMover()
+		{
+			StopCoroutine(_thisCoroutine);
+			_navMeshAgent.enabled = false;
+		}
 
-            _navMeshAgent.isStopped = false;
-        }
+		private IEnumerator UpdateMover()
+		{
+			while(true)
+			{
+				CheckIfDestinationIsReached();
+				UpdateAnimator();
+				yield return null;
+			}
+		}
 
-        private IEnumerator _CompleteMove(Vector3 destination)
-        {
-            _completeCoroutineStarted = true;
-            var range = GetComponent<Fighter>().GetWeaponConfig().GetRange();
-            while(!Helper.IsWithinDistance(transform.position, destination, 0.1f))
-            {
-                yield return null;
-            }
+		private void CheckIfDestinationIsReached()
+		{
+			if(!_navMeshAgent.isStopped)
+			{
+				if(Helper.IsWithinDistance(transform.position, _navMeshAgent.destination, _distanceBeforeReachingDestination))
+				{
+					Complete();
+				}
+			}
+		}
 
-            Complete();
-            _completeCoroutineStarted = false;
-        }
+		private void UpdateAnimator()
+		{
+			var velocity = _navMeshAgent.velocity;
+			var localVelocity = transform.InverseTransformDirection(velocity);
+			var speed = localVelocity.z;
+			_animator.SetFloat(ForwardSpeed, speed);
+		}
 
-        public bool CanMoveTo(Vector3 destination)
-        {
-            var path = new NavMeshPath();
-            var hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
-            if(!hasPath) return false;
-            if(path.status != NavMeshPathStatus.PathComplete) return false;
-            return!(GetPathLength(path) > maxNavPathLength);
-        }
+		private void MoveTo(Vector3 destination, float speedFraction = 1f)
+		{
+			_navMeshAgent.destination = destination;
+			_navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
+			_navMeshAgent.isStopped = false;
+		}
 
-        private float GetPathLength(NavMeshPath path)
-        {
-            var total = 0f;
-            if(path.corners.Length < 2) return total;
-            for(var i = 0;i < path.corners.Length - 1;i++)
-            {
-                total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
-            }
+		public bool CanMoveTo(Vector3 destination)
+		{
+			var path = new NavMeshPath();
+			var hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
+			if(!hasPath) return false;
+			if(path.status != NavMeshPathStatus.PathComplete) return false;
+			return!(GetPathLength(path) > maxNavPathLength);
+		}
 
-            return total;
-        }
+		private float GetPathLength(NavMeshPath path)
+		{
+			var total = 0f;
+			if(path.corners.Length < 2) return total;
+			for(var i = 0;i < path.corners.Length - 1;i++)
+			{
+				total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+			}
 
-        public void Cancel() => _navMeshAgent.isStopped = true;
+			return total;
+		}
 
-        public void StartMoveAction(Vector3 destination, float speedFraction)
-        {
-            _actionScheduler.StartAction(this);
-            MoveTo(destination, speedFraction);
-        }
+		public void Cancel() => _navMeshAgent.isStopped = true;
 
-        public void QueueMoveAction(Vector3 destination, float speedFraction) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction));
+		public IAction StartMoveAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
+		{
+			_actionScheduler.StartAction(this);
+			_distanceBeforeReachingDestination = withinDistance;
+			MoveTo(destination, speedFraction);
+			return this;
+		}
 
-        public object CaptureState() => new SerializableVector3(transform.position);
+		public void QueueMoveAction(Vector3 destination, float speedFraction) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction));
 
-        public void RestoreState(object state)
-        {
-            var position = (SerializableVector3)state;
-            _agent.enabled = false;
-            transform.position = position.ToVector();
-            _agent.enabled = true;
-        }
+		public object CaptureState() => new SerializableVector3(transform.position);
 
-        public void Complete() => _actionScheduler.CompleteAction();
+		public void RestoreState(object state)
+		{
+			var position = (SerializableVector3)state;
+			_navMeshAgent.enabled = false;
+			transform.position = position.ToVector();
+			_navMeshAgent.enabled = true;
+		}
 
-        public void ExecuteAction(IActionData data)
-        {
-            var destination = ((MoverActionData)data).Destination;
-            var speed = ((MoverActionData)data).Speed;
+		public void Complete()
+		{
+			_navMeshAgent.isStopped = true;
+			_actionScheduler.CompleteAction();
+			OnComplete?.Invoke();
+		}
 
-            MoveTo(destination, speed);
-        }
-    }
+		public void ExecuteAction(IActionData data)
+		{
+			var destination = ((MoverActionData)data).Destination;
+			var speed = ((MoverActionData)data).Speed;
+
+			MoveTo(destination, speed);
+		}
+	}
 }

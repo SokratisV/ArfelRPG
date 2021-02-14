@@ -1,200 +1,198 @@
+using System;
 using System.Collections.Generic;
 using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Attributes;
-using RPG.Control;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
-    {
-        [SerializeField] private float timeBetweenAttacks = 1f; //When changing, change RandomAttackAnimBehavior as well
-        [SerializeField] private Transform rightHandTransform = null;
-        [SerializeField] private Transform leftHandTransform = null;
-        [SerializeField] private WeaponConfig defaultWeapon = null;
+	public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
+	{
+		public event Action OnComplete;
 
-        private WeaponConfig _currentWeaponConfig;
-        private Mover _mover;
-        private ActionScheduler _actionScheduler;
-        private Animator _animator;
-        private LazyValue<Weapon> _currentWeapon;
-        private Health _target;
-        private float _timeSinceLastAttack = Mathf.Infinity;
-        private static readonly int StopAttackHash = Animator.StringToHash("stopAttack");
-        private static readonly int AttackHash = Animator.StringToHash("attack");
+		[SerializeField] private float timeBetweenAttacks = 1f; //When changing, change RandomAttackAnimBehavior as well
+		[SerializeField] private Transform rightHandTransform = null;
+		[SerializeField] private Transform leftHandTransform = null;
+		[SerializeField] private WeaponConfig defaultWeapon = null;
 
-        private void Start()
-        {
-            _currentWeapon.ForceInit();
-        }
+		private WeaponConfig _currentWeaponConfig;
+		private Mover _mover;
+		private ActionScheduler _actionScheduler;
+		private Animator _animator;
+		private LazyValue<Weapon> _currentWeapon;
+		private Health _target;
+		private bool _isInRange;
+		private float _timeSinceLastAttack = Mathf.Infinity;
+		private static readonly int StopAttackHash = Animator.StringToHash("stopAttack");
+		private static readonly int AttackHash = Animator.StringToHash("attack");
 
-        private void Awake()
-        {
-            _currentWeaponConfig = defaultWeapon;
-            _currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
-            _animator = GetComponent<Animator>();
-            _actionScheduler = GetComponent<ActionScheduler>();
-            _mover = GetComponent<Mover>();
-        }
+		private void Start() => _currentWeapon.ForceInit();
 
-        private Weapon SetupDefaultWeapon()
-        {
-            return AttachWeapon(defaultWeapon);
-        }
+		private void Awake()
+		{
+			_currentWeaponConfig = defaultWeapon;
+			_currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+			_animator = GetComponent<Animator>();
+			_actionScheduler = GetComponent<ActionScheduler>();
+			_mover = GetComponent<Mover>();
+		}
 
-        public void EquipWeapon(WeaponConfig weapon)
-        {
-            _currentWeaponConfig = weapon;
-            _currentWeapon.Value = AttachWeapon(weapon);
-        }
+		private Weapon SetupDefaultWeapon() => AttachWeapon(defaultWeapon);
 
-        private Weapon AttachWeapon(WeaponConfig weapon)
-        {
-            return weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
-        }
+		public void EquipWeapon(WeaponConfig weapon)
+		{
+			_currentWeaponConfig = weapon;
+			_currentWeapon.Value = AttachWeapon(weapon);
+		}
 
-        public Health GetTarget()
-        {
-            return _target;
-        }
+		private Weapon AttachWeapon(WeaponConfig weapon) => weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
 
-        public WeaponConfig GetWeaponConfig()
-        {
-            return _currentWeaponConfig;
-        }
+		public Health GetTarget() => _target;
 
-        private void Update()
-        {
-            _timeSinceLastAttack += Time.deltaTime;
+		public WeaponConfig GetWeaponConfig() => _currentWeaponConfig;
 
-            if(_target == null)
-            {
-                return;
-            }
+		private void Update()
+		{
+			_timeSinceLastAttack += Time.deltaTime;
 
-            if(_target.IsDead)
-            {
-                Complete();
-                _target = null;
-                return;
-            }
+			if(_target == null)
+				return;
 
-            if(GetComponent<TrainingDummy>()) return; //TODO: Remove
-            if(!IsInRange(_target.transform))
-            {
-                _mover.MoveTo(_target.transform.position, 1f);
-            }
-            else
-            {
-                _mover.Cancel();
-                AttackBehavior();
-            }
-        }
+			if(_target.IsDead)
+			{
+				Complete();
+				_target = null;
+				return;
+			}
 
-        private void AttackBehavior()
-        {
-            transform.LookAt(_target.transform);
-            if(!(_timeSinceLastAttack > timeBetweenAttacks)) return;
-            TriggerAttack();
-            _timeSinceLastAttack = 0;
-        }
+			if(_isInRange)
+			{
+				AttackBehavior();
+			}
+		}
 
-        private void TriggerAttack()
-        {
-            _animator.ResetTrigger(StopAttackHash);
-            _animator.SetTrigger(AttackHash);
-        }
+		private void AttackBehavior()
+		{
+			transform.LookAt(_target.transform);
+			if(!(_timeSinceLastAttack > timeBetweenAttacks)) return;
+			TriggerAttack();
+			_timeSinceLastAttack = 0;
+		}
 
-        // Animation Event
-        private void Hit()
-        {
-            var damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
-            if(_currentWeapon.Value != null)
-            {
-                _currentWeapon.Value.OnHit();
-            }
+		private void TriggerAttack()
+		{
+			_animator.ResetTrigger(StopAttackHash);
+			_animator.SetTrigger(AttackHash);
+		}
 
-            if(_target == null) return;
-            if(_currentWeaponConfig.HasProjectile())
-            {
-                _currentWeaponConfig.LaunchProjectile(rightHandTransform, leftHandTransform, _target, gameObject, damage);
-            }
-            else
-            {
-                _target.TakeDamage(gameObject, damage);
-            }
-        }
+		// Animation Event
+		private void Hit()
+		{
+			var damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
+			if(_currentWeapon.Value != null)
+			{
+				_currentWeapon.Value.OnHit();
+			}
 
-        private void Shoot() => Hit();
+			if(_target == null) return;
+			if(_currentWeaponConfig.HasProjectile())
+			{
+				_currentWeaponConfig.LaunchProjectile(rightHandTransform, leftHandTransform, _target, gameObject, damage);
+			}
+			else
+			{
+				_target.TakeDamage(gameObject, damage);
+			}
+		}
 
-        public bool CanAttack(GameObject target)
-        {
-            if(target == null) return false;
-            if(!_mover.CanMoveTo(target.transform.position) && !IsInRange(target.transform)) return false;
-            var targetToTest = target.GetComponent<Health>();
-            return targetToTest != null && !targetToTest.IsDead;
-        }
+		private void Shoot() => Hit();
 
-        private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _currentWeaponConfig.GetRange());
+		public bool CanAttack(GameObject target)
+		{
+			if(target == null) return false;
+			if(!_mover.CanMoveTo(target.transform.position) && !IsInRange(target.transform)) return false;
+			var targetToTest = target.GetComponent<Health>();
+			return targetToTest != null && !targetToTest.IsDead;
+		}
 
-        public void Attack(GameObject combatTarget)
-        {
-            _actionScheduler.StartAction(this);
-            _target = combatTarget.GetComponent<Health>();
-        }
+		private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _currentWeaponConfig.GetRange());
 
-        public void QueueAttackAction(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
+		public void Attack(GameObject combatTarget)
+		{
+			_isInRange = false;
+			_target = combatTarget.GetComponent<Health>();
 
-        public void Cancel()
-        {
-            StopAttack();
-            _mover.Cancel();
-            _target = null;
-        }
+			void Action()
+			{
+				StartAttackAction();
+				_mover.OnComplete -= Action;
+			}
 
-        private void StopAttack()
-        {
-            _animator.ResetTrigger(AttackHash);
-            _animator.SetTrigger(StopAttackHash);
-        }
+			_mover.StartMoveAction(combatTarget.transform.position, withinDistance: GetWeaponConfig().GetRange()).OnComplete += Action;
+		}
 
-        public object CaptureState() => _currentWeaponConfig.name;
+		private void StartAttackAction()
+		{
+			_actionScheduler.StartAction(this);
+			_isInRange = true;
+		}
 
-        public void RestoreState(object state)
-        {
-            _currentWeaponConfig = Resources.Load<WeaponConfig>((string)state);
-            EquipWeapon(_currentWeaponConfig);
-        }
+		public void QueueAttackAction(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
 
-        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
-        {
-            if(stat == Stat.Damage)
-            {
-                yield return _currentWeaponConfig.GetDamage();
-            }
-        }
+		public void Cancel()
+		{
+			StopAttack();
+			_mover.Cancel();
+			_target = null;
+		}
 
-        public IEnumerable<float> GetPercentageModifiers(Stat stat)
-        {
-            if(stat == Stat.Damage)
-            {
-                yield return _currentWeaponConfig.GetPercentageBonus();
-            }
-        }
+		private void StopAttack()
+		{
+			_animator.ResetTrigger(AttackHash);
+			_animator.SetTrigger(StopAttackHash);
+		}
 
-        public void Complete() => _actionScheduler.CompleteAction();
+		public object CaptureState() => _currentWeaponConfig.name;
 
-        public void ExecuteAction(IActionData data)
-        {
-            _target = ((FighterActionData)data).Target.GetComponent<Health>();
-            if(_target == null)
-            {
-                _actionScheduler.CompleteAction();
-            }
-        }
-    }
+		public void RestoreState(object state)
+		{
+			_currentWeaponConfig = Resources.Load<WeaponConfig>((string)state);
+			EquipWeapon(_currentWeaponConfig);
+		}
+
+		public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+		{
+			if(stat == Stat.Damage)
+			{
+				yield return _currentWeaponConfig.GetDamage();
+			}
+		}
+
+		public IEnumerable<float> GetPercentageModifiers(Stat stat)
+		{
+			if(stat == Stat.Damage)
+			{
+				yield return _currentWeaponConfig.GetPercentageBonus();
+			}
+		}
+
+		public void Complete()
+		{
+			OnComplete?.Invoke();
+			_actionScheduler.CompleteAction();
+		}
+
+		public void ExecuteAction(IActionData data)
+		{
+			_target = ((FighterActionData)data).Target.GetComponent<Health>();
+			if(_target == null)
+			{
+				_actionScheduler.CompleteAction();
+			}
+		}
+	}
 }

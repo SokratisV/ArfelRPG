@@ -121,7 +121,7 @@ namespace RPG.Control
             {
                 if(Input.GetMouseButton(0))
                 {
-                    _mover.StartMoveAction(target, 1f);
+                    _mover.StartMoveAction(target);
                 }
             }
 

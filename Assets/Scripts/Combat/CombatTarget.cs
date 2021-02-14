@@ -7,10 +7,7 @@ namespace RPG.Combat
     [RequireComponent(typeof(Health))]
     public class CombatTarget : MonoBehaviour, IRaycastable
     {
-        public CursorType GetCursorType()
-        {
-            return CursorType.Combat;
-        }
+        public CursorType GetCursorType() => CursorType.Combat;
 
         public bool HandleRaycast(PlayerController callingController)
         {
@@ -30,17 +27,14 @@ namespace RPG.Combat
             }
             else
             {
-                if(Input.GetMouseButton(0))
+                if(Input.GetMouseButtonDown(0))
                 {
                     callingController.GetComponent<Fighter>().Attack(gameObject);
                 }
             }
         }
 
-        public float GetInteractionRange()
-        {
-            return 0f;
-        }
+        public float GetInteractionRange() => 0f;
 
         private void ToggleOutline(bool toggle)
         {
@@ -48,14 +42,8 @@ namespace RPG.Combat
                 outline.enabled = toggle;
         }
 
-        private void OnMouseEnter()
-        {
-            ToggleOutline(true);
-        }
+        private void OnMouseEnter() => ToggleOutline(true);
 
-        private void OnMouseExit()
-        {
-            ToggleOutline(false);
-        }
+        private void OnMouseExit() => ToggleOutline(false);
     }
 }
