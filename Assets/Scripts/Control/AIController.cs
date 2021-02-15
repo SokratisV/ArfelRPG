@@ -27,7 +27,6 @@ namespace RPG.Control
 		private Health _health;
 		private Fighter _fighter;
 		private Mover _mover;
-		private ActionScheduler _actionScheduler;
 		private LazyValue<Vector3> _guardPosition;
 
 		private float _timeSinceLastSawPlayer = Mathf.Infinity,
@@ -46,12 +45,15 @@ namespace RPG.Control
 			_health = GetComponent<Health>();
 			_mover = GetComponent<Mover>();
 			_guardPosition = new LazyValue<Vector3>(GetGuardPosition);
-			_actionScheduler = GetComponent<ActionScheduler>();
 		}
 
 		private Vector3 GetGuardPosition() => transform.position;
 
-		private void OnEnable() => _health.OnTakeDamage += AttackAttacker;
+		private void OnEnable()
+		{
+			_health.OnTakeDamage += AttackAttacker;
+			_health.OnDeath += MarkDead;
+		}
 
 		private void AttackAttacker(GameObject obj)
 		{
@@ -68,7 +70,7 @@ namespace RPG.Control
 
 		private void Update()
 		{
-			if(IsDead()) return;
+			if(_health.IsDead) return;
 
 			if(IsAggrevated() && _fighter.CanAttack(_player))
 			{
@@ -86,21 +88,15 @@ namespace RPG.Control
 			UpdateTimers();
 		}
 
-		private bool IsDead()
+		private void MarkDead()
 		{
-			if(_health.IsDead)
+			if(_hasInformedPlayerOfAggro)
 			{
-				if(_hasInformedPlayerOfAggro)
-				{
-					OnPlayerAggro?.Invoke(false, combatMusic);
-					_hasInformedPlayerOfAggro = false;
-				}
-
+				OnPlayerAggro?.Invoke(false, combatMusic);
+				_hasInformedPlayerOfAggro = false;
 				GetComponent<Collider>().enabled = false;
-				return true;
+				_health.OnDeath -= MarkDead;
 			}
-
-			return false;
 		}
 
 		private bool IsSuspicious()
@@ -180,8 +176,8 @@ namespace RPG.Control
 			{
 				if(hit.transform.TryGetComponent(out AIController ai))
 				{
-					if (ai == this) continue;
-					if (ai.IsAggrevated()) continue;
+					if(ai == this) continue;
+					if(ai.IsAggrevated()) continue;
 					ai.Aggrevate();
 				}
 			}

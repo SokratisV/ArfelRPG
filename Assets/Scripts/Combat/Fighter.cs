@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using GameDevTV.Utils;
+using RPG.AnimatorBehaviors;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Attributes;
@@ -14,7 +16,7 @@ namespace RPG.Combat
 	{
 		public event Action OnActionComplete;
 
-		[SerializeField] private float timeBetweenAttacks = 1f; //When changing, change RandomAttackAnimBehavior as well
+		[SerializeField] private float timeBetweenAttacks = 1f;
 		[SerializeField] private Transform rightHandTransform = null;
 		[SerializeField] private Transform leftHandTransform = null;
 		[SerializeField] private WeaponConfig defaultWeapon = null;
@@ -26,12 +28,23 @@ namespace RPG.Combat
 		private LazyValue<Weapon> _currentWeapon;
 		private Health _target;
 		private BaseStats _stats;
-		private bool _isInRange;
 		private float _timeSinceLastAttack = Mathf.Infinity;
+		private bool _isCurrentAnimationDone = true;
 		private static readonly int StopAttackHash = Animator.StringToHash("stopAttack");
 		private static readonly int AttackHash = Animator.StringToHash("attack");
 
-		private void Start() => _currentWeapon.ForceInit();
+		private void Start()
+		{
+			_currentWeapon.ForceInit();
+			var attackSpeedBehaviors = _animator.GetBehaviours<RandomAttackAnimBehavior>();
+			foreach(var behaviour in attackSpeedBehaviors)
+			{
+				behaviour.TimeBetweenAttacks = timeBetweenAttacks;
+			}
+
+			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
+			attackListenerBehavior.OnAnimationComplete += () => _isCurrentAnimationDone = true;
+		}
 
 		private void Awake()
 		{
@@ -75,7 +88,8 @@ namespace RPG.Combat
 			}
 			else
 			{
-				_mover.MoveWithoutAction(_target.transform.position);
+				if (_isCurrentAnimationDone)
+					_mover.MoveWithoutAction(_target.transform.position);
 			}
 		}
 
@@ -89,6 +103,7 @@ namespace RPG.Combat
 
 		private void AttackAnimation()
 		{
+			_isCurrentAnimationDone = false;
 			_animator.ResetTrigger(StopAttackHash);
 			_animator.SetTrigger(AttackHash);
 		}
