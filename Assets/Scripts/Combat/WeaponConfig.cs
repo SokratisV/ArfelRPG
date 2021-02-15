@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using RPG.Attributes;
 using UnityEngine;
 
@@ -13,6 +15,7 @@ namespace RPG.Combat
 		[SerializeField] private Projectile projectile = null;
 
 		private const string WeaponName = "Weapon";
+		private static Dictionary<Animator, Weapon> WeaponPerPlayer = new Dictionary<Animator, Weapon>();
 
 		public bool HasProjectile() => projectile != null;
 
@@ -24,7 +27,7 @@ namespace RPG.Combat
 
 		public Weapon Spawn(Transform rightHand, Transform leftHand, Animator animator)
 		{
-			DestroyOldWeapon(rightHand, leftHand);
+			DestroyOldWeapon(animator);
 			Weapon weapon = null;
 
 			if(equippedPrefab != null)
@@ -32,6 +35,7 @@ namespace RPG.Combat
 				var handTransform = GetTransform(rightHand, leftHand);
 				weapon = Instantiate(equippedPrefab, handTransform);
 				weapon.gameObject.name = WeaponName;
+				WeaponPerPlayer[animator] = weapon;
 			}
 
 			var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
@@ -47,17 +51,12 @@ namespace RPG.Combat
 			return weapon;
 		}
 
-		private void DestroyOldWeapon(Transform rightHand, Transform leftHand)
+		private void DestroyOldWeapon(Animator animator)
 		{
-			var oldWeapon = rightHand.Find(WeaponName);
-			if(oldWeapon == null)
+			if(WeaponPerPlayer.TryGetValue(animator, out var weapon))
 			{
-				oldWeapon = leftHand.Find(WeaponName);
+				Destroy(weapon.gameObject);
 			}
-
-			if(oldWeapon == null) return;
-			oldWeapon.name = "DESTROYING";
-			Destroy(oldWeapon.gameObject);
 		}
 
 		private Transform GetTransform(Transform rightHand, Transform leftHand)
@@ -71,5 +70,7 @@ namespace RPG.Combat
 		public float GetRange() => weaponRange;
 
 		public float GetPercentageBonus() => weaponPercentageBonus;
+
+		private void OnDestroy() => WeaponPerPlayer = null;
 	}
 }

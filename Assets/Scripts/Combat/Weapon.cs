@@ -12,5 +12,10 @@ namespace RPG.Combat
 		{
 			onHit.Invoke();
 		}
+
+		public void Destroy()
+		{
+			Destroy(gameObject);
+		}
 	}
 }
