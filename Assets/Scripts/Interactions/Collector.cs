@@ -46,7 +46,7 @@ namespace RPG.Interactions
 				_mover.OnActionComplete -= Action;
 			}
 
-			_mover.StartMoveAction(collectible.transform.position, withinDistance: collectible.GetInteractionRange()).OnActionComplete += Action;
+			_mover.Move(collectible.transform.position, withinDistance: collectible.GetInteractionRange()).OnActionComplete += Action;
 		}
 		
 		private void StartCollectAction()

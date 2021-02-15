@@ -114,14 +114,14 @@ namespace RPG.Control
             {
                 if(Input.GetMouseButtonDown(0))
                 {
-                    _mover.QueueMoveAction(target, 1f);
+                    _mover.QueueMoveAction(target);
                 }
             }
             else
             {
                 if(Input.GetMouseButton(0))
                 {
-                    _mover.StartMoveAction(target);
+                    _mover.Move(target);
                 }
             }
 

@@ -60,9 +60,7 @@ namespace RPG.Combat
 		private void Update()
 		{
 			_timeSinceLastAttack += Time.deltaTime;
-
 			if(_target == null) return;
-
 			if(_target.IsDead)
 			{
 				CompleteAction();
@@ -70,18 +68,18 @@ namespace RPG.Combat
 				return;
 			}
 
-			_isInRange = IsInRange(_target.transform);
-			if(_isInRange)
+			if(IsInRange(_target.transform))
 			{
-				AttackBehavior();
+				_mover.CancelAction();
+				Attack();
 			}
 			else
 			{
-				_mover.StartMoveAction(_target.transform.position, withinDistance:GetWeaponConfig().GetRange());
+				_mover.MoveWithoutAction(_target.transform.position);
 			}
 		}
 
-		private void AttackBehavior()
+		private void Attack()
 		{
 			transform.LookAt(_target.transform);
 			if(!(_timeSinceLastAttack > timeBetweenAttacks)) return;
@@ -121,18 +119,18 @@ namespace RPG.Combat
 		{
 			if(target == null) return false;
 			if(!_mover.CanMoveTo(target.transform.position) && !IsInRange(target.transform)) return false;
-			var targetToTest = target.GetComponent<Health>();
-			return targetToTest != null && !targetToTest.IsDead;
+			var health = target.GetComponent<Health>();
+			return health != null && !health.IsDead;
 		}
 
-		private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _currentWeaponConfig.GetRange());
+		private bool IsInRange(Transform target) => Helper.IsWithinDistance(transform, target, _currentWeaponConfig.GetRange());
 
 		public void Attack(GameObject combatTarget)
 		{
-			_actionScheduler.StartAction(this);
 			_target ??= combatTarget.GetComponent<Health>();
+			_actionScheduler.StartAction(this);
 		}
-		
+
 		public void QueueAttackAction(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
 
 		public void CancelAction()

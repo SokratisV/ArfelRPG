@@ -45,7 +45,11 @@ namespace RPG.Movement
 			DisableMover();
 		}
 
-		private void DisableMover() => _selfUpdateRoutine.StopCoroutine(this);
+		private void DisableMover()
+		{
+			_navMeshAgent.enabled = false;
+			_selfUpdateRoutine.StopCoroutine(this);
+		}
 
 		private IEnumerator UpdateMover()
 		{
@@ -76,7 +80,7 @@ namespace RPG.Movement
 			_animator.SetFloat(ForwardSpeed, speed);
 		}
 
-		private void MoveTowards(Vector3 destination, float speedFraction = 1f)
+		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f)
 		{
 			_navMeshAgent.destination = destination;
 			_navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
@@ -106,15 +110,15 @@ namespace RPG.Movement
 
 		public void CancelAction() => _navMeshAgent.isStopped = true;
 
-		public IAction StartMoveAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
+		public IAction Move(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
 			_actionScheduler.StartAction(this);
 			_distanceBeforeReachingDestination = withinDistance;
-			MoveTowards(destination, speedFraction);
+			MoveWithoutAction(destination, speedFraction);
 			return this;
 		}
 
-		public void QueueMoveAction(Vector3 destination, float speedFraction) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction));
+		public void QueueMoveAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction, withinDistance));
 
 		public object CaptureState() => new SerializableVector3(transform.position);
 
@@ -137,8 +141,8 @@ namespace RPG.Movement
 		{
 			var destination = ((MoverActionData)data).Destination;
 			var speed = ((MoverActionData)data).Speed;
-
-			MoveTowards(destination, speed);
+			_distanceBeforeReachingDestination = ((MoverActionData)data).StopDistance;
+			MoveWithoutAction(destination, speed);
 		}
 	}
 }

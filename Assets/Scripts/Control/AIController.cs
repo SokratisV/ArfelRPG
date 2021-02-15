@@ -32,11 +32,11 @@ namespace RPG.Control
 
 		private float _timeSinceLastSawPlayer = Mathf.Infinity,
 			_timeSinceArrivedAtWaypoint = Mathf.Infinity,
+			_timeSinceAggrevated = Mathf.Infinity,
 			_timeSinceNotifiedOthers = 0;
 
 		private int _currentWayPointIndex = 0;
 		private bool _hasInformedPlayerOfAggro = false;
-		private bool _isAggrevated;
 		[SerializeField] private CombatMusicAreas combatMusic;
 
 		private void Awake()
@@ -58,11 +58,12 @@ namespace RPG.Control
 			if(_health.IsDead)
 			{
 				_health.OnTakeDamage -= AttackAttacker;
-				_isAggrevated = false;
+				_timeSinceAggrevated = Mathf.Infinity;
 				return;
 			}
 
-			_isAggrevated = true;
+			Aggrevate();
+			// IsPlayerWithinView();
 		}
 
 		private void Start() => _guardPosition.ForceInit();
@@ -71,7 +72,7 @@ namespace RPG.Control
 		{
 			if(IsDead()) return;
 
-			if(_isAggrevated && _fighter.CanAttack(_player))
+			if(IsPlayerWithinView() && _fighter.CanAttack(_player))
 			{
 				AttackBehaviour();
 			}
@@ -106,20 +107,20 @@ namespace RPG.Control
 
 		private bool IsSuspicious()
 		{
-			if(_timeSinceLastSawPlayer < suspicionTime)
-				return true;
+			if(_timeSinceLastSawPlayer < suspicionTime) return true;
 
 			if(_hasInformedPlayerOfAggro)
 			{
 				OnPlayerAggro?.Invoke(false, combatMusic);
 				_hasInformedPlayerOfAggro = false;
-				_isAggrevated = false;
 			}
 
 			return false;
 		}
 
-		public void Aggrevate() => _isAggrevated = true;
+		public void Aggrevate() => _timeSinceAggrevated = 0;
+
+		private bool IsPlayerWithinView() => Helper.IsWithinDistance(_player.transform, transform, chaseDistance) || _timeSinceAggrevated < aggroCooldownTime;
 
 		private void UpdateTimers()
 		{
@@ -145,7 +146,7 @@ namespace RPG.Control
 
 			if(_timeSinceArrivedAtWaypoint > wayPointDwellTime)
 			{
-				_mover.StartMoveAction(nextPosition, patrolSpeedFraction);
+				_mover.Move(nextPosition, patrolSpeedFraction);
 			}
 		}
 

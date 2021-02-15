@@ -60,6 +60,8 @@ namespace RPG.Attributes
             OnTakeDamage?.Invoke(instigator);
             if(_healthPoints.Value == 0)
             {
+                Die();
+                AwardExperience(instigator);
                 onDie.Invoke();
                 //TODO: Remove from health (add in different script only for player and call it through unity event?)
                 if(tag.Equals("Player"))
@@ -70,10 +72,6 @@ namespace RPG.Attributes
                 {
                     OnDeath?.Invoke();
                 }
-
-                //
-                Die();
-                AwardExperience(instigator);
             }
         }
 
