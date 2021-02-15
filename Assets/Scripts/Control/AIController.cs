@@ -18,7 +18,7 @@ namespace RPG.Control
 			shoutDistance = 0f,
 			aggroShoutInterval = .4f;
 
-		[SerializeField] private PatrolPath patrolPath = default;
+		[SerializeField] private PatrolPath patrolPath;
 		[Range(0, 1)] [SerializeField] private float patrolSpeedFraction = 0.2f;
 
 		public static event Action<bool, CombatMusicAreas> OnPlayerAggro;
@@ -58,12 +58,10 @@ namespace RPG.Control
 			if(_health.IsDead)
 			{
 				_health.OnTakeDamage -= AttackAttacker;
-				_timeSinceAggrevated = Mathf.Infinity;
 				return;
 			}
 
 			Aggrevate();
-			// IsPlayerWithinView();
 		}
 
 		private void Start() => _guardPosition.ForceInit();
@@ -72,7 +70,7 @@ namespace RPG.Control
 		{
 			if(IsDead()) return;
 
-			if(IsPlayerWithinView() && _fighter.CanAttack(_player))
+			if(IsAggrevated() && _fighter.CanAttack(_player))
 			{
 				AttackBehaviour();
 			}
@@ -120,13 +118,14 @@ namespace RPG.Control
 
 		public void Aggrevate() => _timeSinceAggrevated = 0;
 
-		private bool IsPlayerWithinView() => Helper.IsWithinDistance(_player.transform, transform, chaseDistance) || _timeSinceAggrevated < aggroCooldownTime;
+		private bool IsAggrevated() => Helper.IsWithinDistance(_player.transform, transform, chaseDistance) || _timeSinceAggrevated < aggroCooldownTime;
 
 		private void UpdateTimers()
 		{
 			_timeSinceLastSawPlayer += Time.deltaTime;
 			_timeSinceArrivedAtWaypoint += Time.deltaTime;
 			_timeSinceNotifiedOthers += Time.deltaTime;
+			_timeSinceAggrevated += Time.deltaTime;
 		}
 
 		private void PatrolBehaviour()
@@ -180,7 +179,11 @@ namespace RPG.Control
 			foreach(var hit in hits)
 			{
 				if(hit.transform.TryGetComponent(out AIController ai))
+				{
+					if (ai == this) continue;
+					if (ai.IsAggrevated()) continue;
 					ai.Aggrevate();
+				}
 			}
 		}
 
