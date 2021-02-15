@@ -161,7 +161,7 @@ namespace RPG.Control
 				OnPlayerAggro?.Invoke(true, combatMusic);
 			}
 
-			_fighter.Attack(_player);
+			_fighter.StartAttackAction(_player);
 			_timeSinceLastSawPlayer = 0;
 			AggrevateNearbyEnemies();
 		}

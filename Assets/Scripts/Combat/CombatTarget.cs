@@ -29,7 +29,7 @@ namespace RPG.Combat
             {
                 if(Input.GetMouseButtonDown(0))
                 {
-                    callingController.GetComponent<Fighter>().Attack(gameObject);
+                    callingController.GetComponent<Fighter>().StartAttackAction(gameObject);
                 }
             }
         }

@@ -140,7 +140,7 @@ namespace RPG.Combat
 
 		private bool IsInRange(Transform target) => Helper.IsWithinDistance(transform, target, _currentWeaponConfig.GetRange());
 
-		public void Attack(GameObject combatTarget)
+		public void StartAttackAction(GameObject combatTarget)
 		{
 			_target ??= combatTarget.GetComponent<Health>();
 			_actionScheduler.StartAction(this);
@@ -191,13 +191,6 @@ namespace RPG.Combat
 			_actionScheduler.CompleteAction();
 		}
 
-		public void ExecuteAction(IActionData data)
-		{
-			_target = ((FighterActionData)data).Target.GetComponent<Health>();
-			if(_target == null)
-			{
-				_actionScheduler.CompleteAction();
-			}
-		}
+		public void ExecuteAction(IActionData data) => _target = ((FighterActionData)data).Target.GetComponent<Health>();
 	}
 }
