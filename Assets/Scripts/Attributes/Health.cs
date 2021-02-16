@@ -49,7 +49,7 @@ namespace RPG.Attributes
 
         private void RestoreHealth()
         {
-            var regenHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health) * (regenerationPercentage / 100);
+            var regenHealthPoints = _baseStats.GetStat(Stat.Health) * (regenerationPercentage / 100);
             _healthPoints.Value = Mathf.Max(_healthPoints.Value, regenHealthPoints);
         }
 
@@ -82,7 +82,7 @@ namespace RPG.Attributes
         private void AwardExperience(GameObject instigator)
         {
             if(instigator.TryGetComponent(out Experience experience))
-                experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
+                experience.GainExperience(_baseStats.GetStat(Stat.ExperienceReward));
         }
 
         public float GetPercentage() => 100 * GetFraction();

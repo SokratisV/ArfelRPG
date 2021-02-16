@@ -91,10 +91,9 @@ namespace RPG.Stats
 
 		public int CalculateLevel()
 		{
-			var experience = GetComponent<Experience>();
-			if(experience == null) return startingLevel;
+			if(_experience == null) return startingLevel;
 
-			var currentXp = experience.GetPoints();
+			var currentXp = _experience.GetPoints();
 			var penultimateLevel = progression.GetLevels(Stat.ExperienceToLevelUp, characterClass);
 			for(var level = 1;level <= penultimateLevel;level++)
 			{

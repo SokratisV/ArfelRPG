@@ -7,173 +7,169 @@ using UnityEngine.AI;
 
 namespace RPG.Control
 {
-    public class PlayerController : MonoBehaviour
-    {
-        private RaycastHit[] _hits;
-        private RaycastHit _movementRaycast;
-        private Health _health;
-        private SpawnFeedback _movementFeedbackPrefab;
-        private Mover _mover;
-        private Camera _mainCamera;
-        [SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius = 1f;
+	public class PlayerController : MonoBehaviour
+	{
+		private RaycastHit[] _hits;
+		private RaycastHit _movementRaycast;
+		private Health _health;
+		private SpawnFeedback _movementFeedbackPrefab;
+		private Mover _mover;
+		private Camera _mainCamera;
+		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius;
 
-        [Serializable]
-        private struct CursorMapping
-        {
-            public CursorType type;
-            public Texture2D texture;
-            public Vector2 hotspot;
-        }
+		[Serializable]
+		private struct CursorMapping
+		{
+			public CursorType type;
+			public Texture2D texture;
+			public Vector2 hotspot;
+		}
 
-        [SerializeField] private CursorMapping[] cursorMappings = null;
+		[SerializeField] private CursorMapping[] cursorMappings = null;
 
-        private void Awake()
-        {
-            _health = GetComponent<Health>();
-            _movementFeedbackPrefab = GetComponent<SpawnFeedback>();
-            _mover = GetComponent<Mover>();
-            _mainCamera = Camera.main;
-        }
+		private void Awake()
+		{
+			_health = GetComponent<Health>();
+			_movementFeedbackPrefab = GetComponent<SpawnFeedback>();
+			_mover = GetComponent<Mover>();
+			_mainCamera = Camera.main;
+		}
 
-        private void Update()
-        {
-            // Unnecessary for now
-            // if (InteractWithUI()) { return; }
-            if(_health.IsDead)
-            {
-                SetCursor(CursorType.None);
-                return;
-            }
+		private void Update()
+		{
+			if(InteractWithUI()) return;
+			if(_health.IsDead)
+			{
+				SetCursor(CursorType.None);
+				return;
+			}
 
-            if(InteractWithComponent()) return;
-            if(InteractWithMovement()) return;
+			if(InteractWithComponent()) return;
+			if(InteractWithMovement()) return;
 
-            SetCursor(CursorType.None);
-        }
+			SetCursor(CursorType.None);
+		}
 
-        private bool InteractWithComponent()
-        {
-            _hits = Physics.RaycastAll(GetMouseRay());
-            foreach(var hit in _hits)
-            {
-                var raycastables = hit.transform.GetComponents<IRaycastable>();
-                foreach(var raycastable in raycastables)
-                {
-                    if(raycastable.HandleRaycast(this))
-                    {
-                        SetCursor(raycastable.GetCursorType());
-                        return true;
-                    }
-                }
-            }
+		private bool InteractWithComponent()
+		{
+			_hits = RaycastAllSorted();
+			foreach(var hit in _hits)
+			{
+				var raycastables = hit.transform.GetComponents<IRaycastable>();
+				foreach(var raycastable in raycastables)
+				{
+					if(raycastable.HandleRaycast(this))
+					{
+						SetCursor(raycastable.GetCursorType());
+						return true;
+					}
+				}
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        private RaycastHit[] RaycastAllSorted()
-        {
-            var raycastHit = Physics.SphereCastAll(GetMouseRay(), raycastRadius);
-            var distances = new float[_hits.Length];
-            for(var i = 0;i < _hits.Length;i++)
-            {
-                distances[i] = _hits[i].distance;
-            }
+		private RaycastHit[] RaycastAllSorted()
+		{
+			var hits = Physics.SphereCastAll(GetMouseRay(), raycastRadius);
+			var distances = new float[hits.Length];
+			for(var i = 0;i < hits.Length;i++)
+			{
+				distances[i] = hits[i].distance;
+			}
 
-            Array.Sort(distances, _hits);
-            return _hits;
-        }
+			Array.Sort(distances, hits);
+			return hits;
+		}
 
-        private bool InteractWithUI()
-        {
-            if(EventSystem.current.IsPointerOverGameObject())
-            {
-                SetCursor(CursorType.UI);
-                return true;
-            }
+		private bool InteractWithUI()
+		{
+			if(EventSystem.current.IsPointerOverGameObject())
+			{
+				SetCursor(CursorType.UI);
+				return true;
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        private bool InteractWithMovement()
-        {
-            var hasHit = RaycastNavMesh(out var target);
-            if(hasHit)
-            {
-                if(!_mover.CanMoveTo(target)) return false;
-                CheckPressedButtons(target);
-                SetCursor(CursorType.Movement);
-                return true;
-            }
+		private bool InteractWithMovement()
+		{
+			var hasHit = RaycastNavMesh(out var target);
+			if(hasHit)
+			{
+				if(!_mover.CanMoveTo(target)) return false;
+				CheckPressedButtons(target);
+				SetCursor(CursorType.Movement);
+				return true;
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        private void CheckPressedButtons(Vector3 target)
-        {
-            if(Input.GetKey(KeyCode.LeftControl))
-            {
-                if(Input.GetMouseButtonDown(0))
-                {
-                    _mover.QueueMoveAction(target);
-                }
-            }
-            else
-            {
-                if(Input.GetMouseButton(0))
-                {
-                    _mover.Move(target);
-                }
-            }
+		private void CheckPressedButtons(Vector3 target)
+		{
+			if(Input.GetKey(KeyCode.LeftControl))
+			{
+				if(Input.GetMouseButtonDown(0))
+				{
+					_mover.QueueMoveAction(target);
+				}
+			}
+			else
+			{
+				if(Input.GetMouseButton(0))
+				{
+					_mover.Move(target);
+				}
+			}
 
-            if(Input.GetMouseButtonDown(0))
-            {
-                MovementFeedback(target);
-            }
-        }
+			if(Input.GetMouseButtonDown(0))
+			{
+				MovementFeedback(target);
+			}
+		}
 
-        private bool RaycastNavMesh(out Vector3 target)
-        {
-            target = new Vector3();
+		private bool RaycastNavMesh(out Vector3 target)
+		{
+			target = new Vector3();
+			var hasHit = Physics.Raycast(GetMouseRay(), out _movementRaycast);
+			if(!hasHit) return false;
 
-            var hasHit = Physics.Raycast(GetMouseRay(), out _movementRaycast);
-            if(!hasHit) return false;
+			var hasCastToNavMesh = NavMesh.SamplePosition(_movementRaycast.point, out var navMeshHit, maxNavMeshProjectionDistance, NavMesh.AllAreas);
+			if(!hasCastToNavMesh) return false;
 
-            var hasCastToNavMesh = NavMesh.SamplePosition(
-                _movementRaycast.point, out var navMeshHit, maxNavMeshProjectionDistance, NavMesh.AllAreas);
-            if(!hasCastToNavMesh) return false;
+			target = navMeshHit.position;
+			return _mover.CanMoveTo(target);
+		}
 
-            target = navMeshHit.position;
+		private void MovementFeedback(Vector3 target)
+		{
+			if(_movementFeedbackPrefab != null)
+			{
+				_movementFeedbackPrefab.Spawn(target, _movementRaycast.normal);
+			}
+		}
 
-            return _mover.CanMoveTo(target);
-        }
+		private void SetCursor(CursorType type)
+		{
+			var mapping = GetCursorMapping(type);
+			Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
+		}
 
-        private void MovementFeedback(Vector3 target)
-        {
-            if(_movementFeedbackPrefab != null)
-            {
-                _movementFeedbackPrefab.Spawn(target, _movementRaycast.normal);
-            }
-        }
+		private CursorMapping GetCursorMapping(CursorType type)
+		{
+			foreach(var mapping in cursorMappings)
+			{
+				if(mapping.type == type)
+				{
+					return mapping;
+				}
+			}
 
-        private void SetCursor(CursorType type)
-        {
-            var mapping = GetCursorMapping(type);
-            Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
-        }
+			return cursorMappings[0];
+		}
 
-        private CursorMapping GetCursorMapping(CursorType type)
-        {
-            foreach(var mapping in cursorMappings)
-            {
-                if(mapping.type == type)
-                {
-                    return mapping;
-                }
-            }
-
-            return cursorMappings[0];
-        }
-
-        private Ray GetMouseRay() => _mainCamera.ScreenPointToRay(Input.mousePosition);
-    }
+		private Ray GetMouseRay() => _mainCamera.ScreenPointToRay(Input.mousePosition);
+	}
 }

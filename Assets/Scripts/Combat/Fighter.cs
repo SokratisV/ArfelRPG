@@ -40,9 +40,6 @@ namespace RPG.Combat
 			{
 				behaviour.TimeBetweenAttacks = timeBetweenAttacks;
 			}
-
-			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
-			attackListenerBehavior.OnAnimationComplete += () => _isCurrentAnimationDone = true;
 		}
 
 		private void Awake()
@@ -53,6 +50,8 @@ namespace RPG.Combat
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_mover = GetComponent<Mover>();
 			_stats = GetComponent<BaseStats>();
+			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
+			attackListenerBehavior.OnAnimationComplete += () => _isCurrentAnimationDone = true;
 		}
 
 		private Weapon SetupDefaultWeapon() => AttachWeapon(defaultWeapon);
@@ -111,10 +110,7 @@ namespace RPG.Combat
 		private void Hit()
 		{
 			var damage = _stats.GetStat(Stat.Damage);
-			if(_currentWeapon.Value != null)
-			{
-				_currentWeapon.Value.OnHit();
-			}
+			if(_currentWeapon.Value != null) _currentWeapon.Value.OnHit();
 
 			if(_target == null) return;
 			if(_currentWeaponConfig.HasProjectile())
@@ -171,17 +167,13 @@ namespace RPG.Combat
 		public IEnumerable<float> GetAdditiveModifiers(Stat stat)
 		{
 			if(stat == Stat.Damage)
-			{
 				yield return _currentWeaponConfig.GetDamage();
-			}
 		}
 
 		public IEnumerable<float> GetPercentageModifiers(Stat stat)
 		{
 			if(stat == Stat.Damage)
-			{
 				yield return _currentWeaponConfig.GetPercentageBonus();
-			}
 		}
 
 		public void CompleteAction()

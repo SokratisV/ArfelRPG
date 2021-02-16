@@ -12,7 +12,7 @@ namespace RPG.Combat
 		[SerializeField] private float respawnTime = 5, healthToRestore = 0, pickupRange = 1f;
 
 		private Collider _collider;
-		
+
 		private void Awake() => _collider = GetComponent<Collider>();
 
 		//TODO: Remove and fix to pickup on first click
