@@ -13,7 +13,7 @@ namespace RPG.Combat
 		[SerializeField] private UnityEvent onHit;
 		private Health _target = null;
 		private GameObject _instigator = null;
-		private float _weaponDamage = 0f, _arrowDamage = 1f;
+		private float _weaponDamage = 0f, _projectileDamage = 1f;
 
 		private void Start() => transform.LookAt(GetAimLocation());
 
@@ -70,6 +70,6 @@ namespace RPG.Combat
 			}
 		}
 
-		private float CalculateDamage() => _weaponDamage * _arrowDamage;
+		private float CalculateDamage() => _weaponDamage * _projectileDamage;
 	}
 }

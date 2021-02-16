@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\Stats\LevelDisplay.cs" />
      <Compile Include="Assets\Scripts\Stats\ExperienceDisplay.cs" />
      <Compile Include="Assets\Scripts\Core\CameraFacing.cs" />
+     <Compile Include="Assets\Scripts\AnimatorBehaviors\AttackAnimationInfo.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\Displace.cs" />
      <Compile Include="Assets\Scripts\UI\DamageText\DamageText.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\GerstnerDisplace.cs" />
@@ -133,7 +134,6 @@
      <Compile Include="Assets\Scripts\Core\ActionScheduler.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\SpecularLighting.cs" />
      <Compile Include="Assets\Scripts\Combat\Weapon.cs" />
-     <Compile Include="Assets\Scripts\AnimatorBehaviors\AttackAnimationInfo.cs" />
      <None Include="Assets\Asset Packs\Synty - Polygon Student Sample\README - Usage Rights for these assets.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
