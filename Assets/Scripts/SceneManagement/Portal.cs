@@ -18,7 +18,8 @@ namespace RPG.SceneManagement
 			E
 		}
 
-		[SerializeField] private int sceneToLoad = -1;
+		[SerializeField] private Object sceneToLoad = null;
+		[SerializeField] private int sceneIndexToLoad = -1;
 		[SerializeField] private Transform spawnPoint;
 		[SerializeField] private DestinationIdentifier destination;
 		[SerializeField] private float fadeInTime = 2f, fadeOutTime = 2f, fadeWaitTime = 2f;
@@ -33,7 +34,7 @@ namespace RPG.SceneManagement
 
 		private IEnumerator Transition()
 		{
-			if(sceneToLoad < 0)
+			if(sceneIndexToLoad < 0 && sceneToLoad == null)
 			{
 				Debug.LogError("Scene to load is not set.");
 				yield break;
@@ -49,15 +50,22 @@ namespace RPG.SceneManagement
 			playerController.enabled = false;
 
 			yield return fader.FadeOut(fadeOutTime);
-			yield return SceneManager.LoadSceneAsync(sceneToLoad);
+			if(sceneToLoad == null)
+			{
+				yield return SceneManager.LoadSceneAsync(sceneIndexToLoad);
+			}
+			else
+			{
+				yield return SceneManager.LoadSceneAsync(sceneToLoad.name);
+			}
 
-			var newPlayerController = player.GetComponent<PlayerController>();
+			var newPlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 			newPlayerController.enabled = false;
 
 			wrapper.Load();
 
 			var otherPortal = GetOtherPortal();
-			UpdatePlayer(otherPortal, player.transform);
+			UpdatePlayer(otherPortal, newPlayerController.transform);
 
 			wrapper.Save();
 
