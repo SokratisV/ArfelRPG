@@ -1,61 +1,43 @@
 using UnityEngine;
-using System.Collections.Generic;
+using RotaryHeart.Lib.SerializableDictionary;
 
 namespace RPG.Stats
 {
 	[CreateAssetMenu(fileName = "Progression", menuName = "Stats/New Progression", order = 0)]
 	public class Progression : ScriptableObject
 	{
-		[SerializeField] private ProgressionCharacterClass[] characterClasses = null;
-		private Dictionary<CharacterClass, Dictionary<Stat, float[]>> _lookupTable = null;
+		[SerializeField] private ProgressionDictionary progressionDictionary = new ProgressionDictionary();
 
 		public float GetStat(Stat stat, CharacterClass characterClass, int level)
 		{
-			BuildLookup();
-			var levels = _lookupTable[characterClass][stat];
-			if(levels.Length < level) return 0;
+			var levels = progressionDictionary[characterClass][stat];
+			if(levels.levels.Length < level) return 0;
 
-			return levels[level - 1];
-		}
-
-		private void BuildLookup()
-		{
-			if(_lookupTable != null) return;
-
-			_lookupTable = new Dictionary<CharacterClass, Dictionary<Stat, float[]>>();
-			foreach(var progressionClass in characterClasses)
-			{
-				var statLookupTable = new Dictionary<Stat, float[]>();
-
-				foreach(var progressionStat in progressionClass.stats)
-				{
-					statLookupTable[progressionStat.stat] = progressionStat.levels;
-				}
-
-				_lookupTable[progressionClass.characterClass] = statLookupTable;
-			}
+			return levels.levels[level - 1];
 		}
 
 		public int GetLevels(Stat stat, CharacterClass characterClass)
 		{
-			BuildLookup();
-			var levels = _lookupTable[characterClass][stat];
-			return levels.Length;
+			var levels = progressionDictionary[characterClass][stat];
+			return levels.levels.Length;
 		}
 
 
 		[System.Serializable]
-		private class ProgressionCharacterClass
+		public class ProgressionStats
 		{
-			public CharacterClass characterClass;
-			public ProgressionStat[] stats;
-		}
-
-		[System.Serializable]
-		private class ProgressionStat
-		{
-			public Stat stat;
 			public float[] levels;
 		}
+		
+		[System.Serializable]
+		public class ProgressionStatDictionary : SerializableDictionaryBase<Stat, ProgressionStats>
+		{
+		}
+
+		[System.Serializable]
+		private class ProgressionDictionary : SerializableDictionaryBase<CharacterClass, ProgressionStatDictionary>
+		{
+		}
 	}
+
 }
