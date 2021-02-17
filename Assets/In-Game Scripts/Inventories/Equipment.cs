@@ -14,7 +14,7 @@ namespace RPG.Inventories
     public class Equipment : MonoBehaviour, ISaveable
     {
         // STATE
-        Dictionary<EquipLocation, EquipableItem> equippedItems = new Dictionary<EquipLocation, EquipableItem>();
+        private Dictionary<EquipLocation, EquipableItem> equippedItems = new Dictionary<EquipLocation, EquipableItem>();
 
         // PUBLIC
 

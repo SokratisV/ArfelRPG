@@ -14,10 +14,11 @@ namespace RPG.Inventories
     {
         // CONFIG DATA
         [Tooltip("Allowed size")]
-        [SerializeField] int inventorySize = 16;
+        [SerializeField]
+        private int inventorySize = 16;
 
         // STATE
-        InventorySlot[] slots;
+        private InventorySlot[] slots;
 
         public struct InventorySlot
         {

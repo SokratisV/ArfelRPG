@@ -10,8 +10,8 @@ namespace RPG.Inventories
     public class PickupSpawner : MonoBehaviour, ISaveable
     {
         // CONFIG DATA
-        [SerializeField] InventoryItem item = null;
-        [SerializeField] int number = 1;
+        [SerializeField] private InventoryItem item = null;
+        [SerializeField] private int number = 1;
 
         // LIFECYCLE METHODS
         private void Awake()

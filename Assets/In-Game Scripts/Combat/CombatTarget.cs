@@ -1,49 +1,56 @@
 using RPG.Control;
 using RPG.Attributes;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.Combat
 {
-    [RequireComponent(typeof(Health))]
-    public class CombatTarget : MonoBehaviour, IRaycastable
-    {
-        public CursorType GetCursorType() => CursorType.Combat;
+	[RequireComponent(typeof(Health))]
+	public class CombatTarget : MonoBehaviour, IRaycastable
+	{
+		private OutlineableComponent _outlineableComponent;
 
-        public bool HandleRaycast(PlayerController callingController)
-        {
-            if(!callingController.GetComponent<Fighter>().CanAttack(gameObject)) return false;
-            CheckPressedButtons(callingController);
-            return true;
-        }
+		private void Awake()
+		{
+			if(TryGetComponent(out Outline outline))
+				_outlineableComponent = new OutlineableComponent(outline);
+			else
+			{
+				outline = gameObject.AddComponent<Outline>();
+				outline.enabled = false;
+				_outlineableComponent = new OutlineableComponent(outline);
+			}
+		}
 
-        private void CheckPressedButtons(PlayerController callingController)
-        {
-            if(Input.GetKey(KeyCode.LeftControl))
-            {
-                if(Input.GetMouseButtonDown(0))
-                {
-                    callingController.GetComponent<Fighter>().QueueAttackAction(gameObject);
-                }
-            }
-            else
-            {
-                if(Input.GetMouseButtonDown(0))
-                {
-                    callingController.GetComponent<Fighter>().StartAttackAction(gameObject);
-                }
-            }
-        }
+		public CursorType GetCursorType() => CursorType.Combat;
 
-        public float GetInteractionRange() => 0f;
+		public bool HandleRaycast(PlayerController callingController)
+		{
+			if(!callingController.GetComponent<Fighter>().CanAttack(gameObject)) return false;
+			CheckPressedButtons(callingController);
+			return true;
+		}
 
-        private void ToggleOutline(bool toggle)
-        {
-            if(TryGetComponent(out Outline outline))
-                outline.enabled = toggle;
-        }
+		public void ShowInteractivity() => _outlineableComponent.ShowOutline(this);
 
-        private void OnMouseEnter() => ToggleOutline(true);
+		private void CheckPressedButtons(PlayerController callingController)
+		{
+			if(Input.GetKey(KeyCode.LeftControl))
+			{
+				if(Input.GetMouseButtonDown(0))
+				{
+					callingController.GetComponent<Fighter>().QueueAttackAction(gameObject);
+				}
+			}
+			else
+			{
+				if(Input.GetMouseButtonDown(0))
+				{
+					callingController.GetComponent<Fighter>().StartAttackAction(gameObject);
+				}
+			}
+		}
 
-        private void OnMouseExit() => ToggleOutline(false);
-    }
+		public float GetInteractionRange() => 0f;
+	}
 }

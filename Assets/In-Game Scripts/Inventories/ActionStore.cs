@@ -14,7 +14,7 @@ namespace RPG.Inventories
     public class ActionStore : MonoBehaviour, ISaveable
     {
         // STATE
-        Dictionary<int, DockedItemSlot> dockedItems = new Dictionary<int, DockedItemSlot>();
+        private Dictionary<int, DockedItemSlot> dockedItems = new Dictionary<int, DockedItemSlot>();
         private class DockedItemSlot 
         {
             public ActionItem item;

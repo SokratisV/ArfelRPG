@@ -15,6 +15,7 @@ namespace RPG.Control
 		private SpawnFeedback _movementFeedbackPrefab;
 		private Mover _mover;
 		private Camera _mainCamera;
+		private bool _isDraggingUI = false;
 		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius;
 
 		[Serializable]
@@ -60,6 +61,7 @@ namespace RPG.Control
 				{
 					if(raycastable.HandleRaycast(this))
 					{
+						raycastable.ShowInteractivity();
 						SetCursor(raycastable.GetCursorType());
 						return true;
 					}
@@ -84,13 +86,15 @@ namespace RPG.Control
 
 		private bool InteractWithUI()
 		{
+			if(Input.GetMouseButtonUp(0)) _isDraggingUI = false;
 			if(EventSystem.current.IsPointerOverGameObject())
 			{
+				if(Input.GetMouseButtonDown(0)) _isDraggingUI = true;
 				SetCursor(CursorType.UI);
 				return true;
 			}
 
-			return false;
+			return _isDraggingUI;
 		}
 
 		private bool InteractWithMovement()

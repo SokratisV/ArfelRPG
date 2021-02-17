@@ -3,38 +3,33 @@ using RPG.Inventories;
 
 namespace RPG.Control
 {
+    [RequireComponent(typeof(SphereCollider))]
     [RequireComponent(typeof(Pickup))]
     public class ClickablePickup : MonoBehaviour, IRaycastable
     {
-        Pickup pickup;
+        private Pickup _pickup;
 
-        private void Awake()
-        {
-            pickup = GetComponent<Pickup>();
-        }
+        private void Awake() => _pickup = GetComponent<Pickup>();
 
-        public CursorType GetCursorType()
-        {
-            if (pickup.CanBePickedUp())
-            {
-                return CursorType.Pickup;
-            }
-
-            return CursorType.FullPickup;
-        }
+        public CursorType GetCursorType() => _pickup.CanBePickedUp()? CursorType.Pickup:CursorType.FullPickup;
 
         public bool HandleRaycast(PlayerController callingController)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                pickup.PickupItem();
+                _pickup.PickupItem();
             }
             return true;
         }
 
+        public void ShowInteractivity()
+        {
+            
+        }
+
         public float GetInteractionRange()
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
     }
 }

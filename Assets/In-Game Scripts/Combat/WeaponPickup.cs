@@ -12,8 +12,20 @@ namespace RPG.Combat
 		[SerializeField] private float respawnTime = 5, healthToRestore = 0, pickupRange = 1f;
 
 		private Collider _collider;
+		private OutlineableComponent _outlineableComponent;
 
-		private void Awake() => _collider = GetComponent<Collider>();
+		private void Awake()
+		{
+			if(TryGetComponent(out Outline outline))
+				_outlineableComponent = new OutlineableComponent(outline);
+			else
+			{
+				outline = gameObject.AddComponent<Outline>();
+				outline.enabled = false;
+				_outlineableComponent = new OutlineableComponent(outline);
+			}
+			_collider = GetComponent<Collider>();
+		}
 
 		//TODO: Remove and fix to pickup on first click
 		private void OnTriggerEnter(Collider other)
@@ -78,15 +90,7 @@ namespace RPG.Combat
 			return true;
 		}
 
-		private void ToggleOutline(bool toggle)
-		{
-			if(TryGetComponent(out Outline outline))
-				outline.enabled = toggle;
-		}
-
-		private void OnMouseEnter() => ToggleOutline(true);
-
-		private void OnMouseExit() => ToggleOutline(false);
+		public void ShowInteractivity() => _outlineableComponent.ShowOutline(this);
 
 		public CursorType GetCursorType() => CursorType.Pickup;
 

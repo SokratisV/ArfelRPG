@@ -2,7 +2,7 @@
 using RPG.Saving;
 using UnityEngine;
 
-namespace RPG.Interactions
+namespace RPG.Core
 {
 	public class Treasure : MonoBehaviour, IRaycastable, ISaveable
 	{
@@ -10,8 +10,21 @@ namespace RPG.Interactions
 		[SerializeField] private RandomWeaponDrop lootTable;
 		[SerializeField] private float interactionRange = 1f;
 
+		private OutlineableComponent _outlineableComponent;
 		private Transform _pickupManager;
 		private bool _isOpened = false;
+
+		private void Awake()
+		{
+			if(TryGetComponent(out Outline outline))
+				_outlineableComponent = new OutlineableComponent(outline);
+			else
+			{
+				outline = gameObject.AddComponent<Outline>();
+				outline.enabled = false;
+				_outlineableComponent = new OutlineableComponent(outline);
+			}
+		}
 
 		private void Start() => _pickupManager = GameObject.FindGameObjectWithTag("PickupManager").transform;
 
@@ -29,6 +42,8 @@ namespace RPG.Interactions
 
 			return false;
 		}
+
+		public void ShowInteractivity() => _outlineableComponent.ShowOutline(this);
 
 		private void CheckPressedButtons(Collector collector)
 		{
@@ -74,15 +89,5 @@ namespace RPG.Interactions
 		public object CaptureState() => _isOpened;
 
 		public float GetInteractionRange() => interactionRange;
-
-		private void ToggleOutline(bool toggle)
-		{
-			if(TryGetComponent(out Outline outline))
-				outline.enabled = toggle;
-		}
-
-		private void OnMouseEnter() => ToggleOutline(true);
-
-		private void OnMouseExit() => ToggleOutline(false);
 	}
 }

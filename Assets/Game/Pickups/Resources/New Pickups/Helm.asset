@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20eb1792e8048a46bf5c7c520a3ea3b, type: 3}
+  m_Name: Helm
+  m_EditorClassIdentifier: 
+  itemID: 6fb6fb03-f299-49e0-8c96-dd6f4ca7d477
+  displayName: Arfelohelmet
+  description: The best looking helmet.
+  icon: {fileID: 21300000, guid: 7a704c5f161380f438bfabaf93560dc3, type: 3}
+  pickup: {fileID: 8540547188556865411, guid: cd02ee3ae4b491d4db7a784343940a44, type: 3}
+  stackable: 0
+  allowedEquipLocation: 0
