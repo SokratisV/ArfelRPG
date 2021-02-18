@@ -29,8 +29,10 @@ namespace RPG.Combat
 		private LazyValue<Weapon> _currentWeapon;
 		private Health _target;
 		private BaseStats _stats;
+
 		private float _timeSinceLastAttack = Mathf.Infinity;
-		private bool _isCurrentAnimationDone = true;
+
+		// private bool _isCurrentAnimationDone = true;
 		private static readonly int StopAttackHash = Animator.StringToHash("stopAttack");
 		private static readonly int AttackHash = Animator.StringToHash("attack");
 
@@ -53,8 +55,9 @@ namespace RPG.Combat
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_mover = GetComponent<Mover>();
 			_stats = GetComponent<BaseStats>();
-			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
-			attackListenerBehavior.OnAnimationComplete += () => _isCurrentAnimationDone = true;
+			//TODO: sometimes breaks and event is never fired
+			// var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
+			// attackListenerBehavior.OnAnimationComplete += () => _isCurrentAnimationDone = true;
 			if(_equipment) _equipment.equipmentUpdated += UpdateWeapon;
 		}
 
@@ -97,8 +100,8 @@ namespace RPG.Combat
 			}
 			else
 			{
-				if(_isCurrentAnimationDone)
-					_mover.MoveWithoutAction(_target.transform.position);
+				// if(_isCurrentAnimationDone)
+				_mover.MoveWithoutAction(_target.transform.position);
 			}
 		}
 
@@ -107,12 +110,11 @@ namespace RPG.Combat
 			transform.LookAt(_target.transform);
 			if(!(_timeSinceLastAttack > timeBetweenAttacks)) return;
 			AttackAnimation();
-			_timeSinceLastAttack = 0;
 		}
 
 		private void AttackAnimation()
 		{
-			_isCurrentAnimationDone = false;
+			// _isCurrentAnimationDone = false;
 			_animator.ResetTrigger(StopAttackHash);
 			_animator.SetTrigger(AttackHash);
 		}
@@ -132,6 +134,8 @@ namespace RPG.Combat
 			{
 				_target.TakeDamage(gameObject, damage);
 			}
+
+			_timeSinceLastAttack = 0;
 		}
 
 		private void Shoot() => Hit();

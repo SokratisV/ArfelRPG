@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Core;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace RPG.AnimatorBehaviors
@@ -6,7 +7,7 @@ namespace RPG.AnimatorBehaviors
 	public class RandomAttackAnimBehavior : StateMachineBehaviour
 	{
 		[SerializeField] private int amountOfAnimations;
-		public float TimeBetweenAttacks {get;set;}
+		public float TimeBetweenAttacks {get;set;} = GlobalValues.DefaultAttackSpeed;
 		private static readonly int AttackAnimID = Animator.StringToHash("attackAnimID");
 		private static readonly int AttackAnimSpeed = Animator.StringToHash("attackAnimSpeed");
 
@@ -14,10 +15,10 @@ namespace RPG.AnimatorBehaviors
 		{
 			var value = Random.Range(0, amountOfAnimations);
 			animator.SetInteger(AttackAnimID, value);
-			ChangeAnimationLength(animator);
+			// ChangeAnimationLength(animator);
 		}
 
-		//Kind of works, not sure why
+		//Kind of works, not sure why. Breaks stuff when switching weapons, TODO for later
 		private void ChangeAnimationLength(Animator animator)
 		{
 			var length = animator.GetCurrentAnimatorStateInfo(0).length;
