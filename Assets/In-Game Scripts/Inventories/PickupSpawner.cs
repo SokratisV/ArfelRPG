@@ -3,76 +3,56 @@ using RPG.Saving;
 
 namespace RPG.Inventories
 {
-    /// <summary>
-    /// Spawns pickups that should exist on first load in a level. This
-    /// automatically spawns the correct prefab for a given inventory item.
-    /// </summary>
-    public class PickupSpawner : MonoBehaviour, ISaveable
-    {
-        // CONFIG DATA
-        [SerializeField] private InventoryItem item = null;
-        [SerializeField] private int number = 1;
+	/// <summary>
+	/// Spawns pickups that should exist on first load in a level. This
+	/// automatically spawns the correct prefab for a given inventory item.
+	/// </summary>
+	public class PickupSpawner : MonoBehaviour, ISaveable
+	{
+		[SerializeField] private InventoryItem item = null;
+		[SerializeField] private int number = 1;
 
-        // LIFECYCLE METHODS
-        private void Awake()
-        {
-            // Spawn in Awake so can be destroyed by save system after.
-            SpawnPickup();
-        }
+		private void Awake() => SpawnPickup();
 
-        // PUBLIC
+		/// <summary>
+		/// Returns the pickup spawned by this class if it exists.
+		/// </summary>
+		/// <returns>Returns null if the pickup has been collected.</returns>
+		public Pickup GetPickup() => GetComponentInChildren<Pickup>();
 
-        /// <summary>
-        /// Returns the pickup spawned by this class if it exists.
-        /// </summary>
-        /// <returns>Returns null if the pickup has been collected.</returns>
-        public Pickup GetPickup() 
-        { 
-            return GetComponentInChildren<Pickup>();
-        }
+		/// <summary>
+		/// True if the pickup was collected.
+		/// </summary>
+		public bool IsCollected() => GetPickup() == null;
 
-        /// <summary>
-        /// True if the pickup was collected.
-        /// </summary>
-        public bool isCollected() 
-        { 
-            return GetPickup() == null;
-        }
+		private void SpawnPickup()
+		{
+			var spawnedPickup = item.SpawnPickup(transform.position, number);
+			spawnedPickup.transform.SetParent(transform);
+		}
 
-        //PRIVATE
+		private void DestroyPickup()
+		{
+			if(GetPickup())
+			{
+				Destroy(GetPickup().gameObject);
+			}
+		}
 
-        private void SpawnPickup()
-        {
-            var spawnedPickup = item.SpawnPickup(transform.position, number);
-            spawnedPickup.transform.SetParent(transform);
-        }
+		object ISaveable.CaptureState() => IsCollected();
 
-        private void DestroyPickup()
-        {
-            if (GetPickup())
-            {
-                Destroy(GetPickup().gameObject);
-            }
-        }
-
-        object ISaveable.CaptureState()
-        {
-            return isCollected();
-        }
-
-        void ISaveable.RestoreState(object state)
-        {
-            bool shouldBeCollected = (bool)state;
-
-            if (shouldBeCollected && !isCollected())
-            {
-                DestroyPickup();
-            }
-
-            if (!shouldBeCollected && isCollected())
-            {
-                SpawnPickup();
-            }
-        }
-    }
+		void ISaveable.RestoreState(object state)
+		{
+			var shouldBeCollected = (bool)state;
+			switch(shouldBeCollected)
+			{
+				case true when!IsCollected():
+					DestroyPickup();
+					break;
+				case false when IsCollected():
+					SpawnPickup();
+					break;
+			}
+		}
+	}
 }

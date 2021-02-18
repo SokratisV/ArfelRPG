@@ -14,14 +14,14 @@ namespace RPG.Inventories
 		[System.Serializable]
 		private struct Modifier
 		{
-			public Stat Stat;
-			public float Value;
+			public Stat stat;
+			public float value;
 		}
 
-		public IEnumerable<float> GetAdditiveModifiers(Stat stat) => 
-			from modifier in additiveModifiers where modifier.Stat == stat select modifier.Value;
+		public IEnumerable<float> GetAdditiveModifiers(Stat stat) =>
+			from modifier in additiveModifiers where modifier.stat == stat select modifier.value;
 
-		public IEnumerable<float> GetPercentageModifiers(Stat stat) => 
-			from modifier in percentageModifiers where modifier.Stat == stat select modifier.Value;
+		public IEnumerable<float> GetPercentageModifiers(Stat stat) =>
+			from modifier in percentageModifiers where modifier.stat == stat select modifier.value;
 	}
 }

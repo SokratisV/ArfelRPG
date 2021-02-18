@@ -10,49 +10,49 @@ namespace RPG.UI.Inventories
     public class ActionSlotUI : MonoBehaviour, IItemHolder, IDragContainer<InventoryItem>
     {
         // CONFIG DATA
-        [SerializeField] InventoryItemIcon icon = null;
-        [SerializeField] int index = 0;
+        [SerializeField] private InventoryItemIcon icon = null;
+        [SerializeField] private int index = 0;
 
         // CACHE
-        ActionStore store;
+        private ActionStore _store;
 
         // LIFECYCLE METHODS
         private void Awake()
         {
-            store = GameObject.FindGameObjectWithTag("Player").GetComponent<ActionStore>();
-            store.storeUpdated += UpdateIcon;
+            _store = GameObject.FindGameObjectWithTag("Player").GetComponent<ActionStore>();
+            _store.StoreUpdated += UpdateIcon;
         }
 
         // PUBLIC
 
         public void AddItems(InventoryItem item, int number)
         {
-            store.AddAction(item, index, number);
+            _store.AddAction(item, index, number);
         }
 
         public InventoryItem GetItem()
         {
-            return store.GetAction(index);
+            return _store.GetAction(index);
         }
 
         public int GetNumber()
         {
-            return store.GetNumber(index);
+            return _store.GetNumber(index);
         }
 
         public int MaxAcceptable(InventoryItem item)
         {
-            return store.MaxAcceptable(item, index);
+            return _store.MaxAcceptable(item, index);
         }
 
         public void RemoveItems(int number)
         {
-            store.RemoveItems(index, number);
+            _store.RemoveItems(index, number);
         }
 
         // PRIVATE
 
-        void UpdateIcon()
+        private void UpdateIcon()
         {
             icon.SetItem(GetItem(), GetNumber());
         }

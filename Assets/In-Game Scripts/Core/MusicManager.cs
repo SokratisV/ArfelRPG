@@ -20,7 +20,7 @@ namespace RPG.Core
 		BossVillage,
 		BossTroll
 	}
-	
+
 	[RequireComponent(typeof(AudioSource))]
 	public class MusicManager : MonoBehaviour
 	{
@@ -41,7 +41,6 @@ namespace RPG.Core
 
 		[SerializeField] private AreaToMusicAreaDictionary areaToMusicArea = new AreaToMusicAreaDictionary();
 		[SerializeField] private MusicAreaToMusicDictionary musicAreaToMusic = new MusicAreaToMusicDictionary();
-
 		[SerializeField] private CombatMusicAreaToMusicDictionary areaToBossMusic = new CombatMusicAreaToMusicDictionary();
 
 		private AudioSource _mAudio;

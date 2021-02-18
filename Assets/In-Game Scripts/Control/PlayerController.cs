@@ -163,11 +163,10 @@ namespace RPG.Control
 		private CursorMapping GetCursorMapping(CursorType type) => cursorMappings.TryGetValue(type, out var mapping)? mapping:cursorMappings[0];
 
 		private Ray GetMouseRay() => _mainCamera.ScreenPointToRay(Input.mousePosition);
-		
+
 		[Serializable]
 		private class CursorMappings : SerializableDictionaryBase<CursorType, CursorMapping>
 		{
 		}
 	}
-
 }

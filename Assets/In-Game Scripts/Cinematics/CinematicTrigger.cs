@@ -3,18 +3,18 @@ using UnityEngine;
 
 namespace RPG.Cinematics
 {
-    public class CinematicTrigger : MonoBehaviour
-    {
-        private bool _hasBeenPlayed = false;
+	public class CinematicTrigger : MonoBehaviour
+	{
+		private bool _hasBeenPlayed = false;
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if(_hasBeenPlayed) return;
-            if(other.gameObject.CompareTag("Player"))
-            {
-                GetComponent<PlayableDirector>().Play();
-                _hasBeenPlayed = true;
-            }
-        }
-    }
+		private void OnTriggerEnter(Collider other)
+		{
+			if(_hasBeenPlayed) return;
+			if(other.gameObject.CompareTag("Player"))
+			{
+				GetComponent<PlayableDirector>().Play();
+				_hasBeenPlayed = true;
+			}
+		}
+	}
 }

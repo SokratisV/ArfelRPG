@@ -6,29 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class RestartScene : MonoBehaviour
 {
-    [SerializeField] private GameObject canvas;
+	[SerializeField] private GameObject canvas;
 
-    public void Restart()
-    {
-        StartCoroutine(LoadScene());
-    }
+	public void Restart() => StartCoroutine(LoadScene());
 
-    public void ShowDeathUI()
-    {
-        canvas.SetActive(true);
-    }
+	public void ShowDeathUI() => canvas.SetActive(true);
 
-    private IEnumerator LoadScene()
-    {
-        FindObjectOfType<SavingWrapper>().Delete();
-        FindObjectOfType<MusicManager>().ResetMusicPlayer();
-        var asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+	private IEnumerator LoadScene()
+	{
+		FindObjectOfType<SavingWrapper>().Delete();
+		FindObjectOfType<MusicManager>().ResetMusicPlayer();
+		var asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 
-        while(!asyncLoad.isDone)
-        {
-            yield return null;
-        }
+		while(!asyncLoad.isDone)
+		{
+			yield return null;
+		}
 
-        canvas.SetActive(false);
-    }
+		canvas.SetActive(false);
+	}
 }

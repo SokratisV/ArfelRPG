@@ -9,72 +9,36 @@ namespace RPG.UI.Inventories
     /// </summary>
     public class EquipmentSlotUI : MonoBehaviour, IItemHolder, IDragContainer<InventoryItem>
     {
-        // CONFIG DATA
+        [SerializeField] private InventoryItemIcon icon = null;
+        [SerializeField] private EquipLocation equipLocation = EquipLocation.Weapon;
 
-        [SerializeField] InventoryItemIcon icon = null;
-        [SerializeField] EquipLocation equipLocation = EquipLocation.Weapon;
-
-        // CACHE
-        Equipment playerEquipment;
-
-        // LIFECYCLE METHODS
+        private Equipment _playerEquipment;
        
         private void Awake() 
         {
             var player = GameObject.FindGameObjectWithTag("Player");
-            playerEquipment = player.GetComponent<Equipment>();
-            playerEquipment.EquipmentUpdated += RedrawUI;
+            _playerEquipment = player.GetComponent<Equipment>();
+            _playerEquipment.EquipmentUpdated += RedrawUI;
         }
 
-        private void Start() 
-        {
-            RedrawUI();
-        }
-
-        // PUBLIC
+        private void Start() => RedrawUI();
 
         public int MaxAcceptable(InventoryItem item)
         {
-            EquipableItem equipableItem = item as EquipableItem;
+            var equipableItem = item as EquipableItem;
             if (equipableItem == null) return 0;
             if (equipableItem.GetAllowedEquipLocation() != equipLocation) return 0;
-            if (GetItem() != null) return 0;
-
-            return 1;
+            return GetItem() != null? 0:1;
         }
 
-        public void AddItems(InventoryItem item, int number)
-        {
-            playerEquipment.AddItem(equipLocation, (EquipableItem) item);
-        }
+        public void AddItems(InventoryItem item, int number) => _playerEquipment.AddItem(equipLocation, (EquipableItem) item);
 
-        public InventoryItem GetItem()
-        {
-            return playerEquipment.GetItemInSlot(equipLocation);
-        }
+        public InventoryItem GetItem() => _playerEquipment.GetItemInSlot(equipLocation);
 
-        public int GetNumber()
-        {
-            if (GetItem() != null)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
+        public int GetNumber() => GetItem() != null? 1:0;
 
-        public void RemoveItems(int number)
-        {
-            playerEquipment.RemoveItem(equipLocation);
-        }
+        public void RemoveItems(int number) => _playerEquipment.RemoveItem(equipLocation);
 
-        // PRIVATE
-
-        void RedrawUI()
-        {
-            icon.SetItem(playerEquipment.GetItemInSlot(equipLocation));
-        }
+        private void RedrawUI() => icon.SetItem(_playerEquipment.GetItemInSlot(equipLocation));
     }
 }

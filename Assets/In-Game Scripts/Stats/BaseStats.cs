@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using RPG.Utils;
 using UnityEngine;
 
@@ -60,31 +61,13 @@ namespace RPG.Stats
 		private float GetAdditiveModifier(Stat stat)
 		{
 			if(!shouldUseModifiers) return 0;
-			float total = 0;
-			foreach(var provider in GetComponents<IModifierProvider>())
-			{
-				foreach(var modifier in provider.GetAdditiveModifiers(stat))
-				{
-					total += modifier;
-				}
-			}
-
-			return total;
+			return GetComponents<IModifierProvider>().SelectMany(provider => provider.GetAdditiveModifiers(stat)).Sum();
 		}
 
 		private float GetPercentageModifier(Stat stat)
 		{
 			if(!shouldUseModifiers) return 0;
-			float total = 0;
-			foreach(var provider in GetComponents<IModifierProvider>())
-			{
-				foreach(var modifier in provider.GetPercentageModifiers(stat))
-				{
-					total += modifier;
-				}
-			}
-
-			return total;
+			return GetComponents<IModifierProvider>().SelectMany(provider => provider.GetPercentageModifiers(stat)).Sum();
 		}
 
 		public int GetLevel() => _currentLevel.Value;

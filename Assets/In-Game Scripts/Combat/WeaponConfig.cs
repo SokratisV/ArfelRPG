@@ -69,6 +69,7 @@ namespace RPG.Combat
 		public float GetRange() => weaponRange;
 
 		private void OnDestroy() => WeaponPerPlayer = null;
+
 		public IEnumerable<float> GetAdditiveModifiers(Stat stat)
 		{
 			if(stat == Stat.Damage) yield return weaponDamage;

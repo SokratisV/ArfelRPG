@@ -8,14 +8,8 @@ namespace RPG.Combat
 		[SerializeField] private UnityEvent onHit;
 
 		// Animation event
-		public void OnHit()
-		{
-			onHit.Invoke();
-		}
+		public void OnHit() => onHit.Invoke();
 
-		public void Destroy()
-		{
-			Destroy(gameObject);
-		}
+		public void Destroy() => Destroy(gameObject);
 	}
 }

@@ -18,7 +18,7 @@ namespace RPG.Combat
 			_outlineableComponent = new OutlineableComponent(gameObject);
 			_collider = GetComponent<Collider>();
 		}
-		
+
 		private void OnTriggerEnter(Collider other)
 		{
 			if(other.CompareTag("Player"))

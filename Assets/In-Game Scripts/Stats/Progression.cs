@@ -28,7 +28,7 @@ namespace RPG.Stats
 		{
 			public float[] levels;
 		}
-		
+
 		[System.Serializable]
 		public class ProgressionStatDictionary : SerializableDictionaryBase<Stat, ProgressionStats>
 		{
@@ -39,5 +39,4 @@ namespace RPG.Stats
 		{
 		}
 	}
-
 }

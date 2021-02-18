@@ -13,11 +13,8 @@ namespace RPG.Inventories
 	/// </summary>
 	public class Equipment : MonoBehaviour, ISaveable
 	{
-		// STATE
 		private Dictionary<EquipLocation, EquipableItem> _equippedItems = new Dictionary<EquipLocation, EquipableItem>();
-
-		// PUBLIC
-
+		
 		/// <summary>
 		/// Broadcasts when the items in the slots are added/removed.
 		/// </summary>
@@ -52,10 +49,7 @@ namespace RPG.Inventories
 		/// Enumerate through all the sltos that currently contain items.
 		/// </summary>
 		public IEnumerable<EquipLocation> GetAllPopulatedSlots() => _equippedItems.Keys;
-
-
-		// PRIVATE
-
+		
 		object ISaveable.CaptureState()
 		{
 			var equippedItemsForSerialization = new Dictionary<EquipLocation, string>();

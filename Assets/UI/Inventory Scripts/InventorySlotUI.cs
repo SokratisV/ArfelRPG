@@ -6,50 +6,27 @@ namespace RPG.UI.Inventories
 {
     public class InventorySlotUI : MonoBehaviour, IItemHolder, IDragContainer<InventoryItem>
     {
-        // CONFIG DATA
-        [SerializeField] InventoryItemIcon icon = null;
+        [SerializeField] private InventoryItemIcon icon = null;
 
-        // STATE
-        int index;
-        InventoryItem item;
-        Inventory inventory;
-
-        // PUBLIC
+        private int _index;
+        private InventoryItem _item;
+        private Inventory _inventory;
 
         public void Setup(Inventory inventory, int index)
         {
-            this.inventory = inventory;
-            this.index = index;
+            _inventory = inventory;
+            _index = index;
             icon.SetItem(inventory.GetItemInSlot(index), inventory.GetNumberInSlot(index));
         }
 
-        public int MaxAcceptable(InventoryItem item)
-        {
-            if (inventory.HasSpaceFor(item))
-            {
-                return int.MaxValue;
-            }
-            return 0;
-        }
+        public int MaxAcceptable(InventoryItem item) => _inventory.HasSpaceFor(item)? int.MaxValue:0;
 
-        public void AddItems(InventoryItem item, int number)
-        {
-            inventory.AddItemToSlot(index, item, number);
-        }
+        public void AddItems(InventoryItem item, int number) => _inventory.AddItemToSlot(_index, item, number);
 
-        public InventoryItem GetItem()
-        {
-            return inventory.GetItemInSlot(index);
-        }
+        public InventoryItem GetItem() => _inventory.GetItemInSlot(_index);
 
-        public int GetNumber()
-        {
-            return inventory.GetNumberInSlot(index);
-        }
+        public int GetNumber() => _inventory.GetNumberInSlot(_index);
 
-        public void RemoveItems(int number)
-        {
-            inventory.RemoveFromSlot(index, number);
-        }
+        public void RemoveItems(int number) => _inventory.RemoveFromSlot(_index, number);
     }
 }

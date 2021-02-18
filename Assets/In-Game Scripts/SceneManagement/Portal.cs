@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using RPG.Control;
 using UnityEngine;
 using UnityEngine.AI;
@@ -76,17 +77,7 @@ namespace RPG.SceneManagement
 			Destroy(gameObject);
 		}
 
-		private Portal GetOtherPortal()
-		{
-			foreach(var portal in FindObjectsOfType<Portal>())
-			{
-				if(portal == this) continue;
-				if(portal.destination != destination) continue;
-				return portal;
-			}
-
-			return null;
-		}
+		private Portal GetOtherPortal() => FindObjectsOfType<Portal>().Where(portal => portal != this).FirstOrDefault(portal => portal.destination == destination);
 
 		private void UpdatePlayer(Portal otherPortal, Transform player)
 		{
