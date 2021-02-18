@@ -16,14 +16,7 @@ namespace RPG.Combat
 
 		private void Awake()
 		{
-			if(TryGetComponent(out Outline outline))
-				_outlineableComponent = new OutlineableComponent(outline);
-			else
-			{
-				outline = gameObject.AddComponent<Outline>();
-				outline.enabled = false;
-				_outlineableComponent = new OutlineableComponent(outline);
-			}
+			_outlineableComponent = new OutlineableComponent(gameObject);
 			_collider = GetComponent<Collider>();
 		}
 

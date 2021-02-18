@@ -73,6 +73,7 @@
      <Compile Include="Assets\UI\Inventory Scripts\ItemTooltip.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\MeshContainer.cs" />
      <Compile Include="Assets\Rotary Heart\SerializableDictionary\ReorderableList\ReorderableList.cs" />
+     <Compile Include="Assets\In-Game Scripts\Core\GlobalValues.cs" />
      <Compile Include="Assets\In-Game Scripts\Core\PersistentObjectSpawner.cs" />
      <Compile Include="Assets\In-Game Scripts\Inventories\PickupSpawner.cs" />
      <Compile Include="Assets\In-Game Scripts\Movement\CoroutineExtension.cs" />
@@ -135,6 +136,7 @@
      <Compile Include="Assets\In-Game Scripts\SceneManagement\Fader.cs" />
      <Compile Include="Assets\Rotary Heart\SerializableDictionary\References\RequiredReferences.cs" />
      <Compile Include="Assets\UI\Inventory Scripts\Utils\UI\Dragging\IDragSource.cs" />
+     <Compile Include="Assets\In-Game Scripts\Core\OutlineableComponent.cs" />
      <Compile Include="Assets\UI\Inventory Scripts\InventorySlotUI.cs" />
      <Compile Include="Assets\In-Game Scripts\Control\IRaycastable.cs" />
      <Compile Include="Assets\In-Game Scripts\Control\PatrolPath.cs" />
@@ -161,8 +163,6 @@
      <Compile Include="Assets\In-Game Scripts\Core\ActionScheduler.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\SpecularLighting.cs" />
      <Compile Include="Assets\In-Game Scripts\Combat\Weapon.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\GlobalValues.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\OutlineableComponent.cs" />
      <None Include="Assets\Asset Packs\Synty - Polygon Student Sample\README - Usage Rights for these assets.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

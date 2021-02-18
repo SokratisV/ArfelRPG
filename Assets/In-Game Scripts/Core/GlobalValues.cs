@@ -1,7 +1,10 @@
-﻿namespace RPG.Core
+﻿using UnityEngine;
+
+namespace RPG.Core
 {
 	public static class GlobalValues
 	{
-		public static float OutlineOffDelay {get;private set;} = .05f;
+		public static float OutlineOffDelay {get;} = .05f;
+		public static Color32 PickupColor {get;} = new Color32(255, 255, 0, 0);
 	}
 }

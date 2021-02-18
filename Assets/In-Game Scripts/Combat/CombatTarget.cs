@@ -10,17 +10,7 @@ namespace RPG.Combat
 	{
 		private OutlineableComponent _outlineableComponent;
 
-		private void Awake()
-		{
-			if(TryGetComponent(out Outline outline))
-				_outlineableComponent = new OutlineableComponent(outline);
-			else
-			{
-				outline = gameObject.AddComponent<Outline>();
-				outline.enabled = false;
-				_outlineableComponent = new OutlineableComponent(outline);
-			}
-		}
+		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject);
 
 		public CursorType GetCursorType() => CursorType.Combat;
 

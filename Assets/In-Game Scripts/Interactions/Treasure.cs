@@ -14,17 +14,7 @@ namespace RPG.Core
 		private Transform _pickupManager;
 		private bool _isOpened = false;
 
-		private void Awake()
-		{
-			if(TryGetComponent(out Outline outline))
-				_outlineableComponent = new OutlineableComponent(outline);
-			else
-			{
-				outline = gameObject.AddComponent<Outline>();
-				outline.enabled = false;
-				_outlineableComponent = new OutlineableComponent(outline);
-			}
-		}
+		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject);
 
 		private void Start() => _pickupManager = GameObject.FindGameObjectWithTag("PickupManager").transform;
 

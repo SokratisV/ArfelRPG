@@ -1,3 +1,4 @@
+using RPG.Core;
 using UnityEngine;
 using RPG.Inventories;
 
@@ -8,8 +9,13 @@ namespace RPG.Control
     public class ClickablePickup : MonoBehaviour, IRaycastable
     {
         private Pickup _pickup;
-
-        private void Awake() => _pickup = GetComponent<Pickup>();
+        private OutlineableComponent _outlineableComponent;
+        
+        private void Awake()
+        {
+            _pickup = GetComponent<Pickup>();
+            _outlineableComponent = new OutlineableComponent(gameObject);
+        }
 
         public CursorType GetCursorType() => _pickup.CanBePickedUp()? CursorType.Pickup:CursorType.FullPickup;
 
@@ -24,7 +30,7 @@ namespace RPG.Control
 
         public void ShowInteractivity()
         {
-            
+            _outlineableComponent.ShowOutline(this);
         }
 
         public float GetInteractionRange()

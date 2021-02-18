@@ -10,7 +10,19 @@ namespace RPG.Core
 		private WaitForSeconds _waitForSeconds = new WaitForSeconds(GlobalValues.OutlineOffDelay);
 		private bool _isMouseHoveringOver;
 
-		public OutlineableComponent(Outline outline) => _outline = outline;
+		public OutlineableComponent(GameObject obj)
+		{
+			var outline = obj.GetComponentInChildren<Outline>();
+			if(!outline)
+			{
+				outline = obj.AddComponent<Outline>();
+				outline.OutlineColor = GlobalValues.PickupColor;
+				outline.enabled = false;
+			}
+
+			_outline = outline;
+			_outline.enabled = false;
+		}
 
 		public void ShowOutline(MonoBehaviour mono)
 		{
