@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752130efc96294aa3ae70f790754e58a, type: 3}
   m_Name: Unarmed
   m_EditorClassIdentifier: 
+  itemID: 927ecdbb-69da-449c-9f78-25e1fea79c14
+  displayName: 
+  description: 
+  icon: {fileID: 0}
+  pickup: {fileID: 8540547188556865411, guid: cd02ee3ae4b491d4db7a784343940a44, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
   animatorOverride: {fileID: 0}
   equippedPrefab: {fileID: 8588511950748160044, guid: 8fa976fe57f59ed408f0dcc64889099e,
     type: 3}
@@ -20,4 +27,3 @@ MonoBehaviour:
   weaponPercentageBonus: 0
   isRightHanded: 1
   projectile: {fileID: 0}
-  attackAnimation: {fileID: 0}

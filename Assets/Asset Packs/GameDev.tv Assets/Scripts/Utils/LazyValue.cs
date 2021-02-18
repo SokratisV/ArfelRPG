@@ -1,4 +1,4 @@
-﻿namespace GameDevTV.Utils
+﻿namespace RPG.Utils
 {
     /// <summary>
     /// Container class that wraps a value and ensures initialisation is 

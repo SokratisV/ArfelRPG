@@ -17,7 +17,6 @@ namespace RPG.Core
 			{
 				outline = obj.AddComponent<Outline>();
 				outline.OutlineColor = GlobalValues.PickupColor;
-				outline.enabled = false;
 			}
 
 			_outline = outline;
@@ -27,10 +26,10 @@ namespace RPG.Core
 		public void ShowOutline(MonoBehaviour mono)
 		{
 			_isMouseHoveringOver = true;
-			_outlineRoutine ??= _outlineRoutine.StartCoroutine(mono, DisableOutline());
+			_outlineRoutine ??= _outlineRoutine.StartCoroutine(mono, TriggerOutline());
 		}
 
-		private IEnumerator DisableOutline()
+		private IEnumerator TriggerOutline()
 		{
 			ToggleOutline(true);
 			while(_isMouseHoveringOver)

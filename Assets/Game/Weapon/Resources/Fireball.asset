@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752130efc96294aa3ae70f790754e58a, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
+  itemID: 5d4b1257-e8ce-4c4c-9c6e-c0d5612a1fc1
+  displayName: Arfelus Staff
+  description: The default choice of Arfelus the Great.
+  icon: {fileID: 21300000, guid: d19901b0ee3c38743a7d383bd484b0b5, type: 3}
+  pickup: {fileID: 3748472160507269689, guid: 3fc90bfcfe5348447bc5818be6bb1b35, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
   animatorOverride: {fileID: 22100000, guid: 083afb6f3090dd64983f6459f72dad89, type: 2}
   equippedPrefab: {fileID: 8725702829197781277, guid: 97f0cde80d7860d4498cef8f158e422c,
     type: 3}
@@ -21,4 +28,3 @@ MonoBehaviour:
   isRightHanded: 0
   projectile: {fileID: 3401505232858583259, guid: 42fc2f9c3c8da914bbf340983e643cc2,
     type: 3}
-  attackAnimation: {fileID: 7400002, guid: 71247772d707f7d438e34fe82e8f7b22, type: 3}

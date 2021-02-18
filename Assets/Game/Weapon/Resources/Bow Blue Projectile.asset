@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752130efc96294aa3ae70f790754e58a, type: 3}
   m_Name: Bow Blue Projectile
   m_EditorClassIdentifier: 
+  itemID: 1decd19e-472c-4ae0-a6f6-939ea00717c1
+  displayName: Arfelbow
+  description: Bow to Arfelus!
+  icon: {fileID: 21300000, guid: d19901b0ee3c38743a7d383bd484b0b5, type: 3}
+  pickup: {fileID: 2287223541132574480, guid: 681e9fe39ac21db4cadbd81f3992f111, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
   animatorOverride: {fileID: 22100000, guid: 79b6c98053f2f42b19fc6530bdf74a1e, type: 2}
   equippedPrefab: {fileID: 1692883748218490884, guid: 4d82a01f78c554e9386e6beb6bdb2669,
     type: 3}

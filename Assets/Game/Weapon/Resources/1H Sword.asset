@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752130efc96294aa3ae70f790754e58a, type: 3}
   m_Name: 1H Sword
   m_EditorClassIdentifier: 
+  itemID: af256ae4-4501-4863-9801-75e59a6fc2aa
+  displayName: Arfelosword
+  description: The one-handed sword to rule them all!
+  icon: {fileID: 21300000, guid: d19901b0ee3c38743a7d383bd484b0b5, type: 3}
+  pickup: {fileID: 5806468035435215841, guid: a262243ce3485db49b511606f2a0ee27, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
   animatorOverride: {fileID: 22100000, guid: 9e87592448cb14bd2a1dcf8ccd72f853, type: 2}
   equippedPrefab: {fileID: 8588511950748160044, guid: 5d178ff400dc8401f976b0b1dd09855f,
     type: 3}

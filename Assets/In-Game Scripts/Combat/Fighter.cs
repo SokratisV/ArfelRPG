@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using GameDevTV.Utils;
+using RPG.Utils;
 using RPG.AnimatorBehaviors;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Attributes;
+using RPG.Inventories;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace RPG.Combat
 		[SerializeField] private WeaponConfig defaultWeapon = null;
 
 		private WeaponConfig _currentWeaponConfig;
+		private Equipment _equipment;
 		private Mover _mover;
 		private ActionScheduler _actionScheduler;
 		private Animator _animator;
@@ -47,16 +49,25 @@ namespace RPG.Combat
 			_currentWeaponConfig = defaultWeapon;
 			_currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
 			_animator = GetComponent<Animator>();
+			_equipment = GetComponent<Equipment>();
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_mover = GetComponent<Mover>();
 			_stats = GetComponent<BaseStats>();
 			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
 			attackListenerBehavior.OnAnimationComplete += () => _isCurrentAnimationDone = true;
+			if(_equipment) _equipment.equipmentUpdated += UpdateWeapon;
+		}
+
+		[ContextMenu(nameof(UpdateWeapon))]
+		private void UpdateWeapon()
+		{
+			var weapon = _equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;
+			EquipWeapon(!weapon? defaultWeapon:weapon);
 		}
 
 		private Weapon SetupDefaultWeapon() => AttachWeapon(defaultWeapon);
 
-		public void EquipWeapon(WeaponConfig weapon)
+		private void EquipWeapon(WeaponConfig weapon)
 		{
 			_currentWeaponConfig = weapon;
 			_currentWeapon.Value = AttachWeapon(weapon);
@@ -86,7 +97,7 @@ namespace RPG.Combat
 			}
 			else
 			{
-				if (_isCurrentAnimationDone)
+				if(_isCurrentAnimationDone)
 					_mover.MoveWithoutAction(_target.transform.position);
 			}
 		}

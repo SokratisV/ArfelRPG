@@ -4,7 +4,7 @@ using RPG.Inventories;
 
 namespace RPG.Control
 {
-	[RequireComponent(typeof(SphereCollider))]
+	[RequireComponent(typeof(Collider))]
 	[RequireComponent(typeof(Pickup))]
 	public class ClickablePickup : MonoBehaviour, IRaycastable, ICollectable
 	{
