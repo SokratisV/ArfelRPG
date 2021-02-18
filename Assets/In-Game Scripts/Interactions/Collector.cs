@@ -7,7 +7,7 @@ namespace RPG.Core
 	public class Collector : MonoBehaviour, IAction
 	{
 		public event Action OnActionComplete;
-		private Treasure _collectible;
+		private ICollectable _collectible;
 		private Mover _mover;
 		private ActionScheduler _actionScheduler;
 
@@ -20,20 +20,20 @@ namespace RPG.Core
 		private void Update()
 		{
 			if (_collectible == null) return;
-			if(IsInRange(_collectible.transform))
+			if(IsInRange(_collectible.GetTransform()))
 			{
 				CollectBehavior();
 			}
 			else
 			{
-				_mover.MoveWithoutAction(_collectible.transform.position);
+				_mover.MoveWithoutAction(_collectible.GetTransform().position);
 			}
 		}
 
 		private void CollectBehavior()
 		{
-			transform.LookAt(_collectible.transform);
-			if(IsInRange(_collectible.transform))
+			transform.LookAt(_collectible.GetTransform());
+			if(IsInRange(_collectible.GetTransform()))
 			{
 				_mover.CancelAction();
 				Collect();
@@ -42,14 +42,14 @@ namespace RPG.Core
 
 		private void Collect()
 		{
-			_collectible.OpenTreasure();
+			_collectible.Collect();
 			_collectible = null;
 			CompleteAction();
 		}
 
-		public void StartCollectAction(Treasure collectible)
+		public void StartCollectAction(ICollectable collectable)
 		{
-			_collectible = collectible;
+			_collectible = collectable;
 			_actionScheduler.StartAction(this);
 		}
 
@@ -59,13 +59,13 @@ namespace RPG.Core
 			_mover.CancelAction();
 		}
 
-		public bool CanCollect(GameObject collectible)
+		public bool CanCollect(GameObject collectable)
 		{
-			if(collectible == null) return false;
-			return!_mover.CanMoveTo(collectible.transform.position);
+			if(collectable == null) return false;
+			return!_mover.CanMoveTo(collectable.transform.position);
 		}
 
-		private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _collectible.GetInteractionRange());
+		private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _collectible.InteractionDistance());
 
 		public void QueueCollectAction(GameObject obj) => _actionScheduler.EnqueueAction(new PickableActionData(this, obj.transform));
 
@@ -75,6 +75,6 @@ namespace RPG.Core
 			_actionScheduler.CompleteAction();
 		}
 
-		public void ExecuteAction(IActionData data) =>_collectible = ((PickableActionData)data).Treasure.GetComponent<Treasure>();
+		public void ExecuteAction(IActionData data) =>_collectible = ((PickableActionData)data).Treasure.GetComponent<ICollectable>();
 	}
 }

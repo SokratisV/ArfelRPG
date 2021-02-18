@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace RPG.Core
 {
-	public class Treasure : MonoBehaviour, IRaycastable, ISaveable
+	public class Treasure : MonoBehaviour, IRaycastable, ISaveable, ICollectable
 	{
 		[SerializeField] private Transform[] dropLocations;
-		[SerializeField] private RandomWeaponDrop lootTable;
+		// [SerializeField] private RandomWeaponDrop lootTable;
 		[SerializeField] private float interactionRange = 1f;
 
 		private OutlineableComponent _outlineableComponent;
@@ -62,7 +62,7 @@ namespace RPG.Core
 		//Animation event
 		public void DropLoot()
 		{
-			lootTable.GenerateLoot(dropLocations, _pickupManager);
+			// lootTable.GenerateLoot(dropLocations, _pickupManager);
 			_isOpened = true;
 			GetComponent<Collider>().enabled = false;
 		}
@@ -78,6 +78,10 @@ namespace RPG.Core
 
 		public object CaptureState() => _isOpened;
 
-		public float GetInteractionRange() => interactionRange;
+		public Transform GetTransform() => transform;
+
+		public void Collect() => OpenTreasure();
+
+		public float InteractionDistance() => GlobalValues.InteractableRange;
 	}
 }

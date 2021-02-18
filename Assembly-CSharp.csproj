@@ -65,7 +65,7 @@
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\FireLight.cs" />
      <Compile Include="Assets\In-Game Scripts\Core\CameraAngleManager.cs" />
      <Compile Include="Assets\In-Game Scripts\Cinematics\CinematicTrigger.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\WeaponPickup.cs" />
+     <Compile Include="Assets\In-Game Scripts\Combat\ProximityPickup.cs" />
      <Compile Include="Assets\UI\Inventory Scripts\InventoryUI.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\WaterBase.cs" />
      <Compile Include="Assets\Rotary Heart\SerializableDictionary\IDAttribute.cs" />
@@ -77,6 +77,7 @@
      <Compile Include="Assets\In-Game Scripts\Core\PersistentObjectSpawner.cs" />
      <Compile Include="Assets\In-Game Scripts\Inventories\PickupSpawner.cs" />
      <Compile Include="Assets\In-Game Scripts\Movement\CoroutineExtension.cs" />
+     <Compile Include="Assets\In-Game Scripts\Interactions\ICollectable.cs" />
      <Compile Include="Assets\In-Game Scripts\Saving\ISaveable.cs" />
      <Compile Include="Assets\In-Game Scripts\Interactions\RandomWeaponDrop.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\ExtinguishableParticleSystem.cs" />

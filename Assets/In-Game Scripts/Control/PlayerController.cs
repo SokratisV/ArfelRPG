@@ -2,6 +2,7 @@ using UnityEngine;
 using RPG.Movement;
 using RPG.Attributes;
 using System;
+using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
 
@@ -21,12 +22,11 @@ namespace RPG.Control
 		[Serializable]
 		private struct CursorMapping
 		{
-			public CursorType type;
 			public Texture2D texture;
 			public Vector2 hotspot;
 		}
 
-		[SerializeField] private CursorMapping[] cursorMappings = null;
+		[SerializeField] private CursorMappings cursorMappings = new CursorMappings();
 
 		private void Awake()
 		{
@@ -161,19 +161,14 @@ namespace RPG.Control
 			Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
 		}
 
-		private CursorMapping GetCursorMapping(CursorType type)
-		{
-			foreach(var mapping in cursorMappings)
-			{
-				if(mapping.type == type)
-				{
-					return mapping;
-				}
-			}
-
-			return cursorMappings[0];
-		}
+		private CursorMapping GetCursorMapping(CursorType type) => cursorMappings.TryGetValue(type, out var mapping)? mapping:cursorMappings[0];
 
 		private Ray GetMouseRay() => _mainCamera.ScreenPointToRay(Input.mousePosition);
+		
+		[Serializable]
+		private class CursorMappings : SerializableDictionaryBase<CursorType, CursorMapping>
+		{
+		}
 	}
+
 }

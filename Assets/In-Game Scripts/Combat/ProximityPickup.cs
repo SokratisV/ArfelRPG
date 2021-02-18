@@ -6,10 +6,9 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-	public class WeaponPickup : MonoBehaviour, IRaycastable
+	public class ProximityPickup : MonoBehaviour, IRaycastable
 	{
-		[SerializeField] private WeaponConfig weapon = null;
-		[SerializeField] private float respawnTime = 5, healthToRestore = 0, pickupRange = 1f;
+		[SerializeField] private float respawnTime = 5, healthToRestore = 0;
 
 		private Collider _collider;
 		private OutlineableComponent _outlineableComponent;
@@ -19,8 +18,7 @@ namespace RPG.Combat
 			_outlineableComponent = new OutlineableComponent(gameObject);
 			_collider = GetComponent<Collider>();
 		}
-
-		//TODO: Remove and fix to pickup on first click
+		
 		private void OnTriggerEnter(Collider other)
 		{
 			if(other.CompareTag("Player"))
@@ -31,12 +29,7 @@ namespace RPG.Combat
 
 		private bool Pickup(GameObject subject)
 		{
-			if(!Helper.IsWithinDistance(transform, subject.transform, GetInteractionRange())) return false;
-			if(weapon != null)
-			{
-				subject.GetComponent<Fighter>().EquipWeapon(weapon);
-			}
-
+			if(!Helper.IsWithinDistance(transform, subject.transform, InteractionDistance())) return false;
 			if(healthToRestore > 0)
 			{
 				subject.GetComponent<Health>().Heal(healthToRestore);
@@ -87,6 +80,6 @@ namespace RPG.Combat
 
 		public CursorType GetCursorType() => CursorType.Pickup;
 
-		public float GetInteractionRange() => pickupRange;
+		public float InteractionDistance() => 0;
 	}
 }

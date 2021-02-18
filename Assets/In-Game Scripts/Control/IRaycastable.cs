@@ -5,6 +5,6 @@
         CursorType GetCursorType();
         bool HandleRaycast(PlayerController callingController);
         void ShowInteractivity();
-        float GetInteractionRange();
+        float InteractionDistance();
     }
 }

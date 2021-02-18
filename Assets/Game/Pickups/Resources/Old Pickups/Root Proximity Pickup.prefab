@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1242687290578955905}
-  - component: {fileID: 369241900293614958}
   - component: {fileID: 7008918525487417878}
   m_Layer: 0
   m_Name: Root Pickup
@@ -33,22 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &369241900293614958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7293195383944613899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a299b2407ded64950851a0321db4877c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: 3177d12e4bf264f938c959a4a183c6d7, type: 2}
-  respawnTime: 0
-  healthToRestore: 0
-  pickupRange: 2
 --- !u!136 &7008918525487417878
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -72,6 +55,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 518617073886716065, guid: 2966972c0d6a8534e9cb95a24136d390,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518617073886716065, guid: 2966972c0d6a8534e9cb95a24136d390,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -87,6 +75,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 518617073886716065, guid: 2966972c0d6a8534e9cb95a24136d390,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 518617073886716065, guid: 2966972c0d6a8534e9cb95a24136d390,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -98,16 +91,6 @@ PrefabInstance:
     - target: {fileID: 518617073886716065, guid: 2966972c0d6a8534e9cb95a24136d390,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 518617073886716065, guid: 2966972c0d6a8534e9cb95a24136d390,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 518617073886716065, guid: 2966972c0d6a8534e9cb95a24136d390,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 518617073886716065, guid: 2966972c0d6a8534e9cb95a24136d390,

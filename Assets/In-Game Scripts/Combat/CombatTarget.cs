@@ -41,6 +41,6 @@ namespace RPG.Combat
 			}
 		}
 
-		public float GetInteractionRange() => 0f;
+		public float InteractionDistance() => 0f;
 	}
 }

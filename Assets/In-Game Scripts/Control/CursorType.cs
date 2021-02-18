@@ -7,6 +7,6 @@ namespace RPG.Control
         Combat,
         UI,
         Pickup,
-        FullPickup
+        InventoryFull
     }
 }
