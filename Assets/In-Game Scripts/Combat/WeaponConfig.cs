@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using RPG.Attributes;
 using RPG.Inventories;
+using RPG.Stats;
 using UnityEngine;
 
 namespace RPG.Combat
 {
 	[CreateAssetMenu(fileName = "Weapon", menuName = "Weapons/New Weapon", order = 0)]
-	public class WeaponConfig : EquipableItem
+	public class WeaponConfig : EquipableItem, IModifierProvider
 	{
 		[SerializeField] private AnimatorOverrideController animatorOverride = null;
 		[SerializeField] private Weapon equippedPrefab = null;
@@ -65,12 +66,17 @@ namespace RPG.Combat
 			return handTransform;
 		}
 
-		public float GetDamage() => weaponDamage;
-
 		public float GetRange() => weaponRange;
 
-		public float GetPercentageBonus() => weaponPercentageBonus;
-
 		private void OnDestroy() => WeaponPerPlayer = null;
+		public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+		{
+			if(stat == Stat.Damage) yield return weaponDamage;
+		}
+
+		public IEnumerable<float> GetPercentageModifiers(Stat stat)
+		{
+			if(stat == Stat.Damage) yield return weaponPercentageBonus;
+		}
 	}
 }

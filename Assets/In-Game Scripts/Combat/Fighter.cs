@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using RPG.Utils;
 using RPG.AnimatorBehaviors;
 using RPG.Core;
@@ -12,7 +11,7 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-	public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
+	public class Fighter : MonoBehaviour, IAction, ISaveable
 	{
 		public event Action OnActionComplete;
 
@@ -58,7 +57,7 @@ namespace RPG.Combat
 			//TODO: sometimes breaks and event is never fired
 			// var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
 			// attackListenerBehavior.OnAnimationComplete += () => _isCurrentAnimationDone = true;
-			if(_equipment) _equipment.equipmentUpdated += UpdateWeapon;
+			if(_equipment) _equipment.EquipmentUpdated += UpdateWeapon;
 		}
 
 		[ContextMenu(nameof(UpdateWeapon))]
@@ -177,18 +176,6 @@ namespace RPG.Combat
 		{
 			_currentWeaponConfig = Resources.Load<WeaponConfig>((string)state);
 			EquipWeapon(_currentWeaponConfig);
-		}
-
-		public IEnumerable<float> GetAdditiveModifiers(Stat stat)
-		{
-			if(stat == Stat.Damage)
-				yield return _currentWeaponConfig.GetDamage();
-		}
-
-		public IEnumerable<float> GetPercentageModifiers(Stat stat)
-		{
-			if(stat == Stat.Damage)
-				yield return _currentWeaponConfig.GetPercentageBonus();
 		}
 
 		public void CompleteAction()
