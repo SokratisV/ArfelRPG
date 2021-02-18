@@ -19,7 +19,7 @@ namespace RPG.Core
 
 		private void Update()
 		{
-			if (_collectible == null) return;
+			if(_collectible == null) return;
 			if(IsInRange(_collectible.GetTransform()))
 			{
 				CollectBehavior();
@@ -59,11 +59,7 @@ namespace RPG.Core
 			_mover.CancelAction();
 		}
 
-		public bool CanCollect(GameObject collectable)
-		{
-			if(collectable == null) return false;
-			return!_mover.CanMoveTo(collectable.transform.position);
-		}
+		public bool CanCollect(ICollectable collectable) => collectable != null && _mover.CanMoveTo(collectable.GetTransform().position);
 
 		private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _collectible.InteractionDistance());
 
@@ -75,6 +71,6 @@ namespace RPG.Core
 			_actionScheduler.CompleteAction();
 		}
 
-		public void ExecuteAction(IActionData data) =>_collectible = ((PickableActionData)data).Treasure.GetComponent<ICollectable>();
+		public void ExecuteAction(IActionData data) => _collectible = ((PickableActionData)data).Treasure.GetComponent<ICollectable>();
 	}
 }

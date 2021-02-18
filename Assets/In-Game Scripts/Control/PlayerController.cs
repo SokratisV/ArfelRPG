@@ -102,7 +102,6 @@ namespace RPG.Control
 			var hasHit = RaycastNavMesh(out var target);
 			if(hasHit)
 			{
-				if(!_mover.CanMoveTo(target)) return false;
 				CheckPressedButtons(target);
 				SetCursor(CursorType.Movement);
 				return true;

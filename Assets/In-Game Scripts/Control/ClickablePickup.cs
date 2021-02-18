@@ -22,7 +22,7 @@ namespace RPG.Control
 		public bool HandleRaycast(PlayerController callingController)
 		{
 			var collector = callingController.GetComponent<Collector>();
-			// if(!collector.CanCollect(gameObject)) return false;
+			if(!collector.CanCollect(this)) return false;
 			CheckPressedButtons(collector);
 			return true;
 		}

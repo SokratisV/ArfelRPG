@@ -7,6 +7,8 @@ namespace RPG.Core
 	public class Treasure : MonoBehaviour, IRaycastable, ISaveable, ICollectable
 	{
 		[SerializeField] private Transform[] dropLocations;
+		[SerializeField] private Transform unlockTransform;
+
 		// [SerializeField] private RandomWeaponDrop lootTable;
 		[SerializeField] private float interactionRange = 1f;
 
@@ -25,7 +27,7 @@ namespace RPG.Core
 			if(!_isOpened)
 			{
 				var collector = callingController.GetComponent<Collector>();
-				if(!collector.CanCollect(gameObject)) return false;
+				if(!collector.CanCollect(this)) return false;
 				CheckPressedButtons(collector);
 				return true;
 			}
@@ -78,7 +80,7 @@ namespace RPG.Core
 
 		public object CaptureState() => _isOpened;
 
-		public Transform GetTransform() => transform;
+		public Transform GetTransform() => unlockTransform;
 
 		public void Collect() => OpenTreasure();
 
