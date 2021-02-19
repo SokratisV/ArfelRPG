@@ -11,7 +11,7 @@ namespace RPG.Inventories
 	/// </summary>
 	public class ItemDropper : MonoBehaviour, ISaveable
 	{
-		private List<Pickup> droppedItems = new List<Pickup>();
+		private List<Pickup> _droppedItems = new List<Pickup>();
 
 		/// <summary>
 		/// Create a pickup at the current position.
@@ -28,7 +28,7 @@ namespace RPG.Inventories
 		/// </summary>
 		/// <param name="item">The item type for the pickup.</param>
 		public void DropItem(InventoryItem item) => SpawnPickup(item, GetDropLocation(), 1);
-		
+
 		/// <summary>
 		/// Override to set a custom method for locating a drop.
 		/// </summary>
@@ -38,7 +38,7 @@ namespace RPG.Inventories
 		public void SpawnPickup(InventoryItem item, Vector3 spawnLocation, int number)
 		{
 			var pickup = item.SpawnPickup(spawnLocation, number);
-			droppedItems.Add(pickup);
+			_droppedItems.Add(pickup);
 		}
 
 		[System.Serializable]
@@ -52,12 +52,12 @@ namespace RPG.Inventories
 		object ISaveable.CaptureState()
 		{
 			RemoveDestroyedDrops();
-			var droppedItemsList = new DropRecord[droppedItems.Count];
+			var droppedItemsList = new DropRecord[_droppedItems.Count];
 			for(var i = 0;i < droppedItemsList.Length;i++)
 			{
-				droppedItemsList[i].itemID = droppedItems[i].GetItem().GetItemID();
-				droppedItemsList[i].position = new SerializableVector3(droppedItems[i].transform.position);
-				droppedItemsList[i].number = droppedItems[i].GetNumber();
+				droppedItemsList[i].itemID = _droppedItems[i].GetItem().GetItemID();
+				droppedItemsList[i].position = new SerializableVector3(_droppedItems[i].transform.position);
+				droppedItemsList[i].number = _droppedItems[i].GetNumber();
 			}
 
 			return droppedItemsList;
@@ -80,8 +80,8 @@ namespace RPG.Inventories
 		/// </summary>
 		private void RemoveDestroyedDrops()
 		{
-			var newList = droppedItems.Where(item => item != null).ToList();
-			droppedItems = newList;
+			var newList = _droppedItems.Where(item => item != null).ToList();
+			_droppedItems = newList;
 		}
 	}
 }

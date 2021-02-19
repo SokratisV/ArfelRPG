@@ -43,7 +43,10 @@ namespace RPG.Control
 
 		public float InteractionDistance() => GlobalValues.InteractableRange;
 
-		public Transform GetTransform() => transform.parent;
+		public Transform GetTransform()
+		{
+			return transform.parent == null? transform:transform.parent;
+		}
 
 		public void Collect() => _pickup.PickupItem();
 	}
