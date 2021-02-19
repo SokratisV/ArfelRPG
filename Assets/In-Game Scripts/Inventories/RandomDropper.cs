@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using RPG.Stats;
+using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace RPG.Inventories
 {
@@ -8,10 +11,13 @@ namespace RPG.Inventories
 		[Tooltip("How far pickups will be scattered")] [SerializeField]
 		private float scatterDistance = 1;
 
-		[SerializeField] private InventoryItem[] dropLibrary;
+		[SerializeField] private DropLibrary dropLibrary;
 		[SerializeField] private int numberOfDrops = 2;
 
+		private BaseStats _baseStats;
 		private const int Attempts = 30;
+
+		private void Awake() => _baseStats = GetComponent<BaseStats>();
 
 		protected override Vector3 GetDropLocation()
 		{
@@ -29,10 +35,10 @@ namespace RPG.Inventories
 
 		public void RandomDrop()
 		{
-			for(var i = 0;i < numberOfDrops;i++)
+			var item = dropLibrary.GetRandomDrops(_baseStats.GetLevel());
+			foreach(var dropped in item)
 			{
-				var item = dropLibrary[Random.Range(0, dropLibrary.Length)];
-				DropItem(item, 1);
+				DropItem(dropped.Item, dropped.Number);
 			}
 		}
 	}

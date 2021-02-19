@@ -6,6 +6,7 @@ namespace RPG.Control
 {
 	[RequireComponent(typeof(Collider))]
 	[RequireComponent(typeof(Pickup))]
+	[SelectionBase]
 	public class ClickablePickup : MonoBehaviour, IRaycastable, ICollectable
 	{
 		private Pickup _pickup;

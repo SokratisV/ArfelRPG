@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using RPG.Saving;
+using UnityEngine.SceneManagement;
 
 namespace RPG.Inventories
 {
@@ -12,6 +13,7 @@ namespace RPG.Inventories
 	public class ItemDropper : MonoBehaviour, ISaveable
 	{
 		private List<Pickup> _droppedItems = new List<Pickup>();
+		private List<DropRecord> _otherSceneDroppedItems = new List<DropRecord>();
 
 		/// <summary>
 		/// Create a pickup at the current position.
@@ -47,27 +49,43 @@ namespace RPG.Inventories
 			public string itemID;
 			public SerializableVector3 position;
 			public int number;
+			public int sceneBuildIndex;
 		}
 
 		object ISaveable.CaptureState()
 		{
 			RemoveDestroyedDrops();
-			var droppedItemsList = new DropRecord[_droppedItems.Count];
-			for(var i = 0;i < droppedItemsList.Length;i++)
+			var droppedItemsList = new List<DropRecord>();
+			var sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+			foreach(var pickup in _droppedItems)
 			{
-				droppedItemsList[i].itemID = _droppedItems[i].GetItem().GetItemID();
-				droppedItemsList[i].position = new SerializableVector3(_droppedItems[i].transform.position);
-				droppedItemsList[i].number = _droppedItems[i].GetNumber();
+				var droppedItem = new DropRecord
+				{
+					itemID = pickup.GetItem().GetItemID(),
+					position = new SerializableVector3(pickup.transform.position),
+					number = pickup.GetNumber(),
+					sceneBuildIndex = sceneBuildIndex
+				};
+				droppedItemsList.Add(droppedItem);
 			}
 
+			droppedItemsList.AddRange(_otherSceneDroppedItems);
 			return droppedItemsList;
 		}
 
 		void ISaveable.RestoreState(object state)
 		{
 			var droppedItemsList = (DropRecord[])state;
+			var sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+			_otherSceneDroppedItems.Clear();
 			foreach(var item in droppedItemsList)
 			{
+				if(item.sceneBuildIndex != sceneBuildIndex)
+				{
+					_otherSceneDroppedItems.Add(item);
+					continue;
+				}
+
 				var pickupItem = InventoryItem.GetFromID(item.itemID);
 				var position = item.position.ToVector();
 				var number = item.number;
