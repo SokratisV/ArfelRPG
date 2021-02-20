@@ -114,6 +114,7 @@ namespace RPG.Combat
 		private void AttackAnimation()
 		{
 			// _isCurrentAnimationDone = false;
+			_timeSinceLastAttack = 0;
 			_animator.ResetTrigger(StopAttackHash);
 			_animator.SetTrigger(AttackHash);
 		}
@@ -134,7 +135,6 @@ namespace RPG.Combat
 				_target.TakeDamage(gameObject, damage);
 			}
 
-			_timeSinceLastAttack = 0;
 		}
 
 		private void Shoot() => Hit();
