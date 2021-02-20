@@ -691,6 +691,10 @@
       <Project>{81044aed-9a49-5a6f-aab9-d3735042e71b}</Project>
       <Name>Saving</Name>
     </ProjectReference>
+    <ProjectReference Include="DialogueEditor.csproj">
+      <Project>{57ad8430-61e1-1afe-f003-9f50cad11514}</Project>
+      <Name>DialogueEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="Stats.csproj">
       <Project>{0b9e375e-9a09-947a-9718-fcb7d4b95842}</Project>
       <Name>Stats</Name>
@@ -742,6 +746,10 @@
     <ProjectReference Include="Movement.csproj">
       <Project>{969468c0-3ae0-0795-e700-d90d7a086cb7}</Project>
       <Name>Movement</Name>
+    </ProjectReference>
+    <ProjectReference Include="Dialogue.csproj">
+      <Project>{7fd088b2-4c6e-93af-fb1d-acac7eab0e50}</Project>
+      <Name>Dialogue</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

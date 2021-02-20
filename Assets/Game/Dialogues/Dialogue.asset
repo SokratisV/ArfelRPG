@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a805a3040deb4673b784488560465a44, type: 3}
+  m_Name: Dialogue
+  m_EditorClassIdentifier: 
+  nodes:
+  - uniqueID: 123
+    text: a
+    children:
+    - 1b9687bf-5031-4124-b3e4-161a3dee05e8
+    - 531dd207-3b88-4e33-92d7-9e3ba695efa0
+    rect:
+      serializedVersion: 2
+      x: 275
+      y: 327
+      width: 200
+      height: 200
+  - uniqueID: 531dd207-3b88-4e33-92d7-9e3ba695efa0
+    text: 
+    children: []
+    rect:
+      serializedVersion: 2
+      x: 586
+      y: 307
+      width: 200
+      height: 100
+  - uniqueID: 1b9687bf-5031-4124-b3e4-161a3dee05e8
+    text: 
+    children:
+    - 67008620-662b-4ca3-83a3-6ffed84c9178
+    rect:
+      serializedVersion: 2
+      x: 559
+      y: 508
+      width: 200
+      height: 100
+  - uniqueID: 67008620-662b-4ca3-83a3-6ffed84c9178
+    text: 
+    children: []
+    rect:
+      serializedVersion: 2
+      x: 873
+      y: 504
+      width: 200
+      height: 100
