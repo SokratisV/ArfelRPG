@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Control
 {
 	public interface ICollectable
 	{

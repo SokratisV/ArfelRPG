@@ -1,7 +1,8 @@
+using RPG.Attributes;
 using TMPro;
 using UnityEngine;
 
-namespace RPG.Attributes
+namespace RPG.UI
 {
 	public class HealthDisplay : MonoBehaviour
 	{

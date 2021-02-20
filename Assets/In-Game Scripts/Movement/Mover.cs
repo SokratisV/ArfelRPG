@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
+using RPG.Attributes;
 using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
 using RPG.Saving;
-using RPG.Attributes;
 
 namespace RPG.Movement
 {
@@ -12,7 +12,7 @@ namespace RPG.Movement
 	public class Mover : MonoBehaviour, IAction, ISaveable
 	{
 		public event Action OnActionComplete;
-
+		
 		private float _distanceBeforeReachingDestination;
 		private NavMeshAgent _navMeshAgent;
 		private Animator _animator;

@@ -53,13 +53,8 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\SpecularLightingEditor.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\Editor\Constants.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\Editor\DictionaryPropertyDrawer.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\Editor\Definer.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\PlanarReflectionEditor.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\GerstnerDisplaceEditor.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\Editor\SupportWindow.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\Editor\PreferencesWindow.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\WaterBaseEditor.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\WaterEditorUtility.cs" />
  <Reference Include="UnityEngine">
@@ -294,7 +289,7 @@
  <HintPath>C:/Program Files/Unity/Editor/2020.2.3f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="AssetStoreTools">
- <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Assets/AssetStoreTools/Editor/AssetStoreTools.dll</HintPath>
+ <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Assets/Asset Packs/AssetStoreTools/Editor/AssetStoreTools.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -691,6 +686,62 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{11e5e80b-06d5-d0a1-e67d-923a5ed26d39}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="Saving.csproj">
+      <Project>{81044aed-9a49-5a6f-aab9-d3735042e71b}</Project>
+      <Name>Saving</Name>
+    </ProjectReference>
+    <ProjectReference Include="Stats.csproj">
+      <Project>{0b9e375e-9a09-947a-9718-fcb7d4b95842}</Project>
+      <Name>Stats</Name>
+    </ProjectReference>
+    <ProjectReference Include="Outline.csproj">
+      <Project>{3e64631f-bc48-1183-10b0-32032bb5a975}</Project>
+      <Name>Outline</Name>
+    </ProjectReference>
+    <ProjectReference Include="UI.csproj">
+      <Project>{1cd77628-a7a2-5c04-4ca5-20c16974f46c}</Project>
+      <Name>UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Audio.csproj">
+      <Project>{878500fc-3137-686f-4779-1eeb77883f70}</Project>
+      <Name>Audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="Core.csproj">
+      <Project>{bb3d43e7-04ee-c47a-905f-d98699edfa32}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Inventories.csproj">
+      <Project>{9bd45c65-5ef1-5218-e6a8-6d63c7c624c7}</Project>
+      <Name>Inventories</Name>
+    </ProjectReference>
+    <ProjectReference Include="Cinematic.csproj">
+      <Project>{63c322c9-af88-31a6-a296-dbb19f3a4b82}</Project>
+      <Name>Cinematic</Name>
+    </ProjectReference>
+    <ProjectReference Include="Combat.csproj">
+      <Project>{213dca96-aa32-a723-6ebc-f034c78b6219}</Project>
+      <Name>Combat</Name>
+    </ProjectReference>
+    <ProjectReference Include="RotaryHeart.csproj">
+      <Project>{9a57197f-6bce-1fef-2b72-2c61b4333055}</Project>
+      <Name>RotaryHeart</Name>
+    </ProjectReference>
+    <ProjectReference Include="Attributes.csproj">
+      <Project>{037e8168-b924-f7b2-c01f-671f18fd881b}</Project>
+      <Name>Attributes</Name>
+    </ProjectReference>
+    <ProjectReference Include="SceneManagement.csproj">
+      <Project>{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}</Project>
+      <Name>SceneManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="Control.csproj">
+      <Project>{62ba2814-d88d-74e0-0f77-67289fddf2da}</Project>
+      <Name>Control</Name>
+    </ProjectReference>
+    <ProjectReference Include="Movement.csproj">
+      <Project>{969468c0-3ae0-0795-e700-d90d7a086cb7}</Project>
+      <Name>Movement</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

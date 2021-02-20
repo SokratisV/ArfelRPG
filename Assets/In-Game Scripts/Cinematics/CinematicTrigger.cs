@@ -5,7 +5,7 @@ namespace RPG.Cinematics
 {
 	public class CinematicTrigger : MonoBehaviour
 	{
-		private bool _hasBeenPlayed = false;
+		private bool _hasBeenPlayed;
 
 		private void OnTriggerEnter(Collider other)
 		{

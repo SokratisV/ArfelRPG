@@ -1,7 +1,6 @@
-using RPG.Combat;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Control
 {
 	[CreateAssetMenu(fileName = "LootTable", menuName = "Loot/Make New LootTable", order = 0)]
 	public class RandomWeaponDrop : ScriptableObject

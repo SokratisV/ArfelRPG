@@ -6,21 +6,6 @@ using UnityEngine;
 
 namespace RPG.Core
 {
-	internal enum MusicAreas
-	{
-		Forest,
-		Town,
-		Hill,
-		Death
-	}
-
-	public enum CombatMusicAreas
-	{
-		CombatNormal,
-		BossVillage,
-		BossTroll
-	}
-
 	[RequireComponent(typeof(AudioSource))]
 	public class MusicManager : MonoBehaviour
 	{

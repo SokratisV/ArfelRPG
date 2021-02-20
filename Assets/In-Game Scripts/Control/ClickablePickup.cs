@@ -20,9 +20,9 @@ namespace RPG.Control
 
 		public CursorType GetCursorType() => _pickup.CanBePickedUp()? CursorType.Pickup:CursorType.InventoryFull;
 
-		public bool HandleRaycast(PlayerController callingController)
+		public bool HandleRaycast(GameObject caller)
 		{
-			var collector = callingController.GetComponent<Collector>();
+			var collector = caller.GetComponent<Collector>();
 			if(!collector.CanCollect(this)) return false;
 			CheckPressedButtons(collector);
 			return true;
@@ -44,10 +44,7 @@ namespace RPG.Control
 
 		public float InteractionDistance() => GlobalValues.InteractableRange;
 
-		public Transform GetTransform()
-		{
-			return transform.parent == null? transform:transform.parent;
-		}
+		public Transform GetTransform() => transform.parent == null? transform:transform.parent;
 
 		public void Collect() => _pickup.PickupItem();
 	}

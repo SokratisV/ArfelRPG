@@ -1,5 +1,4 @@
-﻿using System;
-using RPG.Stats;
+﻿using RPG.Stats;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -12,8 +11,6 @@ namespace RPG.Inventories
 		private float scatterDistance = 1;
 
 		[SerializeField] private DropLibrary dropLibrary;
-		[SerializeField] private int numberOfDrops = 2;
-
 		private BaseStats _baseStats;
 		private const int Attempts = 30;
 

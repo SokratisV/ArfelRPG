@@ -1,8 +1,9 @@
 using UnityEngine;
 using RPG.Movement;
-using RPG.Attributes;
 using System;
 using RotaryHeart.Lib.SerializableDictionary;
+using RPG.Attributes;
+using RPG.Core;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
 
@@ -59,7 +60,7 @@ namespace RPG.Control
 				var raycastables = hit.transform.GetComponents<IRaycastable>();
 				foreach(var raycastable in raycastables)
 				{
-					if(raycastable.HandleRaycast(this))
+					if(raycastable.HandleRaycast(gameObject))
 					{
 						raycastable.ShowInteractivity();
 						SetCursor(raycastable.GetCursorType());

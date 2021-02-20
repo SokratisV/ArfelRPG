@@ -1,9 +1,11 @@
-﻿namespace RPG.Control
+﻿using UnityEngine;
+
+namespace RPG.Core
 {
     public interface IRaycastable
     {
         CursorType GetCursorType();
-        bool HandleRaycast(PlayerController callingController);
+        bool HandleRaycast(GameObject caller);
         void ShowInteractivity();
         float InteractionDistance();
     }

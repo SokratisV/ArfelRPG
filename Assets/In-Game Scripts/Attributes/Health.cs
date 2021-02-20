@@ -1,6 +1,6 @@
 using System;
-using RPG.Utils;
 using RPG.Core;
+using RPG.Utils;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
@@ -45,7 +45,7 @@ namespace RPG.Attributes
 
 		private float GetInitialHealth() => _baseStats.GetStat(Stat.Health);
 
-		internal void Heal(float healthToRestore) => _healthPoints.Value = Mathf.Min(_healthPoints.Value + healthToRestore, GetMaxHealthPoints());
+		public void Heal(float healthToRestore) => _healthPoints.Value = Mathf.Min(_healthPoints.Value + healthToRestore, GetMaxHealthPoints());
 
 		private void RestoreHealth()
 		{

@@ -1,8 +1,9 @@
 using System;
+using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Control
 {
 	public class Collector : MonoBehaviour, IAction
 	{

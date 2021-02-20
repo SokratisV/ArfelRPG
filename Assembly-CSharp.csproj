@@ -52,122 +52,24 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\In-Game Scripts\Control\PlayerController.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\EquipableItem.cs" />
-     <Compile Include="Assets\In-Game Scripts\Interactions\Collector.cs" />
-     <Compile Include="Assets\Asset Packs\QuickOutline\Scripts\Outline.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\Equipment.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\EquipLocation.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\MusicManager.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\InventoryDragItem.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\CameraZoomControl.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\Utils\UI\Dragging\IDragDestination.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\FireLight.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\CameraAngleManager.cs" />
-     <Compile Include="Assets\In-Game Scripts\Cinematics\CinematicTrigger.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\ProximityPickup.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\InventoryUI.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\WaterBase.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\IDAttribute.cs" />
-     <Compile Include="Assets\In-Game Scripts\Stats\CharacterClass.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\ItemTooltip.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\MeshContainer.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\RandomDropper.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\ReorderableList\ReorderableList.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\GlobalValues.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\PersistentObjectSpawner.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\PickupSpawner.cs" />
-     <Compile Include="Assets\In-Game Scripts\Movement\CoroutineExtension.cs" />
-     <Compile Include="Assets\In-Game Scripts\Interactions\ICollectable.cs" />
-     <Compile Include="Assets\In-Game Scripts\Saving\ISaveable.cs" />
-     <Compile Include="Assets\In-Game Scripts\Interactions\RandomWeaponDrop.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\ExtinguishableParticleSystem.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\EnemyHealthDisplay.cs" />
-     <Compile Include="Assets\In-Game Scripts\Saving\SerializableVector3.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\Utils\UI\Dragging\DragItem.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\TrainingDummy.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\ExplosionFireAndDebris.cs" />
-     <Compile Include="Assets\Asset Packs\GameDev.tv Assets\Scripts\Utils\LazyValue.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\InventoryItemIcon.cs" />
-     <Compile Include="Assets\In-Game Scripts\Interactions\SpawnFeedback.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\InventoryDropTarget.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\ParticleSystemMultiplier.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\ItemDropper.cs" />
-     <Compile Include="Assets\In-Game Scripts\Control\AIController.cs" />
-     <Compile Include="Assets\In-Game Scripts\Stats\LevelDisplay.cs" />
-     <Compile Include="Assets\In-Game Scripts\Stats\ExperienceDisplay.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\CameraFacing.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\Pickup.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\ItemTooltipSpawner.cs" />
-     <Compile Include="Assets\In-Game Scripts\AnimatorBehaviors\AttackAnimationInfo.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\ActionSlotUI.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\Displace.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\DamageText\DamageText.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\ActionStore.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\GerstnerDisplace.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\Utils\UI\Dragging\IDragContainer.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\InventoryItem.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\DrawKeyAsPropertyAttribute.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\ActionItem.cs" />
-     <Compile Include="Assets\In-Game Scripts\Movement\Mover.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\WeaponConfig.cs" />
-     <Compile Include="Assets\In-Game Scripts\Interactions\Treasure.cs" />
-     <Compile Include="Assets\In-Game Scripts\Saving\SavingSystem.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\ShowHideUI.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\Projectile.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\IAction.cs" />
-     <Compile Include="Assets\In-Game Scripts\SceneManagement\RestartScene.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\EquipmentSlotUI.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\AreaEventManager.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\AfterburnerPhysicsForce.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\Inventory.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\ExplosionPhysicsForce.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\PlanarReflection.cs" />
-     <Compile Include="Assets\In-Game Scripts\Attributes\HealthDisplay.cs" />
-     <Compile Include="Assets\In-Game Scripts\Attributes\Health.cs" />
-     <Compile Include="Assets\In-Game Scripts\Stats\Stats.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\DamageText\DamageTextSpawner.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\WaterHoseParticles.cs" />
-     <Compile Include="Assets\In-Game Scripts\SceneManagement\SavingWrapper.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\OnAreaTrigger.cs" />
-     <Compile Include="Assets\In-Game Scripts\Saving\SaveableEntity.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\SerializableDictionaryBase.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\FollowCamera.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\DestroyAfterEffect.cs" />
-     <Compile Include="Assets\In-Game Scripts\SceneManagement\Fader.cs" />
-     <Compile Include="Assets\Rotary Heart\SerializableDictionary\References\RequiredReferences.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\Utils\UI\Dragging\IDragSource.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\OutlineableComponent.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\StatsEquipment.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\InventorySlotUI.cs" />
-     <Compile Include="Assets\In-Game Scripts\Control\IRaycastable.cs" />
-     <Compile Include="Assets\In-Game Scripts\Control\PatrolPath.cs" />
-     <Compile Include="Assets\In-Game Scripts\AnimatorBehaviors\RandomAttackAnimBehavior.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\Water.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\OnHitParticles.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\CombatTarget.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\Utils\UI\Tooltips\TooltipSpawner.cs" />
-     <Compile Include="Assets\In-Game Scripts\SceneManagement\Portal.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\WaterTile.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\SmokeParticles.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\StatsEquipableItem.cs" />
-     <Compile Include="Assets\UI\Inventory Scripts\IItemHolder.cs" />
-     <Compile Include="Assets\In-Game Scripts\Stats\BaseStats.cs" />
-     <Compile Include="Assets\In-Game Scripts\Stats\Progression.cs" />
-     <Compile Include="Assets\In-Game Scripts\Attributes\HealthBar.cs" />
-     <Compile Include="Assets\In-Game Scripts\Stats\IModifierProvider.cs" />
-     <Compile Include="Assets\In-Game Scripts\Cinematics\CinematicControlRemover.cs" />
-     <Compile Include="Assets\In-Game Scripts\Control\ClickablePickup.cs" />
-     <Compile Include="Assets\In-Game Scripts\Control\Helper.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\Fighter.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\Hose.cs" />
-     <Compile Include="Assets\In-Game Scripts\Control\CursorType.cs" />
-     <Compile Include="Assets\In-Game Scripts\Stats\Experience.cs" />
-     <Compile Include="Assets\In-Game Scripts\Core\ActionScheduler.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\SpecularLighting.cs" />
-     <Compile Include="Assets\In-Game Scripts\Combat\Weapon.cs" />
-     <Compile Include="Assets\In-Game Scripts\Inventories\DropLibrary.cs" />
      <None Include="Assets\Asset Packs\Synty - Polygon Student Sample\README - Usage Rights for these assets.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -175,7 +77,6 @@
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\Asset Packs\SimpleFX\Materials\UnlitVertexColour_Alpha.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
-     <None Include="Assets\Asset Packs\QuickOutline\Resources\Shaders\OutlineMask.shader" />
      <None Include="Assets\Asset Packs\Animations by Explosive\README - Usage Rights for these assets 1.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
@@ -196,7 +97,6 @@
      <None Include="Assets\Asset Packs\Standard Assets\ParticleSystems\ParticleSystemsGuidelines.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularSmooth.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
-     <None Include="Assets\Asset Packs\QuickOutline\Readme.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\DO_NOT_WORK_IN_VR.txt" />
@@ -215,7 +115,6 @@
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
-     <None Include="Assets\Asset Packs\QuickOutline\Resources\Shaders\OutlineFill.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
@@ -825,6 +724,62 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Saving.csproj">
+      <Project>{81044aed-9a49-5a6f-aab9-d3735042e71b}</Project>
+      <Name>Saving</Name>
+    </ProjectReference>
+    <ProjectReference Include="Stats.csproj">
+      <Project>{0b9e375e-9a09-947a-9718-fcb7d4b95842}</Project>
+      <Name>Stats</Name>
+    </ProjectReference>
+    <ProjectReference Include="Outline.csproj">
+      <Project>{3e64631f-bc48-1183-10b0-32032bb5a975}</Project>
+      <Name>Outline</Name>
+    </ProjectReference>
+    <ProjectReference Include="UI.csproj">
+      <Project>{1cd77628-a7a2-5c04-4ca5-20c16974f46c}</Project>
+      <Name>UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Audio.csproj">
+      <Project>{878500fc-3137-686f-4779-1eeb77883f70}</Project>
+      <Name>Audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="Core.csproj">
+      <Project>{bb3d43e7-04ee-c47a-905f-d98699edfa32}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Inventories.csproj">
+      <Project>{9bd45c65-5ef1-5218-e6a8-6d63c7c624c7}</Project>
+      <Name>Inventories</Name>
+    </ProjectReference>
+    <ProjectReference Include="Cinematic.csproj">
+      <Project>{63c322c9-af88-31a6-a296-dbb19f3a4b82}</Project>
+      <Name>Cinematic</Name>
+    </ProjectReference>
+    <ProjectReference Include="Combat.csproj">
+      <Project>{213dca96-aa32-a723-6ebc-f034c78b6219}</Project>
+      <Name>Combat</Name>
+    </ProjectReference>
+    <ProjectReference Include="RotaryHeart.csproj">
+      <Project>{9a57197f-6bce-1fef-2b72-2c61b4333055}</Project>
+      <Name>RotaryHeart</Name>
+    </ProjectReference>
+    <ProjectReference Include="Attributes.csproj">
+      <Project>{037e8168-b924-f7b2-c01f-671f18fd881b}</Project>
+      <Name>Attributes</Name>
+    </ProjectReference>
+    <ProjectReference Include="SceneManagement.csproj">
+      <Project>{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}</Project>
+      <Name>SceneManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="Control.csproj">
+      <Project>{62ba2814-d88d-74e0-0f77-67289fddf2da}</Project>
+      <Name>Control</Name>
+    </ProjectReference>
+    <ProjectReference Include="Movement.csproj">
+      <Project>{969468c0-3ae0-0795-e700-d90d7a086cb7}</Project>
+      <Name>Movement</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

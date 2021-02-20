@@ -13,7 +13,8 @@ namespace RPG.Core
 		ForestEntrance,
 		ForestExit,
 		HillClimbing,
-		HillTop
+		HillTop,
+		Boss
 	}
 
 	public class CameraAngleManager : MonoBehaviour

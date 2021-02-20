@@ -1,16 +1,14 @@
 ﻿using RPG.Control;
+using RPG.Core;
 using RPG.Saving;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Control
 {
 	public class Treasure : MonoBehaviour, IRaycastable, ISaveable, ICollectable
 	{
 		[SerializeField] private Transform[] dropLocations;
 		[SerializeField] private Transform unlockTransform;
-
-		// [SerializeField] private RandomWeaponDrop lootTable;
-		[SerializeField] private float interactionRange = 1f;
 
 		private OutlineableComponent _outlineableComponent;
 		private Transform _pickupManager;
@@ -22,11 +20,11 @@ namespace RPG.Core
 
 		public CursorType GetCursorType() => CursorType.Pickup;
 
-		public bool HandleRaycast(PlayerController callingController)
+		public bool HandleRaycast(GameObject caller)
 		{
 			if(!_isOpened)
 			{
-				var collector = callingController.GetComponent<Collector>();
+				var collector = caller.GetComponent<Collector>();
 				if(!collector.CanCollect(this)) return false;
 				CheckPressedButtons(collector);
 				return true;

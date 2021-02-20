@@ -1,9 +1,9 @@
 using System;
 using RPG.Utils;
 using RPG.AnimatorBehaviors;
+using RPG.Attributes;
 using RPG.Core;
 using RPG.Movement;
-using RPG.Attributes;
 using RPG.Inventories;
 using RPG.Saving;
 using RPG.Stats;

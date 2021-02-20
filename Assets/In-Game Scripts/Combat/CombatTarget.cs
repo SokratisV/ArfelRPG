@@ -1,4 +1,3 @@
-using RPG.Control;
 using RPG.Attributes;
 using RPG.Core;
 using UnityEngine;
@@ -13,30 +12,31 @@ namespace RPG.Combat
 		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject);
 
 		public CursorType GetCursorType() => CursorType.Combat;
+		
+		public void ShowInteractivity() => _outlineableComponent.ShowOutline(this);
 
-		public bool HandleRaycast(PlayerController callingController)
+		public bool HandleRaycast(GameObject caller)
 		{
-			if(!callingController.GetComponent<Fighter>().CanAttack(gameObject)) return false;
-			CheckPressedButtons(callingController);
+			var fighter = caller.GetComponent<Fighter>();
+			if(fighter == null && !fighter.CanAttack(gameObject)) return false;
+			CheckPressedButtons(fighter);
 			return true;
 		}
 
-		public void ShowInteractivity() => _outlineableComponent.ShowOutline(this);
-
-		private void CheckPressedButtons(PlayerController callingController)
+		private void CheckPressedButtons(Fighter fighter)
 		{
 			if(Input.GetKey(KeyCode.LeftControl))
 			{
 				if(Input.GetMouseButtonDown(0))
 				{
-					callingController.GetComponent<Fighter>().QueueAttackAction(gameObject);
+					fighter.QueueAttackAction(gameObject);
 				}
 			}
 			else
 			{
 				if(Input.GetMouseButtonDown(0))
 				{
-					callingController.GetComponent<Fighter>().StartAttackAction(gameObject);
+					fighter.StartAttackAction(gameObject);
 				}
 			}
 		}
