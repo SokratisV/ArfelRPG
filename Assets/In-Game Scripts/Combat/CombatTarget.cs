@@ -17,6 +17,7 @@ namespace RPG.Combat
 
 		public bool HandleRaycast(GameObject player)
 		{
+			if(!enabled) return false;
 			var fighter = player.GetComponent<Fighter>();
 			if(fighter == null && !fighter.CanAttack(gameObject)) return false;
 			CheckPressedButtons(fighter);

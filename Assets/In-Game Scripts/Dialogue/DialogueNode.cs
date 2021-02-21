@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RPG.Core;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,10 +12,13 @@ namespace RPG.Dialogue
 		[SerializeField] private string text;
 		[SerializeField] private List<string> children = new List<string>();
 		[SerializeField] private Rect rect = new Rect(0, 0, 200, 100);
-
+		[SerializeField] private DialogueAction enterAction, exitAction;
+		
 		public string Text => text;
 		public List<string> Children => children;
 		public Rect Rect => rect;
+		public DialogueAction OnEnterAction => enterAction;
+		public DialogueAction OnExitAction => exitAction;
 
 #if UNITY_EDITOR
 		public void SetPosition(Vector2 position)

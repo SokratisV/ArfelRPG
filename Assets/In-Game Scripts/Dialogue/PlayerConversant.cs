@@ -17,10 +17,12 @@ namespace RPG.Dialogue
 		private IInteractable _interactTarget;
 		private Mover _mover;
 		private ActionScheduler _actionScheduler;
+		private AIConversant _currentConversant = null;
 
 		public bool IsChoosing {get;private set;}
 		public bool HasNext => _currentNode.Children.Count > 0;
 		public bool IsActive => _currentDialogue != null;
+		public string Name => _currentConversant.Name;
 
 		#region Unity
 
@@ -39,7 +41,7 @@ namespace RPG.Dialogue
 			}
 			else
 			{
-				if (_mover.IsMoving) return;
+				if(_mover.IsMoving) return;
 				_mover.MoveWithoutAction(_interactTarget.GetTransform().position, withinDistance: _interactTarget.InteractionDistance());
 			}
 		}
@@ -56,15 +58,19 @@ namespace RPG.Dialogue
 
 		#region Public
 
-		public void StartDialogue(Dialogue newDialogue)
+		public void StartDialogue(AIConversant newConversant, Dialogue newDialogue)
 		{
+			_currentConversant = newConversant;
 			_currentDialogue = newDialogue;
 			_currentNode = _currentDialogue.GetRootNode();
+			TriggerEnterAction();
 			OnUpdated?.Invoke();
 		}
 
 		public void Quit()
 		{
+			TriggerExitAction();
+			_currentConversant = null;
 			_currentDialogue = null;
 			_currentNode = null;
 			IsChoosing = false;
@@ -78,6 +84,7 @@ namespace RPG.Dialogue
 		public void SelectChoice(DialogueNode chosenNode)
 		{
 			_currentNode = chosenNode;
+			TriggerEnterAction();
 			IsChoosing = false;
 			Next();
 		}
@@ -87,19 +94,20 @@ namespace RPG.Dialogue
 			if(_currentDialogue.GetPlayerChildren(_currentNode).Any())
 			{
 				IsChoosing = true;
+				TriggerExitAction();
 				OnUpdated?.Invoke();
 				return;
 			}
 
 			var children = _currentDialogue.GetAIChildren(_currentNode).ToArray();
+			TriggerExitAction();
 			_currentNode = children[Random.Range(0, children.Length)];
+			TriggerEnterAction();
 			OnUpdated?.Invoke();
 		}
 
 		public bool CanInteract(IInteractable interactable) => interactable != null && _mover.CanMoveTo(interactable.GetTransform().position);
 
-		#endregion
-		
 		public void CancelAction()
 		{
 			_interactTarget = null;
@@ -122,5 +130,36 @@ namespace RPG.Dialogue
 		}
 
 		public void QueueInteractAction(GameObject obj) => _actionScheduler.EnqueueAction(new InteractableActionData(this, obj.transform));
+
+		#endregion
+
+		#region Private
+
+		private void TriggerEnterAction()
+		{
+			if(_currentNode != null && _currentNode.OnEnterAction != DialogueAction.None)
+			{
+				TriggerAction(_currentNode.OnEnterAction);
+			}
+		}
+
+		private void TriggerExitAction()
+		{
+			if(_currentNode != null && _currentNode.OnExitAction != DialogueAction.None)
+			{
+				TriggerAction(_currentNode.OnExitAction);
+			}
+		}
+
+		private void TriggerAction(DialogueAction action)
+		{
+			if(action == DialogueAction.None) return;
+			foreach(var trigger in _currentConversant.GetComponents<DialogueTrigger>())
+			{
+				trigger.Trigger(action);
+			}
+		}
+
+		#endregion
 	}
 }

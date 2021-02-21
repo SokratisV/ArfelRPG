@@ -14,6 +14,8 @@ namespace RPG.UI
 		[SerializeField] private GameObject nextButtonParent;
 		[SerializeField] private Transform choicesButtons;
 		[SerializeField] private GameObject choicePrefab;
+		[SerializeField] private TextMeshProUGUI currentSpeaker;
+		
 
 		private void Start()
 		{
@@ -34,6 +36,7 @@ namespace RPG.UI
 		{
 			gameObject.SetActive(_playerConversant.IsActive);
 			if(!_playerConversant.IsActive) return;
+			currentSpeaker.SetText(_playerConversant.Name);
 			nextButtonParent.SetActive(!_playerConversant.IsChoosing);
 			choicesButtons.gameObject.SetActive(_playerConversant.IsChoosing);
 			if(_playerConversant.IsChoosing)

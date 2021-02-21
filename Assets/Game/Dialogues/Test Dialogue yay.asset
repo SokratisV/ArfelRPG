@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: 06ad8b27-5798-401b-b7f6-6d8dae303117
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 1
-  text: Nah it ain't.
+  text: Nah.
   children:
   - 884659f0-f01b-4993-8b38-77c859aa37f9
   rect:
     serializedVersion: 2
-    x: 1019
-    y: 185
+    x: 1029
+    y: 189
     width: 200
     height: 100
+  enterAction: 0
+  exitAction: 0
 --- !u!114 &-1550217278117053498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,7 +37,7 @@ MonoBehaviour:
   m_Name: 6bc96197-3660-4965-ad5e-6fb433accc1e
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 1
-  text: I came from Greece.
+  text: You better get used to me.
   children:
   - 0725ec1a-879f-4ac9-a248-98d2d4f15e82
   rect:
@@ -44,6 +46,31 @@ MonoBehaviour:
     y: 289
     width: 200
     height: 100
+  enterAction: 0
+  exitAction: 0
+--- !u!114 &-873142317422165242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: dae03784-8c09-4db6-b98c-1c053d111a8a
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: I'd watch my back around here if I were you, then..
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 1305
+    y: 495
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +94,7 @@ MonoBehaviour:
   - {fileID: 6824444529869980501}
   - {fileID: 1640825035509177566}
   - {fileID: -3839608776845441003}
-  - {fileID: 7857568374189422039}
+  - {fileID: -873142317422165242}
   newNodeOffset: {x: 250, y: 0}
 --- !u!114 &392519176764450286
 MonoBehaviour:
@@ -86,13 +113,14 @@ MonoBehaviour:
   children:
   - 6bc96197-3660-4965-ad5e-6fb433accc1e
   - 7d12f85a-f645-464d-9941-63a7ed3260ac
-  - 37d85b0b-e86e-420a-815a-5e96ff41e307
   rect:
     serializedVersion: 2
-    x: 238
-    y: 381
+    x: 239
+    y: 380
     width: 200
     height: 100
+  enterAction: 0
+  exitAction: 0
 --- !u!114 &1640825035509177566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,14 +134,16 @@ MonoBehaviour:
   m_Name: 884659f0-f01b-4993-8b38-77c859aa37f9
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 0
-  text: It's cool. Got anything to eat?
+  text: Kool, everyone should be friendly around here!
   children: []
   rect:
     serializedVersion: 2
-    x: 1275
-    y: 338
+    x: 1292
+    y: 248
     width: 200
     height: 100
+  enterAction: 0
+  exitAction: 0
 --- !u!114 &2108103057536147999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +157,7 @@ MonoBehaviour:
   m_Name: 7d12f85a-f645-464d-9941-63a7ed3260ac
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 1
-  text: That's a lie!
+  text: That's because I just arrived in this land.
   children:
   - d91abe03-83bc-4379-92da-2211093c7799
   rect:
@@ -136,6 +166,8 @@ MonoBehaviour:
     y: 486
     width: 200
     height: 100
+  enterAction: 0
+  exitAction: 0
 --- !u!114 &2817775672966305870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +181,7 @@ MonoBehaviour:
   m_Name: d91abe03-83bc-4379-92da-2211093c7799
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 0
-  text: Prove it. Do you know Spiros?
+  text: Did you come here seeking combat?
   children:
   - 5e3783db-466a-4607-858a-b44601d62cc2
   - 3498f151-ce13-47f7-99ad-8769310fbe4d
@@ -159,6 +191,8 @@ MonoBehaviour:
     y: 487
     width: 200
     height: 100
+  enterAction: 0
+  exitAction: 0
 --- !u!114 &4655955739081410405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,15 +206,17 @@ MonoBehaviour:
   m_Name: 5e3783db-466a-4607-858a-b44601d62cc2
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 1
-  text: Who?
+  text: Obviously!
   children:
-  - 884659f0-f01b-4993-8b38-77c859aa37f9
+  - dae03784-8c09-4db6-b98c-1c053d111a8a
   rect:
     serializedVersion: 2
-    x: 1021
-    y: 435
+    x: 1022
+    y: 552
     width: 200
     height: 100
+  enterAction: 0
+  exitAction: 0
 --- !u!114 &4937823326306252952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,15 +230,17 @@ MonoBehaviour:
   m_Name: d287c035-43e3-47d8-a434-6cb8fc245807
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 1
-  text: Did I say Greece? I meant Finland
+  text: Ye.
   children:
-  - d91abe03-83bc-4379-92da-2211093c7799
+  - dae03784-8c09-4db6-b98c-1c053d111a8a
   rect:
     serializedVersion: 2
-    x: 1019
-    y: 330
+    x: 1036
+    y: 424
     width: 200
     height: 100
+  enterAction: 0
+  exitAction: 0
 --- !u!114 &6824444529869980501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,15 +254,17 @@ MonoBehaviour:
   m_Name: 3498f151-ce13-47f7-99ad-8769310fbe4d
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 1
-  text: Of course I do!
+  text: Not really..
   children:
   - 884659f0-f01b-4993-8b38-77c859aa37f9
   rect:
     serializedVersion: 2
-    x: 1011
-    y: 580
+    x: 1055
+    y: 308
     width: 200
     height: 100
+  enterAction: 0
+  exitAction: 0
 --- !u!114 &7655171525782095162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,7 +278,7 @@ MonoBehaviour:
   m_Name: 0725ec1a-879f-4ac9-a248-98d2d4f15e82
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 0
-  text: Greece? Sounds terrible :(
+  text: Is that a threat?
   children:
   - d287c035-43e3-47d8-a434-6cb8fc245807
   - 06ad8b27-5798-401b-b7f6-6d8dae303117
@@ -248,24 +288,5 @@ MonoBehaviour:
     y: 289
     width: 200
     height: 100
---- !u!114 &7857568374189422039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
-  m_Name: 37d85b0b-e86e-420a-815a-5e96ff41e307
-  m_EditorClassIdentifier: 
-  isPlayerSpeaking: 0
-  text: YOOO
-  children: []
-  rect:
-    serializedVersion: 2
-    x: 524
-    y: 387
-    width: 200
-    height: 100
+  enterAction: 0
+  exitAction: 0

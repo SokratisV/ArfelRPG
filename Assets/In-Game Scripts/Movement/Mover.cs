@@ -73,13 +73,18 @@ namespace RPG.Movement
 
 		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
+			if (!_navMeshAgent.enabled) return;
 			_navMeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
 			_navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
 			_navMeshAgent.isStopped = false;
 		}
 
-		public void CancelAction() => _navMeshAgent.isStopped = true;
+		public void CancelAction()
+		{
+			if (!_navMeshAgent.enabled) return;
+			_navMeshAgent.isStopped = true;
+		}
 
 		public void CompleteAction()
 		{

@@ -150,9 +150,9 @@ namespace RPG.Dialogue.Editor
 			GUILayout.BeginArea(node.Rect, style);
 			node.SetText(EditorGUILayout.TextField(node.Text));
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("+")) _creatingNode = node;
-			DrawLinkButtons(node);
 			if(GUILayout.Button("X")) _deletingNode = node;
+			DrawLinkButtons(node);
+			if(GUILayout.Button("+")) _creatingNode = node;
 			GUILayout.EndHorizontal();
 			GUILayout.EndArea();
 		}
