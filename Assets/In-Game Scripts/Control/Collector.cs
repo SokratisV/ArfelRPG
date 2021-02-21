@@ -12,6 +12,8 @@ namespace RPG.Control
 		private Mover _mover;
 		private ActionScheduler _actionScheduler;
 
+		#region Unity
+
 		private void Awake()
 		{
 			_mover = GetComponent<Mover>();
@@ -27,26 +29,14 @@ namespace RPG.Control
 			}
 			else
 			{
-				_mover.MoveWithoutAction(_collectible.GetTransform().position);
+				if (_mover.IsMoving) return;
+				_mover.MoveWithoutAction(_collectible.GetTransform().position, withinDistance: _collectible.InteractionDistance());
 			}
 		}
 
-		private void CollectBehavior()
-		{
-			transform.LookAt(_collectible.GetTransform());
-			if(IsInRange(_collectible.GetTransform()))
-			{
-				_mover.CancelAction();
-				Collect();
-			}
-		}
-
-		private void Collect()
-		{
-			_collectible.Collect();
-			_collectible = null;
-			CompleteAction();
-		}
+		#endregion
+		
+		#region Public
 
 		public void StartCollectAction(ICollectable collectable)
 		{
@@ -60,10 +50,6 @@ namespace RPG.Control
 			_mover.CancelAction();
 		}
 
-		public bool CanCollect(ICollectable collectable) => collectable != null && _mover.CanMoveTo(collectable.GetTransform().position);
-
-		private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _collectible.InteractionDistance());
-
 		public void QueueCollectAction(GameObject obj) => _actionScheduler.EnqueueAction(new PickableActionData(this, obj.transform));
 
 		public void CompleteAction()
@@ -73,5 +59,28 @@ namespace RPG.Control
 		}
 
 		public void ExecuteAction(IActionData data) => _collectible = ((PickableActionData)data).Treasure.GetComponent<ICollectable>();
+
+		public bool CanCollect(ICollectable collectable) => collectable != null && _mover.CanMoveTo(collectable.GetTransform().position);
+
+		#endregion
+
+		#region Private
+
+		private void CollectBehavior()
+		{
+			_mover.CancelAction();
+			Collect();
+		}
+
+		private void Collect()
+		{
+			_collectible.Collect();
+			_collectible = null;
+			CompleteAction();
+		}
+
+		private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _collectible.InteractionDistance());
+
+		#endregion
 	}
 }

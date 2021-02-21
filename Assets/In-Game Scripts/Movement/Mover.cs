@@ -12,7 +12,8 @@ namespace RPG.Movement
 	public class Mover : MonoBehaviour, IAction, ISaveable
 	{
 		public event Action OnActionComplete;
-		
+		public bool IsMoving => !_navMeshAgent.isStopped;
+
 		private float _distanceBeforeReachingDestination;
 		private NavMeshAgent _navMeshAgent;
 		private Animator _animator;
@@ -22,6 +23,8 @@ namespace RPG.Movement
 		[SerializeField] private float maxNavPathLength = 40f;
 		private Coroutine _selfUpdateRoutine;
 		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
+
+		#region Unity
 
 		private void Awake()
 		{
@@ -44,6 +47,55 @@ namespace RPG.Movement
 			_health.OnDeath -= DisableMover;
 			DisableMover();
 		}
+
+		#endregion
+
+		#region Public
+
+		public bool CanMoveTo(Vector3 destination)
+		{
+			var path = new NavMeshPath();
+			var hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
+			if(!hasPath) return false;
+			if(path.status != NavMeshPathStatus.PathComplete) return false;
+			return!(GetPathLength(path) > maxNavPathLength);
+		}
+
+		public IAction Move(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
+		{
+			_actionScheduler.StartAction(this);
+			MoveWithoutAction(destination, speedFraction, withinDistance);
+			return this;
+		}
+
+		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
+		{
+			_navMeshAgent.destination = destination;
+			_distanceBeforeReachingDestination = withinDistance;
+			_navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
+			_navMeshAgent.isStopped = false;
+		}
+		
+		public void CancelAction() => _navMeshAgent.isStopped = true;
+
+		public void CompleteAction()
+		{
+			_navMeshAgent.isStopped = true;
+			_actionScheduler.CompleteAction();
+			OnActionComplete?.Invoke();
+		}
+
+		public void ExecuteAction(IActionData data)
+		{
+			var moveData = (MoverActionData)data;
+			MoveWithoutAction(moveData.Destination, moveData.Speed, moveData.StopDistance);
+		}
+
+		public void QueueMoveAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction, withinDistance));
+
+		#endregion
+
+		#region Private
 
 		private void DisableMover()
 		{
@@ -80,22 +132,6 @@ namespace RPG.Movement
 			_animator.SetFloat(ForwardSpeed, speed);
 		}
 
-		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f)
-		{
-			_navMeshAgent.destination = destination;
-			_navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
-			_navMeshAgent.isStopped = false;
-		}
-
-		public bool CanMoveTo(Vector3 destination)
-		{
-			var path = new NavMeshPath();
-			var hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
-			if(!hasPath) return false;
-			if(path.status != NavMeshPathStatus.PathComplete) return false;
-			return!(GetPathLength(path) > maxNavPathLength);
-		}
-
 		private float GetPathLength(NavMeshPath path)
 		{
 			var total = 0f;
@@ -108,19 +144,9 @@ namespace RPG.Movement
 			return total;
 		}
 
-		public void CancelAction() => _navMeshAgent.isStopped = true;
+		#endregion
 
-		public IAction Move(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
-		{
-			_actionScheduler.StartAction(this);
-			_distanceBeforeReachingDestination = withinDistance;
-			MoveWithoutAction(destination, speedFraction);
-			return this;
-		}
-
-		public void QueueMoveAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction, withinDistance));
-
-		public object CaptureState() => new SerializableVector3(transform.position);
+		#region State
 
 		public void RestoreState(object state)
 		{
@@ -130,19 +156,8 @@ namespace RPG.Movement
 			_navMeshAgent.enabled = true;
 		}
 
-		public void CompleteAction()
-		{
-			_navMeshAgent.isStopped = true;
-			_actionScheduler.CompleteAction();
-			OnActionComplete?.Invoke();
-		}
+		public object CaptureState() => new SerializableVector3(transform.position);
 
-		public void ExecuteAction(IActionData data)
-		{
-			var destination = ((MoverActionData)data).Destination;
-			var speed = ((MoverActionData)data).Speed;
-			_distanceBeforeReachingDestination = ((MoverActionData)data).StopDistance;
-			MoveWithoutAction(destination, speed);
-		}
+		#endregion
 	}
 }

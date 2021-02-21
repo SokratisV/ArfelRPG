@@ -1,5 +1,4 @@
-﻿using RPG.Control;
-using RPG.Core;
+﻿using RPG.Core;
 using RPG.Saving;
 using UnityEngine;
 
@@ -7,30 +6,23 @@ namespace RPG.Control
 {
 	public class Treasure : MonoBehaviour, IRaycastable, ISaveable, ICollectable
 	{
-		[SerializeField] private Transform[] dropLocations;
 		[SerializeField] private Transform unlockTransform;
 
 		private OutlineableComponent _outlineableComponent;
-		private Transform _pickupManager;
 		private bool _isOpened = false;
 
 		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject);
-
-		private void Start() => _pickupManager = GameObject.FindGameObjectWithTag("PickupManager").transform;
 
 		public CursorType GetCursorType() => CursorType.Pickup;
 
 		public bool HandleRaycast(GameObject caller)
 		{
-			if(!_isOpened)
-			{
-				var collector = caller.GetComponent<Collector>();
-				if(!collector.CanCollect(this)) return false;
-				CheckPressedButtons(collector);
-				return true;
-			}
+			if(_isOpened) return false;
+			var collector = caller.GetComponent<Collector>();
+			if(!collector.CanCollect(this)) return false;
+			CheckPressedButtons(collector);
+			return true;
 
-			return false;
 		}
 
 		public void ShowInteractivity() => _outlineableComponent.ShowOutline(this);
@@ -47,7 +39,7 @@ namespace RPG.Control
 			}
 		}
 
-		public void OpenTreasure()
+		private void OpenTreasure()
 		{
 			var animator = GetComponentInChildren<Animator>();
 			GetComponentInChildren<AudioSource>().Play();
@@ -62,7 +54,6 @@ namespace RPG.Control
 		//Animation event
 		public void DropLoot()
 		{
-			// lootTable.GenerateLoot(dropLocations, _pickupManager);
 			_isOpened = true;
 			GetComponent<Collider>().enabled = false;
 		}

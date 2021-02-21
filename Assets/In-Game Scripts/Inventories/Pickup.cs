@@ -27,13 +27,13 @@ namespace RPG.Inventories
 		/// <param name="number">The number of items represented.</param>
 		public void Setup(InventoryItem item, int number)
 		{
-			this._item = item;
+			_item = item;
 			if(!item.IsStackable)
 			{
 				number = 1;
 			}
 
-			this._number = number;
+			_number = number;
 		}
 
 		public InventoryItem GetItem() => _item;
