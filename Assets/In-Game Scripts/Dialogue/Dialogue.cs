@@ -45,7 +45,6 @@ namespace RPG.Dialogue
 		public IEnumerable<DialogueNode> GetPlayerChildren(DialogueNode currentNode) => GetAllChildren(currentNode).Where(node => node.IsPlayerSpeaking);
 
 		public IEnumerable<DialogueNode> GetAIChildren(DialogueNode currentNode) => GetAllChildren(currentNode).Where(node => !node.IsPlayerSpeaking);
-
 #if UNITY_EDITOR
 		public void CreateNode(DialogueNode parent)
 		{
@@ -63,6 +62,21 @@ namespace RPG.Dialogue
 			CleanConnectedChildren(nodeToDelete);
 			Undo.DestroyObjectImmediate(nodeToDelete);
 		}
+#else
+		public void CreateNode(DialogueNode parent)
+		{
+			var node = MakeNode(parent);
+			AddNode(node);
+		}
+
+		public void DeleteNode(DialogueNode nodeToDelete)
+		{
+			nodes.Remove(nodeToDelete);
+			OnValidate();
+			CleanConnectedChildren(nodeToDelete);
+		}
+#endif
+
 
 		private void CleanConnectedChildren(DialogueNode nodeToDelete)
 		{
@@ -91,10 +105,10 @@ namespace RPG.Dialogue
 
 			return node;
 		}
-#endif
 
 		public void OnBeforeSerialize()
 		{
+#if UNITY_EDITOR
 			if(nodes.Count == 0)
 			{
 				var newNode = MakeNode(null);
@@ -109,6 +123,7 @@ namespace RPG.Dialogue
 					AssetDatabase.AddObjectToAsset(node, this);
 				}
 			}
+#endif
 		}
 
 		public void OnAfterDeserialize()

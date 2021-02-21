@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RotaryHeart", "RotaryHeart.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneManagement", "SceneManagement.csproj", "{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RotaryHeartEditor", "RotaryHeartEditor.csproj", "{ea02ec39-657b-01ad-e0af-d7dc0728962d}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Saving", "Saving.csproj", "{81044aed-9a49-5a6f-aab9-d3735042e71b}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DialogueEditor", "DialogueEditor.csproj", "{57ad8430-61e1-1afe-f003-9f50cad11514}"
@@ -95,6 +97,10 @@ Global
 		{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ea02ec39-657b-01ad-e0af-d7dc0728962d}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ea02ec39-657b-01ad-e0af-d7dc0728962d}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ea02ec39-657b-01ad-e0af-d7dc0728962d}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ea02ec39-657b-01ad-e0af-d7dc0728962d}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81044aed-9a49-5a6f-aab9-d3735042e71b}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81044aed-9a49-5a6f-aab9-d3735042e71b}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81044aed-9a49-5a6f-aab9-d3735042e71b}.Release|Any CPU.ActiveCfg = Release|Any CPU

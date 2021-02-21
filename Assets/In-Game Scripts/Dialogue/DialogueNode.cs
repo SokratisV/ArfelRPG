@@ -19,8 +19,17 @@ namespace RPG.Dialogue
 		public Rect Rect => rect;
 		public DialogueAction OnEnterAction => enterAction;
 		public DialogueAction OnExitAction => exitAction;
-
 #if UNITY_EDITOR
+		public bool IsPlayerSpeaking
+		{
+			get => isPlayerSpeaking;
+			set
+			{
+				Undo.RecordObject(this, "Change Dialogue Speaker ");
+				isPlayerSpeaking = value;
+				EditorUtility.SetDirty(this);
+			}
+		}
 		public void SetPosition(Vector2 position)
 		{
 			Undo.RecordObject(this, "Move Dialogue Node ");
@@ -51,17 +60,38 @@ namespace RPG.Dialogue
 			children.Remove(childID);
 			EditorUtility.SetDirty(this);
 		}
-
+#else
 		public bool IsPlayerSpeaking
 		{
 			get => isPlayerSpeaking;
 			set
 			{
-				Undo.RecordObject(this, "Change Dialogue Speaker ");
 				isPlayerSpeaking = value;
-				EditorUtility.SetDirty(this);
 			}
 		}
+			public void SetPosition(Vector2 position)
+		{
+			rect.position = position;
+		}
+
+		public void SetText(string value)
+		{
+			if(!string.Equals(value, text, StringComparison.Ordinal))
+			{
+				text = value;
+			}
+		}
+
+		public void AddChild(string childID)
+		{
+			children.Add(childID);
+		}
+
+		public void RemoveChild(string childID)
+		{
+			children.Remove(childID);
+		}
 #endif
+
 	}
 }
