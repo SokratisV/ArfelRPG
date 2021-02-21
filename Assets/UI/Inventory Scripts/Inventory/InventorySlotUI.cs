@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using RPG.Inventories;
-using RPG.Core.UI.Dragging;
+using RPG.UI.Dragging;
 
 namespace RPG.UI.Inventories
 {

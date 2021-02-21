@@ -63,11 +63,11 @@ namespace RPG.Combat
 			}
 		}
 
-		public bool HandleRaycast(GameObject caller)
+		public bool HandleRaycast(GameObject player)
 		{
 			if(Input.GetMouseButtonDown(0))
 			{
-				if(!Pickup(caller))
+				if(!Pickup(player))
 				{
 					return false;
 				}

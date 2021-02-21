@@ -23,7 +23,7 @@ namespace RPG.Control
 		private void Update()
 		{
 			if(_collectible == null) return;
-			if(IsInRange(_collectible.GetTransform()))
+			if(_mover.IsInRange(_collectible.GetTransform(), _collectible.InteractionDistance()))
 			{
 				CollectBehavior();
 			}
@@ -69,17 +69,10 @@ namespace RPG.Control
 		private void CollectBehavior()
 		{
 			_mover.CancelAction();
-			Collect();
-		}
-
-		private void Collect()
-		{
 			_collectible.Collect();
 			_collectible = null;
 			CompleteAction();
 		}
-
-		private bool IsInRange(Transform targetTransform) => Helper.IsWithinDistance(transform, targetTransform, _collectible.InteractionDistance());
 
 		#endregion
 	}

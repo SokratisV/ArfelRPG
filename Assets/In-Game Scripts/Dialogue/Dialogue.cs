@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,7 +10,6 @@ namespace RPG.Dialogue
 	{
 		[SerializeField] private List<DialogueNode> nodes = new List<DialogueNode>();
 		[SerializeField] private Vector2 newNodeOffset = new Vector2(250, 0);
-
 
 		private Dictionary<string, DialogueNode> _dialogueNodes = new Dictionary<string, DialogueNode>();
 
@@ -41,6 +41,10 @@ namespace RPG.Dialogue
 				}
 			}
 		}
+
+		public IEnumerable<DialogueNode> GetPlayerChildren(DialogueNode currentNode) => GetAllChildren(currentNode).Where(node => node.IsPlayerSpeaking);
+
+		public IEnumerable<DialogueNode> GetAIChildren(DialogueNode currentNode) => GetAllChildren(currentNode).Where(node => !node.IsPlayerSpeaking);
 
 #if UNITY_EDITOR
 		public void CreateNode(DialogueNode parent)

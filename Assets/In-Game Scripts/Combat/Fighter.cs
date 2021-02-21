@@ -92,7 +92,7 @@ namespace RPG.Combat
 				return;
 			}
 
-			if(IsInRange(_target.transform))
+			if(_mover.IsInRange(_target.transform, _currentWeaponConfig.GetRange()))
 			{
 				_mover.CancelAction();
 				Attack();
@@ -134,7 +134,6 @@ namespace RPG.Combat
 			{
 				_target.TakeDamage(gameObject, damage);
 			}
-
 		}
 
 		private void Shoot() => Hit();
@@ -142,12 +141,10 @@ namespace RPG.Combat
 		public bool CanAttack(GameObject target)
 		{
 			if(target == null) return false;
-			if(!_mover.CanMoveTo(target.transform.position) && !IsInRange(target.transform)) return false;
+			if(!_mover.CanMoveTo(target.transform.position) && !_mover.IsInRange(target.transform, _currentWeaponConfig.GetRange())) return false;
 			var health = target.GetComponent<Health>();
 			return health != null && !health.IsDead;
 		}
-
-		private bool IsInRange(Transform target) => Helper.IsWithinDistance(transform, target, _currentWeaponConfig.GetRange());
 
 		public void StartAttackAction(GameObject combatTarget)
 		{

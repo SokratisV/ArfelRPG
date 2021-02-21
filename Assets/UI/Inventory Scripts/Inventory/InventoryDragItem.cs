@@ -1,4 +1,4 @@
-﻿using RPG.Core.UI.Dragging;
+﻿using RPG.UI.Dragging;
 using RPG.Inventories;
 
 namespace RPG.UI.Inventories

@@ -15,9 +15,9 @@ namespace RPG.Combat
 		
 		public void ShowInteractivity() => _outlineableComponent.ShowOutline(this);
 
-		public bool HandleRaycast(GameObject caller)
+		public bool HandleRaycast(GameObject player)
 		{
-			var fighter = caller.GetComponent<Fighter>();
+			var fighter = player.GetComponent<Fighter>();
 			if(fighter == null && !fighter.CanAttack(gameObject)) return false;
 			CheckPressedButtons(fighter);
 			return true;

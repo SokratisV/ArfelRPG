@@ -5,7 +5,7 @@ namespace RPG.Core
     public interface IRaycastable
     {
         CursorType GetCursorType();
-        bool HandleRaycast(GameObject caller);
+        bool HandleRaycast(GameObject player);
         void ShowInteractivity();
         float InteractionDistance();
     }

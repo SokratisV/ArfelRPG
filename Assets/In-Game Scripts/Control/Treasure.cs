@@ -15,10 +15,10 @@ namespace RPG.Control
 
 		public CursorType GetCursorType() => CursorType.Pickup;
 
-		public bool HandleRaycast(GameObject caller)
+		public bool HandleRaycast(GameObject player)
 		{
 			if(_isOpened) return false;
-			var collector = caller.GetComponent<Collector>();
+			var collector = player.GetComponent<Collector>();
 			if(!collector.CanCollect(this)) return false;
 			CheckPressedButtons(collector);
 			return true;

@@ -7,6 +7,7 @@ namespace RPG.Core
         Combat,
         UI,
         Pickup,
-        InventoryFull
+        InventoryFull,
+        Dialogue
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace RPG.Core.UI.Dragging
+namespace RPG.UI.Dragging
 {
 	/// <summary>
 	/// Allows a UI element to be dragged and dropped from and to a container.

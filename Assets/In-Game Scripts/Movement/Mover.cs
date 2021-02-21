@@ -52,6 +52,9 @@ namespace RPG.Movement
 
 		#region Public
 
+		public bool IsInRange(Transform targetTransform, float withinDistance) =>
+			Helper.IsWithinDistance(transform, targetTransform, withinDistance);
+
 		public bool CanMoveTo(Vector3 destination)
 		{
 			var path = new NavMeshPath();
@@ -75,7 +78,7 @@ namespace RPG.Movement
 			_navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
 			_navMeshAgent.isStopped = false;
 		}
-		
+
 		public void CancelAction() => _navMeshAgent.isStopped = true;
 
 		public void CompleteAction()

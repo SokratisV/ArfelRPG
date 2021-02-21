@@ -1,4 +1,4 @@
-﻿namespace RPG.Core.UI.Dragging
+﻿namespace RPG.UI.Dragging
 {
 	/// <summary>
 	/// Components that implement this interfaces can act as the source for

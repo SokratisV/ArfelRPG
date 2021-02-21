@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using RPG.Core.UI.Tooltips;
+using RPG.UI.Tooltips;
 
 namespace RPG.UI.Inventories
 {

@@ -20,9 +20,9 @@ namespace RPG.Control
 
 		public CursorType GetCursorType() => _pickup.CanBePickedUp()? CursorType.Pickup:CursorType.InventoryFull;
 
-		public bool HandleRaycast(GameObject caller)
+		public bool HandleRaycast(GameObject player)
 		{
-			var collector = caller.GetComponent<Collector>();
+			var collector = player.GetComponent<Collector>();
 			if(!collector.CanCollect(this)) return false;
 			CheckPressedButtons(collector);
 			return true;

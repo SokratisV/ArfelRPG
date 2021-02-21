@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace RPG.Core.UI.Tooltips
+namespace RPG.UI.Tooltips
 {
 	/// <summary>
 	/// Abstract base class that handles the spawning of a tooltip prefab at the
