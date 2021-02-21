@@ -14,6 +14,7 @@ namespace RPG.Dialogue.Editor
 		[NonSerialized] private Vector2 _draggingCanvasOffset;
 		[NonSerialized] private Vector2 _draggingOffset;
 		[NonSerialized] private GUIStyle _nodeStyle;
+		[NonSerialized] private GUIStyle _playerNodeStyle;
 		[NonSerialized] private DialogueNode _draggingNode = null;
 		[NonSerialized] private DialogueNode _creatingNode = null;
 		[NonSerialized] private DialogueNode _deletingNode = null;
@@ -44,6 +45,12 @@ namespace RPG.Dialogue.Editor
 			_nodeStyle = new GUIStyle
 			{
 				normal = {background = EditorGUIUtility.Load("node0") as Texture2D, textColor = Color.white},
+				padding = new RectOffset(20, 20, 20, 20),
+				border = new RectOffset(12, 12, 12, 12)
+			};
+			_playerNodeStyle = new GUIStyle
+			{
+				normal = {background = EditorGUIUtility.Load("node1") as Texture2D, textColor = Color.white},
 				padding = new RectOffset(20, 20, 20, 20),
 				border = new RectOffset(12, 12, 12, 12)
 			};
@@ -138,13 +145,14 @@ namespace RPG.Dialogue.Editor
 
 		private void DrawNode(DialogueNode node)
 		{
-			GUILayout.BeginArea(node.Rect, _nodeStyle);
+			var style = _nodeStyle;
+			if(node.IsPlayerSpeaking) style = _playerNodeStyle;
+			GUILayout.BeginArea(node.Rect, style);
 			node.SetText(EditorGUILayout.TextField(node.Text));
 			GUILayout.BeginHorizontal();
 			if(GUILayout.Button("+")) _creatingNode = node;
 			DrawLinkButtons(node);
 			if(GUILayout.Button("X")) _deletingNode = node;
-
 			GUILayout.EndHorizontal();
 			GUILayout.EndArea();
 		}

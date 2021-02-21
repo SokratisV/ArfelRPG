@@ -7,6 +7,7 @@ namespace RPG.Dialogue
 {
 	public class DialogueNode : ScriptableObject
 	{
+		[SerializeField] private bool isPlayerSpeaking;
 		[SerializeField] private string text;
 		[SerializeField] private List<string> children = new List<string>();
 		[SerializeField] private Rect rect = new Rect(0, 0, 200, 100);
@@ -39,12 +40,23 @@ namespace RPG.Dialogue
 			children.Add(childID);
 			EditorUtility.SetDirty(this);
 		}
-		
+
 		public void RemoveChild(string childID)
 		{
 			Undo.RecordObject(this, "Remove Dialogue Link ");
 			children.Remove(childID);
 			EditorUtility.SetDirty(this);
+		}
+
+		public bool IsPlayerSpeaking
+		{
+			get => isPlayerSpeaking;
+			set
+			{
+				Undo.RecordObject(this, "Change Dialogue Speaker ");
+				isPlayerSpeaking = value;
+				EditorUtility.SetDirty(this);
+			}
 		}
 #endif
 	}
