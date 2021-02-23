@@ -16,7 +16,6 @@ namespace RPG.UI
 		[SerializeField] private GameObject choicePrefab;
 		[SerializeField] private TextMeshProUGUI currentSpeaker;
 		
-
 		private void Start()
 		{
 			_playerConversant = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerConversant>();

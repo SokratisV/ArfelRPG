@@ -74,8 +74,10 @@
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Asset Packs\MedievalTownExteriors\Readme.txt" />
+     <None Include="Assets\Asset Packs\LeanTween\ReadMe.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\Asset Packs\SimpleFX\Materials\UnlitVertexColour_Alpha.shader" />
+     <None Include="Assets\Asset Packs\LeanTween\License.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Asset Packs\Animations by Explosive\README - Usage Rights for these assets 1.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
@@ -709,6 +711,10 @@
       <Project>{0b9e375e-9a09-947a-9718-fcb7d4b95842}</Project>
       <Name>Stats</Name>
     </ProjectReference>
+    <ProjectReference Include="LeanTween.csproj">
+      <Project>{66be3833-5858-777d-9b37-91834931106f}</Project>
+      <Name>LeanTween</Name>
+    </ProjectReference>
     <ProjectReference Include="Outline.csproj">
       <Project>{3e64631f-bc48-1183-10b0-32032bb5a975}</Project>
       <Name>Outline</Name>
@@ -728,6 +734,10 @@
     <ProjectReference Include="Inventories.csproj">
       <Project>{9bd45c65-5ef1-5218-e6a8-6d63c7c624c7}</Project>
       <Name>Inventories</Name>
+    </ProjectReference>
+    <ProjectReference Include="RotaryHeartEditor.csproj">
+      <Project>{ea02ec39-657b-01ad-e0af-d7dc0728962d}</Project>
+      <Name>RotaryHeartEditor</Name>
     </ProjectReference>
     <ProjectReference Include="Cinematic.csproj">
       <Project>{63c322c9-af88-31a6-a296-dbb19f3a4b82}</Project>
@@ -760,10 +770,6 @@
     <ProjectReference Include="Dialogue.csproj">
       <Project>{7fd088b2-4c6e-93af-fb1d-acac7eab0e50}</Project>
       <Name>Dialogue</Name>
-    </ProjectReference>
-    <ProjectReference Include="RotaryHeartEditor.csproj">
-      <Project>{ea02ec39-657b-01ad-e0af-d7dc0728962d}</Project>
-      <Name>RotaryHeartEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

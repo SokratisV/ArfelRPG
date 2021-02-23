@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace RPG.Dialogue
 		[SerializeField] private Vector2 newNodeOffset = new Vector2(250, 0);
 
 		private Dictionary<string, DialogueNode> _dialogueNodes = new Dictionary<string, DialogueNode>();
+		
+		private void Awake() => PopulateDictionary();
 
 		private void OnValidate()
 		{
@@ -19,7 +22,11 @@ namespace RPG.Dialogue
 			{
 				CreateNode(null);
 			}
+			PopulateDictionary();
+		}
 
+		private void PopulateDictionary()
+		{
 			_dialogueNodes.Clear();
 			foreach(var node in nodes)
 			{

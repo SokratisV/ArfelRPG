@@ -30,6 +30,9 @@ namespace RPG.Dialogue
 		{
 			_mover = GetComponent<Mover>();
 			_actionScheduler = GetComponent<ActionScheduler>();
+
+			var obj = Resources.Load<Dialogue>("Test Dialogue yay");
+			Debug.Log(obj.GetAllNodes().Count());
 		}
 
 		private void Update()
