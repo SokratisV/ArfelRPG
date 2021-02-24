@@ -75,6 +75,7 @@ namespace RPG.Inventories
 
 		void ISaveable.RestoreState(object state)
 		{
+			return;
 			var droppedItemsList = (DropRecord[])state;
 			var sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
 			_otherSceneDroppedItems.Clear();

@@ -26,9 +26,9 @@ namespace RPG.SceneManagement
 
 		private void Update()
 		{
-			if(Input.GetKeyDown(KeyCode.L))
+			if(Input.GetKeyDown(KeyCode.F9))
 				Load();
-			else if(Input.GetKeyDown(KeyCode.S))
+			else if(Input.GetKeyDown(KeyCode.F5))
 				Save();
 			else if(Input.GetKeyDown(KeyCode.Delete))
 				Delete();

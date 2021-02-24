@@ -3,6 +3,8 @@
 	public enum DialogueAction
 	{
 		None,
-		Attack
+		Attack,
+		GiveQuest,
+		CompleteQuest
 	}
 }

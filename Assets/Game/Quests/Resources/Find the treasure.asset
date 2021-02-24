@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752130efc96294aa3ae70f790754e58a, type: 3}
-  m_Name: BossTroll
+  m_Script: {fileID: 11500000, guid: 287c3b84fe7eb4442baf039aa2b219cd, type: 3}
+  m_Name: Find the treasure
   m_EditorClassIdentifier: 
-  animatorOverride: {fileID: 0}
-  equippedPrefab: {fileID: 0}
-  weaponRange: 3
-  weaponDamage: 15
-  weaponPercentageBonus: 0
-  isRightHanded: 1
-  projectile: {fileID: 0}
+  objectives:
+  - Go to the Village.
+  - Find the treasure.
