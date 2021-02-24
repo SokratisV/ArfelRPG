@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Interfaces;
 using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace RPG.Dialogue
 		private AIConversant _currentConversant = null;
 
 		public bool IsChoosing {get;private set;}
-		public bool HasNext => _currentNode.Children.Count > 0;
+		public bool HasNext => FilterOnCondition(_currentDialogue.GetAllChildren(_currentNode)).Any();
 		public bool IsActive => _currentDialogue != null;
 		public string Name => _currentConversant.Name;
 
@@ -79,7 +80,7 @@ namespace RPG.Dialogue
 
 		public string GetText() => _currentNode == null? "":_currentNode.Text;
 
-		public IEnumerable<DialogueNode> GetChoices() => _currentDialogue.GetPlayerChildren(_currentNode);
+		public IEnumerable<DialogueNode> GetChoices() => FilterOnCondition(_currentDialogue.GetPlayerChildren(_currentNode));
 
 		public void SelectChoice(DialogueNode chosenNode)
 		{
@@ -91,7 +92,7 @@ namespace RPG.Dialogue
 
 		public void Next()
 		{
-			if(_currentDialogue.GetPlayerChildren(_currentNode).Any())
+			if(FilterOnCondition(_currentDialogue.GetPlayerChildren(_currentNode)).Any())
 			{
 				IsChoosing = true;
 				TriggerExitAction();
@@ -99,7 +100,7 @@ namespace RPG.Dialogue
 				return;
 			}
 
-			var children = _currentDialogue.GetAIChildren(_currentNode).ToArray();
+			var children = FilterOnCondition(_currentDialogue.GetAIChildren(_currentNode)).ToArray();
 			TriggerExitAction();
 			_currentNode = children[Random.Range(0, children.Length)];
 			TriggerEnterAction();
@@ -134,6 +135,19 @@ namespace RPG.Dialogue
 		#endregion
 
 		#region Private
+
+		private IEnumerable<DialogueNode> FilterOnCondition(IEnumerable<DialogueNode> inputNode)
+		{
+			foreach(var node in inputNode)
+			{
+				if(node.CheckCondition(GetEvaluators())) yield return node;
+			}
+		}
+
+		private IEnumerable<IPredicateEvaluator> GetEvaluators()
+		{
+			return GetComponents<IPredicateEvaluator>();
+		}
 
 		private void TriggerEnterAction()
 		{

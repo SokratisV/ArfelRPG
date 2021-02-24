@@ -23,6 +23,9 @@ MonoBehaviour:
     height: 100
   enterAction: 0
   exitAction: 3
+  condition:
+    predicate: 
+    parameters: []
 --- !u!114 &-5512088998211565191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40,6 +43,7 @@ MonoBehaviour:
   children:
   - afc55d07-2f66-47b7-8e16-cae774fbde2d
   - c2de2ab2-dde2-4132-ad12-c47059dd1156
+  - 89021a21-c47b-4320-970f-e7badbac23a5
   rect:
     serializedVersion: 2
     x: 68
@@ -48,6 +52,9 @@ MonoBehaviour:
     height: 100
   enterAction: 0
   exitAction: 0
+  condition:
+    predicate: 
+    parameters: []
 --- !u!114 &-4072082979542297950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,6 +78,9 @@ MonoBehaviour:
     height: 100
   enterAction: 0
   exitAction: 2
+  condition:
+    predicate: 
+    parameters: []
 --- !u!114 &-3917012295237595977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +105,9 @@ MonoBehaviour:
     height: 100
   enterAction: 0
   exitAction: 0
+  condition:
+    predicate: 
+    parameters: []
 --- !u!114 &-3829240229152661581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +132,36 @@ MonoBehaviour:
     height: 100
   enterAction: 0
   exitAction: 0
+  condition:
+    predicate: 
+    parameters: []
+--- !u!114 &-3606357331630134683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 89021a21-c47b-4320-970f-e7badbac23a5
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: I got it already.
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 338
+    y: 358
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    predicate: HasQuest
+    parameters:
+    - Help me find the treasure
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,4 +180,5 @@ MonoBehaviour:
   - {fileID: -3829240229152661581}
   - {fileID: -4072082979542297950}
   - {fileID: -6404039884708520666}
+  - {fileID: -3606357331630134683}
   newNodeOffset: {x: 250, y: 0}

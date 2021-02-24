@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Interfaces;
 using RPG.Inventories;
 using RPG.Saving;
 using UnityEngine;
 
 namespace RPG.Quests
 {
-	public class QuestList : MonoBehaviour, ISaveable
+	public class QuestList : MonoBehaviour, ISaveable, IPredicateEvaluator
 	{
 		public List<QuestStatus> Statuses {get;} = new List<QuestStatus>();
 		public event Action OnListUpdated;
@@ -77,6 +78,12 @@ namespace RPG.Quests
 					Statuses.Add(new QuestStatus(obj));
 				}
 			}
+		}
+
+		public bool? Evaluate(string predicate, string[] parameters)
+		{
+			if(predicate != "HasQuest") return null;
+			return HasQuest(Quest.GetByName(parameters[0]));
 		}
 	}
 }
