@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace RPG.Quests
 {
@@ -25,6 +26,8 @@ namespace RPG.Quests
 				_completedObjectives = state.completedObjectives;
 			}
 		}
+
+		public bool IsComplete => Quest.GetObjectives().All(objective => _completedObjectives.Contains(objective.reference));
 
 		public int CompletedCount => _completedObjectives.Count;
 

@@ -9,6 +9,7 @@ namespace RPG.UI.Quests
 		[SerializeField] private TextMeshProUGUI title;
 		[SerializeField] private Transform objectiveParent;
 		[SerializeField] private GameObject objectivePrefab, objectiveIncompletePrefab;
+		[SerializeField] private TextMeshProUGUI rewardText;
 
 		public void Setup(QuestStatus status)
 		{
@@ -21,11 +22,27 @@ namespace RPG.UI.Quests
 
 			foreach(var objective in quest.GetObjectives())
 			{
-				var prefab = status.IsObjectiveComplete(objective)? objectivePrefab:objectiveIncompletePrefab;
+				var prefab = status.IsObjectiveComplete(objective.reference)? objectivePrefab:objectiveIncompletePrefab;
 				var obj = Instantiate(prefab, objectiveParent);
 				var text = obj.GetComponentInChildren<TextMeshProUGUI>();
-				text.SetText(objective);
+				text.SetText(objective.description);
 			}
+
+			rewardText.SetText(GetRewardText(quest));
+		}
+
+		private string GetRewardText(Quest quest)
+		{
+			var text = string.Empty;
+			foreach(var reward in quest.GetRewards())
+			{
+				if(!string.IsNullOrEmpty(text)) text += ", ";
+				text += $"{reward.item.GetDisplayName} (x{reward.number})";
+			}
+
+			if(string.IsNullOrEmpty(text)) text = "No Reward";
+			text += ".";
+			return text;
 		}
 	}
 }
