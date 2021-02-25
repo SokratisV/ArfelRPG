@@ -1,4 +1,6 @@
 ﻿using System;
+using RPG.Core.Interfaces;
+using RPG.Core;
 using UnityEngine;
 using RPG.Saving;
 
@@ -10,7 +12,7 @@ namespace RPG.Inventories
 	///
 	/// This component should be placed on the GameObject tagged "Player".
 	/// </summary>
-	public class Inventory : MonoBehaviour, ISaveable
+	public class Inventory : MonoBehaviour, ISaveable, IPredicateEvaluator
 	{
 		[Tooltip("Allowed size")] [SerializeField]
 		private int inventorySize = 16;
@@ -230,6 +232,17 @@ namespace RPG.Inventories
 			}
 
 			InventoryUpdated?.Invoke();
+		}
+
+		public bool? Evaluate(DialoguePredicates predicate, string[] parameters)
+		{
+			switch(predicate)
+			{
+				case DialoguePredicates.HasItem:
+					return HasItem(InventoryItem.GetFromID(parameters[0]));
+			}
+
+			return null;
 		}
 	}
 }

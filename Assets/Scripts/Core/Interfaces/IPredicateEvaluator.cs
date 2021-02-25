@@ -1,7 +1,7 @@
-﻿namespace Core.Interfaces
+﻿namespace RPG.Core.Interfaces
 {
 	public interface IPredicateEvaluator
 	{
-		bool? Evaluate(string predicate, string[] parameters);
+		bool? Evaluate(DialoguePredicates predicate, string[] parameters);
 	}
 }

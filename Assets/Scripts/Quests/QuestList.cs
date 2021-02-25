@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Core.Interfaces;
+using RPG.Core.Interfaces;
+using RPG.Core;
 using RPG.Inventories;
 using RPG.Saving;
 using UnityEngine;
@@ -80,10 +81,18 @@ namespace RPG.Quests
 			}
 		}
 
-		public bool? Evaluate(string predicate, string[] parameters)
+		public bool? Evaluate(DialoguePredicates predicate, string[] parameters)
 		{
-			if(predicate != "HasQuest") return null;
-			return HasQuest(Quest.GetByName(parameters[0]));
+			switch(predicate)
+			{
+				case DialoguePredicates.HasQuest:
+					return HasQuest(Quest.GetByName(parameters[0]));
+				case DialoguePredicates.QuestComplete:
+					var questStatus = GetStatus(Quest.GetByName(parameters[0]));
+					return questStatus != null && questStatus.IsComplete;
+			}
+
+			return null;
 		}
 	}
 }

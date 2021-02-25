@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Interfaces;
+using RPG.Core.Interfaces;
 using RPG.Core;
 using UnityEditor;
 using UnityEngine;
@@ -15,7 +15,6 @@ namespace RPG.Dialogue
 		[SerializeField] private Rect rect = new Rect(0, 0, 200, 100);
 		[SerializeField] private DialogueAction enterAction, exitAction;
 		[SerializeField] private Condition condition;
-
 
 		public string Text => text;
 		public List<string> Children => children;

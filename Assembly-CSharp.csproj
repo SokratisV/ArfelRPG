@@ -699,6 +699,22 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Saving.csproj">
+      <Project>{81044aed-9a49-5a6f-aab9-d3735042e71b}</Project>
+      <Name>Saving</Name>
+    </ProjectReference>
+    <ProjectReference Include="DialogueEditor.csproj">
+      <Project>{57ad8430-61e1-1afe-f003-9f50cad11514}</Project>
+      <Name>DialogueEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Stats.csproj">
+      <Project>{0b9e375e-9a09-947a-9718-fcb7d4b95842}</Project>
+      <Name>Stats</Name>
+    </ProjectReference>
+    <ProjectReference Include="Quests.csproj">
+      <Project>{125ed28f-22b6-70ae-77fb-d9cdfdd69752}</Project>
+      <Name>Quests</Name>
+    </ProjectReference>
     <ProjectReference Include="LeanTween.csproj">
       <Project>{66be3833-5858-777d-9b37-91834931106f}</Project>
       <Name>LeanTween</Name>
@@ -711,37 +727,9 @@
       <Project>{1cd77628-a7a2-5c04-4ca5-20c16974f46c}</Project>
       <Name>UI</Name>
     </ProjectReference>
-    <ProjectReference Include="RotaryHeartEditor.csproj">
-      <Project>{ea02ec39-657b-01ad-e0af-d7dc0728962d}</Project>
-      <Name>RotaryHeartEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="RotaryHeart.csproj">
-      <Project>{9a57197f-6bce-1fef-2b72-2c61b4333055}</Project>
-      <Name>RotaryHeart</Name>
-    </ProjectReference>
-    <ProjectReference Include="Stats.csproj">
-      <Project>{0b9e375e-9a09-947a-9718-fcb7d4b95842}</Project>
-      <Name>Stats</Name>
-    </ProjectReference>
-    <ProjectReference Include="Dialogue.csproj">
-      <Project>{7fd088b2-4c6e-93af-fb1d-acac7eab0e50}</Project>
-      <Name>Dialogue</Name>
-    </ProjectReference>
-    <ProjectReference Include="Saving.csproj">
-      <Project>{81044aed-9a49-5a6f-aab9-d3735042e71b}</Project>
-      <Name>Saving</Name>
-    </ProjectReference>
-    <ProjectReference Include="Combat.csproj">
-      <Project>{213dca96-aa32-a723-6ebc-f034c78b6219}</Project>
-      <Name>Combat</Name>
-    </ProjectReference>
-    <ProjectReference Include="Attributes.csproj">
-      <Project>{037e8168-b924-f7b2-c01f-671f18fd881b}</Project>
-      <Name>Attributes</Name>
-    </ProjectReference>
-    <ProjectReference Include="DialogueEditor.csproj">
-      <Project>{57ad8430-61e1-1afe-f003-9f50cad11514}</Project>
-      <Name>DialogueEditor</Name>
+    <ProjectReference Include="Audio.csproj">
+      <Project>{878500fc-3137-686f-4779-1eeb77883f70}</Project>
+      <Name>Audio</Name>
     </ProjectReference>
     <ProjectReference Include="Core.csproj">
       <Project>{bb3d43e7-04ee-c47a-905f-d98699edfa32}</Project>
@@ -751,29 +739,41 @@
       <Project>{9bd45c65-5ef1-5218-e6a8-6d63c7c624c7}</Project>
       <Name>Inventories</Name>
     </ProjectReference>
-    <ProjectReference Include="Audio.csproj">
-      <Project>{878500fc-3137-686f-4779-1eeb77883f70}</Project>
-      <Name>Audio</Name>
-    </ProjectReference>
-    <ProjectReference Include="Quests.csproj">
-      <Project>{125ed28f-22b6-70ae-77fb-d9cdfdd69752}</Project>
-      <Name>Quests</Name>
+    <ProjectReference Include="RotaryHeartEditor.csproj">
+      <Project>{ea02ec39-657b-01ad-e0af-d7dc0728962d}</Project>
+      <Name>RotaryHeartEditor</Name>
     </ProjectReference>
     <ProjectReference Include="Cinematic.csproj">
       <Project>{63c322c9-af88-31a6-a296-dbb19f3a4b82}</Project>
       <Name>Cinematic</Name>
     </ProjectReference>
+    <ProjectReference Include="Combat.csproj">
+      <Project>{213dca96-aa32-a723-6ebc-f034c78b6219}</Project>
+      <Name>Combat</Name>
+    </ProjectReference>
+    <ProjectReference Include="RotaryHeart.csproj">
+      <Project>{9a57197f-6bce-1fef-2b72-2c61b4333055}</Project>
+      <Name>RotaryHeart</Name>
+    </ProjectReference>
+    <ProjectReference Include="Attributes.csproj">
+      <Project>{037e8168-b924-f7b2-c01f-671f18fd881b}</Project>
+      <Name>Attributes</Name>
+    </ProjectReference>
     <ProjectReference Include="SceneManagement.csproj">
       <Project>{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}</Project>
       <Name>SceneManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="Control.csproj">
+      <Project>{62ba2814-d88d-74e0-0f77-67289fddf2da}</Project>
+      <Name>Control</Name>
     </ProjectReference>
     <ProjectReference Include="Movement.csproj">
       <Project>{969468c0-3ae0-0795-e700-d90d7a086cb7}</Project>
       <Name>Movement</Name>
     </ProjectReference>
-    <ProjectReference Include="Control.csproj">
-      <Project>{62ba2814-d88d-74e0-0f77-67289fddf2da}</Project>
-      <Name>Control</Name>
+    <ProjectReference Include="Dialogue.csproj">
+      <Project>{7fd088b2-4c6e-93af-fb1d-acac7eab0e50}</Project>
+      <Name>Dialogue</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

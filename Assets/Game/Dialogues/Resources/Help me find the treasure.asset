@@ -1,5 +1,30 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7214817412053308424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: c3582789-f9f1-4dea-a1c7-9ee33534fb01
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Np.
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 607
+    y: 15
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []
 --- !u!114 &-6404039884708520666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22,10 +47,50 @@ MonoBehaviour:
     width: 200
     height: 100
   enterAction: 0
-  exitAction: 3
+  exitAction: 0
   condition:
-    predicate: 
-    parameters: []
+    and: []
+--- !u!114 &-6072426523601658786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 7df2b693-a088-44dd-b8c2-3f7716044c61
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: I've found your treasure!
+  children:
+  - 440d5486-2ab2-44b8-a81e-e31b4b6a5254
+  rect:
+    serializedVersion: 2
+    x: 342
+    y: 467
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and:
+    - or:
+      - predicate: 1
+        parameters:
+        - Find the treasure
+        negate: 0
+    - or:
+      - predicate: 3
+        parameters:
+        - af256ae4-4501-4863-9801-75e59a6fc2aa
+        negate: 0
+    - or:
+      - predicate: 2
+        parameters:
+        - Find the treasure
+        negate: 0
 --- !u!114 &-5512088998211565191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,17 +109,68 @@ MonoBehaviour:
   - afc55d07-2f66-47b7-8e16-cae774fbde2d
   - c2de2ab2-dde2-4132-ad12-c47059dd1156
   - 89021a21-c47b-4320-970f-e7badbac23a5
+  - 7df2b693-a088-44dd-b8c2-3f7716044c61
+  - d669803a-9611-424e-a038-3931071064ef
   rect:
     serializedVersion: 2
-    x: 68
-    y: 180
+    x: 82
+    y: 240
     width: 200
     height: 100
   enterAction: 0
   exitAction: 0
   condition:
-    predicate: 
-    parameters: []
+    and: []
+--- !u!114 &-5159064813889711607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 440d5486-2ab2-44b8-a81e-e31b4b6a5254
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: That's it! Thank you! <3
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 610
+    y: 469
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 3
+  condition:
+    and: []
+--- !u!114 &-4621054428358616509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: e921a311-c9d2-4337-9697-80454c03c232
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Sorry, I forgot...
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 613
+    y: 358
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []
 --- !u!114 &-4072082979542297950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,15 +188,14 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 612
+    x: 614
     y: 240
     width: 200
     height: 100
   enterAction: 0
   exitAction: 2
   condition:
-    predicate: 
-    parameters: []
+    and: []
 --- !u!114 &-3917012295237595977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,15 +214,24 @@ MonoBehaviour:
   - d75f68d5-2f33-4068-861c-8012eec63efd
   rect:
     serializedVersion: 2
-    x: 338
-    y: 127
+    x: 339
+    y: 126
     width: 200
     height: 100
   enterAction: 0
   exitAction: 0
   condition:
-    predicate: 
-    parameters: []
+    and:
+    - or:
+      - predicate: 2
+        parameters:
+        - Find the treasure
+        negate: 1
+    - or:
+      - predicate: 1
+        parameters:
+        - Find the treasure
+        negate: 1
 --- !u!114 &-3829240229152661581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,8 +257,17 @@ MonoBehaviour:
   enterAction: 0
   exitAction: 0
   condition:
-    predicate: 
-    parameters: []
+    and:
+    - or:
+      - predicate: 2
+        parameters:
+        - Find the treasure
+        negate: 1
+    - or:
+      - predicate: 1
+        parameters:
+        - Find the treasure
+        negate: 1
 --- !u!114 &-3606357331630134683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,19 +282,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 1
   text: I got it already.
-  children: []
+  children:
+  - e921a311-c9d2-4337-9697-80454c03c232
   rect:
     serializedVersion: 2
-    x: 338
+    x: 339
     y: 358
     width: 200
     height: 100
   enterAction: 0
   exitAction: 0
   condition:
-    predicate: HasQuest
-    parameters:
-    - Help me find the treasure
+    and:
+    - or:
+      - predicate: 1
+        parameters:
+        - Find the treasure
+        negate: 0
+    - or:
+      - predicate: 2
+        parameters:
+        - Find the treasure
+        negate: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,4 +323,40 @@ MonoBehaviour:
   - {fileID: -4072082979542297950}
   - {fileID: -6404039884708520666}
   - {fileID: -3606357331630134683}
+  - {fileID: -4621054428358616509}
+  - {fileID: -6072426523601658786}
+  - {fileID: -5159064813889711607}
+  - {fileID: 7818323284078228618}
+  - {fileID: -7214817412053308424}
   newNodeOffset: {x: 250, y: 0}
+--- !u!114 &7818323284078228618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: d669803a-9611-424e-a038-3931071064ef
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: Thanks for helping me!
+  children:
+  - c3582789-f9f1-4dea-a1c7-9ee33534fb01
+  rect:
+    serializedVersion: 2
+    x: 342
+    y: 20
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and:
+    - or:
+      - predicate: 2
+        parameters:
+        - Find the treasure
+        negate: 0

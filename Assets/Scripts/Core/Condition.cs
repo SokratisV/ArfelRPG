@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Core.Interfaces;
+using System.Linq;
+using RPG.Core.Interfaces;
 using UnityEngine;
 
 namespace RPG.Core
@@ -7,19 +8,35 @@ namespace RPG.Core
 	[System.Serializable]
 	public class Condition
 	{
-		[SerializeField] private string predicate;
-		[SerializeField] private string[] parameters;
+		[SerializeField] private Disjunction[] and;
 
-		public bool Check(IEnumerable<IPredicateEvaluator> evaluators)
+		public bool Check(IEnumerable<IPredicateEvaluator> evaluators) => and.All(disjunction => disjunction.Check(evaluators));
+
+		[System.Serializable]
+		class Disjunction
 		{
-			foreach(var evaluator in evaluators)
-			{
-				var result = evaluator.Evaluate(predicate, parameters);
-				if(result == null) continue;
-				if(result == false) return false;
-			}
+			[SerializeField] private Predicate[] or;
 
-			return true;
+			public bool Check(IEnumerable<IPredicateEvaluator> evaluators) => or.Any(predicate => predicate.Check(evaluators));
+		}
+
+		[System.Serializable]
+		private class Predicate
+		{
+			[SerializeField] private DialoguePredicates predicate;
+			[SerializeField] private string[] parameters;
+			[SerializeField] private bool negate;
+			
+			public bool Check(IEnumerable<IPredicateEvaluator> evaluators)
+			{
+				foreach(var evaluator in evaluators)
+				{
+					var result = evaluator.Evaluate(predicate, parameters);
+					if(result == negate) return false;
+				}
+
+				return true;
+			}
 		}
 	}
 }
