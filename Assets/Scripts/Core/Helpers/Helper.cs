@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace RPG.Core
 {
@@ -13,5 +14,7 @@ namespace RPG.Core
 		{
 			return IsWithinDistance(transform1.position, transform2.position, distance);
 		}
+		
+		public static bool FloatEquals(float value1, float value2) => Math.Abs(value1 - value2) < .001f;
 	}
 }

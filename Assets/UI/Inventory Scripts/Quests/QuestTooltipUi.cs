@@ -37,7 +37,7 @@ namespace RPG.UI.Quests
 			foreach(var reward in quest.GetRewards())
 			{
 				if(!string.IsNullOrEmpty(text)) text += ", ";
-				text += $"{reward.item.GetDisplayName} (x{reward.number})";
+				text += $"{reward.item.DisplayName} (x{reward.number})";
 			}
 
 			if(string.IsNullOrEmpty(text)) text = "No Reward";

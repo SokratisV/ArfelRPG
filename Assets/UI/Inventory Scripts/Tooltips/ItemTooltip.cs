@@ -15,8 +15,8 @@ namespace RPG.UI.Inventories
 
 		public void Setup(InventoryItem item)
 		{
-			titleText.text = item.GetDisplayName;
-			bodyText.text = item.GetDescription;
+			titleText.text = item.DisplayName;
+			bodyText.text = item.Description;
 		}
 	}
 }

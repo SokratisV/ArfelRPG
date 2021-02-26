@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace RPG.Inventories
@@ -32,10 +33,7 @@ namespace RPG.Inventories
 		[Tooltip("If true, multiple items of this type can be stacked in the same inventory slot.")] [SerializeField]
 		private bool stackable = false;
 
-		// STATE
-		private static Dictionary<string, InventoryItem> itemLookupCache;
-
-		// PUBLIC
+		private static Dictionary<string, InventoryItem> ItemLookupCache;
 
 		/// <summary>
 		/// Get the inventory item instance from its UUID.
@@ -48,24 +46,24 @@ namespace RPG.Inventories
 		/// </returns>
 		public static InventoryItem GetFromID(string itemID)
 		{
-			if(itemLookupCache == null)
+			if(ItemLookupCache == null)
 			{
-				itemLookupCache = new Dictionary<string, InventoryItem>();
+				ItemLookupCache = new Dictionary<string, InventoryItem>();
 				var itemList = Resources.LoadAll<InventoryItem>("");
 				foreach(var item in itemList)
 				{
-					if(itemLookupCache.ContainsKey(item.itemID))
+					if(ItemLookupCache.ContainsKey(item.itemID))
 					{
-						Debug.LogError($"Looks like there's a duplicate RPG.UI.InventorySystem ID for objects: {itemLookupCache[item.itemID]} and {item}");
+						Debug.LogError($"Looks like there's a duplicate RPG.UI.InventorySystem ID for objects: {ItemLookupCache[item.itemID]} and {item}");
 						continue;
 					}
 
-					itemLookupCache[item.itemID] = item;
+					ItemLookupCache[item.itemID] = item;
 				}
 			}
 
-			if(itemID == null || !itemLookupCache.ContainsKey(itemID)) return null;
-			return itemLookupCache[itemID];
+			if(itemID == null || !ItemLookupCache.ContainsKey(itemID)) return null;
+			return ItemLookupCache[itemID];
 		}
 
 		/// <summary>
@@ -82,17 +80,18 @@ namespace RPG.Inventories
 			return pickup;
 		}
 
-		public Sprite GetIcon() => icon;
+		public Pickup Pickup => pickup;
 
-		public string GetItemID() => itemID;
+		public Sprite Icon => icon;
+
+		public string ItemID => itemID;
 
 		public bool IsStackable => stackable;
 
-		public string GetDisplayName => displayName;
+		public string DisplayName => displayName;
 
-		public string GetDescription => description;
+		public string Description => description;
 
-		// PRIVATE
 
 		void ISerializationCallbackReceiver.OnBeforeSerialize()
 		{
@@ -108,5 +107,77 @@ namespace RPG.Inventories
 			// Require by the ISerializationCallbackReceiver but we don't need
 			// to do anything with it.
 		}
+
+#if UNITY_EDITOR
+
+		public void SetDisplayName(string newDisplayName)
+		{
+			if(displayName == newDisplayName) return;
+			SetUndo("Change Display Name");
+			displayName = newDisplayName;
+			Dirty();
+		}
+
+		public void SetDescription(string newDescription)
+		{
+			if(description == newDescription) return;
+			SetUndo("Change Description");
+			description = newDescription;
+			Dirty();
+		}
+
+		public void SetIcon(Sprite newIcon)
+		{
+			if(icon == newIcon) return;
+			SetUndo("Change Icon");
+			icon = newIcon;
+			Dirty();
+		}
+
+		public void SetPickup(Pickup newPickup)
+		{
+			if(pickup == newPickup) return;
+			SetUndo("Change Pickup");
+			pickup = newPickup;
+			Dirty();
+		}
+
+		public void SetItemID(string newItemID)
+		{
+			if(itemID == newItemID) return;
+			SetUndo("Change ItemID");
+			itemID = newItemID;
+			Dirty();
+		}
+
+		public void SetStackable(bool newStackable)
+		{
+			if(stackable == newStackable) return;
+			SetUndo(stackable? "Set Not Stackable":"Set Stackable");
+			stackable = newStackable;
+			Dirty();
+		}
+
+		private bool _drawInventoryItem = true;
+		protected GUIStyle FoldoutStyle;
+
+		public virtual void DrawCustomInspector()
+		{
+			FoldoutStyle = new GUIStyle(EditorStyles.foldout) {fontStyle = FontStyle.Bold};
+			_drawInventoryItem = EditorGUILayout.Foldout(_drawInventoryItem, "Inventory Item Data", FoldoutStyle);
+			if(!_drawInventoryItem) return;
+			EditorGUILayout.HelpBox($"{name}/{DisplayName}", MessageType.Info);
+			SetItemID(EditorGUILayout.TextField("ItemID (clear to reset)", ItemID));
+			SetDisplayName(EditorGUILayout.TextField("Display name", DisplayName));
+			SetDescription(EditorGUILayout.TextField("Description", Description));
+			SetIcon((Sprite)EditorGUILayout.ObjectField("Icon", Icon, typeof(Sprite), false));
+			SetPickup((Pickup)EditorGUILayout.ObjectField("Pickup", Pickup, typeof(Pickup), false));
+			SetStackable(EditorGUILayout.Toggle("Stackable", IsStackable));
+		}
+
+		protected void SetUndo(string message) => Undo.RecordObject(this, message);
+
+		protected void Dirty() => EditorUtility.SetDirty(this);
+#endif
 	}
 }

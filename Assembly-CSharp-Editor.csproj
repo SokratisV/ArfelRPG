@@ -767,6 +767,10 @@
       <Project>{7fd088b2-4c6e-93af-fb1d-acac7eab0e50}</Project>
       <Name>Dialogue</Name>
     </ProjectReference>
+    <ProjectReference Include="Editor.csproj">
+      <Project>{ba3e57c9-86db-f553-89b4-a1736e8cf987}</Project>
+      <Name>Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

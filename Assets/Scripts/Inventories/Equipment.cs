@@ -31,7 +31,7 @@ namespace RPG.Inventories
 		/// </summary>
 		public void AddItem(EquipLocation slot, EquipableItem item)
 		{
-			Debug.Assert(item.GetAllowedEquipLocation() == slot);
+			Debug.Assert(item.AllowedEquipLocation == slot);
 			_equippedItems[slot] = item;
 			EquipmentUpdated?.Invoke();
 		}
@@ -55,7 +55,7 @@ namespace RPG.Inventories
 			var equippedItemsForSerialization = new Dictionary<EquipLocation, string>();
 			foreach(var pair in _equippedItems)
 			{
-				equippedItemsForSerialization[pair.Key] = pair.Value.GetItemID();
+				equippedItemsForSerialization[pair.Key] = pair.Value.ItemID;
 			}
 
 			return equippedItemsForSerialization;

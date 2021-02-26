@@ -1,3 +1,5 @@
+using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace RPG.Inventories
@@ -10,8 +12,35 @@ namespace RPG.Inventories
 	public class EquipableItem : InventoryItem
 	{
 		[Tooltip("Where are we allowed to put this item.")] [SerializeField]
-		private EquipLocation allowedEquipLocation = EquipLocation.Weapon;
+		protected EquipLocation allowedEquipLocation = EquipLocation.Weapon;
 
-		public EquipLocation GetAllowedEquipLocation() => allowedEquipLocation;
+		public EquipLocation AllowedEquipLocation => allowedEquipLocation;
+
+#if UNITY_EDITOR
+		public virtual bool IsLocationSelectable(Enum location)
+		{
+			var candidate = (EquipLocation)location;
+			return candidate != EquipLocation.Weapon;
+		}
+
+		public void SetAllowedEquipLocation(EquipLocation newLocation)
+		{
+			if(allowedEquipLocation == newLocation) return;
+			SetUndo("Change Equip Location");
+			allowedEquipLocation = newLocation;
+			Dirty();
+		}
+
+		private bool _drawInventoryItem = true;
+
+		public override void DrawCustomInspector()
+		{
+			base.DrawCustomInspector();
+			FoldoutStyle = new GUIStyle(EditorStyles.foldout) {fontStyle = FontStyle.Bold};
+			_drawInventoryItem = EditorGUILayout.Foldout(_drawInventoryItem, "Equipable Item Data", FoldoutStyle);
+			if(!_drawInventoryItem) return;
+			SetAllowedEquipLocation((EquipLocation)EditorGUILayout.EnumPopup(new GUIContent("Equip Location"), allowedEquipLocation, IsLocationSelectable, false));
+		}
+#endif
 	}
 }

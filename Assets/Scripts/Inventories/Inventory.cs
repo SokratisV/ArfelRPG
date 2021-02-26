@@ -214,7 +214,7 @@ namespace RPG.Inventories
 			{
 				if(_slots[i].Item != null)
 				{
-					slotStrings[i].itemID = _slots[i].Item.GetItemID();
+					slotStrings[i].itemID = _slots[i].Item.ItemID;
 					slotStrings[i].number = _slots[i].Number;
 				}
 			}

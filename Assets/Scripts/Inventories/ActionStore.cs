@@ -137,9 +137,7 @@ namespace RPG.Inventories
 			var state = new Dictionary<int, DockedItemRecord>();
 			foreach(var pair in dockedItems)
 			{
-				var record = new DockedItemRecord();
-				record.itemID = pair.Value.item.GetItemID();
-				record.number = pair.Value.number;
+				var record = new DockedItemRecord {itemID = pair.Value.item.ItemID, number = pair.Value.number};
 				state[pair.Key] = record;
 			}
 

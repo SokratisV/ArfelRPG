@@ -27,7 +27,7 @@ namespace RPG.UI.Inventories
         {
             var equipableItem = item as EquipableItem;
             if (equipableItem == null) return 0;
-            if (equipableItem.GetAllowedEquipLocation() != equipLocation) return 0;
+            if (equipableItem.AllowedEquipLocation != equipLocation) return 0;
             return GetItem() != null? 0:1;
         }
 

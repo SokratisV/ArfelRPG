@@ -61,7 +61,7 @@ namespace RPG.Inventories
 			{
 				var droppedItem = new DropRecord
 				{
-					itemID = pickup.GetItem().GetItemID(),
+					itemID = pickup.GetItem().ItemID,
 					position = new SerializableVector3(pickup.transform.position),
 					number = pickup.GetNumber(),
 					sceneBuildIndex = sceneBuildIndex
