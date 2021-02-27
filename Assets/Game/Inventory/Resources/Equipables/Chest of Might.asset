@@ -9,14 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f20eb1792e8048a46bf5c7c520a3ea3b, type: 3}
-  m_Name: Dagger
+  m_Script: {fileID: 11500000, guid: 7038571bf696b3444bc0fac372f39cfa, type: 3}
+  m_Name: Chest of Might
   m_EditorClassIdentifier: 
-  itemID: 1ca8bcb6-3995-44fb-97a9-15c60fe159e9
-  displayName: Dagger
-  description: Stab your enemies in the back, like the coward you are!
-  icon: {fileID: 21300000, guid: d19901b0ee3c38743a7d383bd484b0b5, type: 3}
-  pickup: {fileID: 6494234044896430859, guid: ab73185f2dadf4445ae07e78eb669c1f, type: 3}
+  itemID: ef83cec2-a520-406f-b8f9-977f59f6c01e
+  displayName: Chest of Might
+  description: 
+  icon: {fileID: 0}
+  pickup: {fileID: 0}
   stackable: 0
   _rarity: {fileID: 11400000, guid: 53e1bb8804df4a34bba2ac3bbcb29d8d, type: 2}
   allowedEquipLocation: 5
+  additiveModifiers: []
+  percentageModifiers: []

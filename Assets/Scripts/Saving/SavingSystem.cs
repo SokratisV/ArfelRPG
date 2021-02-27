@@ -29,10 +29,7 @@ namespace RPG.Saving
 			SaveFile(saveFile, state);
 		}
 
-		public void Load(string saveFile)
-		{
-			RestoreState(LoadFile(saveFile));
-		}
+		public void Load(string saveFile) => RestoreState(LoadFile(saveFile));
 
 		public void Delete(string saveFile) => File.Delete(GetPathFromSaveFile(saveFile));
 
@@ -62,7 +59,7 @@ namespace RPG.Saving
 		{
 			foreach(var saveable in FindObjectsOfType<SaveableEntity>())
 			{
-				state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
+				state[saveable.UniqueIdentifier] = saveable.CaptureState();
 			}
 
 			state["lastSceneBuildIndex"] = SceneManager.GetActiveScene().buildIndex;
@@ -72,7 +69,7 @@ namespace RPG.Saving
 		{
 			foreach(var saveable in FindObjectsOfType<SaveableEntity>())
 			{
-				var id = saveable.GetUniqueIdentifier();
+				var id = saveable.UniqueIdentifier;
 				if(state.ContainsKey(id))
 				{
 					saveable.RestoreState(state[id]);

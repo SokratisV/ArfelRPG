@@ -14,17 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 1decd19e-472c-4ae0-a6f6-939ea00717c1
   displayName: Arfelbow
-  description: Bow to Arfelus!
+  description: 
   icon: {fileID: 21300000, guid: d19901b0ee3c38743a7d383bd484b0b5, type: 3}
   pickup: {fileID: 2287223541132574480, guid: 681e9fe39ac21db4cadbd81f3992f111, type: 3}
   stackable: 0
+  _rarity: {fileID: 11400000, guid: 52b1d6db300a6af4e817a7a2b5abb69e, type: 2}
   allowedEquipLocation: 5
+  additiveModifiers: []
+  percentageModifiers: []
   animatorOverride: {fileID: 22100000, guid: 79b6c98053f2f42b19fc6530bdf74a1e, type: 2}
   equippedPrefab: {fileID: 1692883748218490884, guid: 4d82a01f78c554e9386e6beb6bdb2669,
     type: 3}
   weaponRange: 10
   weaponDamage: 4
-  weaponPercentageBonus: 10
+  percentageBonus: 0
   isRightHanded: 0
   projectile: {fileID: 8259317026995254453, guid: 2864e23bf0720a340af7d8885aa379fa,
     type: 3}

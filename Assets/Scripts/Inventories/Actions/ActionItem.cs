@@ -19,21 +19,13 @@ namespace RPG.Inventories
 		/// Trigger the use of this item. Override to provide functionality.
 		/// </summary>
 		/// <param name="user">The character that is using this action.</param>
-		public virtual void Use(GameObject user)
-		{
-			Debug.Log("Using action: " + this);
-		}
+		public virtual void Use(GameObject user) => Debug.Log("Using action: " + this);
 
-		public virtual bool CanUse(GameObject user)
-		{
-			return true;
-		}
+		public virtual bool CanUse(GameObject user) => true;
 
 		public bool IsConsumable => consumable;
 
 #if UNITY_EDITOR
-
-
 		private void SetIsConsumable(bool value)
 		{
 			if(consumable == value) return;
@@ -53,7 +45,6 @@ namespace RPG.Inventories
 			SetIsConsumable(EditorGUILayout.Toggle("Is Consumable", consumable));
 			EditorGUILayout.EndVertical();
 		}
-
 #endif
 	}
 }

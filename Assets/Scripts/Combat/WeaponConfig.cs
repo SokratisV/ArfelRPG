@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 namespace RPG.Combat
 {
 	[CreateAssetMenu(fileName = "Weapon", menuName = "RPG/Inventory/New Weapon", order = 0)]
-	public class WeaponConfig : StatsEquipableItem, IModifierProvider
+	public class WeaponConfig : StatsEquipableItem
 	{
 		[SerializeField] private AnimatorOverrideController animatorOverride = null;
 		[SerializeField] private Weapon equippedPrefab = null;
@@ -19,19 +19,20 @@ namespace RPG.Combat
 		[SerializeField] private bool isRightHanded = true;
 		[SerializeField] private Projectile projectile = null;
 
-		public override string Description
+		public override string StatDescription
 		{
 			get
 			{
-				string result = projectile ? "Ranged Weapon" : "Melee Weapon";
-				result += $"\n\n{RawDescription}\n";
+				var result = base.StatDescription;
+				result += projectile? "Ranged Weapon":"Melee Weapon";
 				result += $"\nRange {weaponRange} meters";
 				result += $"\nBase Damage {weaponDamage} points";
-				if ((int)percentageBonus != 0)
+				if((int)percentageBonus != 0)
 				{
-					string bonus = percentageBonus > 0 ? "<color=#8888ff>bonus</color>" : "<color=#ff8888>penalty</color>";
-					result += $"\n{(int) percentageBonus} percent {bonus} to attack.";
+					var bonus = percentageBonus > 0? "<color=#8888ff>bonus</color>":"<color=#ff8888>penalty</color>";
+					result += $"\n{(int)percentageBonus} percent {bonus} to attack.";
 				}
+
 				return result;
 			}
 		}
@@ -91,12 +92,12 @@ namespace RPG.Combat
 
 		private void OnDestroy() => WeaponPerPlayer = null;
 
-		public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+		public override IEnumerable<float> GetAdditiveModifiers(Stat stat)
 		{
 			if(stat == Stat.Damage) yield return weaponDamage;
 		}
 
-		public IEnumerable<float> GetPercentageModifiers(Stat stat)
+		public override IEnumerable<float> GetPercentageModifiers(Stat stat)
 		{
 			if(stat == Stat.Damage) yield return percentageBonus;
 		}
@@ -167,7 +168,7 @@ namespace RPG.Combat
 		}
 
 		private bool _drawWeaponConfig = true;
-		
+
 		public override void DrawCustomInspector()
 		{
 			base.DrawCustomInspector();
@@ -182,7 +183,6 @@ namespace RPG.Combat
 			SetAnimatorOverride((AnimatorOverrideController)EditorGUILayout.ObjectField("Animator Override", animatorOverride, typeof(AnimatorOverrideController), false));
 			SetProjectile((Projectile)EditorGUILayout.ObjectField("Projectile", projectile, typeof(Projectile), false));
 		}
-
 #endif
 	}
 }

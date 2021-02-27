@@ -11,7 +11,7 @@ namespace RPG.Inventories
 		[SerializeField] private float amountToHeal;
 		[SerializeField] private bool isPercentage;
 
-		public override string Description
+		public override string StatDescription
 		{
 			get
 			{

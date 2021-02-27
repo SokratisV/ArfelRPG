@@ -15,7 +15,6 @@ namespace RPG.Inventories
 	/// </remarks>
 	public abstract class InventoryItem : ScriptableObject, ISerializationCallbackReceiver
 	{
-		// CONFIG DATA
 		[Tooltip("Auto-generated UUID for saving/loading. Clear this field if you want to generate a new one.")] [SerializeField]
 		private string itemID = null;
 
@@ -33,6 +32,8 @@ namespace RPG.Inventories
 
 		[Tooltip("If true, multiple items of this type can be stacked in the same inventory slot.")] [SerializeField]
 		private bool stackable = false;
+
+		[SerializeField] private Rarity _rarity = null;
 
 		private static Dictionary<string, InventoryItem> ItemLookupCache;
 
@@ -85,22 +86,28 @@ namespace RPG.Inventories
 
 		public Sprite Icon => icon;
 
+		public Rarity Rarity => _rarity;
+
 		public string ItemID => itemID;
 
 		public bool IsStackable => stackable;
 
 		public string DisplayName => displayName;
 
-		public virtual string Description => description;
+		public virtual string StatDescription => description;
 
 		public string RawDescription => description;
-		
+
 		void ISerializationCallbackReceiver.OnBeforeSerialize()
 		{
-			// Generate and save a new UUID if this is blank.
 			if(string.IsNullOrWhiteSpace(itemID))
 			{
 				itemID = Guid.NewGuid().ToString();
+			}
+
+			if(string.IsNullOrWhiteSpace(displayName))
+			{
+				displayName = name;
 			}
 		}
 
@@ -111,32 +118,31 @@ namespace RPG.Inventories
 		}
 
 #if UNITY_EDITOR
-
-		public void SetDisplayName(string newDisplayName)
+		private void SetDisplayName(string newDisplayName)
 		{
-			if(displayName == newDisplayName) return;
+			if(DisplayName == newDisplayName) return;
 			SetUndo("Change Display Name");
 			displayName = newDisplayName;
 			Dirty();
 		}
 
-		public void SetDescription(string newDescription)
+		private void SetDescription(string newDescription)
 		{
-			if(description == newDescription) return;
+			if(StatDescription == newDescription) return;
 			SetUndo("Change Description");
 			description = newDescription;
 			Dirty();
 		}
 
-		public void SetIcon(Sprite newIcon)
+		private void SetIcon(Sprite newIcon)
 		{
-			if(icon == newIcon) return;
+			if(Icon == newIcon) return;
 			SetUndo("Change Icon");
 			icon = newIcon;
 			Dirty();
 		}
 
-		public void SetPickup(Pickup newPickup)
+		private void SetPickup(Pickup newPickup)
 		{
 			if(pickup == newPickup) return;
 			SetUndo("Change Pickup");
@@ -144,7 +150,7 @@ namespace RPG.Inventories
 			Dirty();
 		}
 
-		public void SetItemID(string newItemID)
+		private void SetItemID(string newItemID)
 		{
 			if(itemID == newItemID) return;
 			SetUndo("Change ItemID");
@@ -152,11 +158,19 @@ namespace RPG.Inventories
 			Dirty();
 		}
 
-		public void SetStackable(bool newStackable)
+		private void SetStackable(bool newStackable)
 		{
 			if(stackable == newStackable) return;
 			SetUndo(stackable? "Set Not Stackable":"Set Stackable");
 			stackable = newStackable;
+			Dirty();
+		}
+
+		private void SetRarity(Rarity newRarity)
+		{
+			if(_rarity == newRarity) return;
+			SetUndo("Change Rarity");
+			_rarity = newRarity;
 			Dirty();
 		}
 
@@ -166,16 +180,17 @@ namespace RPG.Inventories
 
 		public virtual void DrawCustomInspector()
 		{
-			ContentStyle = new GUIStyle {padding = new RectOffset(15, 15, 0, 0)};
-			FoldoutStyle = new GUIStyle(EditorStyles.foldout) {fontStyle = FontStyle.Bold};
+			ContentStyle = new GUIStyle {padding = new RectOffset(15, 15, 0, 0), wordWrap = true};
+			FoldoutStyle = new GUIStyle(EditorStyles.foldout) {fontStyle = FontStyle.Bold, wordWrap = true,};
 			_drawInventoryItem = EditorGUILayout.Foldout(_drawInventoryItem, "Inventory Item Data", FoldoutStyle);
 			if(!_drawInventoryItem) return;
 			EditorGUILayout.HelpBox($"{name}/{DisplayName}", MessageType.Info);
 			SetItemID(EditorGUILayout.TextField("ItemID (clear to reset)", ItemID));
 			SetDisplayName(EditorGUILayout.TextField("Display name", DisplayName));
-			SetDescription(EditorGUILayout.TextField("Description", Description));
+			SetDescription(EditorGUILayout.TextField("Description", StatDescription));
 			SetIcon((Sprite)EditorGUILayout.ObjectField("Icon", Icon, typeof(Sprite), false));
 			SetPickup((Pickup)EditorGUILayout.ObjectField("Pickup", Pickup, typeof(Pickup), false));
+			SetRarity((Rarity)EditorGUILayout.ObjectField("Rarity", Rarity, typeof(Rarity), false));
 			SetStackable(EditorGUILayout.Toggle("Stackable", IsStackable));
 		}
 

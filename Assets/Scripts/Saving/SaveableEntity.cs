@@ -10,10 +10,7 @@ namespace RPG.Saving
 		[SerializeField] private string uniqueIdentifier = "";
 		private static Dictionary<string, SaveableEntity> GlobalLookup = new Dictionary<string, SaveableEntity>();
 
-		public string GetUniqueIdentifier()
-		{
-			return uniqueIdentifier;
-		}
+		public string UniqueIdentifier => uniqueIdentifier;
 
 		public object CaptureState()
 		{
@@ -70,7 +67,7 @@ namespace RPG.Saving
 				return true;
 			}
 
-			if(GlobalLookup[candidate].GetUniqueIdentifier() != candidate)
+			if(GlobalLookup[candidate].UniqueIdentifier != candidate)
 			{
 				GlobalLookup.Remove(candidate);
 				return true;

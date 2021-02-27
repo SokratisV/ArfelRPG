@@ -14,11 +14,11 @@ namespace RPG.Inventories
 		[SerializeField] private List<Modifier> additiveModifiers = new List<Modifier>();
 		[SerializeField] private List<Modifier> percentageModifiers = new List<Modifier>();
 
-		public override string Description
+		public override string StatDescription
 		{
 			get
 			{
-				var result = RawDescription + "\n";
+				var result = "";
 				foreach(var mod in additiveModifiers)
 				{
 					result += FormatAttribute(mod, false);
@@ -32,7 +32,7 @@ namespace RPG.Inventories
 				return result;
 			}
 		}
-
+		
 		[Serializable]
 		private struct Modifier
 		{
@@ -48,10 +48,10 @@ namespace RPG.Inventories
 			return$"{Mathf.Abs((int)mod.value)} {percentString} {bonus} to {mod.stat}\n";
 		}
 
-		public IEnumerable<float> GetAdditiveModifiers(Stat stat) =>
+		public virtual IEnumerable<float> GetAdditiveModifiers(Stat stat) =>
 			from modifier in additiveModifiers where modifier.stat == stat select modifier.value;
 
-		public IEnumerable<float> GetPercentageModifiers(Stat stat) =>
+		public virtual IEnumerable<float> GetPercentageModifiers(Stat stat) =>
 			from modifier in percentageModifiers where modifier.stat == stat select modifier.value;
 
 #if UNITY_EDITOR

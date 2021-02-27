@@ -14,16 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: f0f0899c-134b-4ee8-864a-67c5c99b155d
   displayName: Eagle Helmet
-  description: Helmbet that provides health.
+  description: basic helmet
   icon: {fileID: 21300000, guid: 7a704c5f161380f438bfabaf93560dc3, type: 3}
   pickup: {fileID: 8463999928626207292, guid: 632d7d0834987f64cafc32e664311048, type: 3}
   stackable: 0
+  _rarity: {fileID: 11400000, guid: 31a56d1b959c908498a4cc255e047371, type: 2}
   allowedEquipLocation: 0
   additiveModifiers:
   - stat: 0
-    value: 20
-  percentageModifiers:
-  - stat: 0
-    value: 17
+    value: 10
   - stat: 2
-    value: 30
+    value: -10
+  percentageModifiers:
+  - stat: 2
+    value: 5
