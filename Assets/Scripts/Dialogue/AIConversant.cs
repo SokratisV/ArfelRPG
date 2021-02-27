@@ -15,7 +15,7 @@ namespace RPG.Dialogue
 
 		#region Unity
 
-		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject);
+		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject, GlobalValues.InteractColor);
 
 		#endregion
 

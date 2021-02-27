@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace RPG.Core
@@ -10,16 +11,13 @@ namespace RPG.Core
 		private WaitForSeconds _waitForSeconds = new WaitForSeconds(GlobalValues.OutlineOffDelay);
 		private bool _isMouseHoveringOver;
 
-		public OutlineableComponent(GameObject obj)
+		public OutlineableComponent(GameObject obj, Color32 color)
 		{
 			var outline = obj.GetComponentInChildren<Outline>();
-			if(!outline)
-			{
-				outline = obj.AddComponent<Outline>();
-				outline.OutlineColor = GlobalValues.PickupColor;
-			}
+			if(!outline) outline = obj.AddComponent<Outline>();
 
 			_outline = outline;
+			_outline.OutlineColor = color;
 			_outline.enabled = false;
 		}
 

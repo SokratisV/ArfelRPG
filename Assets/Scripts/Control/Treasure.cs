@@ -11,7 +11,7 @@ namespace RPG.Control
 		private OutlineableComponent _outlineableComponent;
 		private bool _isOpened = false;
 
-		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject);
+		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject, GlobalValues.PickupColor);
 
 		public CursorType GetCursorType() => CursorType.Pickup;
 

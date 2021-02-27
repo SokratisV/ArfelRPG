@@ -15,7 +15,7 @@ namespace RPG.Combat
 
 		private void Awake()
 		{
-			_outlineableComponent = new OutlineableComponent(gameObject);
+			_outlineableComponent = new OutlineableComponent(gameObject, GlobalValues.PickupColor);
 			_collider = GetComponent<Collider>();
 		}
 

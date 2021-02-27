@@ -9,7 +9,7 @@ namespace RPG.Combat
 	{
 		private OutlineableComponent _outlineableComponent;
 
-		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject);
+		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject, GlobalValues.EnemyColor);
 
 		public CursorType GetCursorType() => CursorType.Combat;
 		

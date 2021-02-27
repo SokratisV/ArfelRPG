@@ -1,3 +1,4 @@
+using System;
 using RPG.Core;
 using UnityEngine;
 using RPG.Inventories;
@@ -12,11 +13,9 @@ namespace RPG.Control
 		private Pickup _pickup;
 		private OutlineableComponent _outlineableComponent;
 
-		private void Awake()
-		{
-			_pickup = GetComponent<Pickup>();
-			_outlineableComponent = new OutlineableComponent(gameObject);
-		}
+		private void Awake() => _pickup = GetComponent<Pickup>();
+
+		private void Start() => _outlineableComponent = new OutlineableComponent(gameObject, _pickup.GetItem().Rarity.Color);
 
 		public CursorType GetCursorType() => _pickup.CanBePickedUp()? CursorType.Pickup:CursorType.InventoryFull;
 
