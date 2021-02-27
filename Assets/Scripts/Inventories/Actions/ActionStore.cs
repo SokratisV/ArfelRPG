@@ -13,16 +13,13 @@ namespace RPG.Inventories
 	/// </summary>
 	public class ActionStore : MonoBehaviour, ISaveable
 	{
-		// STATE
 		private Dictionary<int, DockedItemSlot> dockedItems = new Dictionary<int, DockedItemSlot>();
 
 		private class DockedItemSlot
 		{
-			public ActionItem item;
-			public int number;
+			public ActionItem Item;
+			public int Number;
 		}
-
-		// PUBLIC
 
 		/// <summary>
 		/// Broadcasts when the items in the slots are added/removed.
@@ -32,7 +29,7 @@ namespace RPG.Inventories
 		/// <summary>
 		/// Get the action at the given index.
 		/// </summary>
-		public ActionItem GetAction(int index) => dockedItems.ContainsKey(index)? dockedItems[index].item:null;
+		public ActionItem GetAction(int index) => dockedItems.ContainsKey(index)? dockedItems[index].Item:null;
 
 		/// <summary>
 		/// Get the number of items left at the given index.
@@ -41,7 +38,7 @@ namespace RPG.Inventories
 		/// Will return 0 if no item is in the index or the item has
 		/// been fully consumed.
 		/// </returns>
-		public int GetNumber(int index) => dockedItems.ContainsKey(index)? dockedItems[index].number:0;
+		public int GetNumber(int index) => dockedItems.ContainsKey(index)? dockedItems[index].Number:0;
 
 		/// <summary>
 		/// Add an item to the given index.
@@ -53,14 +50,14 @@ namespace RPG.Inventories
 		{
 			if(dockedItems.ContainsKey(index))
 			{
-				if(ReferenceEquals(item, dockedItems[index].item))
+				if(ReferenceEquals(item, dockedItems[index].Item))
 				{
-					dockedItems[index].number += number;
+					dockedItems[index].Number += number;
 				}
 			}
 			else
 			{
-				var slot = new DockedItemSlot {item = item as ActionItem, number = number};
+				var slot = new DockedItemSlot {Item = item as ActionItem, Number = number};
 				dockedItems[index] = slot;
 			}
 
@@ -76,8 +73,8 @@ namespace RPG.Inventories
 		public bool Use(int index, GameObject user)
 		{
 			if(!dockedItems.ContainsKey(index)) return false;
-			dockedItems[index].item.Use(user);
-			if(dockedItems[index].item.IsConsumable)
+			dockedItems[index].Item.Use(user);
+			if(dockedItems[index].Item.IsConsumable)
 			{
 				RemoveItems(index, 1);
 			}
@@ -93,8 +90,8 @@ namespace RPG.Inventories
 		{
 			if(dockedItems.ContainsKey(index))
 			{
-				dockedItems[index].number -= number;
-				if(dockedItems[index].number <= 0)
+				dockedItems[index].Number -= number;
+				if(dockedItems[index].Number <= 0)
 				{
 					dockedItems.Remove(index);
 				}
@@ -116,7 +113,7 @@ namespace RPG.Inventories
 			var actionItem = item as ActionItem;
 			if(!actionItem) return 0;
 
-			if(dockedItems.ContainsKey(index) && !object.ReferenceEquals(item, dockedItems[index].item))
+			if(dockedItems.ContainsKey(index) && !ReferenceEquals(item, dockedItems[index].Item))
 				return 0;
 
 			if(actionItem.IsConsumable)
@@ -137,7 +134,7 @@ namespace RPG.Inventories
 			var state = new Dictionary<int, DockedItemRecord>();
 			foreach(var pair in dockedItems)
 			{
-				var record = new DockedItemRecord {itemID = pair.Value.item.ItemID, number = pair.Value.number};
+				var record = new DockedItemRecord {itemID = pair.Value.Item.ItemID, number = pair.Value.Number};
 				state[pair.Key] = record;
 			}
 

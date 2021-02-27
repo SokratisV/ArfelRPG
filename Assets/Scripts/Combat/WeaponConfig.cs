@@ -148,15 +148,13 @@ namespace RPG.Combat
 			projectile = newProjectile;
 			Dirty();
 		}
-
-		private bool _drawInventoryItem = true;
-
+		
 		public override void DrawCustomInspector()
 		{
 			base.DrawCustomInspector();
 			FoldoutStyle = new GUIStyle(EditorStyles.foldout) {fontStyle = FontStyle.Bold};
-			_drawInventoryItem = EditorGUILayout.Foldout(_drawInventoryItem, "Weapon Config Data", FoldoutStyle);
-			if(!_drawInventoryItem) return;
+			DrawInventoryItem = EditorGUILayout.Foldout(DrawInventoryItem, "Weapon Config Data", FoldoutStyle);
+			if(!DrawInventoryItem) return;
 			SetEquippedPrefab((Weapon)EditorGUILayout.ObjectField("Equipped Prefab", equippedPrefab, typeof(Object), false));
 			SetWeaponDamage(EditorGUILayout.Slider("Weapon Damage", weaponDamage, 0, 100));
 			SetWeaponRange(EditorGUILayout.Slider("Weapon Range", weaponRange, 1, 40));

@@ -751,6 +751,10 @@
       <Project>{213dca96-aa32-a723-6ebc-f034c78b6219}</Project>
       <Name>Combat</Name>
     </ProjectReference>
+    <ProjectReference Include="Editor.csproj">
+      <Project>{ba3e57c9-86db-f553-89b4-a1736e8cf987}</Project>
+      <Name>Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="RotaryHeart.csproj">
       <Project>{9a57197f-6bce-1fef-2b72-2c61b4333055}</Project>
       <Name>RotaryHeart</Name>
@@ -774,10 +778,6 @@
     <ProjectReference Include="Dialogue.csproj">
       <Project>{7fd088b2-4c6e-93af-fb1d-acac7eab0e50}</Project>
       <Name>Dialogue</Name>
-    </ProjectReference>
-    <ProjectReference Include="Editor.csproj">
-      <Project>{ba3e57c9-86db-f553-89b4-a1736e8cf987}</Project>
-      <Name>Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

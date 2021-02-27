@@ -31,14 +31,14 @@ namespace RPG.Inventories
 			Dirty();
 		}
 
-		private bool _drawInventoryItem = true;
+		protected bool DrawInventoryItem = true;
 
 		public override void DrawCustomInspector()
 		{
 			base.DrawCustomInspector();
 			FoldoutStyle = new GUIStyle(EditorStyles.foldout) {fontStyle = FontStyle.Bold};
-			_drawInventoryItem = EditorGUILayout.Foldout(_drawInventoryItem, "Equipable Item Data", FoldoutStyle);
-			if(!_drawInventoryItem) return;
+			DrawInventoryItem = EditorGUILayout.Foldout(DrawInventoryItem, "Equipable Item Data", FoldoutStyle);
+			if(!DrawInventoryItem) return;
 			SetAllowedEquipLocation((EquipLocation)EditorGUILayout.EnumPopup(new GUIContent("Equip Location"), allowedEquipLocation, IsLocationSelectable, false));
 		}
 #endif

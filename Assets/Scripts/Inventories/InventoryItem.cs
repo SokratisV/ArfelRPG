@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -160,9 +161,11 @@ namespace RPG.Inventories
 
 		private bool _drawInventoryItem = true;
 		protected GUIStyle FoldoutStyle;
+		protected GUIStyle ContentStyle;
 
 		public virtual void DrawCustomInspector()
 		{
+			ContentStyle = new GUIStyle {padding = new RectOffset(15, 15, 0, 0)};
 			FoldoutStyle = new GUIStyle(EditorStyles.foldout) {fontStyle = FontStyle.Bold};
 			_drawInventoryItem = EditorGUILayout.Foldout(_drawInventoryItem, "Inventory Item Data", FoldoutStyle);
 			if(!_drawInventoryItem) return;
