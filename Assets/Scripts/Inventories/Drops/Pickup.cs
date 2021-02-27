@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Core;
+using UnityEngine;
 
 namespace RPG.Inventories
 {
@@ -14,7 +15,7 @@ namespace RPG.Inventories
 
 		private void Awake()
 		{
-			var player = GameObject.FindGameObjectWithTag("Player");
+			var player = PlayerFinder.Player;;
 			_inventory = player.GetComponent<Inventory>();
 		}
 

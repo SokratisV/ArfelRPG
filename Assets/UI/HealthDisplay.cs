@@ -1,4 +1,5 @@
 using RPG.Attributes;
+using RPG.Core;
 using TMPro;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace RPG.UI
 
 		private void Awake()
 		{
-			_health = GameObject.FindWithTag("Player").GetComponent<Health>();
+			_health = PlayerFinder.Player.GetComponent<Health>();
 			_text = GetComponent<TextMeshProUGUI>();
 		}
 

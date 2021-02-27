@@ -10,7 +10,6 @@ namespace RPG.UI.Inventories
 		[SerializeField] private InventoryItemIcon icon = null;
 
 		private int _index;
-		private InventoryItem _item;
 		private Inventory _playerInventory;
 		private Equipment _playerEquipment;
 

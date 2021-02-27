@@ -23,7 +23,7 @@ namespace RPG.Cinematics
 			playableDirector.stopped -= EnableControl;
 		}
 
-		private void Awake() => _player = GameObject.FindWithTag("Player");
+		private void Awake() => _player = PlayerFinder.Player;
 
 		private void DisableControl(PlayableDirector pd)
 		{

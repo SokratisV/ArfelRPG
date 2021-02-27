@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Core;
+using UnityEngine;
 
 namespace RPG.Quests
 {
@@ -9,7 +10,7 @@ namespace RPG.Quests
 		//UnityEvent
 		public void GiveQuest()
 		{
-			var questList = GameObject.FindWithTag("Player").GetComponent<QuestList>();
+			var questList = PlayerFinder.Player.GetComponent<QuestList>();
 			questList.AddQuest(quest);
 		}
 	}

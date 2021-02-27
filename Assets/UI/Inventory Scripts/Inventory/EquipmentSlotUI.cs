@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Core;
+using UnityEngine;
 using RPG.UI.Dragging;
 using RPG.Inventories;
 using UnityEngine.EventSystems;
@@ -18,7 +19,7 @@ namespace RPG.UI.Inventories
 
 		private void Awake()
 		{
-			var player = GameObject.FindGameObjectWithTag("Player");
+			var player = PlayerFinder.Player;;
 			_playerEquipment = player.GetComponent<Equipment>();
 			_playerInventory = player.GetComponent<Inventory>();
 			_playerEquipment.EquipmentUpdated += RedrawUI;

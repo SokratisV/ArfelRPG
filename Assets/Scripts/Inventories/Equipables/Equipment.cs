@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RPG.Core;
 using UnityEngine;
 using RPG.Saving;
 
@@ -25,7 +26,7 @@ namespace RPG.Inventories
 		/// </summary>
 		public static Equipment GetPlayerEquipment()
 		{
-			var player = GameObject.FindWithTag("Player");
+			var player = PlayerFinder.Player;
 			return player.GetComponent<Equipment>();
 		}
 		

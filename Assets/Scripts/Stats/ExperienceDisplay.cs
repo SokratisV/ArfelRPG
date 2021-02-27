@@ -1,3 +1,4 @@
+using RPG.Core;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace RPG.Stats
 
 		private void Awake()
 		{
-			_experience = GameObject.FindWithTag("Player").GetComponent<Experience>();
+			_experience = PlayerFinder.Player.GetComponent<Experience>();
 			_text = GetComponent<TextMeshProUGUI>();
 		}
 

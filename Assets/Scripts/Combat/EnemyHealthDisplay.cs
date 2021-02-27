@@ -1,3 +1,4 @@
+using RPG.Core;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace RPG.Combat
 
 		private void Awake()
 		{
-			_fighter = GameObject.FindWithTag("Player").GetComponent<Fighter>();
+			_fighter = PlayerFinder.Player.GetComponent<Fighter>();
 			_text = GetComponent<TextMeshProUGUI>();
 		}
 

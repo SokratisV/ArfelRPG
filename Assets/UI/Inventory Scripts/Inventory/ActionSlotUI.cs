@@ -1,4 +1,5 @@
-﻿using RPG.UI.Dragging;
+﻿using RPG.Core;
+using RPG.UI.Dragging;
 using RPG.Inventories;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,7 +18,7 @@ namespace RPG.UI.Inventories
 
 		private void Awake()
 		{
-			_store = GameObject.FindGameObjectWithTag("Player").GetComponent<ActionStore>();
+			_store = PlayerFinder.Player.GetComponent<ActionStore>();
 			_store.StoreUpdated += UpdateIcon;
 		}
 

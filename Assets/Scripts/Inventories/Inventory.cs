@@ -35,7 +35,7 @@ namespace RPG.Inventories
 		/// </summary>
 		public static Inventory GetPlayerInventory()
 		{
-			var player = GameObject.FindWithTag("Player");
+			var player = PlayerFinder.Player;
 			return player.GetComponent<Inventory>();
 		}
 

@@ -1,3 +1,4 @@
+using RPG.Core;
 using UnityEngine;
 using RPG.UI.Dragging;
 using RPG.Inventories;
@@ -14,7 +15,7 @@ namespace RPG.UI.Inventories
 	{
 		public void AddItems(InventoryItem item, int number)
 		{
-			var player = GameObject.FindGameObjectWithTag("Player");
+			var player = PlayerFinder.Player;;
 			player.GetComponent<ItemDropper>().DropItem(item, number);
 		}
 

@@ -40,7 +40,7 @@ namespace RPG.Control
 
 		private void Awake()
 		{
-			_player = GameObject.FindWithTag("Player");
+			_player = PlayerFinder.Player;
 			_fighter = GetComponent<Fighter>();
 			_health = GetComponent<Health>();
 			_mover = GetComponent<Mover>();

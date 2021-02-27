@@ -1,4 +1,5 @@
-﻿using RPG.Dialogue;
+﻿using RPG.Core;
+using RPG.Dialogue;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,7 @@ namespace RPG.UI
 		
 		private void Start()
 		{
-			_playerConversant = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerConversant>();
+			_playerConversant = PlayerFinder.Player.GetComponent<PlayerConversant>();
 			_playerConversant.OnUpdated += UpdateUI;
 			nextButton.onClick.AddListener(Next);
 			quitButton.onClick.AddListener(_playerConversant.Quit);

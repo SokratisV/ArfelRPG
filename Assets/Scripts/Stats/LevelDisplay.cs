@@ -1,3 +1,4 @@
+using RPG.Core;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace RPG.Stats
 
 		private void Awake()
 		{
-			_stats = GameObject.FindWithTag("Player").GetComponent<BaseStats>();
+			_stats = PlayerFinder.Player.GetComponent<BaseStats>();
 			_text = GetComponent<TextMeshProUGUI>();
 		}
 

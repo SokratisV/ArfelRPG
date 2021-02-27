@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using RPG.Control;
+using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -46,7 +47,7 @@ namespace RPG.SceneManagement
 
 			var wrapper = FindObjectOfType<SavingWrapper>();
 			wrapper.Save();
-			var player = GameObject.FindWithTag("Player");
+			var player = PlayerFinder.Player;
 			var playerController = player.GetComponent<PlayerController>();
 			playerController.enabled = false;
 
@@ -59,8 +60,8 @@ namespace RPG.SceneManagement
 			{
 				yield return SceneManager.LoadSceneAsync(sceneToLoad.name);
 			}
-
-			var newPlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+			PlayerFinder.ResetPlayer();
+			var newPlayerController = PlayerFinder.Player.GetComponent<PlayerController>();
 			newPlayerController.enabled = false;
 
 			wrapper.Load();

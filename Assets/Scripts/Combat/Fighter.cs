@@ -171,7 +171,7 @@ namespace RPG.Combat
 
 		public void RestoreState(object state)
 		{
-			_currentWeaponConfig = Resources.Load<WeaponConfig>((string)state);
+			_currentWeaponConfig = Resources.Load<WeaponConfig>($"Equipables/{(string)state}");
 			EquipWeapon(_currentWeaponConfig);
 		}
 

@@ -1,4 +1,5 @@
-﻿using RPG.Quests;
+﻿using RPG.Core;
+using RPG.Quests;
 using UnityEngine;
 
 namespace RPG.UI.Quests
@@ -10,7 +11,7 @@ namespace RPG.UI.Quests
 
 		private void Start()
 		{
-			_questList = GameObject.FindWithTag("Player").GetComponent<QuestList>();
+			_questList = PlayerFinder.Player.GetComponent<QuestList>();
 			_questList.OnListUpdated += UpdateUi;
 			UpdateUi();
 		}

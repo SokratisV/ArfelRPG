@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Core;
+using UnityEngine;
 
 namespace RPG.Quests
 {
@@ -10,7 +11,7 @@ namespace RPG.Quests
 		//Unity Event
 		public void CompleteObjective()
 		{
-			var questList = GameObject.FindWithTag("Player").GetComponent<QuestList>();
+			var questList = PlayerFinder.Player.GetComponent<QuestList>();
 			questList.CompleteObjective(quest, objective);
 		}
 	}
