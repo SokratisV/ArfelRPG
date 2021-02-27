@@ -10,14 +10,31 @@ using Object = UnityEngine.Object;
 
 namespace RPG.Combat
 {
-	[CreateAssetMenu(fileName = "Weapon", menuName = "Weapons/New Weapon", order = 0)]
-	public class WeaponConfig : EquipableItem, IModifierProvider
+	[CreateAssetMenu(fileName = "Weapon", menuName = "RPG/Inventory/New Weapon", order = 0)]
+	public class WeaponConfig : StatsEquipableItem, IModifierProvider
 	{
 		[SerializeField] private AnimatorOverrideController animatorOverride = null;
 		[SerializeField] private Weapon equippedPrefab = null;
-		[SerializeField] private float weaponRange = 2f, weaponDamage = 5f, weaponPercentageBonus = 0;
+		[SerializeField] private float weaponRange = 2f, weaponDamage = 5f, percentageBonus = 0;
 		[SerializeField] private bool isRightHanded = true;
 		[SerializeField] private Projectile projectile = null;
+
+		public override string Description
+		{
+			get
+			{
+				string result = projectile ? "Ranged Weapon" : "Melee Weapon";
+				result += $"\n\n{RawDescription}\n";
+				result += $"\nRange {weaponRange} meters";
+				result += $"\nBase Damage {weaponDamage} points";
+				if ((int)percentageBonus != 0)
+				{
+					string bonus = percentageBonus > 0 ? "<color=#8888ff>bonus</color>" : "<color=#ff8888>penalty</color>";
+					result += $"\n{(int) percentageBonus} percent {bonus} to attack.";
+				}
+				return result;
+			}
+		}
 
 		private const string WeaponName = "Weapon";
 		private static Dictionary<Animator, Weapon> WeaponPerPlayer = new Dictionary<Animator, Weapon>();
@@ -81,11 +98,11 @@ namespace RPG.Combat
 
 		public IEnumerable<float> GetPercentageModifiers(Stat stat)
 		{
-			if(stat == Stat.Damage) yield return weaponPercentageBonus;
+			if(stat == Stat.Damage) yield return percentageBonus;
 		}
 
 #if UNITY_EDITOR
-		public override bool IsLocationSelectable(Enum location)
+		protected override bool IsLocationSelectable(Enum location)
 		{
 			var candidate = (EquipLocation)location;
 			return candidate == EquipLocation.Weapon;
@@ -109,9 +126,9 @@ namespace RPG.Combat
 
 		private void SetPercentageBonus(float newPercentageBonus)
 		{
-			if(Helper.FloatEquals(weaponPercentageBonus, newPercentageBonus)) return;
+			if(Helper.FloatEquals(percentageBonus, newPercentageBonus)) return;
 			SetUndo("Set Percentage Bonus");
-			weaponPercentageBonus = newPercentageBonus;
+			percentageBonus = newPercentageBonus;
 			Dirty();
 		}
 
@@ -148,17 +165,19 @@ namespace RPG.Combat
 			projectile = newProjectile;
 			Dirty();
 		}
+
+		private bool _drawWeaponConfig = true;
 		
 		public override void DrawCustomInspector()
 		{
 			base.DrawCustomInspector();
 			FoldoutStyle = new GUIStyle(EditorStyles.foldout) {fontStyle = FontStyle.Bold};
-			DrawInventoryItem = EditorGUILayout.Foldout(DrawInventoryItem, "Weapon Config Data", FoldoutStyle);
-			if(!DrawInventoryItem) return;
+			_drawWeaponConfig = EditorGUILayout.Foldout(_drawWeaponConfig, "Weapon Config Data", FoldoutStyle);
+			if(!_drawWeaponConfig) return;
 			SetEquippedPrefab((Weapon)EditorGUILayout.ObjectField("Equipped Prefab", equippedPrefab, typeof(Object), false));
 			SetWeaponDamage(EditorGUILayout.Slider("Weapon Damage", weaponDamage, 0, 100));
 			SetWeaponRange(EditorGUILayout.Slider("Weapon Range", weaponRange, 1, 40));
-			SetPercentageBonus(EditorGUILayout.IntSlider("Percentage Bonus", (int)weaponPercentageBonus, -10, 100));
+			SetPercentageBonus(EditorGUILayout.IntSlider("Percentage Bonus", (int)percentageBonus, -10, 100));
 			SetIsRightHanded(EditorGUILayout.Toggle("Is Right Handed", isRightHanded));
 			SetAnimatorOverride((AnimatorOverrideController)EditorGUILayout.ObjectField("Animator Override", animatorOverride, typeof(AnimatorOverrideController), false));
 			SetProjectile((Projectile)EditorGUILayout.ObjectField("Projectile", projectile, typeof(Projectile), false));

@@ -91,15 +91,16 @@ namespace RPG.Inventories
 
 		public string DisplayName => displayName;
 
-		public string Description => description;
+		public virtual string Description => description;
 
-
+		public string RawDescription => description;
+		
 		void ISerializationCallbackReceiver.OnBeforeSerialize()
 		{
 			// Generate and save a new UUID if this is blank.
 			if(string.IsNullOrWhiteSpace(itemID))
 			{
-				itemID = System.Guid.NewGuid().ToString();
+				itemID = Guid.NewGuid().ToString();
 			}
 		}
 

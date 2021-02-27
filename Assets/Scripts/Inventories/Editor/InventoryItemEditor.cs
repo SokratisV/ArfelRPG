@@ -41,6 +41,20 @@ namespace RPG.Inventories.Editor
 			Repaint();
 		}
 
+		private GUIStyle _previewStyle;
+		private GUIStyle _descriptionStyle;
+		private GUIStyle _headerStyle;
+
+		private void OnEnable()
+		{
+			_previewStyle = new GUIStyle
+			{
+				normal = {background = EditorGUIUtility.Load("Assets/Asset Packs/Fantasy RPG UI Sample/UI/Parts/Background_06.png") as Texture2D}, padding = new RectOffset(40, 40, 40, 40), border = new RectOffset(0, 0, 0, 0)
+			};
+		}
+
+		private bool _stylesInitialized = false;
+
 		private void OnGUI()
 		{
 			if(!_selected)
@@ -48,8 +62,53 @@ namespace RPG.Inventories.Editor
 				EditorGUILayout.HelpBox("No InventoryItem Selected", MessageType.Error);
 				return;
 			}
-			
+
+			if(!_stylesInitialized)
+			{
+				_descriptionStyle = new GUIStyle(GUI.skin.label)
+				{
+					richText = true,
+					wordWrap = true,
+					stretchHeight = true,
+					fontSize = 14,
+					alignment = TextAnchor.MiddleCenter
+				};
+				_headerStyle = new GUIStyle(_descriptionStyle) {fontSize = 24};
+				_stylesInitialized = true;
+			}
+
+			var rect = new Rect(0, 0, position.width * .65f, position.height);
+			DrawInspector(rect);
+			rect.x = rect.width;
+			rect.width /= 2.0f;
+
+			DrawPreviewTooltip(rect);
+		}
+
+		private Vector2 _scrollPosition;
+
+		private void DrawInspector(Rect rect)
+		{
+			GUILayout.BeginArea(rect);
+			_scrollPosition = GUILayout.BeginScrollView(_scrollPosition);
 			_selected.DrawCustomInspector();
+			GUILayout.EndScrollView();
+			GUILayout.EndArea();
+		}
+
+		private void DrawPreviewTooltip(Rect rect)
+		{
+			GUILayout.BeginArea(rect, _previewStyle);
+			if(_selected.Icon != null)
+			{
+				var iconSize = Mathf.Min(rect.width * .33f, rect.height * .33f);
+				var texRect = GUILayoutUtility.GetRect(iconSize, iconSize);
+				GUI.DrawTexture(texRect, _selected.Icon.texture, ScaleMode.ScaleToFit);
+			}
+
+			EditorGUILayout.LabelField(_selected.DisplayName, _headerStyle);
+			EditorGUILayout.LabelField(_selected.Description, _descriptionStyle);
+			GUILayout.EndArea();
 		}
 	}
 }

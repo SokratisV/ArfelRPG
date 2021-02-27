@@ -8,17 +8,44 @@ using UnityEngine;
 
 namespace RPG.Inventories
 {
-	[CreateAssetMenu(fileName = "Equipable Item with Stats", menuName = "RPG/Inventory/Equipable Item With Stats")]
+	[CreateAssetMenu(fileName = "Item with Stats", menuName = "RPG/Inventory/New Item With Stats")]
 	public class StatsEquipableItem : EquipableItem, IModifierProvider
 	{
 		[SerializeField] private List<Modifier> additiveModifiers = new List<Modifier>();
 		[SerializeField] private List<Modifier> percentageModifiers = new List<Modifier>();
+
+		public override string Description
+		{
+			get
+			{
+				var result = RawDescription + "\n";
+				foreach(var mod in additiveModifiers)
+				{
+					result += FormatAttribute(mod, false);
+				}
+
+				foreach(var mod in percentageModifiers)
+				{
+					result += FormatAttribute(mod, true);
+				}
+
+				return result;
+			}
+		}
 
 		[Serializable]
 		private struct Modifier
 		{
 			public Stat stat;
 			public float value;
+		}
+
+		private string FormatAttribute(Modifier mod, bool percent)
+		{
+			if((int)mod.value == 0.0f) return"";
+			var percentString = percent? "percent":"point";
+			var bonus = mod.value > 0.0f? "<color=#8888ff>bonus</color>":"<color=#ff8888>penalty</color>";
+			return$"{Mathf.Abs((int)mod.value)} {percentString} {bonus} to {mod.stat}\n";
 		}
 
 		public IEnumerable<float> GetAdditiveModifiers(Stat stat) =>
@@ -112,6 +139,7 @@ namespace RPG.Inventories
 			{
 				DrawModifierList(percentageModifiers);
 			}
+
 			EditorGUILayout.EndVertical();
 		}
 

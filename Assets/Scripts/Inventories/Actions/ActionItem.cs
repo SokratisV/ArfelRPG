@@ -34,7 +34,7 @@ namespace RPG.Inventories
 #if UNITY_EDITOR
 
 
-		void SetIsConsumable(bool value)
+		private void SetIsConsumable(bool value)
 		{
 			if(consumable == value) return;
 			SetUndo(value? "Set Consumable":"Set Not Consumable");
