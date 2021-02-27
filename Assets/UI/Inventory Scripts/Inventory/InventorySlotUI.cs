@@ -43,9 +43,11 @@ namespace RPG.UI.Inventories
 			if(shouldAct)
 			{
 				var item = GetItem();
-				if(item && item is EquipableItem equipableItem)
+				if(item is EquipableItem equipableItem)
 				{
 					RemoveItems(1);
+					var previousItem = _playerEquipment.GetItemInSlot(equipableItem.AllowedEquipLocation);
+					if(previousItem) AddItems(previousItem, 1);
 					_playerEquipment.AddItem(equipableItem.AllowedEquipLocation, equipableItem);
 				}
 				else if(item && item is ActionItem actionItem)

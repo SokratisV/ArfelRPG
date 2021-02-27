@@ -14,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: ef83cec2-a520-406f-b8f9-977f59f6c01e
   displayName: Chest of Might
-  description: 
-  icon: {fileID: 0}
+  description: Oh, mighty chest, oh might chest..
+  icon: {fileID: 21300000, guid: 7bcee3dac4c974d43b329ee45aef4c99, type: 3}
   pickup: {fileID: 0}
   stackable: 0
   _rarity: {fileID: 11400000, guid: 53e1bb8804df4a34bba2ac3bbcb29d8d, type: 2}
   allowedEquipLocation: 5
-  additiveModifiers: []
-  percentageModifiers: []
+  additiveModifiers:
+  - stat: 0
+    value: 15
+  - stat: 2
+    value: 26
+  percentageModifiers:
+  - stat: 2
+    value: 5
