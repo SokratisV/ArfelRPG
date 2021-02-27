@@ -25,8 +25,6 @@ namespace RPG.Inventories
 			public int Number;
 		}
 
-		// PUBLIC
-
 		/// <summary>
 		/// Broadcasts when the items in the slots are added/removed.
 		/// </summary>

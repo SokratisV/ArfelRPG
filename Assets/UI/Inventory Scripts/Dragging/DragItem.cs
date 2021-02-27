@@ -25,7 +25,7 @@ namespace RPG.UI.Dragging
 		private IDragSource<T> _source;
 		private Canvas _parentCanvas;
 		private CanvasGroup _canvasGroup;
-		
+
 		private void Awake()
 		{
 			_parentCanvas = GetComponentInParent<Canvas>();
@@ -50,8 +50,7 @@ namespace RPG.UI.Dragging
 			_canvasGroup.blocksRaycasts = true;
 			transform.SetParent(_originalParent, true);
 
-			IDragDestination<T> container;
-			container = !EventSystem.current.IsPointerOverGameObject()? _parentCanvas.GetComponent<IDragDestination<T>>():GetContainer(eventData);
+			var container = !EventSystem.current.IsPointerOverGameObject()? _parentCanvas.GetComponent<IDragDestination<T>>():GetContainer(eventData);
 			if(container != null)
 			{
 				DropItemIntoContainer(container);

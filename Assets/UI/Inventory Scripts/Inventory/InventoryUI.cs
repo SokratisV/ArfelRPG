@@ -12,10 +12,12 @@ namespace RPG.UI.Inventories
 		[SerializeField] private InventorySlotUI inventoryItemPrefab = null;
 
 		private Inventory _playerInventory;
+		private Equipment _equipment;
 
 		private void Awake()
 		{
 			_playerInventory = Inventory.GetPlayerInventory();
+			_equipment = Equipment.GetPlayerEquipment();
 			_playerInventory.InventoryUpdated += Redraw;
 		}
 
@@ -31,7 +33,7 @@ namespace RPG.UI.Inventories
 			for(var i = 0;i < _playerInventory.GetSize();i++)
 			{
 				var itemUI = Instantiate(inventoryItemPrefab, transform);
-				itemUI.Setup(_playerInventory, i);
+				itemUI.Setup(_playerInventory,_equipment, i);
 			}
 		}
 	}

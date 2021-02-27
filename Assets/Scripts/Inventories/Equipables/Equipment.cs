@@ -19,7 +19,16 @@ namespace RPG.Inventories
 		/// Broadcasts when the items in the slots are added/removed.
 		/// </summary>
 		public event Action EquipmentUpdated;
-
+		
+		/// <summary>
+		/// Convenience for getting the player's equipment.
+		/// </summary>
+		public static Equipment GetPlayerEquipment()
+		{
+			var player = GameObject.FindWithTag("Player");
+			return player.GetComponent<Equipment>();
+		}
+		
 		/// <summary>
 		/// Return the item in the given equip location.
 		/// </summary>
