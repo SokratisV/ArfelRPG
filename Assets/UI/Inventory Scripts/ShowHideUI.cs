@@ -15,7 +15,6 @@ namespace RPG.UI
 
 		private void Awake()
 		{
-			Debug.Log("VAR");
 			_canvas = GetComponent<Canvas>();
 			_initialPosition = uiContainer.anchoredPosition;
 			uiContainer.anchoredPosition = _hiddenPosition;
