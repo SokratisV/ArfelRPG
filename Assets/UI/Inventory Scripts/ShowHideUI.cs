@@ -7,17 +7,19 @@ namespace RPG.UI
 		[SerializeField] private RectTransform uiContainer = null;
 		[SerializeField] private KeyCode toggleKey = KeyCode.Escape;
 		[SerializeField] private Vector2 _hiddenPosition;
-		[SerializeField] private LeanTweenType _tweenType;
-
+		// [SerializeField] private LeanTweenType _tweenType;
+		[SerializeField] private bool startState;
+		
 		private Vector2 _initialPosition;
 		private Canvas _canvas;
 
 		private void Awake()
 		{
+			Debug.Log("VAR");
 			_canvas = GetComponent<Canvas>();
 			_initialPosition = uiContainer.anchoredPosition;
 			uiContainer.anchoredPosition = _hiddenPosition;
-			_canvas.enabled = false;
+			_canvas.enabled = startState;
 		}
 
 		private void Update()
@@ -28,6 +30,7 @@ namespace RPG.UI
 			}
 		}
 
+		[ContextMenu("Toggle")]
 		public void Toggle()
 		{
 			if(_canvas.enabled)
