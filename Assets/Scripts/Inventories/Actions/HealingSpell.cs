@@ -31,6 +31,7 @@ namespace RPG.Inventories
 
 		public override void Use(GameObject user)
 		{
+			base.Use(user);
 			if(!user.TryGetComponent(out Health health)) return;
 			if(health.IsDead) return;
 			health.Heal(isPercentage? health.GetMaxHealthPoints() * amountToHeal / 100.0f:amountToHeal);

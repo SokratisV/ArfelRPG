@@ -1,6 +1,8 @@
-﻿using RPG.Core;
+﻿using System;
+using RPG.Core;
 using RPG.UI.Dragging;
 using RPG.Inventories;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,14 +14,22 @@ namespace RPG.UI.Inventories
 	public class ActionSlotUI : MonoBehaviour, IItemHolder, IDragContainer<InventoryItem>, IPointerClickHandler
 	{
 		[SerializeField] private InventoryItemIcon icon = null;
+		[SerializeField] private TextMeshProUGUI keyBindText;
 		[SerializeField] private int index = 0;
+		[SerializeField] private KeyCode keyBind = KeyCode.None;
 
 		private ActionStore _store;
 
 		private void Awake()
 		{
 			_store = PlayerFinder.Player.GetComponent<ActionStore>();
+			keyBindText.SetText(Helper.KeyCodeName(keyBind));
 			_store.StoreUpdated += UpdateIcon;
+		}
+
+		private void Update()
+		{
+			if(Input.GetKeyDown(keyBind)) _store.Use(index, PlayerFinder.Player);
 		}
 
 		public void AddItems(InventoryItem item, int number) => _store.AddAction(item, index, number);
@@ -36,22 +46,14 @@ namespace RPG.UI.Inventories
 
 		void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
 		{
-			// var shouldAct = eventData.button switch
-			// {
-			// 	PointerEventData.InputButton.Right => true,
-			// 	PointerEventData.InputButton.Left when eventData.clickCount >= 2 => true,
-			// 	_ => false
-			// };
-			//
-			// if(shouldAct)
-			// {
-			// 	var item = GetItem();
-			// 	if(item)
-			// 	{
-			// 		_playerEquipment.RemoveItem(equipLocation);
-			// 		_playerInventory.AddToFirstEmptySlot(item, 1);
-			// 	}
-			// }
+			var shouldAct = eventData.button switch
+			{
+				PointerEventData.InputButton.Right => true,
+				PointerEventData.InputButton.Left when eventData.clickCount >= 2 => true,
+				_ => false
+			};
+
+			if(shouldAct) _store.Use(index, PlayerFinder.Player);
 		}
 	}
 }

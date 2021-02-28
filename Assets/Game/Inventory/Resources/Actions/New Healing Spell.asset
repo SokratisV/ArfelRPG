@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 10ce9fc5-6340-4375-95d1-a66e386c093a
   displayName: New Healing Spell
-  description: 
-  icon: {fileID: 0}
-  pickup: {fileID: 0}
+  description: I need healing.
+  icon: {fileID: 21300000, guid: a35b151eea1c2de43a63764c264c1d01, type: 3}
+  pickup: {fileID: 8463999928626207292, guid: 632d7d0834987f64cafc32e664311048, type: 3}
   stackable: 0
   _rarity: {fileID: 11400000, guid: 53e1bb8804df4a34bba2ac3bbcb29d8d, type: 2}
+  vfx: {fileID: 6809944706259094419, guid: 0a3972e964dcd2b47b2a3bc58d35d554, type: 3}
   consumable: 0
-  amountToHeal: 1
-  isPercentage: 0
+  amountToHeal: 48
+  isPercentage: 1

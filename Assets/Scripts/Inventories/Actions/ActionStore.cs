@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RPG.Core;
 using UnityEngine;
 using RPG.Saving;
 
@@ -19,6 +20,12 @@ namespace RPG.Inventories
 		{
 			public ActionItem Item;
 			public int Number;
+		}
+
+		public static ActionStore GetPlayerActions()
+		{
+			var player = PlayerFinder.Player;
+			return player.GetComponent<ActionStore>();
 		}
 
 		/// <summary>
@@ -46,7 +53,25 @@ namespace RPG.Inventories
 		/// <param name="item">What item should be added.</param>
 		/// <param name="index">Where should the item be added.</param>
 		/// <param name="number">How many items to add.</param>
-		public void AddAction(InventoryItem item, int index, int number)
+		public void AddAction(InventoryItem item, int index = -1, int number = 1)
+		{
+			if(index > GlobalValues.ActionBarCount) return;
+			if(index >= 0) AddToKnownIndex(item, index, number);
+			else AddToFirstAvailableSlot(item, number);
+			StoreUpdated?.Invoke();
+		}
+
+		private void AddToFirstAvailableSlot(InventoryItem item, int number)
+		{
+			for(var i = 0;i < GlobalValues.ActionBarCount;i++)
+			{
+				if(dockedItems.ContainsKey(i)) continue;
+				AddToKnownIndex(item, i, number);
+				return;
+			}
+		}
+
+		private void AddToKnownIndex(InventoryItem item, int index, int number)
 		{
 			if(dockedItems.ContainsKey(index))
 			{
@@ -60,8 +85,6 @@ namespace RPG.Inventories
 				var slot = new DockedItemSlot {Item = item as ActionItem, Number = number};
 				dockedItems[index] = slot;
 			}
-
-			StoreUpdated?.Invoke();
 		}
 
 		/// <summary>
@@ -72,6 +95,7 @@ namespace RPG.Inventories
 		/// <returns>False if the action could not be executed.</returns>
 		public bool Use(int index, GameObject user)
 		{
+			if(index > GlobalValues.ActionBarCount) return false;
 			if(!dockedItems.ContainsKey(index)) return false;
 			dockedItems[index].Item.Use(user);
 			if(dockedItems[index].Item.IsConsumable)
@@ -80,7 +104,6 @@ namespace RPG.Inventories
 			}
 
 			return true;
-
 		}
 
 		/// <summary>
@@ -88,6 +111,7 @@ namespace RPG.Inventories
 		/// </summary>
 		public void RemoveItems(int index, int number)
 		{
+			if(index > GlobalValues.ActionBarCount) return;
 			if(dockedItems.ContainsKey(index))
 			{
 				dockedItems[index].Number -= number;

@@ -11,13 +11,15 @@ namespace RPG.UI.Inventories
 
 		private int _index;
 		private Inventory _playerInventory;
+		private ActionStore _playerActions;
 		private Equipment _playerEquipment;
 
-		public void Setup(Inventory inventory, Equipment equipment, int index)
+		public void Setup(Inventory inventory, Equipment equipment, ActionStore store, int index)
 		{
 			_playerInventory = inventory;
-			_index = index;
 			_playerEquipment = equipment;
+			_playerActions = store;
+			_index = index;
 			icon.SetItem(inventory.GetItemInSlot(index), inventory.GetNumberInSlot(index));
 		}
 
@@ -50,9 +52,10 @@ namespace RPG.UI.Inventories
 					if(previousItem) AddItems(previousItem, 1);
 					_playerEquipment.AddItem(equipableItem.AllowedEquipLocation, equipableItem);
 				}
-				else if(item && item is ActionItem actionItem)
+				else if(item is ActionItem actionItem)
 				{
-					actionItem.Use(_playerEquipment.gameObject);
+					RemoveItems(1);
+					_playerActions.AddAction(actionItem);
 				}
 			}
 		}
