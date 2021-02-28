@@ -268,9 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bbca262fd1544e9aa75ddd1ef77f0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempQuests:
-  - {fileID: 11400000, guid: 35789faeb9a92a04fbe67e9b4718612e, type: 2}
-  - {fileID: 11400000, guid: 709245c53615b7a48b46e51cf7729bbe, type: 2}
   questPrefab: {fileID: 448802624238927135, guid: 6388ca27f1d376e4f87478eb2c899eb7,
     type: 3}
 --- !u!1 &1476841892179364727
@@ -638,13 +635,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
+  m_ScaleFactor: 0.5
+  m_ReferenceResolution: {x: 2000, y: 2100}
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 1
+  m_PhysicalUnit: 0
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
@@ -678,8 +675,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b6a7fac6e2d604a8e529f6dddf65b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiContainer: {fileID: 5848914046802147563}
   toggleKey: 108
-  uiContainer: {fileID: 7953061863528577724}
+  _hiddenPosition: {x: 0, y: 0}
+  _tweenType: 0
 --- !u!1 &3952951007102308447
 GameObject:
   m_ObjectHideFlags: 0
