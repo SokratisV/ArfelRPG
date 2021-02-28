@@ -193,11 +193,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3575344636419846034, guid: d8f96246af60b564da6f1aa1dd933355,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -10.963867
-      objectReference: {fileID: 0}
     - target: {fileID: 3992105521167970653, guid: d8f96246af60b564da6f1aa1dd933355,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -879,6 +874,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581010853545538089, guid: 2bf36065bd919b14aa317fe735646716,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 6581028566048034399, guid: 2bf36065bd919b14aa317fe735646716,
         type: 3}
@@ -1800,6 +1800,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Quest Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3274573263634471237, guid: cb4fc3bf738af4446ad306fc93ee6006,
+        type: 3}
+      propertyPath: m_Size
+      value: 0.6783255
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274573263634471237, guid: cb4fc3bf738af4446ad306fc93ee6006,
+        type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3499599012138693413, guid: cb4fc3bf738af4446ad306fc93ee6006,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2175,6 +2185,26 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6410082375360739467, guid: cb4fc3bf738af4446ad306fc93ee6006,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410082375360739467, guid: cb4fc3bf738af4446ad306fc93ee6006,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410082375360739467, guid: cb4fc3bf738af4446ad306fc93ee6006,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487986456367078156, guid: cb4fc3bf738af4446ad306fc93ee6006,
+        type: 3}
+      propertyPath: uiContainer
+      value: 
+      objectReference: {fileID: 9211694332776403395}
     - target: {fileID: 6929510580061951280, guid: cb4fc3bf738af4446ad306fc93ee6006,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2395,6 +2425,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8548376507788545375, guid: cb4fc3bf738af4446ad306fc93ee6006,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.00018310547
+      objectReference: {fileID: 0}
     - target: {fileID: 8928196812693610890, guid: cb4fc3bf738af4446ad306fc93ee6006,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2475,6 +2510,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b6a7fac6e2d604a8e529f6dddf65b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &9211694332776403395 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2845250952895357880, guid: cb4fc3bf738af4446ad306fc93ee6006,
+    type: 3}
+  m_PrefabInstance: {fileID: 6389164874378162811}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6792155451593086741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2486,6 +2527,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Equipment Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 728153509246623545, guid: f003a52ae87d1fe49afbee584fa4435a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 415
       objectReference: {fileID: 0}
     - target: {fileID: 728951403104408623, guid: f003a52ae87d1fe49afbee584fa4435a,
         type: 3}
@@ -2981,11 +3027,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9095700763695892710, guid: 41f5804bff26a79429b0e31575b4b7ae,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Toggle
       objectReference: {fileID: 0}
     - target: {fileID: 9095700763695892710, guid: 41f5804bff26a79429b0e31575b4b7ae,
         type: 3}

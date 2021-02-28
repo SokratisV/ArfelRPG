@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7534495824874096144}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3142423257111511906}
+        m_TargetAssemblyTypeName: RPG.UI.ShowHideUI, UI
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7642858958822535221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,10 +392,10 @@ RectTransform:
   m_Father: {fileID: 8415520133687222915}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -35, y: -110}
-  m_SizeDelta: {x: -2130, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -40, y: 946}
+  m_SizeDelta: {x: 1650, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8699068168935134823
 CanvasRenderer:
@@ -475,6 +487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48a383e2f58486f87bdbd5412284416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showHideUI: {fileID: 3142423257111511906}
   aiText: {fileID: 2075678101871898925}
   nextButton: {fileID: 8575331569808666176}
   quitButton: {fileID: 1911283844986153484}
@@ -659,10 +672,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b6a7fac6e2d604a8e529f6dddf65b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggleOnEnable: 1
   uiContainer: {fileID: 3575344636419846034}
   toggleKey: 0
-  _hiddenPosition: {x: 1030, y: 570}
-  _tweenType: 0
+  hiddenPosition: {x: -40, y: 1685}
+  tweenTime: 0.2
+  startState: 0
 --- !u!1 &5353506468208548449
 GameObject:
   m_ObjectHideFlags: 0

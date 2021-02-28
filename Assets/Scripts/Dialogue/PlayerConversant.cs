@@ -12,7 +12,7 @@ namespace RPG.Dialogue
 	public class PlayerConversant : MonoBehaviour, IAction
 	{
 		public event Action OnActionComplete;
-		public event Action OnUpdated;
+		public event Action<bool?> OnUpdated;
 		private Dialogue _currentDialogue;
 		private DialogueNode _currentNode = null;
 		private IInteractable _interactTarget;
@@ -65,7 +65,7 @@ namespace RPG.Dialogue
 			_currentDialogue = newDialogue;
 			_currentNode = _currentDialogue.GetRootNode();
 			TriggerEnterAction();
-			OnUpdated?.Invoke();
+			OnUpdated?.Invoke(true);
 		}
 
 		public void Quit()
@@ -75,7 +75,7 @@ namespace RPG.Dialogue
 			_currentDialogue = null;
 			_currentNode = null;
 			IsChoosing = false;
-			OnUpdated?.Invoke();
+			OnUpdated?.Invoke(false);
 		}
 
 		public string GetText() => _currentNode == null? "":_currentNode.Text;
@@ -96,7 +96,7 @@ namespace RPG.Dialogue
 			{
 				IsChoosing = true;
 				TriggerExitAction();
-				OnUpdated?.Invoke();
+				OnUpdated?.Invoke(null);
 				return;
 			}
 
@@ -104,7 +104,7 @@ namespace RPG.Dialogue
 			TriggerExitAction();
 			_currentNode = children[Random.Range(0, children.Length)];
 			TriggerEnterAction();
-			OnUpdated?.Invoke();
+			OnUpdated?.Invoke(null);
 		}
 
 		public bool CanInteract(IInteractable interactable) => interactable != null && _mover.CanMoveTo(interactable.GetTransform().position);

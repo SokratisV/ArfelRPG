@@ -9,6 +9,7 @@ namespace RPG.UI
 	public class DialogueUI : MonoBehaviour
 	{
 		private PlayerConversant _playerConversant;
+		[SerializeField] private ShowHideUI _showHideUI;
 		[SerializeField] private TextMeshProUGUI aiText;
 		[SerializeField] private Button nextButton;
 		[SerializeField] private Button quitButton;
@@ -16,25 +17,25 @@ namespace RPG.UI
 		[SerializeField] private Transform choicesButtons;
 		[SerializeField] private GameObject choicePrefab;
 		[SerializeField] private TextMeshProUGUI currentSpeaker;
-		
+
 		private void Start()
 		{
 			_playerConversant = PlayerFinder.Player.GetComponent<PlayerConversant>();
 			_playerConversant.OnUpdated += UpdateUI;
 			nextButton.onClick.AddListener(Next);
 			quitButton.onClick.AddListener(_playerConversant.Quit);
-			UpdateUI();
+			UpdateUI(null);
 		}
 
 		private void Next()
 		{
 			_playerConversant.Next();
-			UpdateUI();
+			UpdateUI(null);
 		}
 
-		private void UpdateUI()
+		private void UpdateUI(bool? status)
 		{
-			gameObject.SetActive(_playerConversant.IsActive);
+			if(status == true || status == false) _showHideUI.Toggle(status.Value);
 			if(!_playerConversant.IsActive) return;
 			currentSpeaker.SetText(_playerConversant.Name);
 			nextButtonParent.SetActive(!_playerConversant.IsChoosing);
