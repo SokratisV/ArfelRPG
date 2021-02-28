@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using RPG.Core;
 using RPG.Core.Interfaces;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Dialogue
 {
 	[System.Serializable]
 	public class Condition
