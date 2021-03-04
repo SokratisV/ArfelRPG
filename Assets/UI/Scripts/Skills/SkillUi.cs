@@ -25,9 +25,9 @@ namespace RPG.UI.Skills
 
 		private void Update()
 		{
-			if(Input.GetKeyDown(keyBind)) _skillUser.UseSkill(index, PlayerFinder.Player);
+			if(Input.GetKeyDown(keyBind)) _skillUser.SelectSkill(index);
 		}
-		
+
 		public Skill GetItem() => _skillUser.GetSkill(index);
 
 		public int GetNumber() => 1;
@@ -45,7 +45,7 @@ namespace RPG.UI.Skills
 				_ => false
 			};
 
-			if(shouldAct) _skillUser.UseSkill(index, PlayerFinder.Player);
+			if(shouldAct) _skillUser.SelectSkill(index);
 		}
 
 		Skill ISkillHolder.GetSkill() => _skillUser.GetSkill(index);

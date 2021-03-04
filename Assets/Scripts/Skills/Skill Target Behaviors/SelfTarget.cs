@@ -2,12 +2,10 @@
 
 namespace RPG.Skills.Behaviors
 {
-	[CreateAssetMenu(fileName = "Self Target", menuName = "RPG/Skills/New Self Target Behavior")]
 	public class SelfTarget : TargetBehavior
 	{
-		public override CustomTarget GetTarget(GameObject user)
-		{
-			return new CustomTarget(user, null, null, null);
-		}
+		public override bool RequireTarget() => false;
+
+		public override GameObject[] GetTargets(GameObject user, GameObject target = null, Vector3? _ = null) => new[] {user};
 	}
 }

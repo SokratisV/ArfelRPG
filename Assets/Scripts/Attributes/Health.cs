@@ -53,6 +53,14 @@ namespace RPG.Attributes
 			_healthPoints.Value = Mathf.Max(_healthPoints.Value, regenHealthPoints);
 		}
 
+		[ContextMenu("Take 60 damage")]
+		public void TakeTestDamage()
+		{
+			_healthPoints.Value = Mathf.Max(_healthPoints.Value - 60, 0);
+			takeDamage.Invoke(60);
+			OnTakeDamage?.Invoke(null, 60);
+		}
+
 		public void TakeDamage(GameObject instigator, float damage)
 		{
 			_healthPoints.Value = Mathf.Max(_healthPoints.Value - damage, 0);

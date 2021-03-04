@@ -17,11 +17,11 @@ MonoBehaviour:
   description: 
   icon: {fileID: 21300000, guid: 5d9ba4e7d0964044ea54abe409d81dfd, type: 3}
   duration: 4
-  targetBehavior: {fileID: 11400000, guid: 940de6640b2e0a44a8ff4df7d0288c18, type: 2}
-  skillBehavior: {fileID: 11400000, guid: 80ce53e194f7d0b44aa9941706519dd3, type: 2}
-  vfxOnUser:
+  targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
+  skillBehavior: {fileID: 11400000, guid: a9f93bd347d83e04183cf7512529d778, type: 2}
+  vfxOnUser: []
+  vfxOnTarget:
   - {fileID: 6809944706259094419, guid: 0a3972e964dcd2b47b2a3bc58d35d554, type: 3}
-  vfxOnTarget: []
   sfxOnUser:
   - {fileID: 8300000, guid: 6e60ad64e34fc624ea76483921551c25, type: 3}
   sfxOnTarget: []

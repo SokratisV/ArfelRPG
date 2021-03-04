@@ -5,9 +5,9 @@ namespace RPG.Skills.Behaviors
 {
 	public abstract class SkillBehavior : ScriptableObject
 	{
-		public Action<GameObject, CustomTarget> OnStart, OnUpdate, OnEnd;
-		public abstract void BehaviorStart(GameObject user, CustomTarget target);
-		public abstract void BehaviorUpdate();
-		public abstract void BehaviorEnd();
+		public Action<GameObject, GameObject[]> OnStart, OnUpdate, OnEnd;
+		public abstract void BehaviorStart(GameObject user, GameObject[] targets);
+		public abstract void BehaviorUpdate(GameObject user, GameObject[] targets);
+		public abstract void BehaviorEnd(GameObject user, GameObject[] targets);
 	}
 }

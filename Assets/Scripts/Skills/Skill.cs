@@ -5,6 +5,20 @@ using UnityEngine;
 
 namespace RPG.Skills
 {
+	public struct SkillData
+	{
+		public GameObject User;
+		public GameObject Target;
+		public Vector3? Point;
+
+		public SkillData(GameObject user, GameObject target, Vector3? point)
+		{
+			User = user;
+			Target = target;
+			Point = point;
+		}
+	}
+
 	[CreateAssetMenu(fileName = "Skill", menuName = "RPG/Skills/New Skill", order = 0)]
 	public class Skill : ScriptableObject, ISerializationCallbackReceiver
 	{
@@ -31,28 +45,40 @@ namespace RPG.Skills
 		public string DisplayName => displayName;
 		public string Description => description;
 		public float Duration => duration;
+		public bool RequiresTarget => targetBehavior.RequireTarget();
 
 		private static Dictionary<string, Skill> ItemLookupCache;
 
-		public void OnStart(GameObject user)
+		public SkillData OnStart(GameObject user, GameObject target = null, Vector3? point = null)
 		{
-			skillBehavior.OnStart += PlayCasterVfx;
-			skillBehavior.BehaviorStart(user, targetBehavior.GetTarget(user));
+			skillBehavior.OnStart += PlayVfx;
+			skillBehavior.BehaviorStart(user, targetBehavior.GetTargets(user, target, point));
+			return new SkillData(user, target, point);
 		}
 
-		public void OnUpdate()
+		public void OnUpdate(SkillData data)
 		{
+			skillBehavior.BehaviorUpdate(data.User, targetBehavior.GetTargets(data.User, data.Target, data.Point));
 		}
 
-		public void OnEnd()
+		public void OnEnd(SkillData data)
 		{
+			skillBehavior.BehaviorEnd(data.User, targetBehavior.GetTargets(data.User, data.Target, data.Point));
 		}
 
-		private void PlayCasterVfx(GameObject user, CustomTarget customTarget)
+		private void PlayVfx(GameObject user, GameObject[] targets)
 		{
 			foreach(var vfx in vfxOnUser)
 			{
 				Instantiate(vfx, user.transform);
+			}
+
+			foreach(var vfx in vfxOnTarget)
+			{
+				foreach(var target in targets)
+				{
+					Instantiate(vfx, target.transform);
+				}
 			}
 		}
 

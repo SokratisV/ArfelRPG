@@ -1,28 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using RPG.Core;
+using RPG.Movement;
 using RPG.Saving;
-using RPG.Skills;
 using UnityEngine;
 
 namespace RPG.Skills
 {
-	public class SkillUser : MonoBehaviour, ISaveable
+	public class SkillUser : MonoBehaviour, IAction, ISaveable
 	{
 		public event Action SkillsUpdated;
+		public event Action OnActionComplete;
 
 		private List<ActivatedSkill> _activedSkills = new List<ActivatedSkill>();
 		private Dictionary<int, Skill> _learnedSkills = new Dictionary<int, Skill>();
+		private Skill _selectedSkill = null;
+		private ActionScheduler _actionScheduler = null;
+		private Mover _mover = null;
+		public bool IsPreparingSkill => _selectedSkill != null;
+		public bool SkillRequiresTarget => _selectedSkill.RequiresTarget;
 		private float _globalCooldownTimer = 0;
 		public Skill skill;
 
 		public static SkillUser GetPlayerSkills() => PlayerFinder.Player.GetComponent<SkillUser>();
 
+		private void Awake()
+		{
+			_mover = GetComponent<Mover>();
+			_actionScheduler = GetComponent<ActionScheduler>();
+		}
+
 		private void Start()
 		{
 			AddSkill(skill, 0);
-			UseSkill(0, gameObject);
+			SelectSkill(0);
+			// UseSelectedSkill();
 		}
 
 		private void Update()
@@ -39,14 +51,17 @@ namespace RPG.Skills
 			private float _duration;
 			private float _timer;
 			private List<ActivatedSkill> _activeSkills;
+			private SkillData _data;
 
 			public Skill Skill {get;}
 
-			public ActivatedSkill(Skill skill, List<ActivatedSkill> activeSkills, float duration)
+			//TODO: create new instance of skill here?
+			public ActivatedSkill(Skill skill, List<ActivatedSkill> activeSkills, SkillData data, float duration)
 			{
 				_duration = duration;
 				Skill = skill;
 				_activeSkills = activeSkills;
+				_data = data;
 				_timer = 0;
 			}
 
@@ -55,10 +70,14 @@ namespace RPG.Skills
 				if(_duration < 0) return;
 				if(_timer <= _duration)
 				{
-					Skill.OnUpdate();
+					Skill.OnUpdate(_data);
 					_timer -= Time.deltaTime;
 				}
-				else _activeSkills.Remove(this);
+				else
+				{
+					Skill.OnEnd(_data);
+					_activeSkills.Remove(this);
+				}
 			}
 		}
 
@@ -81,14 +100,34 @@ namespace RPG.Skills
 
 		private void AddToKnownIndex(Skill skill, int index) => _learnedSkills[index] = skill;
 
-		public void UseSkill(int index, GameObject user)
+		public void SelectSkill(int index)
 		{
 			if(_learnedSkills.TryGetValue(index, out var skill))
 			{
 				if(!CanSkillBeUsed(skill)) return;
-				_activedSkills.Add(new ActivatedSkill(skill, _activedSkills, skill.Duration));
-				skill.OnStart(user);
+				_selectedSkill = skill;
 			}
+		}
+
+		public void UseSelectedSkill()
+		{
+			var data = _selectedSkill.OnStart(gameObject);
+			_activedSkills.Add(new ActivatedSkill(_selectedSkill, _activedSkills, data, _selectedSkill.Duration));
+			_selectedSkill = null;
+		}
+
+		public void UseSelectedSkill(GameObject target)
+		{
+			var data = _selectedSkill.OnStart(gameObject, target);
+			_activedSkills.Add(new ActivatedSkill(_selectedSkill, _activedSkills, data, _selectedSkill.Duration));
+			_selectedSkill = null;
+		}
+
+		public void UseSelectedSkill(Vector3 hitPoint)
+		{
+			var data = _selectedSkill.OnStart(gameObject, null, hitPoint);
+			_activedSkills.Add(new ActivatedSkill(_selectedSkill, _activedSkills, data, _selectedSkill.Duration));
+			_selectedSkill = null;
 		}
 
 		private bool CanSkillBeUsed(Skill skill)
@@ -144,5 +183,27 @@ namespace RPG.Skills
 		}
 
 		public Skill GetSkill(int index) => _learnedSkills.TryGetValue(index, out var skill)? skill:null;
+
+		public void CancelAction()
+		{
+			_mover.CancelAction();
+			_selectedSkill = null;
+		}
+
+		public void CompleteAction()
+		{
+			OnActionComplete?.Invoke();
+			_actionScheduler.CompleteAction();
+		}
+
+		public void ExecuteAction(IActionData data)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool CanCast(GameObject o)
+		{
+			return true;
+		}
 	}
 }

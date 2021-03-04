@@ -4,6 +4,7 @@ using System;
 using RotaryHeart.Lib.SerializableDictionary;
 using RPG.Attributes;
 using RPG.Core;
+using RPG.Skills;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
 
@@ -16,6 +17,7 @@ namespace RPG.Control
 		private Health _health;
 		private SpawnFeedback _movementFeedbackPrefab;
 		private Mover _mover;
+		private SkillUser _skillUser;
 		private Camera _mainCamera;
 		private bool _isDraggingUI = false;
 		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius;
@@ -34,6 +36,7 @@ namespace RPG.Control
 			_health = GetComponent<Health>();
 			_movementFeedbackPrefab = GetComponent<SpawnFeedback>();
 			_mover = GetComponent<Mover>();
+			_skillUser = GetComponent<SkillUser>();
 			_mainCamera = Camera.main;
 		}
 
@@ -46,10 +49,44 @@ namespace RPG.Control
 				return;
 			}
 
+			if(InteractWithSkillComponent()) return;
 			if(InteractWithComponent()) return;
 			if(InteractWithMovement()) return;
 
 			SetCursor(CursorType.None);
+		}
+
+		private bool InteractWithSkillComponent()
+		{
+			if(!_skillUser.IsPreparingSkill) return false;
+			if(_skillUser.SkillRequiresTarget)
+			{
+				_hits = RaycastAllSorted();
+				foreach(var hit in _hits)
+				{
+					var raycastables = hit.transform.GetComponents<ISkillcastable>();
+					foreach(var raycastable in raycastables)
+					{
+						if(raycastable.HandleSkillcast(gameObject))
+						{
+							raycastable.ShowInteractivity();
+							SetCursor(raycastable.GetSkillCursorType());
+							return true;
+						}
+					}
+				}
+			}
+			else
+			{
+				var hasHit = RaycastNavMesh(out var target);
+				if(hasHit)
+				{
+					CheckPressedButtons(target);
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		private bool InteractWithComponent()
@@ -115,22 +152,23 @@ namespace RPG.Control
 		{
 			if(Input.GetKey(KeyCode.LeftControl))
 			{
-				if(Input.GetMouseButtonDown(0))
+				if(!Input.GetMouseButtonDown(0)) return;
+				if(_skillUser.IsPreparingSkill) _skillUser.UseSelectedSkill(target);
+				else
 				{
 					_mover.QueueMoveAction(target);
+					MovementFeedback(target);
 				}
 			}
 			else
 			{
-				if(Input.GetMouseButton(0))
+				if(!Input.GetMouseButton(0)) return;
+				if(_skillUser.IsPreparingSkill) _skillUser.UseSelectedSkill(target);
+				else
 				{
 					_mover.Move(target);
+					MovementFeedback(target);
 				}
-			}
-
-			if(Input.GetMouseButtonDown(0))
-			{
-				MovementFeedback(target);
 			}
 		}
 

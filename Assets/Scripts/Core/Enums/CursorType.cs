@@ -8,6 +8,7 @@ namespace RPG.Core
         UI,
         Pickup,
         InventoryFull,
-        Dialogue
+        Dialogue,
+        Skill
     }
 }
