@@ -55,7 +55,7 @@ namespace RPG.Control
 			_health.OnDeath += MarkDead;
 		}
 
-		private void AttackAttacker(GameObject obj)
+		private void AttackAttacker(GameObject obj, float _)
 		{
 			if(_health.IsDead)
 			{

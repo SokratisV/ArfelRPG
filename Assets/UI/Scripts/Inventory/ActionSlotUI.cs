@@ -1,5 +1,4 @@
-﻿using System;
-using RPG.Core;
+﻿using RPG.Core;
 using RPG.UI.Dragging;
 using RPG.Inventories;
 using TMPro;

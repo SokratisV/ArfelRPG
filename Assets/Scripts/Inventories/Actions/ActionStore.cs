@@ -14,7 +14,7 @@ namespace RPG.Inventories
 	/// </summary>
 	public class ActionStore : MonoBehaviour, ISaveable
 	{
-		private Dictionary<int, DockedItemSlot> dockedItems = new Dictionary<int, DockedItemSlot>();
+		private Dictionary<int, DockedItemSlot> _dockedItems = new Dictionary<int, DockedItemSlot>();
 
 		private class DockedItemSlot
 		{
@@ -22,11 +22,7 @@ namespace RPG.Inventories
 			public int Number;
 		}
 
-		public static ActionStore GetPlayerActions()
-		{
-			var player = PlayerFinder.Player;
-			return player.GetComponent<ActionStore>();
-		}
+		public static ActionStore GetPlayerActions() => PlayerFinder.Player.GetComponent<ActionStore>();
 
 		/// <summary>
 		/// Broadcasts when the items in the slots are added/removed.
@@ -36,7 +32,7 @@ namespace RPG.Inventories
 		/// <summary>
 		/// Get the action at the given index.
 		/// </summary>
-		public ActionItem GetAction(int index) => dockedItems.ContainsKey(index)? dockedItems[index].Item:null;
+		public ActionItem GetAction(int index) => _dockedItems.ContainsKey(index)? _dockedItems[index].Item:null;
 
 		/// <summary>
 		/// Get the number of items left at the given index.
@@ -45,7 +41,7 @@ namespace RPG.Inventories
 		/// Will return 0 if no item is in the index or the item has
 		/// been fully consumed.
 		/// </returns>
-		public int GetNumber(int index) => dockedItems.ContainsKey(index)? dockedItems[index].Number:0;
+		public int GetNumber(int index) => _dockedItems.ContainsKey(index)? _dockedItems[index].Number:0;
 
 		/// <summary>
 		/// Add an item to the given index.
@@ -65,7 +61,7 @@ namespace RPG.Inventories
 		{
 			for(var i = 0;i < GlobalValues.ActionBarCount;i++)
 			{
-				if(dockedItems.ContainsKey(i)) continue;
+				if(_dockedItems.ContainsKey(i)) continue;
 				AddToKnownIndex(item, i, number);
 				return;
 			}
@@ -73,17 +69,17 @@ namespace RPG.Inventories
 
 		private void AddToKnownIndex(InventoryItem item, int index, int number)
 		{
-			if(dockedItems.ContainsKey(index))
+			if(_dockedItems.ContainsKey(index))
 			{
-				if(ReferenceEquals(item, dockedItems[index].Item))
+				if(ReferenceEquals(item, _dockedItems[index].Item))
 				{
-					dockedItems[index].Number += number;
+					_dockedItems[index].Number += number;
 				}
 			}
 			else
 			{
 				var slot = new DockedItemSlot {Item = item as ActionItem, Number = number};
-				dockedItems[index] = slot;
+				_dockedItems[index] = slot;
 			}
 		}
 
@@ -96,9 +92,9 @@ namespace RPG.Inventories
 		public bool Use(int index, GameObject user)
 		{
 			if(index > GlobalValues.ActionBarCount) return false;
-			if(!dockedItems.ContainsKey(index)) return false;
-			dockedItems[index].Item.Use(user);
-			if(dockedItems[index].Item.IsConsumable)
+			if(!_dockedItems.ContainsKey(index)) return false;
+			_dockedItems[index].Item.Use(user);
+			if(_dockedItems[index].Item.IsConsumable)
 			{
 				RemoveItems(index, 1);
 			}
@@ -112,12 +108,12 @@ namespace RPG.Inventories
 		public void RemoveItems(int index, int number)
 		{
 			if(index > GlobalValues.ActionBarCount) return;
-			if(dockedItems.ContainsKey(index))
+			if(_dockedItems.ContainsKey(index))
 			{
-				dockedItems[index].Number -= number;
-				if(dockedItems[index].Number <= 0)
+				_dockedItems[index].Number -= number;
+				if(_dockedItems[index].Number <= 0)
 				{
-					dockedItems.Remove(index);
+					_dockedItems.Remove(index);
 				}
 
 				StoreUpdated?.Invoke();
@@ -137,13 +133,13 @@ namespace RPG.Inventories
 			var actionItem = item as ActionItem;
 			if(!actionItem) return 0;
 
-			if(dockedItems.ContainsKey(index) && !ReferenceEquals(item, dockedItems[index].Item))
+			if(_dockedItems.ContainsKey(index) && !ReferenceEquals(item, _dockedItems[index].Item))
 				return 0;
 
 			if(actionItem.IsConsumable)
 				return int.MaxValue;
 
-			return dockedItems.ContainsKey(index)? 0:1;
+			return _dockedItems.ContainsKey(index)? 0:1;
 		}
 
 		[Serializable]
@@ -156,7 +152,7 @@ namespace RPG.Inventories
 		object ISaveable.CaptureState()
 		{
 			var state = new Dictionary<int, DockedItemRecord>();
-			foreach(var pair in dockedItems)
+			foreach(var pair in _dockedItems)
 			{
 				var record = new DockedItemRecord {itemID = pair.Value.Item.ItemID, number = pair.Value.Number};
 				state[pair.Key] = record;

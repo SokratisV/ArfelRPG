@@ -19,7 +19,7 @@ namespace RPG.Attributes
 		//TODO Move everything to C# event
 		public static event Action OnPlayerDeath;
 		public event Action OnDeath;
-		public event Action<GameObject> OnTakeDamage;
+		public event Action<GameObject, float> OnTakeDamage;
 
 		[Serializable]
 		public class TakeDamageEvent : UnityEvent<float>
@@ -57,7 +57,7 @@ namespace RPG.Attributes
 		{
 			_healthPoints.Value = Mathf.Max(_healthPoints.Value - damage, 0);
 			takeDamage.Invoke(damage);
-			OnTakeDamage?.Invoke(instigator);
+			OnTakeDamage?.Invoke(instigator, damage);
 			if(_healthPoints.Value == 0)
 			{
 				Die();

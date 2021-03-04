@@ -11,6 +11,7 @@ namespace RPG.Core
 		public static float InteractableRange {get;} = 1f;
 		public static float DefaultAttackSpeed {get;} = 1f;
 		public static int ActionBarCount {get;} = 4;
+		public static float GlobalCooldown {get;} = 1f;
 		public static string PlayerName {get;} = "Adramalikh";
 	}
 }
