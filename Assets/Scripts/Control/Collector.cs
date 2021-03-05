@@ -58,7 +58,7 @@ namespace RPG.Control
 			_actionScheduler.CompleteAction();
 		}
 
-		public void ExecuteAction(IActionData data) => _collectible = ((PickableActionData)data).Treasure.GetComponent<ICollectable>();
+		public void ExecuteQueuedAction(IActionData data) => _collectible = ((PickableActionData)data).Treasure.GetComponent<ICollectable>();
 
 		public bool CanCollect(ICollectable collectable) => collectable != null && _mover.CanMoveTo(collectable.GetTransform().position);
 

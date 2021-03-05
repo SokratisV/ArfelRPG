@@ -72,7 +72,7 @@ namespace RPG.Control
 		{
 			if(_health.IsDead) return;
 
-			if(IsAggrevated() && _fighter.CanAttack(_player))
+			if(IsAggrevated() && _fighter.CanExecute(_player))
 			{
 				AttackBehaviour();
 			}
@@ -161,7 +161,7 @@ namespace RPG.Control
 				OnPlayerAggro?.Invoke(true, combatMusic);
 			}
 
-			_fighter.StartAttackAction(_player);
+			_fighter.Execute(_player);
 			_timeSinceLastSawPlayer = 0;
 			AggrevateNearbyEnemies();
 		}

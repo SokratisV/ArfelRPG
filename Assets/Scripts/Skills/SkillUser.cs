@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Interfaces;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Saving;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace RPG.Skills
 {
-	public class SkillUser : MonoBehaviour, IAction, ISaveable
+	public class SkillUser : MonoBehaviour, IAction, ISaveable, ICombatActionable
 	{
 		public event Action SkillsUpdated;
 		public event Action OnActionComplete;
@@ -109,24 +110,28 @@ namespace RPG.Skills
 			}
 		}
 
-		public void UseSelectedSkill()
+		public void Execute() => UseSelectedSkill(null, null);
+
+		public void Execute(GameObject target) => UseSelectedSkill(target, null);
+
+		public void QueueExecution(GameObject target)
 		{
-			var data = _selectedSkill.OnStart(gameObject);
-			_activedSkills.Add(new ActivatedSkill(_selectedSkill, _activedSkills, data, _selectedSkill.Duration));
-			_selectedSkill = null;
+			Debug.Log("Queue Skill action Not Yet Implemented");
+			Execute(target);
 		}
 
-		public void UseSelectedSkill(GameObject target)
-		{
-			var data = _selectedSkill.OnStart(gameObject, target);
-			_activedSkills.Add(new ActivatedSkill(_selectedSkill, _activedSkills, data, _selectedSkill.Duration));
-			_selectedSkill = null;
-		}
+		public void Execute(Vector3 hitPoint) => UseSelectedSkill(null, hitPoint);
 
-		public void UseSelectedSkill(Vector3 hitPoint)
+		private void UseSelectedSkill(GameObject target, Vector3? hitPoint)
 		{
-			var data = _selectedSkill.OnStart(gameObject, null, hitPoint);
-			_activedSkills.Add(new ActivatedSkill(_selectedSkill, _activedSkills, data, _selectedSkill.Duration));
+			var data = _selectedSkill.OnStart(gameObject, target, hitPoint);
+			if(!data.HasValue)
+			{
+				_selectedSkill = null;
+				return;
+			}
+
+			_activedSkills.Add(new ActivatedSkill(_selectedSkill, _activedSkills, data.Value, _selectedSkill.Duration));
 			_selectedSkill = null;
 		}
 
@@ -196,12 +201,12 @@ namespace RPG.Skills
 			_actionScheduler.CompleteAction();
 		}
 
-		public void ExecuteAction(IActionData data)
+		public void ExecuteQueuedAction(IActionData data)
 		{
 			throw new NotImplementedException();
 		}
 
-		public bool CanCast(GameObject o)
+		public bool CanExecute(GameObject o)
 		{
 			return true;
 		}

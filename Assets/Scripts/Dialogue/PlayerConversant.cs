@@ -122,7 +122,7 @@ namespace RPG.Dialogue
 			_actionScheduler.CompleteAction();
 		}
 
-		public void ExecuteAction(IActionData data) => _interactTarget = ((InteractableActionData)data).Target.GetComponent<IInteractable>();
+		public void ExecuteQueuedAction(IActionData data) => _interactTarget = ((InteractableActionData)data).Target.GetComponent<IInteractable>();
 
 		public void StartInteractAction(IInteractable interactable)
 		{

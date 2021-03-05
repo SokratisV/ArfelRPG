@@ -54,7 +54,7 @@ namespace RPG.Core
 		private void StartNextAction(IAction action, IActionData data)
 		{
 			_currentAction = action;
-			action.ExecuteAction(data);
+			action.ExecuteQueuedAction(data);
 		}
 	}
 }

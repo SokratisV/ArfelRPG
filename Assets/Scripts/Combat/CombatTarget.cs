@@ -1,6 +1,6 @@
+using Core.Interfaces;
 using RPG.Attributes;
 using RPG.Core;
-using RPG.Skills;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -19,9 +19,12 @@ namespace RPG.Combat
 		public bool HandleSkillcast(GameObject player)
 		{
 			if(!enabled) return false;
-			var skillUser = player.GetComponent<SkillUser>();
-			if(skillUser == null && !skillUser.CanCast(gameObject)) return false;
-			CheckPressedButtons(skillUser);
+			if(player.TryGetComponent(out ICombatActionable skillUser))
+			{
+				if(!skillUser.CanExecute(gameObject)) return false;
+				CheckPressedButtons(skillUser);
+			}
+
 			return true;
 		}
 
@@ -30,28 +33,29 @@ namespace RPG.Combat
 		public bool HandleRaycast(GameObject player)
 		{
 			if(!enabled) return false;
-			var fighter = player.GetComponent<Fighter>();
-			if(fighter == null && !fighter.CanAttack(gameObject)) return false;
-			CheckPressedButtons(fighter);
+			if(player.TryGetComponent(out ICombatActionable fighter))
+			{
+				if(!fighter.CanExecute(gameObject)) return false;
+				CheckPressedButtons(fighter);
+			}
+
 			return true;
 		}
 
-		private void CheckPressedButtons(Component component)
+		private void CheckPressedButtons(ICombatActionable actionable)
 		{
 			if(Input.GetKey(KeyCode.LeftControl))
 			{
 				if(Input.GetMouseButtonDown(0))
 				{
-					if(component is Fighter fighter) fighter.QueueAttackAction(gameObject);
-					if(component is SkillUser skillUser) skillUser.UseSelectedSkill(gameObject);
+					actionable.QueueExecution(gameObject);
 				}
 			}
 			else
 			{
 				if(Input.GetMouseButtonDown(0))
 				{
-					if(component is Fighter fighter) fighter.StartAttackAction(gameObject);
-					if(component is SkillUser skillUser) skillUser.UseSelectedSkill(gameObject);
+					actionable.Execute(gameObject);
 				}
 			}
 		}

@@ -6,6 +6,6 @@ namespace RPG.Skills.Behaviors
 	{
 		public override bool RequireTarget() => false;
 
-		public override GameObject[] GetTargets(GameObject user, GameObject target = null, Vector3? _ = null) => new[] {user};
+		public override GameObject[] GetTargets(GameObject user, GameObject target = null, Vector3? _ = null) => user == null? null:new[] {user};
 	}
 }

@@ -93,7 +93,7 @@ namespace RPG.Movement
 			OnActionComplete?.Invoke();
 		}
 
-		public void ExecuteAction(IActionData data)
+		public void ExecuteQueuedAction(IActionData data)
 		{
 			var moveData = (MoverActionData)data;
 			MoveWithoutAction(moveData.Destination, moveData.Speed, moveData.StopDistance);

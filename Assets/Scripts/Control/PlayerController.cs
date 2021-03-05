@@ -49,40 +49,42 @@ namespace RPG.Control
 				return;
 			}
 
-			if(InteractWithSkillComponent()) return;
+			if(HandleSkillUsage()) return;
 			if(InteractWithComponent()) return;
 			if(InteractWithMovement()) return;
 
 			SetCursor(CursorType.None);
 		}
 
-		private bool InteractWithSkillComponent()
+		private bool HandleSkillUsage()
 		{
 			if(!_skillUser.IsPreparingSkill) return false;
 			if(_skillUser.SkillRequiresTarget)
 			{
-				_hits = RaycastAllSorted();
-				foreach(var hit in _hits)
-				{
-					var raycastables = hit.transform.GetComponents<ISkillcastable>();
-					foreach(var raycastable in raycastables)
-					{
-						if(raycastable.HandleSkillcast(gameObject))
-						{
-							raycastable.ShowInteractivity();
-							SetCursor(raycastable.GetSkillCursorType());
-							return true;
-						}
-					}
-				}
+				if(RaycastForSkillTarget()) return true;
 			}
 			else
 			{
-				var hasHit = RaycastNavMesh(out var target);
-				if(hasHit)
+				if(HasHitNavMesh(CursorType.Skill)) return true;
+			}
+
+			return false;
+		}
+
+		private bool RaycastForSkillTarget()
+		{
+			_hits = RaycastAllSorted();
+			foreach(var hit in _hits)
+			{
+				var raycastables = hit.transform.GetComponents<ISkillcastable>();
+				foreach(var raycastable in raycastables)
 				{
-					CheckPressedButtons(target);
-					return true;
+					if(raycastable.HandleSkillcast(gameObject))
+					{
+						raycastable.ShowInteractivity();
+						SetCursor(raycastable.GetSkillCursorType());
+						return true;
+					}
 				}
 			}
 
@@ -135,25 +137,24 @@ namespace RPG.Control
 			return _isDraggingUI;
 		}
 
-		private bool InteractWithMovement()
+		private bool InteractWithMovement() => HasHitNavMesh(CursorType.Movement);
+
+		private bool HasHitNavMesh(CursorType cursor)
 		{
 			var hasHit = RaycastNavMesh(out var target);
-			if(hasHit)
-			{
-				CheckPressedButtons(target);
-				SetCursor(CursorType.Movement);
-				return true;
-			}
-
-			return false;
+			if(!hasHit) return false;
+			CheckPressedButtons(target);
+			SetCursor(cursor);
+			return true;
 		}
 
 		private void CheckPressedButtons(Vector3 target)
 		{
+			if(Input.GetMouseButton(1) && _skillUser.IsPreparingSkill) _skillUser.CancelAction();
 			if(Input.GetKey(KeyCode.LeftControl))
 			{
 				if(!Input.GetMouseButtonDown(0)) return;
-				if(_skillUser.IsPreparingSkill) _skillUser.UseSelectedSkill(target);
+				if(_skillUser.IsPreparingSkill) _skillUser.Execute(target);
 				else
 				{
 					_mover.QueueMoveAction(target);
@@ -163,7 +164,7 @@ namespace RPG.Control
 			else
 			{
 				if(!Input.GetMouseButton(0)) return;
-				if(_skillUser.IsPreparingSkill) _skillUser.UseSelectedSkill(target);
+				if(_skillUser.IsPreparingSkill) _skillUser.Execute(target);
 				else
 				{
 					_mover.Move(target);

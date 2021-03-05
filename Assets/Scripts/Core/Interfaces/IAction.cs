@@ -7,6 +7,6 @@ namespace RPG.Core
 		event Action OnActionComplete;
 		void CancelAction();
 		void CompleteAction();
-		void ExecuteAction(IActionData data);
+		void ExecuteQueuedAction(IActionData data);
 	}
 }

@@ -49,10 +49,12 @@ namespace RPG.Skills
 
 		private static Dictionary<string, Skill> ItemLookupCache;
 
-		public SkillData OnStart(GameObject user, GameObject target = null, Vector3? point = null)
+		public SkillData? OnStart(GameObject user, GameObject target = null, Vector3? point = null)
 		{
+			var targets = targetBehavior.GetTargets(user, target, point);
+			if(targets == null) return null;
 			skillBehavior.OnStart += PlayVfx;
-			skillBehavior.BehaviorStart(user, targetBehavior.GetTargets(user, target, point));
+			skillBehavior.BehaviorStart(user, targets);
 			return new SkillData(user, target, point);
 		}
 

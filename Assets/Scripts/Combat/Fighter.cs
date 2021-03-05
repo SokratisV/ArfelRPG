@@ -1,4 +1,5 @@
 using System;
+using Core.Interfaces;
 using RPG.Utils;
 using RPG.AnimatorBehaviors;
 using RPG.Attributes;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-	public class Fighter : MonoBehaviour, IAction, ISaveable
+	public class Fighter : MonoBehaviour, IAction, ISaveable, ICombatActionable
 	{
 		public event Action OnActionComplete;
 
@@ -138,7 +139,7 @@ namespace RPG.Combat
 
 		private void Shoot() => Hit();
 
-		public bool CanAttack(GameObject target)
+		public bool CanExecute(GameObject target)
 		{
 			if(target == null) return false;
 			if(!_mover.CanMoveTo(target.transform.position) && !_mover.IsInRange(target.transform, _currentWeaponConfig.GetRange())) return false;
@@ -146,13 +147,13 @@ namespace RPG.Combat
 			return health != null && !health.IsDead;
 		}
 
-		public void StartAttackAction(GameObject combatTarget)
+		public void Execute(GameObject combatTarget)
 		{
 			_target ??= combatTarget.GetComponent<Health>();
 			_actionScheduler.StartAction(this);
 		}
 
-		public void QueueAttackAction(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
+		public void QueueExecution(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
 
 		public void CancelAction()
 		{
@@ -181,6 +182,6 @@ namespace RPG.Combat
 			_actionScheduler.CompleteAction();
 		}
 
-		public void ExecuteAction(IActionData data) => _target = ((FighterActionData)data).Target.GetComponent<Health>();
+		public void ExecuteQueuedAction(IActionData data) => _target = ((FighterActionData)data).Target.GetComponent<Health>();
 	}
 }
