@@ -4,8 +4,12 @@ namespace RPG.Skills.Behaviors
 {
 	public class SingleTarget : TargetBehavior
 	{
-		public override bool RequireTarget() => true;
+		public override bool? RequireTarget() => true;
 
-		public override GameObject[] GetTargets(GameObject user, GameObject target = null, Vector3? raycastPoint = null) => target == null? null:new[] {target};
+		public override bool GetTargets(out GameObject[] targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null)
+		{
+			targets = new[] {initialTarget};
+			return true;
+		}
 	}
 }

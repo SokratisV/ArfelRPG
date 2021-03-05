@@ -7,7 +7,7 @@ namespace RPG.Skills.Behaviors
 	{
 		[SerializeField] private float amountToHeal;
 
-		public override void BehaviorStart(GameObject user, GameObject[] targets)
+		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
 		{
 			if(user.TryGetComponent(out Health health))
 			{
@@ -17,7 +17,7 @@ namespace RPG.Skills.Behaviors
 				}
 			}
 
-			OnStart?.Invoke(user, targets);
+			base.BehaviorStart(user, targets, point);
 		}
 	}
 }

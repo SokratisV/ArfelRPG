@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 530737f8503545a192728a8cf16324fa, type: 3}
-  m_Name: Skill
+  m_Name: Skill 1
   m_EditorClassIdentifier: 
-  skillID: 092f09f3-e273-4b47-aaf5-4483984a1cfa
-  displayName: Skill
+  skillID: 5231d976-a9d9-4917-95fe-1e870c11bb3c
+  displayName: Skill 1
   description: 
-  icon: {fileID: 21300000, guid: 5d9ba4e7d0964044ea54abe409d81dfd, type: 3}
+  icon: {fileID: 21300000, guid: a35b151eea1c2de43a63764c264c1d01, type: 3}
   duration: 0
   cooldown: 5
-  targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
-  skillBehavior: {fileID: 11400000, guid: 295499b2beacb1048b227d587ab0dab9, type: 2}
-  vfxOnUserStart:
-  - {fileID: 4426307091511344963, guid: 175ffb7bd377fc145b212435b73f7fe8, type: 3}
+  targetBehavior: {fileID: 11400000, guid: 57b94b5a2bd2daf40bc6cb8afc96b76b, type: 2}
+  skillBehavior: {fileID: 11400000, guid: aa898cf868e6fdb47ae0e14df4f72f65, type: 2}
+  vfxOnUserStart: []
   vfxOnTargetStart: []
   sfxOnUserStart: []
   sfxOnTargetStart: []

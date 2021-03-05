@@ -5,17 +5,19 @@ using UnityEngine;
 
 namespace RPG.Skills
 {
-	public struct SkillData
+	public class SkillData
 	{
-		public GameObject User;
-		public GameObject Target;
+		public readonly GameObject User;
+		public readonly GameObject InitialTarget;
+		public readonly GameObject[] Targets;
 		public Vector3? Point;
 
-		public SkillData(GameObject user, GameObject target, Vector3? point)
+		public SkillData(GameObject user, GameObject initialTarget, Vector3? point, GameObject[] targets)
 		{
 			User = user;
-			Target = target;
+			InitialTarget = initialTarget;
 			Point = point;
+			Targets = targets;
 		}
 	}
 
@@ -34,7 +36,7 @@ namespace RPG.Skills
 		[Tooltip("The UI icon to represent this item in the inventory.")] [SerializeField]
 		private Sprite icon = null;
 
-		[SerializeField] private float duration;
+		[SerializeField] private float duration, cooldown;
 		[SerializeField] private TargetBehavior targetBehavior;
 		[SerializeField] private SkillBehavior skillBehavior;
 
@@ -44,8 +46,8 @@ namespace RPG.Skills
 		[SerializeField] private GameObject[] vfxOnTargetStart;
 		[SerializeField] private AudioClip[] sfxOnUserStart, sfxOnTargetStart;
 
-		[Header("On End")] [Space(15)]
-		[HideInInspector] public GameObject[] vfxOnUserEnd;
+		[Header("On End")] [Space(15)] [HideInInspector]
+		public GameObject[] vfxOnUserEnd;
 
 		[HideInInspector] public GameObject[] vfxOnTargetEnd;
 		[HideInInspector] public AudioClip[] sfxOnUserEnd, sfxOnTargetEnd;
@@ -55,24 +57,27 @@ namespace RPG.Skills
 		public string DisplayName => displayName;
 		public string Description => description;
 		public float Duration => duration;
-		public bool RequiresTarget => targetBehavior.RequireTarget();
-		public TargetBehavior TargetBehavior => targetBehavior;
+		public float Cooldown => cooldown;
+		public bool? RequiresTarget => targetBehavior.RequireTarget();
 
 		private static Dictionary<string, Skill> ItemLookupCache;
 
-		public SkillData? OnStart(GameObject user, GameObject target = null, Vector3? point = null)
+		public SkillData OnStart(GameObject user, GameObject initialTarget = null, Vector3? point = null)
 		{
-			var targets = targetBehavior.GetTargets(user, target, point);
-			if(targets == null) return null;
+			//if interested in targets, but targets are null, return
+			if(targetBehavior.GetTargets(out var targets, user, initialTarget, point))
+				if(targets == null)
+					return null;
+
 			skillBehavior.OnStart += PlayStartVfx;
 			skillBehavior.OnEnd += PlayEndVfx;
-			skillBehavior.BehaviorStart(user, targets);
-			return new SkillData(user, target, point);
+			skillBehavior.BehaviorStart(user, targets, point);
+			return new SkillData(user, initialTarget, point, targets);
 		}
 
-		public void OnUpdate(SkillData data) => skillBehavior.BehaviorUpdate(data.User, targetBehavior.GetTargets(data.User, data.Target, data.Point));
+		public void OnUpdate(SkillData data) => skillBehavior.BehaviorUpdate(data.User, data.Targets, data.Point);
 
-		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data.User, targetBehavior.GetTargets(data.User, data.Target, data.Point));
+		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data.User, data.Targets, data.Point);
 
 		private void PlayStartVfx(GameObject user, GameObject[] targets)
 		{

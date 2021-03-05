@@ -9,7 +9,6 @@ namespace RPG.UI.Inventories
 	/// </summary>
 	public class ItemTooltip : MonoBehaviour
 	{
-		// CONFIG DATA
 		[SerializeField] private TextMeshProUGUI titleText = null;
 		[SerializeField] private TextMeshProUGUI bodyText = null;
 

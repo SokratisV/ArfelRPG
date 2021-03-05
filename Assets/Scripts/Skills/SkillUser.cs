@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Interfaces;
 using RPG.Core;
 using RPG.Movement;
@@ -13,15 +14,17 @@ namespace RPG.Skills
 		public event Action SkillsUpdated;
 		public event Action OnActionComplete;
 
-		private List<ActivatedSkill> _activedSkills = new List<ActivatedSkill>();
-		private Dictionary<int, Skill> _learnedSkills = new Dictionary<int, Skill>();
+		public bool IsPreparingSkill => _selectedSkill != null;
+		public bool? SkillRequiresTarget => _selectedSkill.RequiresTarget;
+
+		private bool _activeListCleanup = false, _cooldownListCleanup = false;
+		private float _globalCooldownTimer = 0;
+		private Mover _mover = null;
 		private Skill _selectedSkill = null;
 		private ActionScheduler _actionScheduler = null;
-		private Mover _mover = null;
-		public bool IsPreparingSkill => _selectedSkill != null;
-		public bool SkillRequiresTarget => _selectedSkill.RequiresTarget;
-		private float _globalCooldownTimer = 0;
-		public Skill skill;
+		private List<CooldownSkill> _skillsOnCooldown = new List<CooldownSkill>();
+		private List<ActivatedSkill> _activatedSkills = new List<ActivatedSkill>();
+		private Dictionary<int, Skill> _learnedSkills = new Dictionary<int, Skill>();
 
 		public static SkillUser GetPlayerSkills() => PlayerFinder.Player.GetComponent<SkillUser>();
 
@@ -33,52 +36,120 @@ namespace RPG.Skills
 
 		private void Start()
 		{
-			AddSkill(skill, 0);
-			SelectSkill(0);
+			AddSkill(Skill.GetFromID("092f09f3-e273-4b47-aaf5-4483984a1cfa"), 0);
+			AddSkill(Skill.GetFromID("5231d976-a9d9-4917-95fe-1e870c11bb3c"), 1);
+			// SelectSkill(0);
 			// UseSelectedSkill();
 		}
 
 		private void Update()
 		{
-			if(_globalCooldownTimer > 0) _globalCooldownTimer -= Time.deltaTime;
-			foreach(var activeSkill in _activedSkills)
+			SkillListCleanup();
+			UpdateCooldowns();
+			UpdateActiveSkills();
+		}
+
+		private void UpdateActiveSkills()
+		{
+			foreach(var activeSkill in _activatedSkills)
 			{
-				activeSkill.Update();
+				if(activeSkill.Update())
+				{
+					_activeListCleanup = true;
+				}
+			}
+		}
+
+		private void UpdateCooldowns()
+		{
+			if(_globalCooldownTimer > 0) _globalCooldownTimer -= Time.deltaTime;
+			foreach(var skill in _skillsOnCooldown)
+			{
+				if(skill.Update())
+				{
+					_cooldownListCleanup = true;
+				}
+			}
+		}
+
+		private void SkillListCleanup()
+		{
+			if(_activeListCleanup)
+			{
+				_activatedSkills.RemoveAll(activatedSkill => activatedSkill.HasEnded);
+				_activeListCleanup = false;
+			}
+
+			if(_cooldownListCleanup)
+			{
+				_skillsOnCooldown.RemoveAll(cooldownSkill => cooldownSkill.HasCooledDown);
+				_cooldownListCleanup = false;
 			}
 		}
 
 		private class ActivatedSkill
 		{
+			public bool HasEnded = false;
+			public Skill Skill {get;}
 			private float _duration;
 			private float _timer;
-			private List<ActivatedSkill> _activeSkills;
 			private SkillData _data;
 
-			public Skill Skill {get;}
 
 			//TODO: create new instance of skill here?
-			public ActivatedSkill(Skill skill, List<ActivatedSkill> activeSkills, SkillData data, float duration)
+			public ActivatedSkill(Skill skill, SkillData data, float duration)
 			{
 				Skill = skill;
 				_duration = duration;
-				_activeSkills = activeSkills;
 				_data = data;
 				_timer = 0;
 			}
 
-			internal void Update()
+			internal bool Update()
 			{
-				if(_duration < 0) return;
+				if(_duration < 0) return false;
 				if(_timer <= _duration)
 				{
 					Skill.OnUpdate(_data);
-					_timer -= Time.deltaTime;
+					_timer += Time.deltaTime;
 				}
 				else
 				{
 					Skill.OnEnd(_data);
-					_activeSkills.Remove(this);
+					HasEnded = true;
+					return true;
 				}
+
+				return false;
+			}
+		}
+
+		private class CooldownSkill
+		{
+			public bool HasCooledDown;
+			public Skill Skill {get;}
+			private readonly float _cooldown;
+			private float _timer = 0;
+
+			internal bool Update()
+			{
+				if(_timer <= _cooldown)
+				{
+					_timer += Time.deltaTime;
+				}
+				else
+				{
+					HasCooledDown = true;
+					return true;
+				}
+
+				return false;
+			}
+
+			public CooldownSkill(Skill skill)
+			{
+				_cooldown = skill.Cooldown;
+				Skill = skill;
 			}
 		}
 
@@ -124,21 +195,26 @@ namespace RPG.Skills
 
 		private void UseSelectedSkill(GameObject target, Vector3? hitPoint)
 		{
+			if(CheckForSkillCooldown(_selectedSkill)) return;
 			var data = _selectedSkill.OnStart(gameObject, target, hitPoint);
-			if(!data.HasValue)
+			if(data == null)
 			{
 				_selectedSkill = null;
 				return;
 			}
 
-			_activedSkills.Add(new ActivatedSkill(_selectedSkill, _activedSkills, data.Value, _selectedSkill.Duration));
+			_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data, _selectedSkill.Duration));
+			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			_selectedSkill = null;
 		}
+
+		private bool CheckForSkillCooldown(Skill selectedSkill) =>
+			_skillsOnCooldown.Any(skill => skill.Skill == selectedSkill) || _activatedSkills.Any(skill => skill.Skill == selectedSkill);
 
 		private bool CanSkillBeUsed(Skill skill)
 		{
 			if(_globalCooldownTimer > 0) return false;
-			foreach(var activeSkill in _activedSkills)
+			foreach(var activeSkill in _activatedSkills)
 			{
 				if(activeSkill.Skill == skill)
 				{

@@ -4,9 +4,10 @@ namespace RPG.Skills.Behaviors
 {
 	public abstract class TargetBehavior : ScriptableObject
 	{
-		public abstract bool RequireTarget();
+		//true = requires target, false = requires point, null = self cast
+		public abstract bool? RequireTarget();
 
-		//Should return null if it can't find the target it needs
-		public abstract GameObject[] GetTargets(GameObject user, GameObject target = null, Vector3? raycastPoint = null);
+		//Return false when it only cares about the point
+		public abstract bool GetTargets( out GameObject[] targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null);
 	}
 }

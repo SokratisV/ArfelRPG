@@ -19,7 +19,7 @@ namespace RPG.UI.Skills
 		private void Awake()
 		{
 			_skillUser = PlayerFinder.Player.GetComponent<SkillUser>();
-			keyBindText.SetText(Helper.KeyCodeName(keyBind));
+			keyBindText.SetText(keyBind.ToString());
 			_skillUser.SkillsUpdated += UpdateIcon;
 		}
 

@@ -9,7 +9,7 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] private Projectile projectile = null;
 		[SerializeField] private float damage;
 
-		public override void BehaviorStart(GameObject user, GameObject[] targets)
+		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
 		{
 			var projectileInstance = Instantiate(projectile);
 			var transform = projectileInstance.transform;
@@ -20,7 +20,7 @@ namespace RPG.Skills.Behaviors
 				projectileInstance.SetTarget(targets[0].GetComponent<Health>(), user, damage);
 			}
 
-			base.BehaviorStart(user, targets);
+			base.BehaviorStart(user, targets, point);
 		}
 	}
 }

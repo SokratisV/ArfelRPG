@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RPG.Skills.Behaviors
 {
-	public class TargetHeal : SkillBehavior
+	public class Heal : SkillBehavior
 	{
 		[SerializeField] private float amountToHeal;
 

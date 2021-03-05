@@ -59,13 +59,20 @@ namespace RPG.Control
 		private bool HandleSkillUsage()
 		{
 			if(!_skillUser.IsPreparingSkill) return false;
-			if(_skillUser.SkillRequiresTarget)
+			if(_skillUser.SkillRequiresTarget == null)
 			{
-				if(RaycastForSkillTarget()) return true;
+				_skillUser.Execute(gameObject);
 			}
 			else
 			{
-				if(HasHitNavMesh(CursorType.Skill)) return true;
+				if(_skillUser.SkillRequiresTarget.Value)
+				{
+					if(RaycastForSkillTarget()) return true;
+				}
+				else
+				{
+					if(HasHitNavMesh(CursorType.Skill)) return true;
+				}
 			}
 
 			return false;
