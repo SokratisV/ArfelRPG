@@ -19,17 +19,5 @@ namespace RPG.Skills.Behaviors
 
 			OnStart?.Invoke(user, targets);
 		}
-
-		public override void BehaviorUpdate(GameObject user, GameObject[] targets)
-		{
-		}
-
-		public override void BehaviorEnd(GameObject user, GameObject[] targets)
-		{
-			OnEnd?.Invoke(user, targets);
-			OnEnd = null;
-			OnStart = null;
-			OnUpdate = null;
-		}
 	}
 }

@@ -18,10 +18,14 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 5d9ba4e7d0964044ea54abe409d81dfd, type: 3}
   duration: 4
   targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
-  skillBehavior: {fileID: 11400000, guid: a9f93bd347d83e04183cf7512529d778, type: 2}
-  vfxOnUser: []
-  vfxOnTarget:
+  skillBehavior: {fileID: 11400000, guid: 295499b2beacb1048b227d587ab0dab9, type: 2}
+  vfxOnUserStart:
   - {fileID: 6809944706259094419, guid: 0a3972e964dcd2b47b2a3bc58d35d554, type: 3}
-  sfxOnUser:
-  - {fileID: 8300000, guid: 6e60ad64e34fc624ea76483921551c25, type: 3}
-  sfxOnTarget: []
+  vfxOnTargetStart: []
+  sfxOnUserStart: []
+  sfxOnTargetStart: []
+  vfxOnUserEnd:
+  - {fileID: 4426307091511344963, guid: 175ffb7bd377fc145b212435b73f7fe8, type: 3}
+  vfxOnTargetEnd: []
+  sfxOnUserEnd: []
+  sfxOnTargetEnd: []

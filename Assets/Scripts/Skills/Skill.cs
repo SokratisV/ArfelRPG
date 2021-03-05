@@ -37,8 +37,18 @@ namespace RPG.Skills
 		[SerializeField] private float duration;
 		[SerializeField] private TargetBehavior targetBehavior;
 		[SerializeField] private SkillBehavior skillBehavior;
-		[SerializeField] private GameObject[] vfxOnUser, vfxOnTarget;
-		[SerializeField] private AudioClip[] sfxOnUser, sfxOnTarget;
+
+		[Header("On Start")] [Space(15)] [SerializeField]
+		private GameObject[] vfxOnUserStart;
+
+		[SerializeField] private GameObject[] vfxOnTargetStart;
+		[SerializeField] private AudioClip[] sfxOnUserStart, sfxOnTargetStart;
+
+		[Header("On End")] [Space(15)]
+		[HideInInspector] public GameObject[] vfxOnUserEnd;
+
+		[HideInInspector] public GameObject[] vfxOnTargetEnd;
+		[HideInInspector] public AudioClip[] sfxOnUserEnd, sfxOnTargetEnd;
 
 		public string SkillID => skillID;
 		public Sprite Icon => icon;
@@ -46,6 +56,7 @@ namespace RPG.Skills
 		public string Description => description;
 		public float Duration => duration;
 		public bool RequiresTarget => targetBehavior.RequireTarget();
+		public TargetBehavior TargetBehavior => targetBehavior;
 
 		private static Dictionary<string, Skill> ItemLookupCache;
 
@@ -53,29 +64,40 @@ namespace RPG.Skills
 		{
 			var targets = targetBehavior.GetTargets(user, target, point);
 			if(targets == null) return null;
-			skillBehavior.OnStart += PlayVfx;
+			skillBehavior.OnStart += PlayStartVfx;
+			skillBehavior.OnEnd += PlayEndVfx;
 			skillBehavior.BehaviorStart(user, targets);
 			return new SkillData(user, target, point);
 		}
 
-		public void OnUpdate(SkillData data)
-		{
-			skillBehavior.BehaviorUpdate(data.User, targetBehavior.GetTargets(data.User, data.Target, data.Point));
-		}
+		public void OnUpdate(SkillData data) => skillBehavior.BehaviorUpdate(data.User, targetBehavior.GetTargets(data.User, data.Target, data.Point));
 
-		public void OnEnd(SkillData data)
-		{
-			skillBehavior.BehaviorEnd(data.User, targetBehavior.GetTargets(data.User, data.Target, data.Point));
-		}
+		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data.User, targetBehavior.GetTargets(data.User, data.Target, data.Point));
 
-		private void PlayVfx(GameObject user, GameObject[] targets)
+		private void PlayStartVfx(GameObject user, GameObject[] targets)
 		{
-			foreach(var vfx in vfxOnUser)
+			foreach(var vfx in vfxOnUserStart)
 			{
 				Instantiate(vfx, user.transform);
 			}
 
-			foreach(var vfx in vfxOnTarget)
+			foreach(var vfx in vfxOnTargetStart)
+			{
+				foreach(var target in targets)
+				{
+					Instantiate(vfx, target.transform);
+				}
+			}
+		}
+
+		private void PlayEndVfx(GameObject user, GameObject[] targets)
+		{
+			foreach(var vfx in vfxOnUserEnd)
+			{
+				Instantiate(vfx, user.transform);
+			}
+
+			foreach(var vfx in vfxOnTargetEnd)
 			{
 				foreach(var target in targets)
 				{

@@ -19,7 +19,7 @@ namespace RPG.Combat
 		public bool HandleSkillcast(GameObject player)
 		{
 			if(!enabled) return false;
-			if(player.TryGetComponent(out ICombatActionable skillUser))
+			if(player.TryGetComponent(out ISpellActionable skillUser))
 			{
 				if(!skillUser.CanExecute(gameObject)) return false;
 				CheckPressedButtons(skillUser);
@@ -42,7 +42,7 @@ namespace RPG.Combat
 			return true;
 		}
 
-		private void CheckPressedButtons(ICombatActionable actionable)
+		private void CheckPressedButtons(IActionable actionable)
 		{
 			if(Input.GetKey(KeyCode.LeftControl))
 			{

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace RPG.Skills
 {
-	public class SkillUser : MonoBehaviour, IAction, ISaveable, ICombatActionable
+	public class SkillUser : MonoBehaviour, IAction, ISaveable, ISpellActionable
 	{
 		public event Action SkillsUpdated;
 		public event Action OnActionComplete;
@@ -59,8 +59,8 @@ namespace RPG.Skills
 			//TODO: create new instance of skill here?
 			public ActivatedSkill(Skill skill, List<ActivatedSkill> activeSkills, SkillData data, float duration)
 			{
-				_duration = duration;
 				Skill = skill;
+				_duration = duration;
 				_activeSkills = activeSkills;
 				_data = data;
 				_timer = 0;

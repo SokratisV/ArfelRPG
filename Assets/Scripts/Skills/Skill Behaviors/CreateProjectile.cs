@@ -19,20 +19,8 @@ namespace RPG.Skills.Behaviors
 			{
 				projectileInstance.SetTarget(targets[0].GetComponent<Health>(), user, damage);
 			}
-			else
-			{
-				
-			}
-		}
 
-		public override void BehaviorUpdate(GameObject user, GameObject[] targets)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public override void BehaviorEnd(GameObject user, GameObject[] targets)
-		{
-			throw new System.NotImplementedException();
+			base.BehaviorStart(user, targets);
 		}
 	}
 }
