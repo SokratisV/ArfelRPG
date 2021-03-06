@@ -4,7 +4,9 @@ namespace RPG.Skills.Behaviors
 {
 	public abstract class TargetBehavior : ScriptableObject
 	{
-		//true = requires target, false = requires point, null = self cast
+		/// <summary>
+		/// true = requires target, false = requires point, null = self cast
+		/// </summary>
 		public abstract bool? RequireTarget();
 
 		//Return false when it only cares about the point

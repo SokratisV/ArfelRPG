@@ -46,11 +46,11 @@ namespace RPG.Skills
 		[SerializeField] private GameObject[] vfxOnTargetStart;
 		[SerializeField] private AudioClip[] sfxOnUserStart, sfxOnTargetStart;
 
-		[Header("On End")] [Space(15)] [HideInInspector]
-		public GameObject[] vfxOnUserEnd;
+		[Header("On End")] [Space(15)] [SerializeField]
+		private GameObject[] vfxOnUserEnd;
 
-		[HideInInspector] public GameObject[] vfxOnTargetEnd;
-		[HideInInspector] public AudioClip[] sfxOnUserEnd, sfxOnTargetEnd;
+		[SerializeField] private GameObject[] vfxOnTargetEnd;
+		[SerializeField] private AudioClip[] sfxOnUserEnd, sfxOnTargetEnd;
 
 		public string SkillID => skillID;
 		public Sprite Icon => icon;

@@ -9,19 +9,22 @@ using RPG.Saving;
 namespace RPG.Movement
 {
 	[SelectionBase]
+	[RequireComponent(typeof(Rigidbody))]
 	public class Mover : MonoBehaviour, IAction, ISaveable
 	{
 		public event Action OnActionComplete;
 		public bool IsMoving => !_navMeshAgent.isStopped;
 
-		private float _distanceBeforeReachingDestination;
-		private NavMeshAgent _navMeshAgent;
-		private Animator _animator;
-		private ActionScheduler _actionScheduler;
-		private Health _health;
 		[SerializeField] private float maxSpeed = 6f;
 		[SerializeField] private float maxNavPathLength = 40f;
+
+		private float _distanceBeforeReachingDestination;
+		private Health _health;
+		private Animator _animator;
+		private Rigidbody _rigidbody;
+		private NavMeshAgent _navMeshAgent;
 		private Coroutine _selfUpdateRoutine;
+		private ActionScheduler _actionScheduler;
 		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 
 		#region Unity
@@ -32,6 +35,7 @@ namespace RPG.Movement
 			_animator = GetComponent<Animator>();
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_health = GetComponent<Health>();
+			_rigidbody = GetComponent<Rigidbody>();
 		}
 
 		private void OnEnable()
@@ -73,16 +77,35 @@ namespace RPG.Movement
 
 		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
-			if (!_navMeshAgent.enabled) return;
+			if(!_navMeshAgent.enabled) return;
 			_navMeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
 			_navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
 			_navMeshAgent.isStopped = false;
 		}
 
+		public void Dash(Vector3 destination, float duration)
+		{
+			DisableMoverFor(duration, () => _rigidbody.isKinematic = true);
+			_rigidbody.isKinematic = false;
+			var currentPosition = transform.position;
+			var speedRequired = Vector3.Distance(currentPosition, destination) / duration;
+			var direction = (destination - currentPosition).normalized;
+			_rigidbody.velocity = direction * speedRequired;
+		}
+
+		public void Blink(Vector3 point)
+		{
+			DisableMoverFor(.2f);
+			transform.rotation = Quaternion.LookRotation(point - transform.position);
+			_navMeshAgent.Warp(point);
+		}
+
+		public void DisableMoverFor(float duration, Action extraActionOnEnd = null) => StartCoroutine(DisableForSeconds(duration, extraActionOnEnd));
+
 		public void CancelAction()
 		{
-			if (!_navMeshAgent.enabled) return;
+			if(!_navMeshAgent.enabled) return;
 			_navMeshAgent.isStopped = true;
 		}
 
@@ -109,6 +132,20 @@ namespace RPG.Movement
 		{
 			_navMeshAgent.enabled = false;
 			_selfUpdateRoutine.StopCoroutine(this);
+		}
+
+		private void EnableMover()
+		{
+			_navMeshAgent.enabled = true;
+			_selfUpdateRoutine = _selfUpdateRoutine.StartCoroutine(this, UpdateMover());
+		}
+
+		private IEnumerator DisableForSeconds(float seconds, Action extraActionOnEnd = null)
+		{
+			DisableMover();
+			yield return new WaitForSeconds(seconds);
+			EnableMover();
+			extraActionOnEnd?.Invoke();
 		}
 
 		private IEnumerator UpdateMover()

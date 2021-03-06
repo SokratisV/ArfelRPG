@@ -78,6 +78,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea7fd4b78bd692499ca040b423dc78c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5857183086093753042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844280258488175269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc8a9acb0c34b2eb2d559243ab52435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6623706442341413652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,8 +291,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3211224056665034830, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
-      propertyPath: m_Constraints
-      value: 80
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3264097160167645682, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
@@ -338,7 +350,7 @@ PrefabInstance:
     - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
@@ -349,8 +361,7 @@ PrefabInstance:
         type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 7052341127993344520, guid: 6f31f9a9596f79048913dd2e466898dc,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -370,12 +381,22 @@ PrefabInstance:
     - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ShowDeathUI
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: PlayDeathMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}

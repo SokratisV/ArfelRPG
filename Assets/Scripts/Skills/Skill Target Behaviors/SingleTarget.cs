@@ -8,7 +8,7 @@ namespace RPG.Skills.Behaviors
 
 		public override bool GetTargets(out GameObject[] targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null)
 		{
-			targets = new[] {initialTarget};
+			targets = initialTarget == null? null:targets = new[] {initialTarget};
 			return true;
 		}
 	}

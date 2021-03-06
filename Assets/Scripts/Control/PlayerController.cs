@@ -59,6 +59,7 @@ namespace RPG.Control
 		private bool HandleSkillUsage()
 		{
 			if(!_skillUser.IsPreparingSkill) return false;
+			if(!_skillUser.CanCurrentSkillBeUsed) return false;
 			if(_skillUser.SkillRequiresTarget == null)
 			{
 				_skillUser.Execute(gameObject);
@@ -71,7 +72,7 @@ namespace RPG.Control
 				}
 				else
 				{
-					if(HasHitNavMesh(CursorType.Skill)) return true;
+					if(HasHitNavMesh(CursorType.Skill, false)) return true;
 				}
 			}
 
@@ -83,8 +84,8 @@ namespace RPG.Control
 			_hits = RaycastAllSorted();
 			foreach(var hit in _hits)
 			{
-				var raycastables = hit.transform.GetComponents<ISkillcastable>();
-				foreach(var raycastable in raycastables)
+				var skillcastables = hit.transform.GetComponents<ISkillcastable>();
+				foreach(var raycastable in skillcastables)
 				{
 					if(raycastable.HandleSkillcast(gameObject))
 					{
@@ -146,9 +147,9 @@ namespace RPG.Control
 
 		private bool InteractWithMovement() => HasHitNavMesh(CursorType.Movement);
 
-		private bool HasHitNavMesh(CursorType cursor)
+		private bool HasHitNavMesh(CursorType cursor, bool restrictToMovement = true)
 		{
-			var hasHit = RaycastNavMesh(out var target);
+			var hasHit = RaycastNavMesh(out var target, restrictToMovement);
 			if(!hasHit) return false;
 			CheckPressedButtons(target);
 			SetCursor(cursor);
@@ -174,13 +175,14 @@ namespace RPG.Control
 				if(_skillUser.IsPreparingSkill) _skillUser.Execute(target);
 				else
 				{
+					_skillUser.CancelAction();
 					_mover.Move(target);
 					MovementFeedback(target);
 				}
 			}
 		}
 
-		private bool RaycastNavMesh(out Vector3 target)
+		private bool RaycastNavMesh(out Vector3 target, bool restrictToMovement = true)
 		{
 			target = new Vector3();
 			var hasHit = Physics.Raycast(GetMouseRay(), out _movementRaycast);
@@ -190,7 +192,7 @@ namespace RPG.Control
 			if(!hasCastToNavMesh) return false;
 
 			target = navMeshHit.position;
-			return _mover.CanMoveTo(target);
+			return!restrictToMovement || _mover.CanMoveTo(target);
 		}
 
 		private void MovementFeedback(Vector3 target)

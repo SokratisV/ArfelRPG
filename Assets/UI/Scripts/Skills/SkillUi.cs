@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using RPG.Core;
 using RPG.Skills;
 using RPG.UI.Dragging;
@@ -17,29 +18,63 @@ namespace RPG.UI.Skills
 		[SerializeField] private KeyCode keyBind = KeyCode.None;
 		[SerializeField] private Image globalCooldownFill, cooldownFill;
 
-		private Coroutine _globalCooldowRoutine = null, _cooldownRoutine = null;
-
+		private Coroutine _globalCooldownRoutine = null, _cooldownRoutine = null;
 		private SkillUser _skillUser;
+
+		#region Unity
 
 		private void Awake()
 		{
 			_skillUser = SkillUser.GetPlayerSkills();
 			keyBindText.SetText(keyBind.ToString());
+		}
+
+		private void Update()
+		{
+			if(Input.GetKeyDown(keyBind)) _skillUser.SelectSkill(index);
+		}
+
+		private void OnEnable()
+		{
 			_skillUser.SkillsUpdated += UpdateIcon;
 			_skillUser.OnSkillCast += ShowCooldown;
 			_skillUser.OnSkillCast += ShowGlobalCooldown;
 		}
 
-		private void ShowGlobalCooldown(Skill skill) => _globalCooldowRoutine.StartCoroutine(this, GlobalCooldown(GlobalValues.GlobalCooldown));
+		private void OnDestroy()
+		{
+			_skillUser.SkillsUpdated -= UpdateIcon;
+			_skillUser.OnSkillCast -= ShowCooldown;
+			_skillUser.OnSkillCast -= ShowGlobalCooldown;
+		}
+
+		#endregion
+
+		#region Public
+
+		public Skill GetItem() => _skillUser.GetSkill(index);
+
+		public int GetNumber() => 1;
+
+		public void RemoveItems(int number) => _skillUser.RemoveSkill(index);
+
+		public int MaxAcceptable(Skill skill) => 1;
+
+		public void AddItems(Skill skill, int _) => _skillUser.AddSkill(skill, index);
+
+		#endregion
+
+		#region Private
+
+		private void ShowGlobalCooldown(Skill skill) => _globalCooldownRoutine = _globalCooldownRoutine.StartCoroutine(this, GlobalCooldown(GlobalValues.GlobalCooldown));
 
 		private void ShowCooldown(Skill skill)
 		{
-			if(_skillUser.GetSkill(index) == skill) _cooldownRoutine.StartCoroutine(this, Cooldown(skill.Cooldown));
+			if(_skillUser.GetSkill(index) == skill) _cooldownRoutine = _cooldownRoutine.StartCoroutine(this, Cooldown(skill.Cooldown));
 		}
 
 		private IEnumerator Cooldown(float cooldown)
 		{
-			cooldownFill.fillAmount = 1f;
 			var progress = 1f;
 			while(progress > 0)
 			{
@@ -53,30 +88,21 @@ namespace RPG.UI.Skills
 
 		private IEnumerator GlobalCooldown(float globalCooldown)
 		{
-			globalCooldownFill.fillAmount = 1f;
 			var progress = 1f;
 			while(progress > 0)
 			{
-				cooldownFill.fillAmount = progress;
+				globalCooldownFill.fillAmount = progress;
 				progress -= Time.deltaTime / globalCooldown;
 				yield return null;
 			}
+
 			globalCooldownFill.fillAmount = 0f;
 		}
 
-		private void Update()
-		{
-			if(Input.GetKeyDown(keyBind)) _skillUser.SelectSkill(index);
-		}
-
-		public Skill GetItem() => _skillUser.GetSkill(index);
-
-		public int GetNumber() => 1;
-
-		public void RemoveItems(int number) => _skillUser.RemoveSkill(index);
-
 		private void UpdateIcon() => icon.UpdateIcon(GetItem());
 
+		#endregion
+		
 		void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
 		{
 			var shouldAct = eventData.button switch
@@ -90,9 +116,5 @@ namespace RPG.UI.Skills
 		}
 
 		Skill ISkillHolder.GetSkill() => _skillUser.GetSkill(index);
-
-		public int MaxAcceptable(Skill skill) => 1;
-
-		public void AddItems(Skill skill, int _) => _skillUser.AddSkill(skill, index);
 	}
 }

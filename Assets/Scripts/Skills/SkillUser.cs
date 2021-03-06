@@ -16,7 +16,13 @@ namespace RPG.Skills
 		public event Action<Skill> OnSkillCast, OnSkillEnd, OnSkillSelected;
 
 		public bool IsPreparingSkill => _selectedSkill != null;
+
+		/// <summary>
+		/// true = requires target, false = requires point, null = self cast
+		/// </summary>
 		public bool? SkillRequiresTarget => _selectedSkill.RequiresTarget;
+
+		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
 
 		private bool _activeListCleanup = false, _cooldownListCleanup = false;
 		private float _globalCooldownTimer = 0;
@@ -41,6 +47,7 @@ namespace RPG.Skills
 		{
 			AddSkill(Skill.GetFromID("092f09f3-e273-4b47-aaf5-4483984a1cfa"), 0);
 			AddSkill(Skill.GetFromID("5231d976-a9d9-4917-95fe-1e870c11bb3c"), 1);
+			AddSkill(Skill.GetFromID("83bef455-e343-4538-97ce-79acdf2471e5"), 2);
 		}
 
 		private void Update()
@@ -75,13 +82,14 @@ namespace RPG.Skills
 
 		public void Execute(GameObject target) => UseSelectedSkill(target, null);
 
+		public void Execute(Vector3 hitPoint) => UseSelectedSkill(null, hitPoint);
+
 		public void QueueExecution(GameObject target)
 		{
 			Debug.Log("Queue Skill action Not Yet Implemented");
 			Execute(target);
 		}
 
-		public void Execute(Vector3 hitPoint) => UseSelectedSkill(null, hitPoint);
 
 		public object CaptureState()
 		{
@@ -189,7 +197,7 @@ namespace RPG.Skills
 
 		private void UseSelectedSkill(GameObject target, Vector3? hitPoint)
 		{
-			if(CheckForSkillCooldown(_selectedSkill)) return;
+			if(IsSkillOnCooldown(_selectedSkill)) return;
 			var data = _selectedSkill.OnStart(gameObject, target, hitPoint);
 			if(data == null)
 			{
@@ -197,14 +205,26 @@ namespace RPG.Skills
 				return;
 			}
 
-			_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data, _selectedSkill.Duration));
+			_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data));
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			OnSkillCast?.Invoke(_selectedSkill);
 			_selectedSkill = null;
 		}
 
-		private bool CheckForSkillCooldown(Skill selectedSkill) =>
-			_skillsOnCooldown.Any(skill => skill.Skill == selectedSkill) || _activatedSkills.Any(skill => skill.Skill == selectedSkill);
+		private bool IsSkillOnCooldown(Skill selectedSkill)
+		{
+			foreach(var skill in _skillsOnCooldown)
+			{
+				if(skill.Skill == selectedSkill) return true;
+			}
+
+			foreach(var skill in _activatedSkills)
+			{
+				if(skill.Skill == selectedSkill) return true;
+			}
+
+			return false;
+		}
 
 		private bool CanSkillBeUsed(Skill skill)
 		{
@@ -238,10 +258,10 @@ namespace RPG.Skills
 
 
 			//TODO: create new instance of skill here?
-			public ActivatedSkill(Skill skill, SkillData data, float duration)
+			public ActivatedSkill(Skill skill, SkillData data)
 			{
 				Skill = skill;
-				_duration = duration;
+				_duration = skill.Duration;
 				_data = data;
 				_timer = 0;
 			}
