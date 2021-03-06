@@ -1,9 +1,11 @@
-﻿using RPG.Core;
+﻿using System.Collections;
+using RPG.Core;
 using RPG.Skills;
 using RPG.UI.Dragging;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace RPG.UI.Skills
 {
@@ -13,14 +15,53 @@ namespace RPG.UI.Skills
 		[SerializeField] private TextMeshProUGUI keyBindText;
 		[SerializeField] private int index = 0;
 		[SerializeField] private KeyCode keyBind = KeyCode.None;
+		[SerializeField] private Image globalCooldownFill, cooldownFill;
+
+		private Coroutine _globalCooldowRoutine = null, _cooldownRoutine = null;
 
 		private SkillUser _skillUser;
 
 		private void Awake()
 		{
-			_skillUser = PlayerFinder.Player.GetComponent<SkillUser>();
+			_skillUser = SkillUser.GetPlayerSkills();
 			keyBindText.SetText(keyBind.ToString());
 			_skillUser.SkillsUpdated += UpdateIcon;
+			_skillUser.OnSkillCast += ShowCooldown;
+			_skillUser.OnSkillCast += ShowGlobalCooldown;
+		}
+
+		private void ShowGlobalCooldown(Skill skill) => _globalCooldowRoutine.StartCoroutine(this, GlobalCooldown(GlobalValues.GlobalCooldown));
+
+		private void ShowCooldown(Skill skill)
+		{
+			if(_skillUser.GetSkill(index) == skill) _cooldownRoutine.StartCoroutine(this, Cooldown(skill.Cooldown));
+		}
+
+		private IEnumerator Cooldown(float cooldown)
+		{
+			cooldownFill.fillAmount = 1f;
+			var progress = 1f;
+			while(progress > 0)
+			{
+				cooldownFill.fillAmount = progress;
+				progress -= Time.deltaTime / cooldown;
+				yield return null;
+			}
+
+			cooldownFill.fillAmount = 0f;
+		}
+
+		private IEnumerator GlobalCooldown(float globalCooldown)
+		{
+			globalCooldownFill.fillAmount = 1f;
+			var progress = 1f;
+			while(progress > 0)
+			{
+				cooldownFill.fillAmount = progress;
+				progress -= Time.deltaTime / globalCooldown;
+				yield return null;
+			}
+			globalCooldownFill.fillAmount = 0f;
 		}
 
 		private void Update()

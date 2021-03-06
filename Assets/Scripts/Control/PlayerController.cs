@@ -195,10 +195,7 @@ namespace RPG.Control
 
 		private void MovementFeedback(Vector3 target)
 		{
-			if(_movementFeedbackPrefab != null)
-			{
-				_movementFeedbackPrefab.Spawn(target, _movementRaycast.normal);
-			}
+			if(Input.GetMouseButtonDown(0)) _movementFeedbackPrefab.Spawn(target, _movementRaycast.normal);
 		}
 
 		private void SetCursor(CursorType type)
