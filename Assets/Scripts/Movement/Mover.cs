@@ -26,6 +26,8 @@ namespace RPG.Movement
 		private Coroutine _selfUpdateRoutine;
 		private ActionScheduler _actionScheduler;
 		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
+		private static readonly int Roll = Animator.StringToHash("roll");
+		private static readonly int BlinkHash = Animator.StringToHash("blink");
 
 		#region Unity
 
@@ -86,19 +88,26 @@ namespace RPG.Movement
 
 		public void Dash(Vector3 destination, float duration)
 		{
-			DisableMoverFor(duration, () => _rigidbody.isKinematic = true);
+			var initialRotation = transform.rotation;
+			DisableMoverFor(duration, () =>
+			{
+				transform.rotation = initialRotation;
+				_rigidbody.isKinematic = true;
+			});
+			transform.rotation = Quaternion.LookRotation(destination - transform.position);
 			_rigidbody.isKinematic = false;
 			var currentPosition = transform.position;
 			var speedRequired = Vector3.Distance(currentPosition, destination) / duration;
 			var direction = (destination - currentPosition).normalized;
 			_rigidbody.velocity = direction * speedRequired;
+			_animator.SetTrigger(Roll);
 		}
 
 		public void Blink(Vector3 point)
 		{
-			DisableMoverFor(.2f);
+			_animator.SetTrigger(BlinkHash);
+			DisableMoverFor(.2f, () => _navMeshAgent.Warp(point));
 			transform.rotation = Quaternion.LookRotation(point - transform.position);
-			_navMeshAgent.Warp(point);
 		}
 
 		public void DisableMoverFor(float duration, Action extraActionOnEnd = null) => StartCoroutine(DisableForSeconds(duration, extraActionOnEnd));
