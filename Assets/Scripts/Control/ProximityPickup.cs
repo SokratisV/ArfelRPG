@@ -80,6 +80,6 @@ namespace RPG.Combat
 
 		public CursorType GetCursorType() => CursorType.Pickup;
 
-		public float InteractionDistance() => 0;
+		public float InteractionDistance() => GlobalValues.InteractableRange;
 	}
 }

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7038571bf696b3444bc0fac372f39cfa, type: 3}
+  m_Name: Boots
+  m_EditorClassIdentifier: 
+  itemID: 419f891e-83e4-4af1-bb2c-a7ae142e1350
+  displayName: Boots of Speed
+  description: Totally not a reference.
+  icon: {fileID: 21300000, guid: e420c5bc93cb2604695a893500c897e3, type: 3}
+  pickup: {fileID: 0}
+  stackable: 0
+  _rarity: {fileID: 11400000, guid: 52b1d6db300a6af4e817a7a2b5abb69e, type: 2}
+  allowedEquipLocation: 4
+  additiveModifiers:
+  - stat: 0
+    value: 10
+  percentageModifiers: []

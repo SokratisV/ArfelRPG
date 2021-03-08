@@ -89,8 +89,7 @@ namespace RPG.Skills
 			Debug.Log("Queue Skill action Not Yet Implemented");
 			Execute(target);
 		}
-
-
+		
 		public object CaptureState()
 		{
 			var state = new Dictionary<int, DockedItemRecord>();
@@ -230,15 +229,7 @@ namespace RPG.Skills
 		private bool CanSkillBeUsed(Skill skill)
 		{
 			if(_globalCooldownTimer > 0) return false;
-			foreach(var activeSkill in _activatedSkills)
-			{
-				if(activeSkill.Skill == skill)
-				{
-					return false;
-				}
-			}
-
-			return true;
+			return!IsSkillOnCooldown(skill);
 		}
 
 		//Add more of its state, e.g cooldown

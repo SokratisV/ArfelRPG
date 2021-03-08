@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 376624ba96014ee890783ab7e6cdfae4, type: 3}
+  m_Name: Chest Drops
+  m_EditorClassIdentifier: 
+  potentialDrops:
+  - item: {fileID: 11400000, guid: 1a0a60306aba148c799d0bc0a2300223, type: 2}
+    relativeChance:
+    - 20
+    minNumber: 
+    maxNumber: 
+  - item: {fileID: 11400000, guid: f0023dfc73d1ee04fba8b3ac3aa0532f, type: 2}
+    relativeChance:
+    - 20
+    minNumber: 
+    maxNumber: 
+  - item: {fileID: 11400000, guid: 76c623f55920a4e4da9981c9bf1a6380, type: 2}
+    relativeChance:
+    - 20
+    minNumber: 
+    maxNumber: 
+  - item: {fileID: 11400000, guid: 2fd46f5da8a12974cab854c872ccbfaf, type: 2}
+    relativeChance:
+    - 20
+    minNumber: 
+    maxNumber: 
+  - item: {fileID: 11400000, guid: 2fd46f5da8a12974cab854c872ccbfaf, type: 2}
+    relativeChance:
+    - 20
+    minNumber: 
+    maxNumber: 
+  dropChancePercentage:
+  - 100
+  minDrops: 01000000
+  maxDrops: 01000000

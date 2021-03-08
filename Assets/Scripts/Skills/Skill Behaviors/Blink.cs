@@ -15,6 +15,12 @@ namespace RPG.Skills.Behaviors
 			var path = new NavMeshPath();
 			if(NavMesh.CalculatePath(user.transform.position, point.Value, NavMesh.AllAreas, path))
 			{
+				if(Helper.IsWithinDistance(point.Value, user.transform.position, distance))
+				{
+					user.GetComponent<Mover>().Blink(point.Value);
+					return;
+				}
+				
 				var finalPoint = Helper.CalculateMaximumDistanceNavMeshPoint(path, distance);
 				if(finalPoint == default)
 				{

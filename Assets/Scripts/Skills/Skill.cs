@@ -81,16 +81,19 @@ namespace RPG.Skills
 
 		private void PlayStartVfx(GameObject user, GameObject[] targets)
 		{
+			GameObject vfxInstance;
 			foreach(var vfx in vfxOnUserStart)
 			{
-				Instantiate(vfx, user.transform);
+				vfxInstance = Instantiate(vfx, user.transform);
+				Destroy(vfxInstance, 2f);
 			}
 
 			foreach(var vfx in vfxOnTargetStart)
 			{
 				foreach(var target in targets)
 				{
-					Instantiate(vfx, target.transform);
+					vfxInstance = Instantiate(vfx, target.transform);
+					Destroy(vfxInstance, 2f);
 				}
 			}
 		}

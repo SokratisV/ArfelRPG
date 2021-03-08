@@ -47,5 +47,17 @@ namespace RPG.Core
 		};
 
 		public static string KeyCodeName(KeyCode keyCode) => NiceKeyCodeNames.TryGetValue(keyCode, out var name)? name:"";
+		
+		public static float GetPathLength(NavMeshPath path)
+		{
+			var total = 0f;
+			if(path.corners.Length < 2) return total;
+			for(var i = 0;i < path.corners.Length - 1;i++)
+			{
+				total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+			}
+
+			return total;
+		}
 	}
 }

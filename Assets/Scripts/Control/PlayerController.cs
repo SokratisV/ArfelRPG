@@ -58,8 +58,7 @@ namespace RPG.Control
 
 		private bool HandleSkillUsage()
 		{
-			if(!_skillUser.IsPreparingSkill) return false;
-			if(!_skillUser.CanCurrentSkillBeUsed) return false;
+			if(!_skillUser.IsPreparingSkill && !_skillUser.CanCurrentSkillBeUsed) return false;
 			if(_skillUser.SkillRequiresTarget == null)
 			{
 				_skillUser.Execute(gameObject);

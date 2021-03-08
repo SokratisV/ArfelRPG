@@ -16,7 +16,6 @@ namespace RPG.Movement
 		public bool IsMoving => !_navMeshAgent.isStopped;
 
 		[SerializeField] private float maxSpeed = 6f;
-		[SerializeField] private float maxNavPathLength = 40f;
 
 		private float _distanceBeforeReachingDestination;
 		private Health _health;
@@ -67,7 +66,7 @@ namespace RPG.Movement
 			var hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
 			if(!hasPath) return false;
 			if(path.status != NavMeshPathStatus.PathComplete) return false;
-			return!(GetPathLength(path) > maxNavPathLength);
+			return!(Helper.GetPathLength(path) > GlobalValues.MaxNavPathLength);
 		}
 
 		public IAction Move(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
@@ -88,10 +87,10 @@ namespace RPG.Movement
 
 		public void Dash(Vector3 destination, float duration)
 		{
-			var initialRotation = transform.rotation;
+			// var initialRotation = transform.rotation;
 			DisableMoverFor(duration, () =>
 			{
-				transform.rotation = initialRotation;
+				// transform.rotation = initialRotation;
 				_rigidbody.isKinematic = true;
 			});
 			transform.rotation = Quaternion.LookRotation(destination - transform.position);
@@ -184,18 +183,6 @@ namespace RPG.Movement
 			var localVelocity = transform.InverseTransformDirection(velocity);
 			var speed = localVelocity.z;
 			_animator.SetFloat(ForwardSpeed, speed);
-		}
-
-		private float GetPathLength(NavMeshPath path)
-		{
-			var total = 0f;
-			if(path.corners.Length < 2) return total;
-			for(var i = 0;i < path.corners.Length - 1;i++)
-			{
-				total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
-			}
-
-			return total;
 		}
 
 		#endregion

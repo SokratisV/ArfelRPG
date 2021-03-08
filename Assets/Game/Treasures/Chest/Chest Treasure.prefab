@@ -103,7 +103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3055953497787264980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.898}
+  m_LocalPosition: {x: 0.111, y: 0, z: 1.101}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4028580068956630243}
@@ -11897,6 +11897,22 @@ PrefabInstance:
         type: 3}
       propertyPath: bakeValues.Array.data[1].data.Array.data[485].z
       value: 0.8517484
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067114160988039824, guid: 699f9856c633bac4684c8bcdb34a913e,
+        type: 3}
+      propertyPath: dropLibrary
+      value: 
+      objectReference: {fileID: 11400000, guid: 25e0b06796e42714da87006bce72fcc8,
+        type: 2}
+    - target: {fileID: 6067114160988039824, guid: 699f9856c633bac4684c8bcdb34a913e,
+        type: 3}
+      propertyPath: treasureLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067114160988039824, guid: 699f9856c633bac4684c8bcdb34a913e,
+        type: 3}
+      propertyPath: scatterDistance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6067114160988039824, guid: 699f9856c633bac4684c8bcdb34a913e,
         type: 3}

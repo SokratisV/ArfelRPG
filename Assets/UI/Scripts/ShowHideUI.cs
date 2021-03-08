@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace RPG.UI
 {
@@ -9,16 +10,18 @@ namespace RPG.UI
 		[SerializeField] private KeyCode toggleKey = KeyCode.Escape;
 		[SerializeField] private Vector2 hiddenPosition;
 		[SerializeField] private float tweenTime = .2f;
-
 		[SerializeField] private bool startState;
-		// [SerializeField] private LeanTweenType _tweenType;
+		[SerializeField] private bool disableRaycastingOnHide = false;
+		
 
 		private Vector2 _initialPosition;
 		private Canvas _canvas;
+		private GraphicRaycaster _raycaster;
 
 		private void Awake()
 		{
 			_canvas = GetComponent<Canvas>();
+			_raycaster = GetComponent<GraphicRaycaster>();
 			_initialPosition = uiContainer.anchoredPosition;
 			Toggle(startState);
 		}
@@ -42,10 +45,7 @@ namespace RPG.UI
 		}
 
 		[ContextMenu("Toggle")]
-		public void Toggle()
-		{
-			Toggle(!_canvas.enabled);
-		}
+		public void Toggle() => Toggle(!_canvas.enabled);
 
 		public void Toggle(bool toggle)
 		{
@@ -54,15 +54,21 @@ namespace RPG.UI
 			{
 				LeanTween.cancel(uiContainer);
 				LeanTween.move(uiContainer, hiddenPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleCanvas);
+				ToggleRaycaster();
 			}
 			else
 			{
 				ToggleCanvas();
 				LeanTween.cancel(uiContainer);
-				LeanTween.move(uiContainer, _initialPosition, tweenTime).setEaseInOutExpo();
+				LeanTween.move(uiContainer, _initialPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleRaycaster);
 			}
 		}
 
 		private void ToggleCanvas() => _canvas.enabled = !_canvas.enabled;
+		private void ToggleRaycaster()
+		{
+			if (!disableRaycastingOnHide) return;
+			_raycaster.enabled = !_raycaster.enabled;
+		}
 	}
 }
