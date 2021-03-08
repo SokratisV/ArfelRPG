@@ -20,7 +20,8 @@ MonoBehaviour:
   cooldown: 1
   targetBehavior: {fileID: 11400000, guid: 57b94b5a2bd2daf40bc6cb8afc96b76b, type: 2}
   skillBehavior: {fileID: 11400000, guid: aa898cf868e6fdb47ae0e14df4f72f65, type: 2}
-  vfxOnUserStart: []
+  vfxOnUserStart:
+  - {fileID: 100018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
   vfxOnTargetStart: []
   sfxOnUserStart: []
   sfxOnTargetStart: []

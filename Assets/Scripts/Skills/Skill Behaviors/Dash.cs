@@ -24,7 +24,6 @@ namespace RPG.Skills.Behaviors
 
 				user.GetComponent<Mover>().Dash(finalPoint, dashDuration);
 			}
-
 			else return;
 
 			base.BehaviorStart(user, targets, point);

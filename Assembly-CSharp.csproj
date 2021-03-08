@@ -52,8 +52,10 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Asset Packs\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\ExplosionFireAndDebris.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\Displace.cs" />
+     <Compile Include="Assets\Asset Packs\JMO Assets\Cartoon FX\Scripts\CFX_AutoRotate.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\AfterburnerPhysicsForce.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\ExplosionPhysicsForce.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\PlanarReflection.cs" />
@@ -69,11 +71,14 @@
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\ParticleSystemMultiplier.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\GerstnerDisplace.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\WaterHoseParticles.cs" />
+     <Compile Include="Assets\Asset Packs\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />
+     <Compile Include="Assets\Asset Packs\JMO Assets\Cartoon FX\Scripts\CFX_AutoDestructShuriken.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Scripts\Water.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\Hose.cs" />
      <None Include="Assets\Asset Packs\Synty - Polygon Student Sample\README - Usage Rights for these assets.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\Asset Packs\JMO Assets\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
      <None Include="Assets\Asset Packs\MedievalTownExteriors\Readme.txt" />
      <None Include="Assets\Asset Packs\LeanTween\ReadMe.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
@@ -82,6 +87,7 @@
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Asset Packs\Animations by Explosive\README - Usage Rights for these assets 1.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
+     <None Include="Assets\Asset Packs\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Asset Packs\HolyShift\Shaders\FXWaterLowpoly.shader" />
      <None Include="Assets\Asset Packs\RainEntertainment\FantasyMonster2\Elf Mage Pack\readMe.txt" />
@@ -114,6 +120,7 @@
      <None Include="Assets\Asset Packs\HolyShift\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
      <None Include="Assets\Asset Packs\FXIFIED\common\Shaders\RimLight.shader" />
+     <None Include="Assets\Asset Packs\JMO Assets\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />

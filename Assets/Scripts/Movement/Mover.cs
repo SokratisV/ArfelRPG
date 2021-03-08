@@ -106,7 +106,7 @@ namespace RPG.Movement
 		public void Blink(Vector3 point)
 		{
 			_animator.SetTrigger(BlinkHash);
-			DisableMoverFor(.2f, () => _navMeshAgent.Warp(point));
+			DisableMoverFor(.4f, () => _navMeshAgent.Warp(point));
 			transform.rotation = Quaternion.LookRotation(point - transform.position);
 		}
 

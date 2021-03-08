@@ -208,6 +208,7 @@ namespace RPG.Skills
 			_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data));
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			OnSkillCast?.Invoke(_selectedSkill);
+			_globalCooldownTimer = GlobalValues.GlobalCooldown;
 			_selectedSkill = null;
 		}
 

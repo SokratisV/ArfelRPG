@@ -53,6 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Asset Packs\LeanTween\Editor\LeanTweenDocumentationEditor.cs" />
+     <Compile Include="Assets\Asset Packs\JMO Assets\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\SpecularLightingEditor.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\PlanarReflectionEditor.cs" />
      <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\GerstnerDisplaceEditor.cs" />
@@ -291,9 +292,6 @@
  </Reference>
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Editor/2020.2.3f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="AssetStoreTools">
- <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Assets/Asset Packs/AssetStoreTools/Editor/AssetStoreTools.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/Sokratis/Desktop/UnityProjects/RPG/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
