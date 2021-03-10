@@ -87,12 +87,7 @@ namespace RPG.Movement
 
 		public void Dash(Vector3 destination, float duration)
 		{
-			// var initialRotation = transform.rotation;
-			DisableMoverFor(duration, () =>
-			{
-				// transform.rotation = initialRotation;
-				_rigidbody.isKinematic = true;
-			});
+			DisableMoverFor(duration, () => _rigidbody.isKinematic = true);
 			transform.rotation = Quaternion.LookRotation(destination - transform.position);
 			_rigidbody.isKinematic = false;
 			var currentPosition = transform.position;
@@ -152,8 +147,9 @@ namespace RPG.Movement
 		{
 			DisableMover();
 			yield return new WaitForSeconds(seconds);
-			EnableMover();
 			extraActionOnEnd?.Invoke();
+			yield return null;
+			EnableMover();
 		}
 
 		private IEnumerator UpdateMover()

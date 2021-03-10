@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RPG.Core;
 using RPG.Skills.Behaviors;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace RPG.Skills
 		[Tooltip("The UI icon to represent this item in the inventory.")] [SerializeField]
 		private Sprite icon = null;
 
-		[SerializeField] private float duration, cooldown;
+		[SerializeField] private float cooldown;
 		[SerializeField] private TargetBehavior targetBehavior;
 		[SerializeField] private SkillBehavior skillBehavior;
 
@@ -56,9 +57,10 @@ namespace RPG.Skills
 		public Sprite Icon => icon;
 		public string DisplayName => displayName;
 		public string Description => description;
-		public float Duration => duration;
+		public float Duration => skillBehavior.Duration;
 		public float Cooldown => cooldown;
 		public bool? RequiresTarget => targetBehavior.RequireTarget();
+		public bool CanTargetSelf => skillBehavior.CanTargetSelf;
 
 		private static Dictionary<string, Skill> ItemLookupCache;
 
@@ -69,8 +71,8 @@ namespace RPG.Skills
 				if(targets == null)
 					return null;
 
-			skillBehavior.OnStart += PlayStartVfx;
-			skillBehavior.OnEnd += PlayEndVfx;
+			skillBehavior.OnStart += StartVfxSfx;
+			skillBehavior.OnEnd += EndVfxSfx;
 			skillBehavior.BehaviorStart(user, targets, point);
 			return new SkillData(user, initialTarget, point, targets);
 		}
@@ -79,37 +81,58 @@ namespace RPG.Skills
 
 		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data.User, data.Targets, data.Point);
 
-		private void PlayStartVfx(GameObject user, GameObject[] targets)
+		private void StartVfxSfx(GameObject user, GameObject[] targets)
 		{
-			GameObject vfxInstance;
 			foreach(var vfx in vfxOnUserStart)
 			{
-				vfxInstance = Instantiate(vfx, user.transform);
-				Destroy(vfxInstance, 2f);
+				Destroy(Instantiate(vfx, user.transform), 2f);
 			}
 
-			foreach(var vfx in vfxOnTargetStart)
+			if(user.TryGetComponent(out IAudioPlayer audioPlayer))
 			{
-				foreach(var target in targets)
+				audioPlayer.PlaySound(sfxOnUserStart);
+			}
+
+			if(targets == null) return;
+			foreach(var target in targets)
+			{
+				if(target == null) continue;
+				foreach(var vfx in vfxOnTargetStart)
 				{
-					vfxInstance = Instantiate(vfx, target.transform);
-					Destroy(vfxInstance, 2f);
+					Destroy(Instantiate(vfx, target.transform), 2f);
+				}
+
+				if(target.TryGetComponent(out audioPlayer))
+				{
+					audioPlayer.PlaySound(sfxOnTargetStart);
 				}
 			}
 		}
 
-		private void PlayEndVfx(GameObject user, GameObject[] targets)
+		private void EndVfxSfx(GameObject user, GameObject[] targets)
 		{
 			foreach(var vfx in vfxOnUserEnd)
 			{
-				Instantiate(vfx, user.transform);
+				Destroy(Instantiate(vfx, user.transform), 2f);
 			}
 
-			foreach(var vfx in vfxOnTargetEnd)
+			if(user.TryGetComponent(out IAudioPlayer audioPlayer))
 			{
-				foreach(var target in targets)
+				audioPlayer.PlaySound(sfxOnUserEnd);
+			}
+
+			if(targets == null) return;
+			foreach(var target in targets)
+			{
+				if(target == null) continue;
+				foreach(var vfx in vfxOnTargetEnd)
 				{
-					Instantiate(vfx, target.transform);
+					Destroy(Instantiate(vfx, target.transform), 2f);
+				}
+
+				if(target.TryGetComponent(out audioPlayer))
+				{
+					audioPlayer.PlaySound(sfxOnTargetEnd);
 				}
 			}
 		}

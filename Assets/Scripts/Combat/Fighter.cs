@@ -107,6 +107,7 @@ namespace RPG.Combat
 
 		private void Attack()
 		{
+			Debug.Log("ggg");
 			transform.LookAt(_target.transform);
 			if(!(_timeSinceLastAttack > timeBetweenAttacks)) return;
 			AttackAnimation();

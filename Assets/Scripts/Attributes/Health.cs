@@ -15,6 +15,7 @@ namespace RPG.Attributes
 		[SerializeField] private UnityEvent onDie;
 
 		private BaseStats _baseStats;
+		public bool IsInvulnerable {get;set;}
 
 		//TODO Move everything to C# event
 		public static event Action OnPlayerDeath;
@@ -29,6 +30,7 @@ namespace RPG.Attributes
 		private LazyValue<float> _healthPoints;
 
 		public bool IsDead {get;private set;}
+
 		private static readonly int DieHash = Animator.StringToHash("die");
 
 		private void Awake()
@@ -63,6 +65,7 @@ namespace RPG.Attributes
 
 		public void TakeDamage(GameObject instigator, float damage)
 		{
+			if(IsInvulnerable) return;
 			_healthPoints.Value = Mathf.Max(_healthPoints.Value - damage, 0);
 			takeDamage.Invoke(damage);
 			OnTakeDamage?.Invoke(instigator, damage);

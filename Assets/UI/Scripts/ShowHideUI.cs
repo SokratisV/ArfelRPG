@@ -13,7 +13,6 @@ namespace RPG.UI
 		[SerializeField] private bool startState;
 		[SerializeField] private bool disableRaycastingOnHide = false;
 		
-
 		private Vector2 _initialPosition;
 		private Canvas _canvas;
 		private GraphicRaycaster _raycaster;

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 530737f8503545a192728a8cf16324fa, type: 3}
+  m_Name: Roll Skill
+  m_EditorClassIdentifier: 
+  skillID: 83bef455-e343-4538-97ce-79acdf2471e5
+  displayName: Roll
+  description: Roll distance is 6 units. 2 seconds cooldown.
+  icon: {fileID: 21300000, guid: 5d7061fc7da05ce44add317708ec7215, type: 3}
+  cooldown: 2
+  targetBehavior: {fileID: 11400000, guid: 57b94b5a2bd2daf40bc6cb8afc96b76b, type: 2}
+  skillBehavior: {fileID: 11400000, guid: 9a13730b0d236bb429b37d589e3bc2ec, type: 2}
+  vfxOnUserStart: []
+  vfxOnTargetStart: []
+  sfxOnUserStart:
+  - {fileID: 8300000, guid: da4f5695bff34bf4b88959334d31f55f, type: 3}
+  sfxOnTargetStart: []
+  vfxOnUserEnd: []
+  vfxOnTargetEnd: []
+  sfxOnUserEnd: []
+  sfxOnTargetEnd: []

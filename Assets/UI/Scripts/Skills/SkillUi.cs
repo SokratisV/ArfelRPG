@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using RPG.Core;
 using RPG.Skills;
 using RPG.UI.Dragging;

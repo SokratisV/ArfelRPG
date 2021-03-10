@@ -165,8 +165,9 @@ namespace RPG.Control
 				else
 				{
 					_mover.QueueMoveAction(target);
-					MovementFeedback(target);
 				}
+
+				MovementFeedback(target);
 			}
 			else
 			{
@@ -176,8 +177,9 @@ namespace RPG.Control
 				{
 					_skillUser.CancelAction();
 					_mover.Move(target);
-					MovementFeedback(target);
 				}
+
+				MovementFeedback(target);
 			}
 		}
 

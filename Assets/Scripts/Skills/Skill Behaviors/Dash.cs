@@ -1,4 +1,5 @@
-﻿using RPG.Core;
+﻿using RPG.Attributes;
+using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,10 +24,17 @@ namespace RPG.Skills.Behaviors
 				}
 
 				user.GetComponent<Mover>().Dash(finalPoint, dashDuration);
+				user.GetComponent<Health>().IsInvulnerable = true;
 			}
 			else return;
 
 			base.BehaviorStart(user, targets, point);
+		}
+
+		public override void BehaviorEnd(GameObject user, GameObject[] targets, Vector3? point = null)
+		{
+			user.GetComponent<Health>().IsInvulnerable = false;
+			base.BehaviorEnd(user, targets, point);
 		}
 	}
 }

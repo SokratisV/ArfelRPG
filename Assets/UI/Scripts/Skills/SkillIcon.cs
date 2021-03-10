@@ -8,8 +8,8 @@ namespace RPG.UI.Skills
 	[RequireComponent(typeof(Image))]
 	public class SkillIcon : MonoBehaviour
 	{
-		[SerializeField] private GameObject textContainer = null;
-		[SerializeField] private TextMeshProUGUI cooldown = null;
+		// [SerializeField] private GameObject textContainer = null;
+		// [SerializeField] private TextMeshProUGUI cooldown = null;
 
 		private Image _image;
 

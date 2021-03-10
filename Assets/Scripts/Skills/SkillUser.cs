@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Core.Interfaces;
 using RPG.Core;
 using RPG.Movement;
@@ -15,6 +14,8 @@ namespace RPG.Skills
 		public event Action OnActionComplete;
 		public event Action<Skill> OnSkillCast, OnSkillEnd, OnSkillSelected;
 
+		[SerializeField] private AudioClip cooldownAudio;
+
 		public bool IsPreparingSkill => _selectedSkill != null;
 
 		/// <summary>
@@ -22,10 +23,13 @@ namespace RPG.Skills
 		/// </summary>
 		public bool? SkillRequiresTarget => _selectedSkill.RequiresTarget;
 
+		public bool CanTargetSelf => _selectedSkill.CanTargetSelf;
+
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
 
 		private bool _activeListCleanup = false, _cooldownListCleanup = false;
 		private float _globalCooldownTimer = 0;
+		private IAudioPlayer _audioPlayer;
 		private Mover _mover = null;
 		private Skill _selectedSkill = null;
 		private ActionScheduler _actionScheduler = null;
@@ -41,6 +45,7 @@ namespace RPG.Skills
 		{
 			_mover = GetComponent<Mover>();
 			_actionScheduler = GetComponent<ActionScheduler>();
+			_audioPlayer = GetComponent<IAudioPlayer>();
 		}
 
 		private void Start()
@@ -48,6 +53,7 @@ namespace RPG.Skills
 			AddSkill(Skill.GetFromID("092f09f3-e273-4b47-aaf5-4483984a1cfa"), 0);
 			AddSkill(Skill.GetFromID("5231d976-a9d9-4917-95fe-1e870c11bb3c"), 1);
 			AddSkill(Skill.GetFromID("83bef455-e343-4538-97ce-79acdf2471e5"), 2);
+			AddSkill(Skill.GetFromID("77160995-f7dd-4f3b-a6a5-7ddf45b731bf"), 3);
 		}
 
 		private void Update()
@@ -127,7 +133,7 @@ namespace RPG.Skills
 
 		public void ExecuteQueuedAction(IActionData data) => throw new NotImplementedException();
 
-		public bool CanExecute(GameObject o) => true;
+		public bool CanExecute(GameObject target) => _selectedSkill.CanTargetSelf || gameObject != target;
 
 		public void RemoveSkill(int index)
 		{
@@ -203,7 +209,7 @@ namespace RPG.Skills
 				_selectedSkill = null;
 				return;
 			}
-
+			
 			_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data));
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			OnSkillCast?.Invoke(_selectedSkill);
@@ -223,6 +229,7 @@ namespace RPG.Skills
 				if(skill.Skill == selectedSkill) return true;
 			}
 
+			// _audioPlayer.PlaySound(cooldownAudio);
 			return false;
 		}
 

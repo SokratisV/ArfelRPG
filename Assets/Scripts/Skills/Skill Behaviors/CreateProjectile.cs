@@ -11,14 +11,15 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
 		{
-			var projectileInstance = Instantiate(projectile);
-			var transform = projectileInstance.transform;
-			transform.position = user.transform.position;
-			transform.rotation = user.transform.rotation;
 			if(targets[0] != null)
 			{
+				var projectileInstance = Instantiate(projectile);
+				var transform = projectileInstance.transform;
+				transform.position = user.transform.position;
+				transform.rotation = user.transform.rotation;
 				projectileInstance.SetTarget(targets[0].GetComponent<Health>(), user, damage);
 			}
+
 
 			base.BehaviorStart(user, targets, point);
 		}

@@ -1,4 +1,5 @@
-﻿using RPG.Core;
+﻿using RPG.Attributes;
+using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,12 +16,14 @@ namespace RPG.Skills.Behaviors
 			var path = new NavMeshPath();
 			if(NavMesh.CalculatePath(user.transform.position, point.Value, NavMesh.AllAreas, path))
 			{
+				user.GetComponent<Health>().IsInvulnerable = true;
 				if(Helper.IsWithinDistance(point.Value, user.transform.position, distance))
 				{
 					user.GetComponent<Mover>().Blink(point.Value);
+					base.BehaviorStart(user, targets, point);
 					return;
 				}
-				
+
 				var finalPoint = Helper.CalculateMaximumDistanceNavMeshPoint(path, distance);
 				if(finalPoint == default)
 				{
@@ -33,6 +36,12 @@ namespace RPG.Skills.Behaviors
 			else return;
 
 			base.BehaviorStart(user, targets, point);
+		}
+
+		public override void BehaviorEnd(GameObject user, GameObject[] targets, Vector3? point = null)
+		{
+			user.GetComponent<Health>().IsInvulnerable = false;
+			base.BehaviorEnd(user, targets, point);
 		}
 	}
 }
