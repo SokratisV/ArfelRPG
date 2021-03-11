@@ -20,7 +20,6 @@ namespace RPG.Movement
 		private float _distanceBeforeReachingDestination;
 		private Health _health;
 		private Animator _animator;
-		private Rigidbody _rigidbody;
 		private NavMeshAgent _navMeshAgent;
 		private Coroutine _selfUpdateRoutine;
 		private ActionScheduler _actionScheduler;
@@ -36,7 +35,6 @@ namespace RPG.Movement
 			_animator = GetComponent<Animator>();
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_health = GetComponent<Health>();
-			_rigidbody = GetComponent<Rigidbody>();
 		}
 
 		private void OnEnable()
@@ -57,8 +55,9 @@ namespace RPG.Movement
 
 		#region Public
 
-		public bool IsInRange(Transform targetTransform, float withinDistance) =>
-			Helper.IsWithinDistance(transform, targetTransform, withinDistance);
+		public bool IsInRange(Transform targetTransform, float withinDistance) => Helper.IsWithinDistance(transform, targetTransform, withinDistance);
+
+		public bool IsInRange(Vector3 targetPoint, float withinDistance) => Helper.IsWithinDistance(transform.position, targetPoint, withinDistance);
 
 		public bool CanMoveTo(Vector3 destination)
 		{
@@ -87,13 +86,14 @@ namespace RPG.Movement
 
 		public void Dash(Vector3 destination, float duration)
 		{
-			DisableMoverFor(duration, () => _rigidbody.isKinematic = true);
-			transform.rotation = Quaternion.LookRotation(destination - transform.position);
-			_rigidbody.isKinematic = false;
+			var initialAcceleration = _navMeshAgent.acceleration;
 			var currentPosition = transform.position;
 			var speedRequired = Vector3.Distance(currentPosition, destination) / duration;
-			var direction = (destination - currentPosition).normalized;
-			_rigidbody.velocity = direction * speedRequired;
+			Helper.DoAfterSeconds(() => _navMeshAgent.acceleration = initialAcceleration, duration, this);
+			_navMeshAgent.acceleration *= 2;
+			_navMeshAgent.destination = destination;
+			_navMeshAgent.speed = speedRequired;
+			_navMeshAgent.isStopped = false;
 			_animator.SetTrigger(Roll);
 		}
 
@@ -101,10 +101,8 @@ namespace RPG.Movement
 		{
 			_animator.SetTrigger(BlinkHash);
 			DisableMoverFor(.4f, () => _navMeshAgent.Warp(point));
-			transform.rotation = Quaternion.LookRotation(point - transform.position);
+			StartCoroutine(RotateOverTime(0.2f, point));
 		}
-
-		public void DisableMoverFor(float duration, Action extraActionOnEnd = null) => StartCoroutine(DisableForSeconds(duration, extraActionOnEnd));
 
 		public void CancelAction()
 		{
@@ -131,6 +129,29 @@ namespace RPG.Movement
 
 		#region Private
 
+		private IEnumerator RotateOverTime(float time, Vector3 targetPosition)
+		{
+			var currentRotation = transform.rotation;
+			var lookRotation = Quaternion.LookRotation(targetPosition - transform.position);
+			var progress = 0f;
+			while(progress < 1)
+			{
+				transform.rotation = Quaternion.Slerp(currentRotation, lookRotation, progress);
+				progress += Time.deltaTime / time;
+				yield return null;
+			}
+		}
+
+		private void DisableMoverFor(float duration, Action extraActionOnEnd = null)
+		{
+			DisableMover();
+			Helper.DoAfterSeconds(() =>
+			{
+				extraActionOnEnd?.Invoke();
+				EnableMover();
+			}, duration, this);
+		}
+
 		private void DisableMover()
 		{
 			_navMeshAgent.enabled = false;
@@ -141,15 +162,6 @@ namespace RPG.Movement
 		{
 			_navMeshAgent.enabled = true;
 			_selfUpdateRoutine = _selfUpdateRoutine.StartCoroutine(this, UpdateMover());
-		}
-
-		private IEnumerator DisableForSeconds(float seconds, Action extraActionOnEnd = null)
-		{
-			DisableMover();
-			yield return new WaitForSeconds(seconds);
-			extraActionOnEnd?.Invoke();
-			yield return null;
-			EnableMover();
 		}
 
 		private IEnumerator UpdateMover()

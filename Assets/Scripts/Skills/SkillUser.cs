@@ -29,6 +29,8 @@ namespace RPG.Skills
 
 		private bool _activeListCleanup = false, _cooldownListCleanup = false;
 		private float _globalCooldownTimer = 0;
+		private Vector3? _targetPoint;
+		private GameObject _target;
 		private IAudioPlayer _audioPlayer;
 		private Mover _mover = null;
 		private Skill _selectedSkill = null;
@@ -61,6 +63,35 @@ namespace RPG.Skills
 			SkillListCleanup();
 			UpdateCooldowns();
 			UpdateActiveSkills();
+			MoveToCast();
+		}
+
+		private void MoveToCast()
+		{
+			if(_targetPoint != null)
+			{
+				if(_selectedSkill.Range <= 0 || _mover.IsInRange(_targetPoint.Value, _selectedSkill.Range))
+				{
+					_mover.CancelAction();
+					UseSelectedSkill(null, _targetPoint);
+				}
+				else
+				{
+					_mover.MoveWithoutAction(_targetPoint.Value);
+				}
+			}
+			else if(_target != null)
+			{
+				if(_selectedSkill.Range <= 0 || _mover.IsInRange(_target.transform, _selectedSkill.Range))
+				{
+					_mover.CancelAction();
+					UseSelectedSkill(_target, null);
+				}
+				else
+				{
+					_mover.MoveWithoutAction(_target.transform.position);
+				}
+			}
 		}
 
 		#endregion
@@ -84,18 +115,24 @@ namespace RPG.Skills
 			}
 		}
 
-		public void Execute() => UseSelectedSkill(null, null);
+		public void Execute(GameObject target)
+		{
+			_target = target;
+			_actionScheduler.StartAction(this);
+		}
 
-		public void Execute(GameObject target) => UseSelectedSkill(target, null);
-
-		public void Execute(Vector3 hitPoint) => UseSelectedSkill(null, hitPoint);
+		public void Execute(Vector3 hitPoint)
+		{
+			_targetPoint = hitPoint;
+			_actionScheduler.StartAction(this);
+		}
 
 		public void QueueExecution(GameObject target)
 		{
 			Debug.Log("Queue Skill action Not Yet Implemented");
 			Execute(target);
 		}
-		
+
 		public object CaptureState()
 		{
 			var state = new Dictionary<int, DockedItemRecord>();
@@ -123,6 +160,8 @@ namespace RPG.Skills
 		{
 			_mover.CancelAction();
 			_selectedSkill = null;
+			_target = null;
+			_targetPoint = null;
 		}
 
 		public void CompleteAction()
@@ -133,7 +172,23 @@ namespace RPG.Skills
 
 		public void ExecuteQueuedAction(IActionData data) => throw new NotImplementedException();
 
-		public bool CanExecute(GameObject target) => _selectedSkill.CanTargetSelf || gameObject != target;
+		//if is within range or if not and can move to
+		public bool CanExecute(Vector3 target)
+		{
+			if(_selectedSkill.Range > 0 && !Helper.IsWithinDistance(target, transform.position, _selectedSkill.Range))
+			{
+				return _mover.CanMoveTo(target);
+			}
+
+			return true;
+		}
+
+		//if is within range or if can self target
+		public bool CanExecute(GameObject target)
+		{
+			if(!CanExecute(target.transform.position)) return false;
+			return _selectedSkill.CanTargetSelf || gameObject != target;
+		}
 
 		public void RemoveSkill(int index)
 		{
@@ -203,18 +258,22 @@ namespace RPG.Skills
 		private void UseSelectedSkill(GameObject target, Vector3? hitPoint)
 		{
 			if(IsSkillOnCooldown(_selectedSkill)) return;
+
 			var data = _selectedSkill.OnStart(gameObject, target, hitPoint);
 			if(data == null)
 			{
 				_selectedSkill = null;
 				return;
 			}
-			
+
 			_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data));
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			OnSkillCast?.Invoke(_selectedSkill);
+			OnActionComplete?.Invoke();
 			_globalCooldownTimer = GlobalValues.GlobalCooldown;
 			_selectedSkill = null;
+			_target = null;
+			_targetPoint = null;
 		}
 
 		private bool IsSkillOnCooldown(Skill selectedSkill)

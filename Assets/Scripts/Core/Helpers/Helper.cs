@@ -35,7 +35,13 @@ namespace RPG.Core
 			return finalPoint;
 		}
 
-		public static void StartCoroutine(IEnumerator enumerator, MonoBehaviour mono) => mono.StartCoroutine(enumerator);
+		public static void DoAfterSeconds(Action action, float seconds, MonoBehaviour mono) => mono.StartCoroutine(DoAfterSeconds(action, seconds));
+
+		private static IEnumerator DoAfterSeconds(Action action, float seconds)
+		{
+			yield return new WaitForSeconds(seconds);
+			action?.Invoke();
+		}
 
 		private static readonly Dictionary<KeyCode, string> NiceKeyCodeNames = new Dictionary<KeyCode, string>()
 		{
@@ -47,7 +53,7 @@ namespace RPG.Core
 		};
 
 		public static string KeyCodeName(KeyCode keyCode) => NiceKeyCodeNames.TryGetValue(keyCode, out var name)? name:"";
-		
+
 		public static float GetPathLength(NavMeshPath path)
 		{
 			var total = 0f;

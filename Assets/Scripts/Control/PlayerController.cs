@@ -20,6 +20,7 @@ namespace RPG.Control
 		private SkillUser _skillUser;
 		private Camera _mainCamera;
 		private bool _isDraggingUI = false;
+		private bool _hasInputBeenReset = true;
 		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius;
 
 		[Serializable]
@@ -71,7 +72,9 @@ namespace RPG.Control
 				}
 				else
 				{
-					if(HasHitNavMesh(CursorType.Skill, false)) return true;
+					if(HasHitNavMesh(CursorType.Skill, _skillUser.CanExecute)) return true;
+					SetCursor(CursorType.None);
+					return true;
 				}
 			}
 
@@ -144,11 +147,11 @@ namespace RPG.Control
 			return _isDraggingUI;
 		}
 
-		private bool InteractWithMovement() => HasHitNavMesh(CursorType.Movement);
+		private bool InteractWithMovement() => HasHitNavMesh(CursorType.Movement, _mover.CanMoveTo);
 
-		private bool HasHitNavMesh(CursorType cursor, bool restrictToMovement = true)
+		private bool HasHitNavMesh(CursorType cursor, Func<Vector3, bool> extraCheck)
 		{
-			var hasHit = RaycastNavMesh(out var target, restrictToMovement);
+			var hasHit = RaycastNavMesh(out var target, extraCheck);
 			if(!hasHit) return false;
 			CheckPressedButtons(target);
 			SetCursor(cursor);
@@ -157,7 +160,7 @@ namespace RPG.Control
 
 		private void CheckPressedButtons(Vector3 target)
 		{
-			if(Input.GetMouseButton(1) && _skillUser.IsPreparingSkill) _skillUser.CancelAction();
+			ResetInput();
 			if(Input.GetKey(KeyCode.LeftControl))
 			{
 				if(!Input.GetMouseButtonDown(0)) return;
@@ -172,7 +175,13 @@ namespace RPG.Control
 			else
 			{
 				if(!Input.GetMouseButton(0)) return;
-				if(_skillUser.IsPreparingSkill) _skillUser.Execute(target);
+				if(!_hasInputBeenReset) return;
+
+				if(_skillUser.IsPreparingSkill)
+				{
+					_hasInputBeenReset = false;
+					_skillUser.Execute(target);
+				}
 				else
 				{
 					_skillUser.CancelAction();
@@ -183,7 +192,13 @@ namespace RPG.Control
 			}
 		}
 
-		private bool RaycastNavMesh(out Vector3 target, bool restrictToMovement = true)
+		private void ResetInput()
+		{
+			if(Input.GetMouseButtonUp(0)) _hasInputBeenReset = true;
+			if(Input.GetMouseButtonDown(1) && _skillUser.IsPreparingSkill) _skillUser.CancelAction();
+		}
+
+		private bool RaycastNavMesh(out Vector3 target, Func<Vector3, bool> extraCheck)
 		{
 			target = new Vector3();
 			var hasHit = Physics.Raycast(GetMouseRay(), out _movementRaycast);
@@ -193,7 +208,7 @@ namespace RPG.Control
 			if(!hasCastToNavMesh) return false;
 
 			target = navMeshHit.position;
-			return!restrictToMovement || _mover.CanMoveTo(target);
+			return extraCheck.Invoke(target);
 		}
 
 		private void MovementFeedback(Vector3 target)

@@ -107,7 +107,6 @@ namespace RPG.Combat
 
 		private void Attack()
 		{
-			Debug.Log("ggg");
 			transform.LookAt(_target.transform);
 			if(!(_timeSinceLastAttack > timeBetweenAttacks)) return;
 			AttackAnimation();
@@ -146,6 +145,11 @@ namespace RPG.Combat
 			if(!_mover.CanMoveTo(target.transform.position) && !_mover.IsInRange(target.transform, _currentWeaponConfig.GetRange())) return false;
 			var health = target.GetComponent<Health>();
 			return health != null && !health.IsDead;
+		}
+
+		public bool CanExecute(Vector3 point)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void Execute(GameObject combatTarget)
