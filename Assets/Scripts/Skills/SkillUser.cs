@@ -66,34 +66,6 @@ namespace RPG.Skills
 			MoveToCast();
 		}
 
-		private void MoveToCast()
-		{
-			if(_targetPoint != null)
-			{
-				if(_selectedSkill.Range <= 0 || _mover.IsInRange(_targetPoint.Value, _selectedSkill.Range))
-				{
-					_mover.CancelAction();
-					UseSelectedSkill(null, _targetPoint);
-				}
-				else
-				{
-					_mover.MoveWithoutAction(_targetPoint.Value);
-				}
-			}
-			else if(_target != null)
-			{
-				if(_selectedSkill.Range <= 0 || _mover.IsInRange(_target.transform, _selectedSkill.Range))
-				{
-					_mover.CancelAction();
-					UseSelectedSkill(_target, null);
-				}
-				else
-				{
-					_mover.MoveWithoutAction(_target.transform.position);
-				}
-			}
-		}
-
 		#endregion
 
 		#region Public
@@ -203,6 +175,34 @@ namespace RPG.Skills
 		#endregion
 
 		#region Private
+
+		private void MoveToCast()
+		{
+			if(_targetPoint != null)
+			{
+				if(_selectedSkill.Range <= 0 || _mover.IsInRange(_targetPoint.Value, _selectedSkill.Range))
+				{
+					_mover.CancelAction();
+					UseSelectedSkill(null, _targetPoint);
+				}
+				else
+				{
+					_mover.MoveWithoutAction(_targetPoint.Value);
+				}
+			}
+			else if(_target != null)
+			{
+				if(_selectedSkill.Range <= 0 || _mover.IsInRange(_target.transform, _selectedSkill.Range))
+				{
+					_mover.CancelAction();
+					UseSelectedSkill(_target, null);
+				}
+				else
+				{
+					_mover.MoveWithoutAction(_target.transform.position);
+				}
+			}
+		}
 
 		private void UpdateActiveSkills()
 		{
