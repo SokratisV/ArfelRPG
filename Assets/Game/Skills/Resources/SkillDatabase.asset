@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04af39913a8a5a2429021856bf40578b, type: 3}
+  m_Name: SkillDatabase
+  m_EditorClassIdentifier: 
+  nameToId:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - Blink
+    - Fireball
+    - Heal
+    - Roll
+    _keys:
+    - Blink
+    - Fireball
+    - Heal
+    - Roll
+    _values:
+    - 5231d976-a9d9-4917-95fe-1e870c11bb3c
+    - 092f09f3-e273-4b47-aaf5-4483984a1cfa
+    - 77160995-f7dd-4f3b-a6a5-7ddf45b731bf
+    - 83bef455-e343-4538-97ce-79acdf2471e5

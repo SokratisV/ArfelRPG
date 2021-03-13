@@ -15,6 +15,7 @@ namespace RPG.Combat
 	public class Fighter : MonoBehaviour, IAction, ISaveable, ICombatActionable
 	{
 		public event Action OnActionComplete;
+		public event Action<WeaponConfig> OnWeaponChanged;
 
 		[SerializeField] private float timeBetweenAttacks = 1f;
 		[SerializeField] private Transform rightHandTransform = null;
@@ -74,6 +75,7 @@ namespace RPG.Combat
 		{
 			_currentWeaponConfig = weapon;
 			_currentWeapon.Value = AttachWeapon(weapon);
+			OnWeaponChanged?.Invoke(_currentWeaponConfig);
 		}
 
 		private Weapon AttachWeapon(WeaponConfig weapon) => weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
@@ -136,8 +138,6 @@ namespace RPG.Combat
 				_target.TakeDamage(gameObject, damage);
 			}
 		}
-
-		private void Shoot() => Hit();
 
 		public bool CanExecute(GameObject target)
 		{

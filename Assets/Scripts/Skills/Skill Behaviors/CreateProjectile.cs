@@ -9,9 +9,11 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] private Projectile projectile = null;
 		[SerializeField] private float damage;
 		[SerializeField] private float castRange;
-		
+
+		public override bool UseExtraAnimation() => false;
+		public override int SkillAnimationNumber() => 0;
 		public override float GetCastingRange() => castRange;
-		
+
 		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
 		{
 			if(targets[0] != null)

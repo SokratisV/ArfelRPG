@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Interfaces;
+using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Saving;
@@ -14,44 +15,56 @@ namespace RPG.Skills
 		public event Action OnActionComplete;
 		public event Action<Skill> OnSkillCast, OnSkillEnd, OnSkillSelected;
 
-		[SerializeField] private AudioClip cooldownAudio;
-
-		public bool IsPreparingSkill => _selectedSkill != null;
-
 		/// <summary>
 		/// true = requires target, false = requires point, null = self cast
 		/// </summary>
 		public bool? SkillRequiresTarget => _selectedSkill.RequiresTarget;
 
+		public bool IsPreparingSkill => _selectedSkill != null;
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
 
-		private bool _activeListCleanup = false, _cooldownListCleanup = false;
-		private float _globalCooldownTimer = 0;
+		private bool _activeListCleanup, _cooldownListCleanup;
+		private float _globalCooldownTimer;
 		private Vector3? _targetPoint;
 		private GameObject _target;
-		private Mover _mover = null;
-		private Skill _selectedSkill = null;
-		private ActionScheduler _actionScheduler = null;
+		private Mover _mover;
+		private Skill _selectedSkill;
+		private Animator _animator;
+		private ActionScheduler _actionScheduler;
 		private List<CooldownSkill> _skillsOnCooldown = new List<CooldownSkill>();
 		private List<ActivatedSkill> _activatedSkills = new List<ActivatedSkill>();
 		private Dictionary<int, Skill> _learnedSkills = new Dictionary<int, Skill>();
 
 		public static SkillUser GetPlayerSkills() => PlayerFinder.Player.GetComponent<SkillUser>();
+		private static SkillNamesAndIds SkillsDatabase = null;
+		private static readonly int SkillAnimationHash = Animator.StringToHash("skill");
+		private static readonly int SkillAnimationExtraHash = Animator.StringToHash("skillExtra");
 
 		#region Unity
 
 		private void Awake()
 		{
+			if(SkillsDatabase == null)
+			{
+				SkillsDatabase = Resources.Load<SkillNamesAndIds>("SkillDatabase");
+			}
+
 			_mover = GetComponent<Mover>();
 			_actionScheduler = GetComponent<ActionScheduler>();
+			_animator = GetComponent<Animator>();
 		}
 
-		private void Start()
+
+		private void OnEnable()
 		{
-			AddSkill(Skill.GetFromID("092f09f3-e273-4b47-aaf5-4483984a1cfa"), 0);
-			AddSkill(Skill.GetFromID("5231d976-a9d9-4917-95fe-1e870c11bb3c"), 1);
-			AddSkill(Skill.GetFromID("83bef455-e343-4538-97ce-79acdf2471e5"), 2);
-			AddSkill(Skill.GetFromID("77160995-f7dd-4f3b-a6a5-7ddf45b731bf"), 3);
+			GetComponent<Fighter>().OnWeaponChanged += SwapSkills;
+			OnSkillCast += UseSkillAnimation;
+		}
+
+		private void OnDisable()
+		{
+			GetComponent<Fighter>().OnWeaponChanged -= SwapSkills;
+			OnSkillCast -= UseSkillAnimation;
 		}
 
 		private void Update()
@@ -307,6 +320,34 @@ namespace RPG.Skills
 			return!IsSkillOnCooldown(skill);
 		}
 
+		private void UseSkillAnimation(Skill selectedSkill)
+		{
+			if(selectedSkill.HasExtraAnimation) _animator.SetTrigger(SkillAnimationExtraHash);
+			_animator.SetInteger(SkillAnimationHash, selectedSkill.AnimationHash);
+		}
+
+		private void SwapSkills(WeaponConfig config)
+		{
+			foreach(var skill in _learnedSkills)
+			{
+				RemoveSkill(skill.Key);
+			}
+
+			foreach(var activatedSkill in _activatedSkills)
+			{
+				activatedSkill.HasEnded = true; //temp until I have to end it forcefully
+			}
+
+			for(var index = 0;index < config.SkillIds.Length;index++)
+			{
+				AddSkill(Skill.GetFromID(SkillsDatabase.GetSkillId(config.SkillIds[index])), index);
+			}
+		}
+
+		private void ResetAnimationTrigger()
+		{
+		}
+
 		//Add more of its state, e.g cooldown
 		[Serializable]
 		private struct DockedItemRecord
@@ -317,7 +358,7 @@ namespace RPG.Skills
 
 		private class ActivatedSkill
 		{
-			public bool HasEnded = false;
+			public bool HasEnded;
 			public Skill Skill {get;}
 			private float _duration;
 			private float _timer;
@@ -357,7 +398,7 @@ namespace RPG.Skills
 			public bool HasCooledDown;
 			public Skill Skill {get;}
 			private readonly float _cooldown;
-			private float _timer = 0;
+			private float _timer;
 
 			internal bool Update()
 			{

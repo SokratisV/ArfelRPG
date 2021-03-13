@@ -6,14 +6,13 @@ using UnityEngine.AI;
 
 namespace RPG.Skills.Behaviors
 {
-	public class Blink : SkillBehavior
+	public class Charge : SkillBehavior
 	{
 		[SerializeField] [Range(0, 20f)] private float distance;
-
+		[SerializeField] [Range(0, 2)] private float dashDuration;
 		public override bool UseExtraAnimation() => true;
-
 		public override int SkillAnimationNumber() => 3;
-
+		
 		public override float GetCastingRange() => distance;
 
 		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
@@ -22,23 +21,15 @@ namespace RPG.Skills.Behaviors
 			var path = new NavMeshPath();
 			if(NavMesh.CalculatePath(user.transform.position, point.Value, NavMesh.AllAreas, path))
 			{
-				user.GetComponent<Health>().IsInvulnerable = true;
-				if(Helper.IsWithinDistance(point.Value, user.transform.position, distance))
-				{
-					user.GetComponent<Mover>().Blink(point.Value);
-					base.BehaviorStart(user, targets, point);
-					return;
-				}
-
 				var finalPoint = Helper.CalculateMaximumDistanceNavMeshPoint(path, distance);
 				if(finalPoint == default)
 				{
 					finalPoint = point.Value;
 				}
 
-				user.GetComponent<Mover>().Blink(finalPoint);
+				user.GetComponent<Mover>().Dash(finalPoint, dashDuration);
+				user.GetComponent<Health>().IsInvulnerable = true;
 			}
-
 			else return;
 
 			base.BehaviorStart(user, targets, point);

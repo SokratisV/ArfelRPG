@@ -18,6 +18,9 @@ namespace RPG.Combat
 		[SerializeField] private float weaponRange = 2f, weaponDamage = 5f, percentageBonus = 0;
 		[SerializeField] private bool isRightHanded = true;
 		[SerializeField] private Projectile projectile = null;
+		[SerializeField] private string[] skillIds;
+
+		public string[] SkillIds => skillIds;
 
 		public override string StatDescription
 		{

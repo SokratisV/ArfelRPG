@@ -24,8 +24,6 @@ namespace RPG.Movement
 		private Coroutine _selfUpdateRoutine;
 		private ActionScheduler _actionScheduler;
 		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
-		private static readonly int Roll = Animator.StringToHash("roll");
-		private static readonly int BlinkHash = Animator.StringToHash("blink");
 
 		#region Unity
 
@@ -94,12 +92,10 @@ namespace RPG.Movement
 			_navMeshAgent.destination = destination;
 			_navMeshAgent.speed = speedRequired;
 			_navMeshAgent.isStopped = false;
-			_animator.SetTrigger(Roll);
 		}
 
 		public void Blink(Vector3 point)
 		{
-			_animator.SetTrigger(BlinkHash);
 			DisableMoverFor(.4f, () => _navMeshAgent.Warp(point));
 			StartCoroutine(RotateOverTime(0.2f, point));
 		}

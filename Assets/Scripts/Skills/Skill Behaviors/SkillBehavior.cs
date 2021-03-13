@@ -9,12 +9,12 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] private bool canTargetSelf;
 		[SerializeField] private bool moveInRangeBeforeCasting = true;
 
+		public abstract bool UseExtraAnimation();
+		public abstract int SkillAnimationNumber();
 		public virtual float GetCastingRange() => 0;
 		public bool CanTargetSelf => canTargetSelf;
 		public bool MoveInRangeBefore => moveInRangeBeforeCasting;
-
 		public float Duration => duration;
-
 		public Action<GameObject, GameObject[]> OnStart, OnUpdate, OnEnd;
 
 		public virtual void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null) => OnStart?.Invoke(user, targets);

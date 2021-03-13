@@ -53,17 +53,19 @@ namespace RPG.Skills
 		[SerializeField] private GameObject[] vfxOnTargetEnd;
 		[SerializeField] private AudioClip[] sfxOnUserEnd, sfxOnTargetEnd;
 
-		public string SkillID => skillID;
 		public Sprite Icon => icon;
+		public string SkillID => skillID;
 		public string DisplayName => displayName;
 		public string Description => description;
 		public float Duration => skillBehavior.Duration;
 		public float Cooldown => cooldown;
+		public float CastingRange => skillBehavior.GetCastingRange();
+		public float MinClickDistance => targetBehavior.GetMinRange();
 		public bool? RequiresTarget => targetBehavior.RequireTarget();
 		public bool CanTargetSelf => skillBehavior.CanTargetSelf;
 		public bool MoveInRangeBeforeCasting => skillBehavior.MoveInRangeBefore;
-		public float CastingRange => skillBehavior.GetCastingRange();
-		public float MinClickDistance => targetBehavior.GetMinRange();
+		public bool HasExtraAnimation => skillBehavior.UseExtraAnimation();
+		public int AnimationHash => skillBehavior.SkillAnimationNumber();
 
 		private static Dictionary<string, Skill> ItemLookupCache;
 
