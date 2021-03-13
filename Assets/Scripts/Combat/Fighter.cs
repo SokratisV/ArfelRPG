@@ -105,7 +105,7 @@ namespace RPG.Combat
 
 		public void Execute(GameObject combatTarget)
 		{
-			_target ??= combatTarget.GetComponent<Health>();
+			_target = combatTarget.GetComponent<Health>();
 			_actionScheduler.StartAction(this);
 		}
 

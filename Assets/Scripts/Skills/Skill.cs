@@ -38,6 +38,7 @@ namespace RPG.Skills
 		private Sprite icon = null;
 
 		[SerializeField] private float cooldown;
+		[SerializeField] private bool canBeCancelled;
 		[SerializeField] private TargetBehavior targetBehavior;
 		[SerializeField] private SkillBehavior skillBehavior;
 
@@ -65,6 +66,7 @@ namespace RPG.Skills
 		public bool CanTargetSelf => skillBehavior.CanTargetSelf;
 		public bool MoveInRangeBeforeCasting => skillBehavior.MoveInRangeBefore;
 		public bool HasExtraAnimation => skillBehavior.UseExtraAnimation();
+		public bool CanBeCancelled => canBeCancelled;
 		public bool HasCastTime => skillBehavior.HasCastTime();
 		public int AnimationHash => skillBehavior.SkillAnimationNumber();
 

@@ -12,7 +12,7 @@ namespace RPG.Skills
 	public class SkillUser : MonoBehaviour, IAction, ISaveable, ISpellActionable
 	{
 		public event Action SkillsUpdated;
-		public event Action OnActionComplete;
+		public event Action OnActionComplete, OnActionCancelled;
 		public event Action<Skill> OnSkillCast, OnSkillEnd, OnSkillSelected;
 
 		/// <summary>
@@ -22,6 +22,7 @@ namespace RPG.Skills
 
 		public bool IsPreparingSkill => _selectedSkill != null;
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
+		public bool CanCurrentSkillBeCancelled => _currentCastingSkill == null || _selectedSkill != null  && _selectedSkill.CanBeCancelled;
 
 		private bool _activeListCleanup, _cooldownListCleanup;
 		private float _globalCooldownTimer;
@@ -73,7 +74,7 @@ namespace RPG.Skills
 			SkillListCleanup();
 			UpdateCooldowns();
 			UpdateActiveSkills();
-			UpdateCastingSkill();
+			if(UpdateCastingSkill()) return;
 			MoveToCast();
 		}
 
@@ -156,6 +157,8 @@ namespace RPG.Skills
 		public void CancelAction()
 		{
 			_mover.CancelAction();
+			OnActionCancelled?.Invoke();
+			_currentCastingSkill = null;
 			_selectedSkill = null;
 			_target = null;
 			_targetPoint = null;
@@ -171,6 +174,7 @@ namespace RPG.Skills
 
 		public bool CanExecute(Vector3 target)
 		{
+			if(!CanCurrentSkillBeCancelled) return false;
 			if(_selectedSkill.MinClickDistance > 0 && Helper.IsWithinDistance(target, transform.position, _selectedSkill.MinClickDistance))
 			{
 				return false;
@@ -228,7 +232,7 @@ namespace RPG.Skills
 			}
 		}
 
-		private void UpdateCastingSkill()
+		private bool UpdateCastingSkill()
 		{
 			if(_currentCastingSkill != null)
 			{
@@ -241,7 +245,11 @@ namespace RPG.Skills
 					_target = null;
 					_targetPoint = null;
 				}
+
+				return true;
 			}
+
+			return false;
 		}
 
 		private void UpdateActiveSkills()

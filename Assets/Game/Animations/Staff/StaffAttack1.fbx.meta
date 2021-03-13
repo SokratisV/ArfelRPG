@@ -327,7 +327,16 @@ ModelImporter:
       and has rotation animation that will be discarded.\n\t'Bip001-Spine2' has translation
       animation that will be discarded.\n\t'Bip001-R-Toe0' has translation animation
       that will be discarded.\n"
-    animationRetargetingWarnings: 
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tLeftLowerLeg
+      average position error 0.5 mm and maximum position error 28.1 mm at time 1:21
+      (57.3%) Frame 51\n\tLeftFoot average position error 0.0 mm and maximum position
+      error 2.1 mm at time 1:21 (57.3%) Frame 51\n\tLeftLowerArm average position
+      error 0.2 mm and maximum position error 2.8 mm at time 1:16 (51.7%) Frame 46\n\tRightLowerArm
+      average position error 0.7 mm and maximum position error 9.9 mm at time 0:25
+      (28.1%) Frame 25\n\tLeftFoot average orientation error 0.3 deg and maximum
+      orientation error 2.4 deg at time 0: 6 (6.7%) Frame 6\n\tRightFoot average
+      orientation error 0.2 deg and maximum orientation error 3.5 deg at time 1:
+      4 (38.2%) Frame 34\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -365,7 +374,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.5791093
-        functionName: Shoot
+        functionName: Hit
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
