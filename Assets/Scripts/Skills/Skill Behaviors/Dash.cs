@@ -10,6 +10,8 @@ namespace RPG.Skills.Behaviors
 	{
 		[SerializeField] [Range(0, 20f)] private float distance;
 		[SerializeField] [Range(0, 2)] private float dashDuration;
+		
+		public override float GetCastingRange() => distance;
 
 		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
 		{
@@ -36,5 +38,11 @@ namespace RPG.Skills.Behaviors
 			user.GetComponent<Health>().IsInvulnerable = false;
 			base.BehaviorEnd(user, targets, point);
 		}
+	}
+
+	public class Charge : SkillBehavior
+	{
+		[SerializeField] [Range(0, 20f)] private float distance;
+		[SerializeField] [Range(0, 2)] private float dashDuration;
 	}
 }

@@ -10,6 +10,8 @@ namespace RPG.Skills.Behaviors
 	{
 		[SerializeField] [Range(0, 20f)] private float distance;
 
+		public override float GetCastingRange() => distance;
+
 		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
 		{
 			if(!point.HasValue) return;

@@ -7,8 +7,11 @@ namespace RPG.Skills.Behaviors
 	{
 		[SerializeField] private float duration;
 		[SerializeField] private bool canTargetSelf;
+		[SerializeField] private bool moveInRangeBeforeCasting = true;
 
+		public virtual float GetCastingRange() => 0;
 		public bool CanTargetSelf => canTargetSelf;
+		public bool MoveInRangeBefore => moveInRangeBeforeCasting;
 
 		public float Duration => duration;
 

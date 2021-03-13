@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa210d75bc1043119e8bd775ea5050b3, type: 3}
   m_Name: Shoot Projectile
   m_EditorClassIdentifier: 
+  duration: 0
+  canTargetSelf: 0
+  moveInRangeBeforeCasting: 1
   projectile: {fileID: 3401505232858583259, guid: 42fc2f9c3c8da914bbf340983e643cc2,
     type: 3}
   damage: 50
+  castRange: 8

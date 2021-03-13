@@ -6,6 +6,9 @@ namespace RPG.Skills.Behaviors
 	public class Heal : SkillBehavior
 	{
 		[SerializeField] private float amountToHeal;
+		[SerializeField] private float castRange;
+		
+		public override float GetCastingRange() => castRange;
 
 		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
 		{
@@ -20,4 +23,5 @@ namespace RPG.Skills.Behaviors
 			base.BehaviorStart(user, targets, point);
 		}
 	}
+
 }

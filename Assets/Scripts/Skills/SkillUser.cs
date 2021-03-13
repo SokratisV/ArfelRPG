@@ -23,15 +23,12 @@ namespace RPG.Skills
 		/// </summary>
 		public bool? SkillRequiresTarget => _selectedSkill.RequiresTarget;
 
-		public bool CanTargetSelf => _selectedSkill.CanTargetSelf;
-
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
 
 		private bool _activeListCleanup = false, _cooldownListCleanup = false;
 		private float _globalCooldownTimer = 0;
 		private Vector3? _targetPoint;
 		private GameObject _target;
-		private IAudioPlayer _audioPlayer;
 		private Mover _mover = null;
 		private Skill _selectedSkill = null;
 		private ActionScheduler _actionScheduler = null;
@@ -47,7 +44,6 @@ namespace RPG.Skills
 		{
 			_mover = GetComponent<Mover>();
 			_actionScheduler = GetComponent<ActionScheduler>();
-			_audioPlayer = GetComponent<IAudioPlayer>();
 		}
 
 		private void Start()
@@ -89,14 +85,28 @@ namespace RPG.Skills
 
 		public void Execute(GameObject target)
 		{
-			_target = target;
-			_actionScheduler.StartAction(this);
+			if(_selectedSkill.MoveInRangeBeforeCasting)
+			{
+				_target = target;
+				_actionScheduler.StartAction(this);
+			}
+			else
+			{
+				UseSelectedSkill(target, null);
+			}
 		}
 
 		public void Execute(Vector3 hitPoint)
 		{
-			_targetPoint = hitPoint;
-			_actionScheduler.StartAction(this);
+			if(_selectedSkill.MoveInRangeBeforeCasting)
+			{
+				_targetPoint = hitPoint;
+				_actionScheduler.StartAction(this);
+			}
+			else
+			{
+				UseSelectedSkill(null, hitPoint);
+			}
 		}
 
 		public void QueueExecution(GameObject target)
@@ -144,15 +154,14 @@ namespace RPG.Skills
 
 		public void ExecuteQueuedAction(IActionData data) => throw new NotImplementedException();
 
-		//if is within range or if not and can move to
 		public bool CanExecute(Vector3 target)
 		{
-			if(_selectedSkill.Range > 0 && !Helper.IsWithinDistance(target, transform.position, _selectedSkill.Range))
+			if(_selectedSkill.MinClickDistance > 0 && Helper.IsWithinDistance(target, transform.position, _selectedSkill.MinClickDistance))
 			{
-				return _mover.CanMoveTo(target);
+				return false;
 			}
 
-			return true;
+			return _mover.CanMoveTo(target);
 		}
 
 		//if is within range or if can self target
@@ -180,7 +189,7 @@ namespace RPG.Skills
 		{
 			if(_targetPoint != null)
 			{
-				if(_selectedSkill.Range <= 0 || _mover.IsInRange(_targetPoint.Value, _selectedSkill.Range))
+				if(_mover.IsInRange(_targetPoint.Value, _selectedSkill.CastingRange))
 				{
 					_mover.CancelAction();
 					UseSelectedSkill(null, _targetPoint);
@@ -192,7 +201,7 @@ namespace RPG.Skills
 			}
 			else if(_target != null)
 			{
-				if(_selectedSkill.Range <= 0 || _mover.IsInRange(_target.transform, _selectedSkill.Range))
+				if(_mover.IsInRange(_target.transform, _selectedSkill.CastingRange))
 				{
 					_mover.CancelAction();
 					UseSelectedSkill(_target, null);

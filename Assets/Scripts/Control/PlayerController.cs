@@ -12,6 +12,8 @@ namespace RPG.Control
 {
 	public class PlayerController : MonoBehaviour
 	{
+		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius;
+		
 		private RaycastHit[] _hits;
 		private RaycastHit _movementRaycast;
 		private Health _health;
@@ -21,7 +23,6 @@ namespace RPG.Control
 		private Camera _mainCamera;
 		private bool _isDraggingUI = false;
 		private bool _hasInputBeenReset = true;
-		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius;
 
 		[Serializable]
 		private struct CursorMapping
@@ -50,6 +51,7 @@ namespace RPG.Control
 				return;
 			}
 
+			ResetInput();
 			if(HandleSkillUsage()) return;
 			if(InteractWithComponent()) return;
 			if(InteractWithMovement()) return;
@@ -63,22 +65,19 @@ namespace RPG.Control
 			if(_skillUser.SkillRequiresTarget == null)
 			{
 				_skillUser.Execute(gameObject);
-			}
-			else
-			{
-				if(_skillUser.SkillRequiresTarget.Value)
-				{
-					if(RaycastForSkillTarget()) return true;
-				}
-				else
-				{
-					if(HasHitNavMesh(CursorType.Skill, _skillUser.CanExecute)) return true;
-					SetCursor(CursorType.None);
-					return true;
-				}
+				return true;
 			}
 
-			return false;
+			if(_skillUser.SkillRequiresTarget.Value)
+			{
+				if(RaycastForSkillTarget()) return true;
+				SetCursor(CursorType.None);
+				return true;
+			}
+
+			if(HasHitNavMesh(CursorType.Skill, _skillUser.CanExecute)) return true;
+			SetCursor(CursorType.None);
+			return true;
 		}
 
 		private bool RaycastForSkillTarget()
@@ -160,7 +159,6 @@ namespace RPG.Control
 
 		private void CheckPressedButtons(Vector3 target)
 		{
-			ResetInput();
 			if(Input.GetKey(KeyCode.LeftControl))
 			{
 				if(!Input.GetMouseButtonDown(0)) return;

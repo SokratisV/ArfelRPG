@@ -61,7 +61,9 @@ namespace RPG.Skills
 		public float Cooldown => cooldown;
 		public bool? RequiresTarget => targetBehavior.RequireTarget();
 		public bool CanTargetSelf => skillBehavior.CanTargetSelf;
-		public float Range => targetBehavior.GetRange();
+		public bool MoveInRangeBeforeCasting => skillBehavior.MoveInRangeBefore;
+		public float CastingRange => skillBehavior.GetCastingRange();
+		public float MinClickDistance => targetBehavior.GetMinRange();
 
 		private static Dictionary<string, Skill> ItemLookupCache;
 
