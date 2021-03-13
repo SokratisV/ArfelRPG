@@ -65,6 +65,7 @@ namespace RPG.Skills
 		public bool CanTargetSelf => skillBehavior.CanTargetSelf;
 		public bool MoveInRangeBeforeCasting => skillBehavior.MoveInRangeBefore;
 		public bool HasExtraAnimation => skillBehavior.UseExtraAnimation();
+		public bool HasCastTime => skillBehavior.HasCastTime();
 		public int AnimationHash => skillBehavior.SkillAnimationNumber();
 
 		private static Dictionary<string, Skill> ItemLookupCache;

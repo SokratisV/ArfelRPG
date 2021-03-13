@@ -22,30 +22,20 @@ namespace RPG.Combat
 		[SerializeField] private Transform leftHandTransform = null;
 		[SerializeField] private WeaponConfig defaultWeapon = null;
 
-		private WeaponConfig _currentWeaponConfig;
-		private Equipment _equipment;
+		private float _timeSinceLastAttack = Mathf.Infinity;
 		private Mover _mover;
-		private ActionScheduler _actionScheduler;
-		private Animator _animator;
-		private LazyValue<Weapon> _currentWeapon;
 		private Health _target;
 		private BaseStats _stats;
+		private Animator _animator;
+		private Equipment _equipment;
+		private ActionScheduler _actionScheduler;
+		private LazyValue<Weapon> _currentWeapon;
+		private WeaponConfig _currentWeaponConfig;
 
-		private float _timeSinceLastAttack = Mathf.Infinity;
-
-		// private bool _isCurrentAnimationDone = true;
 		private static readonly int StopAttackHash = Animator.StringToHash("stopAttack");
 		private static readonly int AttackHash = Animator.StringToHash("attack");
 
-		private void Start()
-		{
-			_currentWeapon.ForceInit();
-			var attackSpeedBehaviors = _animator.GetBehaviours<RandomAttackAnimBehavior>();
-			foreach(var behaviour in attackSpeedBehaviors)
-			{
-				behaviour.TimeBetweenAttacks = timeBetweenAttacks;
-			}
-		}
+		#region Unity
 
 		private void Awake()
 		{
@@ -62,27 +52,15 @@ namespace RPG.Combat
 			if(_equipment) _equipment.EquipmentUpdated += UpdateWeapon;
 		}
 
-		[ContextMenu(nameof(UpdateWeapon))]
-		private void UpdateWeapon()
+		private void Start()
 		{
-			var weapon = _equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;
-			EquipWeapon(!weapon? defaultWeapon:weapon);
+			_currentWeapon.ForceInit();
+			var attackSpeedBehaviors = _animator.GetBehaviours<RandomAttackAnimBehavior>();
+			foreach(var behaviour in attackSpeedBehaviors)
+			{
+				behaviour.TimeBetweenAttacks = timeBetweenAttacks;
+			}
 		}
-
-		private Weapon SetupDefaultWeapon() => AttachWeapon(defaultWeapon);
-
-		private void EquipWeapon(WeaponConfig weapon)
-		{
-			_currentWeaponConfig = weapon;
-			_currentWeapon.Value = AttachWeapon(weapon);
-			OnWeaponChanged?.Invoke(_currentWeaponConfig);
-		}
-
-		private Weapon AttachWeapon(WeaponConfig weapon) => weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
-
-		public Health GetTarget() => _target;
-
-		public WeaponConfig GetWeaponConfig() => _currentWeaponConfig;
 
 		private void Update()
 		{
@@ -106,6 +84,77 @@ namespace RPG.Combat
 				_mover.MoveWithoutAction(_target.transform.position);
 			}
 		}
+
+		#endregion
+
+		#region Public
+
+		public Health GetTarget() => _target;
+
+		public WeaponConfig GetWeaponConfig() => _currentWeaponConfig;
+
+		public bool CanExecute(GameObject target)
+		{
+			if(target == null) return false;
+			if(!_mover.CanMoveTo(target.transform.position) && !_mover.IsInRange(target.transform, _currentWeaponConfig.GetRange())) return false;
+			var health = target.GetComponent<Health>();
+			return health != null && !health.IsDead;
+		}
+
+		public bool CanExecute(Vector3 point) => throw new NotImplementedException();
+
+		public void Execute(GameObject combatTarget)
+		{
+			_target ??= combatTarget.GetComponent<Health>();
+			_actionScheduler.StartAction(this);
+		}
+
+		public void QueueExecution(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
+
+		public void CancelAction()
+		{
+			StopAttack();
+			_mover.CancelAction();
+			_target = null;
+		}
+
+		public object CaptureState() => _currentWeaponConfig.name;
+
+		public void RestoreState(object state)
+		{
+			_currentWeaponConfig = Resources.Load<WeaponConfig>($"Equipables/{(string)state}");
+			EquipWeapon(_currentWeaponConfig);
+		}
+
+		public void CompleteAction()
+		{
+			OnActionComplete?.Invoke();
+			_actionScheduler.CompleteAction();
+		}
+
+		public void ExecuteQueuedAction(IActionData data) => _target = ((FighterActionData)data).Target.GetComponent<Health>();
+
+		#endregion
+
+		#region Private
+
+		[ContextMenu(nameof(UpdateWeapon))]
+		private void UpdateWeapon()
+		{
+			var weapon = _equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;
+			EquipWeapon(!weapon? defaultWeapon:weapon);
+		}
+
+		private Weapon SetupDefaultWeapon() => AttachWeapon(defaultWeapon);
+
+		private void EquipWeapon(WeaponConfig weapon)
+		{
+			_currentWeaponConfig = weapon;
+			_currentWeapon.Value = AttachWeapon(weapon);
+			OnWeaponChanged?.Invoke(_currentWeaponConfig);
+		}
+
+		private Weapon AttachWeapon(WeaponConfig weapon) => weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
 
 		private void Attack()
 		{
@@ -139,54 +188,12 @@ namespace RPG.Combat
 			}
 		}
 
-		public bool CanExecute(GameObject target)
-		{
-			if(target == null) return false;
-			if(!_mover.CanMoveTo(target.transform.position) && !_mover.IsInRange(target.transform, _currentWeaponConfig.GetRange())) return false;
-			var health = target.GetComponent<Health>();
-			return health != null && !health.IsDead;
-		}
-
-		public bool CanExecute(Vector3 point)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void Execute(GameObject combatTarget)
-		{
-			_target ??= combatTarget.GetComponent<Health>();
-			_actionScheduler.StartAction(this);
-		}
-
-		public void QueueExecution(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
-
-		public void CancelAction()
-		{
-			StopAttack();
-			_mover.CancelAction();
-			_target = null;
-		}
-
 		private void StopAttack()
 		{
 			_animator.ResetTrigger(AttackHash);
 			_animator.SetTrigger(StopAttackHash);
 		}
 
-		public object CaptureState() => _currentWeaponConfig.name;
-
-		public void RestoreState(object state)
-		{
-			_currentWeaponConfig = Resources.Load<WeaponConfig>($"Equipables/{(string)state}");
-			EquipWeapon(_currentWeaponConfig);
-		}
-
-		public void CompleteAction()
-		{
-			OnActionComplete?.Invoke();
-			_actionScheduler.CompleteAction();
-		}
-
-		public void ExecuteQueuedAction(IActionData data) => _target = ((FighterActionData)data).Target.GetComponent<Health>();
+		#endregion
 	}
 }

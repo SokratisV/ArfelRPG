@@ -10,6 +10,8 @@ namespace RPG.Skills.Behaviors
 	{
 		[SerializeField] [Range(0, 20f)] private float distance;
 
+		public override bool HasCastTime() => false;
+
 		public override bool UseExtraAnimation() => true;
 
 		public override int SkillAnimationNumber() => 3;
@@ -42,6 +44,10 @@ namespace RPG.Skills.Behaviors
 			else return;
 
 			base.BehaviorStart(user, targets, point);
+		}
+
+		public override void BehaviorUpdate(GameObject user, GameObject[] targets, Vector3? point = null)
+		{
 		}
 
 		public override void BehaviorEnd(GameObject user, GameObject[] targets, Vector3? point = null)

@@ -31,12 +31,13 @@ namespace RPG.Skills
 		private Skill _selectedSkill;
 		private Animator _animator;
 		private ActionScheduler _actionScheduler;
+		private CastingSkill _currentCastingSkill;
 		private List<CooldownSkill> _skillsOnCooldown = new List<CooldownSkill>();
 		private List<ActivatedSkill> _activatedSkills = new List<ActivatedSkill>();
 		private Dictionary<int, Skill> _learnedSkills = new Dictionary<int, Skill>();
 
 		public static SkillUser GetPlayerSkills() => PlayerFinder.Player.GetComponent<SkillUser>();
-		private static SkillNamesAndIds SkillsDatabase = null;
+		private static SkillNamesAndIds SkillsDatabase;
 		private static readonly int SkillAnimationHash = Animator.StringToHash("skill");
 		private static readonly int SkillAnimationExtraHash = Animator.StringToHash("skillExtra");
 
@@ -72,6 +73,7 @@ namespace RPG.Skills
 			SkillListCleanup();
 			UpdateCooldowns();
 			UpdateActiveSkills();
+			UpdateCastingSkill();
 			MoveToCast();
 		}
 
@@ -226,6 +228,22 @@ namespace RPG.Skills
 			}
 		}
 
+		private void UpdateCastingSkill()
+		{
+			if(_currentCastingSkill != null)
+			{
+				if(_currentCastingSkill.Update())
+				{
+					OnSkillEnd?.Invoke(_currentCastingSkill.Skill);
+					OnActionComplete?.Invoke();
+					_currentCastingSkill = null;
+					_selectedSkill = null;
+					_target = null;
+					_targetPoint = null;
+				}
+			}
+		}
+
 		private void UpdateActiveSkills()
 		{
 			foreach(var activeSkill in _activatedSkills)
@@ -288,14 +306,22 @@ namespace RPG.Skills
 				return;
 			}
 
-			_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data));
-			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			OnSkillCast?.Invoke(_selectedSkill);
-			OnActionComplete?.Invoke();
+			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
+			if(_selectedSkill.HasCastTime)
+			{
+				_currentCastingSkill = new CastingSkill(_selectedSkill, data);
+			}
+			else
+			{
+				_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data));
+				OnActionComplete?.Invoke();
+				_selectedSkill = null;
+				_target = null;
+				_targetPoint = null;
+			}
+
 			_globalCooldownTimer = GlobalValues.GlobalCooldown;
-			_selectedSkill = null;
-			_target = null;
-			_targetPoint = null;
 		}
 
 		private bool IsSkillOnCooldown(Skill selectedSkill)
@@ -344,10 +370,6 @@ namespace RPG.Skills
 			}
 		}
 
-		private void ResetAnimationTrigger()
-		{
-		}
-
 		//Add more of its state, e.g cooldown
 		[Serializable]
 		private struct DockedItemRecord
@@ -360,10 +382,9 @@ namespace RPG.Skills
 		{
 			public bool HasEnded;
 			public Skill Skill {get;}
-			private float _duration;
 			private float _timer;
-			private SkillData _data;
-
+			private readonly float _duration;
+			private readonly SkillData _data;
 
 			//TODO: create new instance of skill here?
 			public ActivatedSkill(Skill skill, SkillData data)
@@ -386,6 +407,39 @@ namespace RPG.Skills
 				{
 					Skill.OnEnd(_data);
 					HasEnded = true;
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		private class CastingSkill
+		{
+			public Skill Skill {get;}
+			private float _timer;
+			private readonly float _castTime;
+			private readonly SkillData _data;
+
+			public CastingSkill(Skill skill, SkillData data)
+			{
+				Skill = skill;
+				_castTime = skill.Duration;
+				_data = data;
+				_timer = 0;
+			}
+
+			internal bool Update()
+			{
+				if(_castTime < 0) return false;
+				if(_timer <= _castTime)
+				{
+					Skill.OnUpdate(_data);
+					_timer += Time.deltaTime;
+				}
+				else
+				{
+					Skill.OnEnd(_data);
 					return true;
 				}
 

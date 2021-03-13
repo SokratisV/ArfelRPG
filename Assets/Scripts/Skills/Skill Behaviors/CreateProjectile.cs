@@ -1,5 +1,6 @@
 ﻿using RPG.Attributes;
 using RPG.Combat;
+using RPG.Movement;
 using UnityEngine;
 
 namespace RPG.Skills.Behaviors
@@ -10,6 +11,7 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] private float damage;
 		[SerializeField] private float castRange;
 
+		public override bool HasCastTime() => true;
 		public override bool UseExtraAnimation() => false;
 		public override int SkillAnimationNumber() => 0;
 		public override float GetCastingRange() => castRange;
@@ -18,15 +20,33 @@ namespace RPG.Skills.Behaviors
 		{
 			if(targets[0] != null)
 			{
-				var projectileInstance = Instantiate(projectile);
-				var transform = projectileInstance.transform;
-				transform.position = user.transform.position;
-				transform.rotation = user.transform.rotation;
-				projectileInstance.SetTarget(targets[0].GetComponent<Health>(), user, damage);
+				user.GetComponent<Mover>().RotateOverTime(.2f, targets[0].transform.position);
 			}
 
-
 			base.BehaviorStart(user, targets, point);
+		}
+
+		public override void BehaviorUpdate(GameObject user, GameObject[] targets, Vector3? point = null)
+		{
+		}
+
+		public override void BehaviorEnd(GameObject user, GameObject[] targets, Vector3? point = null)
+		{
+			if(targets[0] != null)
+			{
+				ExecuteBehavior(user, targets);
+			}
+
+			base.BehaviorEnd(user, targets, point);
+		}
+
+		private void ExecuteBehavior(GameObject user, GameObject[] targets)
+		{
+			var projectileInstance = Instantiate(projectile);
+			var transform = projectileInstance.transform;
+			transform.position = user.transform.position;
+			transform.rotation = user.transform.rotation;
+			projectileInstance.SetTarget(targets[0].GetComponent<Health>(), user, damage);
 		}
 	}
 }

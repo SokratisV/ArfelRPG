@@ -97,7 +97,7 @@ namespace RPG.Movement
 		public void Blink(Vector3 point)
 		{
 			DisableMoverFor(.4f, () => _navMeshAgent.Warp(point));
-			StartCoroutine(RotateOverTime(0.2f, point));
+			RotateOverTime(0.2f, point);
 		}
 
 		public void CancelAction()
@@ -121,11 +121,13 @@ namespace RPG.Movement
 
 		public void QueueMoveAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction, withinDistance));
 
+		public void RotateOverTime(float time, Vector3 targetPosition) => StartCoroutine(_RotateOverTime(time, targetPosition));
+
 		#endregion
 
 		#region Private
 
-		private IEnumerator RotateOverTime(float time, Vector3 targetPosition)
+		private IEnumerator _RotateOverTime(float time, Vector3 targetPosition)
 		{
 			var currentRotation = transform.rotation;
 			var lookRotation = Quaternion.LookRotation(targetPosition - transform.position);

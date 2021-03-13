@@ -8,8 +8,8 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] private float amountToHeal;
 		[SerializeField] private float castRange;
 
+		public override bool HasCastTime() => true;
 		public override bool UseExtraAnimation() => true;
-
 		public override int SkillAnimationNumber() => 3;
 
 		public override float GetCastingRange() => castRange;
@@ -25,6 +25,10 @@ namespace RPG.Skills.Behaviors
 			}
 
 			base.BehaviorStart(user, targets, point);
+		}
+
+		public override void BehaviorUpdate(GameObject user, GameObject[] targets, Vector3? point = null)
+		{
 		}
 	}
 }
