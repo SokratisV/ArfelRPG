@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbe05334244542f7b84a8165df7164eb, type: 3}
-  m_Name: Blink
+  m_Script: {fileID: 11500000, guid: e3b6fadad12a48379f76d57830826d87, type: 3}
+  m_Name: Freeze
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 5
   canTargetSelf: 0
   moveInRangeBeforeCasting: 0
-  distance: 10
+  damage: 5
+  slowPercent: 50

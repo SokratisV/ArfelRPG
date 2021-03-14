@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.Skills.Behaviors
@@ -17,13 +18,13 @@ namespace RPG.Skills.Behaviors
 		public bool CanTargetSelf => canTargetSelf;
 		public bool MoveInRangeBefore => moveInRangeBeforeCasting;
 		public float Duration => duration;
-		public Action<GameObject, GameObject[]> OnStart, OnEnd;
+		public Action<GameObject, List<GameObject>> OnStart, OnEnd;
 
-		public virtual void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null) => OnStart?.Invoke(user, targets);
+		public virtual void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null) => OnStart?.Invoke(user, targets);
 
-		public abstract void BehaviorUpdate(GameObject user, GameObject[] targets, Vector3? point = null);
+		public abstract void BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null);
 
-		public virtual void BehaviorEnd(GameObject user, GameObject[] targets, Vector3? point = null)
+		public virtual void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
 			OnEnd?.Invoke(user, targets);
 			OnEnd = null;

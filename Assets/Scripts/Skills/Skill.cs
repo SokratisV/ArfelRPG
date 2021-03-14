@@ -10,10 +10,10 @@ namespace RPG.Skills
 	{
 		public readonly GameObject User;
 		public readonly GameObject InitialTarget;
-		public readonly GameObject[] Targets;
+		public readonly List<GameObject> Targets;
 		public Vector3? Point;
 
-		public SkillData(GameObject user, GameObject initialTarget, Vector3? point, GameObject[] targets)
+		public SkillData(GameObject user, GameObject initialTarget, Vector3? point, List<GameObject> targets)
 		{
 			User = user;
 			InitialTarget = initialTarget;
@@ -89,7 +89,7 @@ namespace RPG.Skills
 
 		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data.User, data.Targets, data.Point);
 
-		private void StartVfxSfx(GameObject user, GameObject[] targets)
+		private void StartVfxSfx(GameObject user, List<GameObject> targets)
 		{
 			foreach(var vfx in vfxOnUserStart)
 			{
@@ -117,7 +117,7 @@ namespace RPG.Skills
 			}
 		}
 
-		private void EndVfxSfx(GameObject user, GameObject[] targets)
+		private void EndVfxSfx(GameObject user, List<GameObject> targets)
 		{
 			foreach(var vfx in vfxOnUserEnd)
 			{

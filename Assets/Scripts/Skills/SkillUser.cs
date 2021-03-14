@@ -19,7 +19,6 @@ namespace RPG.Skills
 		/// true = requires target, false = requires point, null = self cast
 		/// </summary>
 		public bool? SkillRequiresTarget => _selectedSkill.RequiresTarget;
-
 		public bool IsPreparingSkill => _selectedSkill != null;
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
 		public bool CanCurrentSkillBeCancelled => _currentCastingSkill == null || _selectedSkill != null  && _selectedSkill.CanBeCancelled;
@@ -156,7 +155,6 @@ namespace RPG.Skills
 
 		public void CancelAction()
 		{
-			_mover.CancelAction();
 			OnActionCancelled?.Invoke();
 			_currentCastingSkill = null;
 			_selectedSkill = null;
@@ -338,11 +336,11 @@ namespace RPG.Skills
 			{
 				if(skill.Skill == selectedSkill) return true;
 			}
-
-			foreach(var skill in _activatedSkills)
-			{
-				if(skill.Skill == selectedSkill) return true;
-			}
+			//
+			// foreach(var skill in _activatedSkills)
+			// {
+			// 	if(skill.Skill == selectedSkill) return true;
+			// }
 
 			// _audioPlayer.PlaySound(cooldownAudio);
 			return false;

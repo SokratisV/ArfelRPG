@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace RPG.Skills.Behaviors
 {
@@ -14,6 +15,6 @@ namespace RPG.Skills.Behaviors
 		public virtual float GetMinRange() => minimumClickRange;
 
 		//Return false when it only cares about the point
-		public abstract bool GetTargets(out GameObject[] targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null);
+		public abstract bool GetTargets(out List<GameObject> targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null);
 	}
 }

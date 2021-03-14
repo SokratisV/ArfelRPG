@@ -14,7 +14,8 @@ namespace RPG.Movement
 	{
 		public event Action OnActionComplete;
 		public bool IsMoving => !_navMeshAgent.isStopped;
-
+		public float CurrentSpeed {get;set;}
+		
 		[SerializeField] private float maxSpeed = 6f;
 
 		private float _distanceBeforeReachingDestination;
@@ -33,6 +34,7 @@ namespace RPG.Movement
 			_animator = GetComponent<Animator>();
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_health = GetComponent<Health>();
+			CurrentSpeed = maxSpeed;
 		}
 
 		private void OnEnable()
@@ -78,7 +80,7 @@ namespace RPG.Movement
 			if(!_navMeshAgent.enabled) return;
 			_navMeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
-			_navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
+			_navMeshAgent.speed = CurrentSpeed * Mathf.Clamp01(speedFraction);
 			_navMeshAgent.isStopped = false;
 		}
 
@@ -122,6 +124,8 @@ namespace RPG.Movement
 		public void QueueMoveAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction, withinDistance));
 
 		public void RotateOverTime(float time, Vector3 targetPosition) => StartCoroutine(_RotateOverTime(time, targetPosition));
+
+		public void RevertToOriginalSpeed() => CurrentSpeed = maxSpeed;
 
 		#endregion
 

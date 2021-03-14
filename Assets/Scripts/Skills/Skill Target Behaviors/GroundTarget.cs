@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace RPG.Skills.Behaviors
 {
@@ -6,7 +7,7 @@ namespace RPG.Skills.Behaviors
 	{
 		public override bool? RequireTarget() => false;
 
-		public override bool GetTargets(out GameObject[] targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null)
+		public override bool GetTargets(out List<GameObject> targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null)
 		{
 			targets = null;
 			return false;

@@ -1,4 +1,5 @@
-﻿using RPG.Attributes;
+﻿using System.Collections.Generic;
+using RPG.Attributes;
 using UnityEngine;
 
 namespace RPG.Skills.Behaviors
@@ -14,7 +15,7 @@ namespace RPG.Skills.Behaviors
 
 		public override float GetCastingRange() => castRange;
 
-		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
+		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
 			if(targets[0].TryGetComponent(out Health health))
 			{
@@ -27,7 +28,7 @@ namespace RPG.Skills.Behaviors
 			base.BehaviorStart(user, targets, point);
 		}
 
-		public override void BehaviorUpdate(GameObject user, GameObject[] targets, Vector3? point = null)
+		public override void BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
 		}
 	}

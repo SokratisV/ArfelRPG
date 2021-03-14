@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbe05334244542f7b84a8165df7164eb, type: 3}
-  m_Name: Blink
+  m_Script: {fileID: 11500000, guid: 6759650768ab4ec28c4a24906814c363, type: 3}
+  m_Name: Ground AoE Target
   m_EditorClassIdentifier: 
-  duration: 1
-  canTargetSelf: 0
-  moveInRangeBeforeCasting: 0
-  distance: 10
+  minimumClickRange: -1
+  radius: 5

@@ -1,4 +1,5 @@
-﻿using RPG.Attributes;
+﻿using System.Collections.Generic;
+using RPG.Attributes;
 using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace RPG.Skills.Behaviors
 		
 		public override float GetCastingRange() => distance;
 
-		public override void BehaviorStart(GameObject user, GameObject[] targets, Vector3? point = null)
+		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
 			if(!point.HasValue) return;
 			var path = new NavMeshPath();
@@ -37,12 +38,12 @@ namespace RPG.Skills.Behaviors
 			base.BehaviorStart(user, targets, point);
 		}
 
-		public override void BehaviorUpdate(GameObject user, GameObject[] targets, Vector3? point = null)
+		public override void BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
 			
 		}
 
-		public override void BehaviorEnd(GameObject user, GameObject[] targets, Vector3? point = null)
+		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
 			user.GetComponent<Health>().IsInvulnerable = false;
 			base.BehaviorEnd(user, targets, point);
