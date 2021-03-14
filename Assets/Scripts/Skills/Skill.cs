@@ -60,6 +60,7 @@ namespace RPG.Skills
 		public string Description => description;
 		public float Duration => skillBehavior.Duration;
 		public float Cooldown => cooldown;
+		public float Radius => targetBehavior.GetRadius();
 		public float CastingRange => skillBehavior.GetCastingRange();
 		public float MinClickDistance => targetBehavior.GetMinRange();
 		public bool? RequiresTarget => targetBehavior.RequireTarget();

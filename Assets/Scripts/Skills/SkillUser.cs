@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace RPG.Skills
 {
-	public class SkillUser : MonoBehaviour, IAction, ISaveable, ISpellActionable
+	public partial class SkillUser : MonoBehaviour, IAction, ISaveable, ISpellActionable
 	{
 		public event Action SkillsUpdated;
 		public event Action OnActionComplete, OnActionCancelled;
@@ -19,10 +19,10 @@ namespace RPG.Skills
 		/// true = requires target, false = requires point, null = self cast
 		/// </summary>
 		public bool? SkillRequiresTarget => _selectedSkill.RequiresTarget;
+
 		public bool IsPreparingSkill => _selectedSkill != null;
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
-		public bool CanCurrentSkillBeCancelled => _currentCastingSkill == null || _selectedSkill != null  && _selectedSkill.CanBeCancelled;
-
+		public bool CanCurrentSkillBeCancelled => _currentCastingSkill == null || _selectedSkill != null && _selectedSkill.CanBeCancelled;
 		private bool _activeListCleanup, _cooldownListCleanup;
 		private float _globalCooldownTimer;
 		private Vector3? _targetPoint;
@@ -31,6 +31,7 @@ namespace RPG.Skills
 		private Skill _selectedSkill;
 		private Animator _animator;
 		private ActionScheduler _actionScheduler;
+		private SkillIndicator _skillIndicator;
 		private CastingSkill _currentCastingSkill;
 		private List<CooldownSkill> _skillsOnCooldown = new List<CooldownSkill>();
 		private List<ActivatedSkill> _activatedSkills = new List<ActivatedSkill>();
@@ -51,10 +52,10 @@ namespace RPG.Skills
 			}
 
 			_mover = GetComponent<Mover>();
+			_skillIndicator = GetComponent<SkillIndicator>();
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_animator = GetComponent<Animator>();
 		}
-
 
 		private void OnEnable()
 		{
@@ -156,6 +157,7 @@ namespace RPG.Skills
 		public void CancelAction()
 		{
 			OnActionCancelled?.Invoke();
+			_skillIndicator.HideIndicator();
 			_currentCastingSkill = null;
 			_selectedSkill = null;
 			_target = null;
@@ -178,6 +180,7 @@ namespace RPG.Skills
 				return false;
 			}
 
+			_skillIndicator.ShowIndicator(target, _selectedSkill.Radius);
 			return _mover.CanMoveTo(target);
 		}
 
@@ -201,6 +204,12 @@ namespace RPG.Skills
 		#endregion
 
 		#region Private
+
+		private void RemoveAllSkills()
+		{
+			_learnedSkills.Clear();
+			SkillsUpdated?.Invoke();
+		}
 
 		private void MoveToCast()
 		{
@@ -237,7 +246,7 @@ namespace RPG.Skills
 				if(_currentCastingSkill.Update())
 				{
 					OnSkillEnd?.Invoke(_currentCastingSkill.Skill);
-					OnActionComplete?.Invoke();
+					CompleteAction();
 					_currentCastingSkill = null;
 					_selectedSkill = null;
 					_target = null;
@@ -321,12 +330,13 @@ namespace RPG.Skills
 			else
 			{
 				_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data));
-				OnActionComplete?.Invoke();
+				CompleteAction();
 				_selectedSkill = null;
 				_target = null;
 				_targetPoint = null;
 			}
 
+			_skillIndicator.HideIndicator();
 			_globalCooldownTimer = GlobalValues.GlobalCooldown;
 		}
 
@@ -336,11 +346,6 @@ namespace RPG.Skills
 			{
 				if(skill.Skill == selectedSkill) return true;
 			}
-			//
-			// foreach(var skill in _activatedSkills)
-			// {
-			// 	if(skill.Skill == selectedSkill) return true;
-			// }
 
 			// _audioPlayer.PlaySound(cooldownAudio);
 			return false;
@@ -360,11 +365,7 @@ namespace RPG.Skills
 
 		private void SwapSkills(WeaponConfig config)
 		{
-			foreach(var skill in _learnedSkills)
-			{
-				RemoveSkill(skill.Key);
-			}
-
+			RemoveAllSkills();
 			foreach(var activatedSkill in _activatedSkills)
 			{
 				activatedSkill.HasEnded = true; //temp until I have to end it forcefully
@@ -382,104 +383,6 @@ namespace RPG.Skills
 		{
 			public string skillID;
 			public float remainingCooldown;
-		}
-
-		private class ActivatedSkill
-		{
-			public bool HasEnded;
-			public Skill Skill {get;}
-			private float _timer;
-			private readonly float _duration;
-			private readonly SkillData _data;
-
-			//TODO: create new instance of skill here?
-			public ActivatedSkill(Skill skill, SkillData data)
-			{
-				Skill = skill;
-				_duration = skill.Duration;
-				_data = data;
-				_timer = 0;
-			}
-
-			internal bool Update()
-			{
-				if(_duration < 0) return false;
-				if(_timer <= _duration)
-				{
-					Skill.OnUpdate(_data);
-					_timer += Time.deltaTime;
-				}
-				else
-				{
-					Skill.OnEnd(_data);
-					HasEnded = true;
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		private class CastingSkill
-		{
-			public Skill Skill {get;}
-			private float _timer;
-			private readonly float _castTime;
-			private readonly SkillData _data;
-
-			public CastingSkill(Skill skill, SkillData data)
-			{
-				Skill = skill;
-				_castTime = skill.Duration;
-				_data = data;
-				_timer = 0;
-			}
-
-			internal bool Update()
-			{
-				if(_castTime < 0) return false;
-				if(_timer <= _castTime)
-				{
-					Skill.OnUpdate(_data);
-					_timer += Time.deltaTime;
-				}
-				else
-				{
-					Skill.OnEnd(_data);
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		private class CooldownSkill
-		{
-			public bool HasCooledDown;
-			public Skill Skill {get;}
-			private readonly float _cooldown;
-			private float _timer;
-
-			internal bool Update()
-			{
-				if(_timer <= _cooldown)
-				{
-					_timer += Time.deltaTime;
-				}
-				else
-				{
-					HasCooledDown = true;
-					return true;
-				}
-
-				return false;
-			}
-
-			public CooldownSkill(Skill skill)
-			{
-				_cooldown = skill.Cooldown;
-				Skill = skill;
-			}
 		}
 
 		#endregion

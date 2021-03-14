@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillID: 83bef455-e343-4538-97ce-79acdf2471e5
   displayName: Roll
-  description: Roll distance is 6 units. 2 seconds cooldown.
+  description: Roll and short distance, becoming invulnerable to damage.
   icon: {fileID: 21300000, guid: 5d7061fc7da05ce44add317708ec7215, type: 3}
   cooldown: 2
+  canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 57b94b5a2bd2daf40bc6cb8afc96b76b, type: 2}
   skillBehavior: {fileID: 11400000, guid: 9a13730b0d236bb429b37d589e3bc2ec, type: 2}
   vfxOnUserStart: []

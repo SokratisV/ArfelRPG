@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillID: 5231d976-a9d9-4917-95fe-1e870c11bb3c
   displayName: Blink
-  description: Blink up to 10 units. 1 second cooldown.
+  description: Teleport to the point you choose.
   icon: {fileID: 21300000, guid: a35b151eea1c2de43a63764c264c1d01, type: 3}
-  cooldown: 1
+  cooldown: 2
+  canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 57b94b5a2bd2daf40bc6cb8afc96b76b, type: 2}
   skillBehavior: {fileID: 11400000, guid: aa898cf868e6fdb47ae0e14df4f72f65, type: 2}
   vfxOnUserStart:

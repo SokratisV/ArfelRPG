@@ -18,7 +18,6 @@ namespace RPG.SceneManagement
 
 		private IEnumerator LoadLastScene()
 		{
-			yield break;
 			yield return _saving.LoadLastScene(SaveFile);
 			var fader = FindObjectOfType<Fader>();
 			fader.FadeOutImmediate();
@@ -27,9 +26,9 @@ namespace RPG.SceneManagement
 
 		private void Update()
 		{
-			if(Input.GetKeyDown(KeyCode.F9))
+			if(Input.GetKeyDown(KeyCode.L))
 				Load();
-			else if(Input.GetKeyDown(KeyCode.F5))
+			else if(Input.GetKeyDown(KeyCode.S))
 				Save();
 			else if(Input.GetKeyDown(KeyCode.Delete))
 				Delete();

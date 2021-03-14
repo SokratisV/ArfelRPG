@@ -13,7 +13,7 @@ namespace RPG.Control
 	public class PlayerController : MonoBehaviour
 	{
 		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius;
-		
+
 		private RaycastHit[] _hits;
 		private RaycastHit _movementRaycast;
 		private Health _health;
