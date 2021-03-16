@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2107581505559253031}
   - component: {fileID: 7461591165536835128}
   - component: {fileID: 2398784987121403354}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.23113209, b: 0.23113209, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 2619679086128401454}
   - component: {fileID: 7964009548861607565}
   - component: {fileID: 2332758797411463837}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Glossy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.14901961}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 7101473924662223996}
   - component: {fileID: 4081621388318260985}
   - component: {fileID: 8096604727846761065}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.18405618, g: 0.6981132, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 2865372938011821986}
   - component: {fileID: 8564689708281311290}
   - component: {fileID: 926419314155281533}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
 --- !u!114 &926419314155281533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 5065382461017819819}
   - component: {fileID: 418996892441617625}
   - component: {fileID: 4575364125578593144}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.60784316}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -426,7 +426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 321857599655065158}
   - component: {fileID: 688476873529695919}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,7 +1,7 @@
 using System;
 using Core.Interfaces;
-using RPG.Utils;
 using RPG.AnimatorBehaviors;
+using RPG.Utils;
 using RPG.Attributes;
 using RPG.Core;
 using RPG.Movement;
@@ -17,12 +17,20 @@ namespace RPG.Combat
 		public event Action OnActionComplete;
 		public event Action<WeaponConfig> OnWeaponChanged;
 
-		[SerializeField] private float timeBetweenAttacks = 1f;
+		public float AttackSpeed
+		{
+			get => _attackSpeed;
+			private set => _attackSpeed = value;
+		}
+
 		[SerializeField] private Transform rightHandTransform = null;
 		[SerializeField] private Transform leftHandTransform = null;
 		[SerializeField] private WeaponConfig defaultWeapon = null;
 
-		private float _timeSinceLastAttack = Mathf.Infinity;
+		private bool CanAttack => _timeSinceLastAttack >= AttackSpeed;
+		private bool _attackAnimationDone = true;
+		private float _timeSinceLastAttack = GlobalValues.DefaultAttackSpeed;
+		private float _attackSpeed;
 		private Mover _mover;
 		private Health _target;
 		private BaseStats _stats;
@@ -47,24 +55,15 @@ namespace RPG.Combat
 			_mover = GetComponent<Mover>();
 			_stats = GetComponent<BaseStats>();
 			//TODO: sometimes breaks and event is never fired
-			// var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
-			// attackListenerBehavior.OnAnimationComplete += () => _isCurrentAnimationDone = true;
+			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
+			attackListenerBehavior.OnAnimationComplete += () => _attackAnimationDone = true;
 			if(_equipment) _equipment.EquipmentUpdated += UpdateWeapon;
 		}
 
-		private void Start()
-		{
-			_currentWeapon.ForceInit();
-			var attackSpeedBehaviors = _animator.GetBehaviours<RandomAttackAnimBehavior>();
-			foreach(var behaviour in attackSpeedBehaviors)
-			{
-				behaviour.TimeBetweenAttacks = timeBetweenAttacks;
-			}
-		}
+		private void Start() => _currentWeapon.ForceInit();
 
 		private void Update()
 		{
-			_timeSinceLastAttack += Time.deltaTime;
 			if(_target == null) return;
 			if(_target.IsDead)
 			{
@@ -73,6 +72,7 @@ namespace RPG.Combat
 				return;
 			}
 
+			_timeSinceLastAttack += Time.deltaTime;
 			if(_mover.IsInRange(_target.transform, _currentWeaponConfig.GetRange()))
 			{
 				_mover.CancelAction();
@@ -80,8 +80,7 @@ namespace RPG.Combat
 			}
 			else
 			{
-				// if(_isCurrentAnimationDone)
-				_mover.MoveWithoutAction(_target.transform.position);
+				if(_attackAnimationDone) _mover.MoveWithoutAction(_target.transform.position);
 			}
 		}
 
@@ -143,6 +142,7 @@ namespace RPG.Combat
 		{
 			var weapon = _equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;
 			EquipWeapon(!weapon? defaultWeapon:weapon);
+			AttackSpeed = _currentWeaponConfig.AttackSpeed;
 		}
 
 		private Weapon SetupDefaultWeapon() => AttachWeapon(defaultWeapon);
@@ -159,14 +159,14 @@ namespace RPG.Combat
 		private void Attack()
 		{
 			transform.LookAt(_target.transform);
-			if(!(_timeSinceLastAttack > timeBetweenAttacks)) return;
+			if(!CanAttack) return;
 			AttackAnimation();
 		}
 
 		private void AttackAnimation()
 		{
-			// _isCurrentAnimationDone = false;
 			_timeSinceLastAttack = 0;
+			_attackAnimationDone = false;
 			_animator.ResetTrigger(StopAttackHash);
 			_animator.SetTrigger(AttackHash);
 		}

@@ -15,12 +15,14 @@ namespace RPG.Combat
 	{
 		[SerializeField] private AnimatorOverrideController animatorOverride = null;
 		[SerializeField] private Weapon equippedPrefab = null;
-		[SerializeField] private float weaponRange = 2f, weaponDamage = 5f, percentageBonus = 0;
+		[SerializeField] private float weaponRange = 2f, weaponDamage = 5f, percentageBonus = 0, attackSpeed;
 		[SerializeField] private bool isRightHanded = true;
 		[SerializeField] private Projectile projectile = null;
 		[SerializeField] private string[] skillIds;
 
 		public string[] SkillIds => skillIds;
+
+		public float AttackSpeed => attackSpeed;
 
 		public override string StatDescription
 		{

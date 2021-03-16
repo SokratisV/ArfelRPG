@@ -15,7 +15,7 @@ namespace RPG.AnimatorBehaviors
 		{
 			var value = Random.Range(0, amountOfAnimations);
 			animator.SetInteger(AttackAnimID, value);
-			// ChangeAnimationLength(animator);
+			ChangeAnimationLength(animator);
 		}
 
 		//Kind of works, not sure why. Breaks stuff when switching weapons, TODO for later

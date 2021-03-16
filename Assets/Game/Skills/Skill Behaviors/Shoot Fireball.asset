@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbb570d5c8742349741be932ce484b4, type: 3}
-  m_Name: Dash
+  m_Script: {fileID: 11500000, guid: fa210d75bc1043119e8bd775ea5050b3, type: 3}
+  m_Name: Shoot Fireball
   m_EditorClassIdentifier: 
-  duration: 0.65
+  duration: 1.35
   canTargetSelf: 0
-  moveInRangeBeforeCasting: 0
-  distance: 4.5
-  dashDuration: 0.5
+  moveInRangeBeforeCasting: 1
+  projectile: {fileID: 3401505232858583259, guid: 42fc2f9c3c8da914bbf340983e643cc2,
+    type: 3}
+  damage: 50
+  castRange: 8

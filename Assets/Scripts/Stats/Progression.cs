@@ -19,9 +19,8 @@ namespace RPG.Stats
 		public int GetLevels(Stat stat, CharacterClass characterClass)
 		{
 			var levels = progressionDictionary[characterClass][stat];
-			return levels.levels.Length;
+			return levels.levels.Length - 1;
 		}
-
 
 		[System.Serializable]
 		public class ProgressionStats

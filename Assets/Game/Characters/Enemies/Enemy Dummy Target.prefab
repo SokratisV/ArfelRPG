@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 1208781365046840337}
   - component: {fileID: 59020573627923725}
   - component: {fileID: 453968624592362707}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -261,6 +261,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898454019296502704, guid: 0aa7d340331a4450b9e3162b98224e46,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4359565403778188666, guid: 0aa7d340331a4450b9e3162b98224e46,
         type: 3}
