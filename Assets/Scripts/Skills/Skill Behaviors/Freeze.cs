@@ -23,15 +23,15 @@ namespace RPG.Skills.Behaviors
 					var target = targets[i];
 					var mover = target.GetComponent<Mover>();
 					mover.CurrentSpeed = mover.CurrentSpeed * slowPercent * 0.01f;
-					if(target.GetComponent<Health>().TakeDamage(user, damage))
-					{
-						targets.Remove(target);
-					}
+					var health = target.GetComponent<Health>();
+					RemoveHealthFromList(health, targets);
+					health.TakeDamage(user, damage);
 				}
 			}
 
 			base.BehaviorStart(user, targets, point);
 		}
+
 
 		public override void BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{

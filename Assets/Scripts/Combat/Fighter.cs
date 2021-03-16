@@ -32,7 +32,7 @@ namespace RPG.Combat
 		private float _timeSinceLastAttack = GlobalValues.DefaultAttackSpeed;
 		private float _attackSpeed;
 		private Mover _mover;
-		private Health _target;
+		private Health _target, _bufferedTarget;
 		private BaseStats _stats;
 		private Animator _animator;
 		private Equipment _equipment;
@@ -54,7 +54,6 @@ namespace RPG.Combat
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_mover = GetComponent<Mover>();
 			_stats = GetComponent<BaseStats>();
-			//TODO: sometimes breaks and event is never fired
 			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
 			attackListenerBehavior.OnAnimationComplete += () => _attackAnimationDone = true;
 			if(_equipment) _equipment.EquipmentUpdated += UpdateWeapon;
@@ -73,7 +72,7 @@ namespace RPG.Combat
 			}
 
 			_timeSinceLastAttack += Time.deltaTime;
-			if(_mover.IsInRange(_target.transform, _currentWeaponConfig.GetRange()))
+			if(_attackAnimationDone && _mover.IsInRange(_target.transform, _currentWeaponConfig.GetRange()))
 			{
 				_mover.CancelAction();
 				Attack();
@@ -104,7 +103,15 @@ namespace RPG.Combat
 
 		public void Execute(GameObject combatTarget)
 		{
-			_target = combatTarget.GetComponent<Health>();
+			if(!_attackAnimationDone)
+			{
+				_bufferedTarget = combatTarget.GetComponent<Health>();
+			}
+			else
+			{
+				_target = combatTarget.GetComponent<Health>();
+			}
+
 			_actionScheduler.StartAction(this);
 		}
 
@@ -115,6 +122,7 @@ namespace RPG.Combat
 			StopAttack();
 			_mover.CancelAction();
 			_target = null;
+			_bufferedTarget = null;
 		}
 
 		public object CaptureState() => _currentWeaponConfig.name;
@@ -158,7 +166,12 @@ namespace RPG.Combat
 
 		private void Attack()
 		{
-			transform.LookAt(_target.transform);
+			if(_bufferedTarget != null)
+			{
+				_target = _bufferedTarget;
+				_bufferedTarget = null;
+			}
+			_mover.RotateOverTime(.2f, _target.transform.position);
 			if(!CanAttack) return;
 			AttackAnimation();
 		}

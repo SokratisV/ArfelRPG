@@ -39,8 +39,9 @@ namespace RPG.Skills
 
 		public static SkillUser GetPlayerSkills() => PlayerFinder.Player.GetComponent<SkillUser>();
 		private static SkillNamesAndIds SkillsDatabase;
-		private static readonly int SkillAnimationHash = Animator.StringToHash("skill");
-		private static readonly int SkillAnimationExtraHash = Animator.StringToHash("skillExtra");
+		private static readonly int UseSkill = Animator.StringToHash("useSkill");
+		private static readonly int ExtraSkillAnimation = Animator.StringToHash("skillExtra");
+		private static readonly int SkillAnimationIndex = Animator.StringToHash("skillIndex");
 
 		#region Unity
 
@@ -104,7 +105,6 @@ namespace RPG.Skills
 			if(_selectedSkill.MoveInRangeBeforeCasting)
 			{
 				_target = target;
-				_actionScheduler.StartAction(this);
 			}
 			else
 			{
@@ -117,7 +117,6 @@ namespace RPG.Skills
 			if(_selectedSkill.MoveInRangeBeforeCasting)
 			{
 				_targetPoint = hitPoint;
-				_actionScheduler.StartAction(this);
 			}
 			else
 			{
@@ -322,6 +321,7 @@ namespace RPG.Skills
 			}
 
 			OnSkillCast?.Invoke(_selectedSkill);
+			_actionScheduler.StartAction(this);
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			if(_selectedSkill.HasCastTime)
 			{
@@ -359,8 +359,9 @@ namespace RPG.Skills
 
 		private void UseSkillAnimation(Skill selectedSkill)
 		{
-			if(selectedSkill.HasExtraAnimation) _animator.SetTrigger(SkillAnimationExtraHash);
-			_animator.SetInteger(SkillAnimationHash, selectedSkill.AnimationHash);
+			if(selectedSkill.HasExtraAnimation) _animator.SetTrigger(ExtraSkillAnimation);
+			_animator.SetTrigger(UseSkill);
+			_animator.SetInteger(SkillAnimationIndex, selectedSkill.AnimationHash);
 		}
 
 		private void SwapSkills(WeaponConfig config)

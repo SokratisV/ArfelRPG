@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RPG.Attributes;
 using UnityEngine;
 
 namespace RPG.Skills.Behaviors
@@ -31,5 +32,14 @@ namespace RPG.Skills.Behaviors
 			OnStart = null;
 		}
 
+		protected static void RemoveHealthFromList(Health health, List<GameObject> list)
+		{
+			void RemoveFromList()
+			{
+				health.OnDeath -= RemoveFromList;
+				list.Remove(health.gameObject);
+			}
+			health.OnDeath += RemoveFromList;
+		}
 	}
 }

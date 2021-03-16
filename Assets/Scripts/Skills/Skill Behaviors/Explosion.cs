@@ -37,10 +37,9 @@ namespace RPG.Skills.Behaviors
 				for(var i = targets.Count - 1;i >= 0;i--)
 				{
 					var target = targets[i];
-					if(target.GetComponent<Health>().TakeDamage(user, damage))
-					{
-						targets.Remove(target);
-					}
+					var health = target.GetComponent<Health>();
+					RemoveHealthFromList(health, targets);
+					health.TakeDamage(user, damage);
 				}
 			}
 

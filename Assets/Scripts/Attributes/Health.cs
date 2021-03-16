@@ -63,9 +63,9 @@ namespace RPG.Attributes
 			OnTakeDamage?.Invoke(null, 60);
 		}
 
-		public bool TakeDamage(GameObject instigator, float damage)
+		public void TakeDamage(GameObject instigator, float damage)
 		{
-			if(IsInvulnerable) return false;
+			if(IsInvulnerable) return;
 			_healthPoints.Value = Mathf.Max(_healthPoints.Value - damage, 0);
 			takeDamage.Invoke(damage);
 			OnTakeDamage?.Invoke(instigator, damage);
@@ -83,11 +83,7 @@ namespace RPG.Attributes
 				{
 					OnDeath?.Invoke();
 				}
-
-				return true;
 			}
-
-			return false;
 		}
 
 		public float GetHealthPoints() => _healthPoints.Value;
