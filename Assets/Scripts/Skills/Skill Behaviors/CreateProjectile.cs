@@ -13,7 +13,7 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] private float castRange;
 
 		public override bool HasCastTime() => true;
-		public override bool UseExtraAnimation() => false;
+		public override bool UseExtraAnimation() => true;
 		public override int SkillAnimationNumber() => 0;
 		public override float GetCastingRange() => castRange;
 

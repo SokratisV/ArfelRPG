@@ -13,7 +13,7 @@ namespace RPG.Skills.Behaviors
 
 		public override float GetCastingRange() => castRange;
 		public override bool HasCastTime() => true;
-		public override bool UseExtraAnimation() => false;
+		public override bool UseExtraAnimation() => true;
 		public override int SkillAnimationNumber() => 2;
 
 		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)

@@ -1,3 +1,4 @@
+using System;
 using RPG.Attributes;
 using UnityEngine;
 
@@ -9,7 +10,12 @@ namespace RPG.UI
 		[SerializeField] private RectTransform foreground = null;
 		[SerializeField] private Canvas rootCanvas = null;
 
-		private void Update()
+		private void OnEnable() => health.OnTakeDamage += UpdateHealthBar;
+		private void OnDisable() => health.OnTakeDamage -= UpdateHealthBar;
+
+		private void Start() => UpdateHealthBar(null, 0);
+
+		private void UpdateHealthBar(GameObject _, float __)
 		{
 			if(Mathf.Approximately(health.GetFraction(), 0) || Mathf.Approximately(health.GetFraction(), 1))
 			{

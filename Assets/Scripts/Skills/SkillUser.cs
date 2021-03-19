@@ -23,6 +23,8 @@ namespace RPG.Skills
 		public bool IsPreparingSkill => _selectedSkill != null;
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
 		public bool CanCurrentSkillBeCancelled => _currentCastingSkill == null || _selectedSkill != null && _selectedSkill.CanBeCancelled;
+		public float SelectedSkillDuration => _selectedSkill.Duration;
+		public bool HasCastTime => _selectedSkill != null && _selectedSkill.HasCastTime;
 		private bool _activeListCleanup, _cooldownListCleanup;
 		private float _globalCooldownTimer;
 		private Vector3? _targetPoint;
@@ -359,7 +361,7 @@ namespace RPG.Skills
 
 		private void UseSkillAnimation(Skill selectedSkill)
 		{
-			if(selectedSkill.HasExtraAnimation) _animator.SetTrigger(ExtraSkillAnimation);
+			if(selectedSkill.HasExtraAnimation) _animator.SetBool(ExtraSkillAnimation, true);
 			_animator.SetTrigger(UseSkill);
 			_animator.SetInteger(SkillAnimationIndex, selectedSkill.AnimationHash);
 		}

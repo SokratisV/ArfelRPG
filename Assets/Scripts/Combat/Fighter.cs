@@ -56,6 +56,7 @@ namespace RPG.Combat
 			_stats = GetComponent<BaseStats>();
 			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
 			attackListenerBehavior.OnAnimationComplete += () => _attackAnimationDone = true;
+			AttackSpeed = _currentWeaponConfig.AttackSpeed;
 			if(_equipment) _equipment.EquipmentUpdated += UpdateWeapon;
 		}
 
@@ -131,6 +132,7 @@ namespace RPG.Combat
 		{
 			_currentWeaponConfig = Resources.Load<WeaponConfig>($"Equipables/{(string)state}");
 			EquipWeapon(_currentWeaponConfig);
+			AttackSpeed = _currentWeaponConfig.AttackSpeed;
 		}
 
 		public void CompleteAction()
