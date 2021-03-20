@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using RPG.Core;
 using RPG.Skills.Behaviors;
@@ -11,14 +12,16 @@ namespace RPG.Skills
 		public readonly GameObject User;
 		public readonly GameObject InitialTarget;
 		public readonly List<GameObject> Targets;
+		public IEnumerator UpdateBehavior;
 		public Vector3? Point;
 
-		public SkillData(GameObject user, GameObject initialTarget, Vector3? point, List<GameObject> targets)
+		public SkillData(GameObject user, GameObject initialTarget, Vector3? point, List<GameObject> targets, IEnumerator updateBehavior)
 		{
 			User = user;
 			InitialTarget = initialTarget;
 			Point = point;
 			Targets = targets;
+			UpdateBehavior = updateBehavior;
 		}
 	}
 
@@ -83,11 +86,9 @@ namespace RPG.Skills
 			skillBehavior.OnStart += StartVfxSfx;
 			skillBehavior.OnEnd += EndVfxSfx;
 			skillBehavior.BehaviorStart(user, targets, point);
-			return new SkillData(user, initialTarget, point, targets);
+			return new SkillData(user, initialTarget, point, targets, skillBehavior.BehaviorUpdate(user, targets, point));
 		}
-
-		public void OnUpdate(SkillData data) => skillBehavior.BehaviorUpdate(data.User, data.Targets, data.Point);
-
+		
 		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data.User, data.Targets, data.Point);
 
 		private void StartVfxSfx(GameObject user, List<GameObject> targets)

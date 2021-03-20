@@ -171,10 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d54b42173fcd5846831f9f665fc7757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileLocation: {fileID: 2756358826429577695}
   onHit:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6627817401146038609}
+        m_TargetAssemblyTypeName: 
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:

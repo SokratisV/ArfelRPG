@@ -23,14 +23,13 @@ namespace RPG.Combat
 			private set => _attackSpeed = value;
 		}
 
-		[SerializeField] private Transform rightHandTransform = null;
-		[SerializeField] private Transform leftHandTransform = null;
 		[SerializeField] private WeaponConfig defaultWeapon = null;
 
 		private bool CanAttack => _timeSinceLastAttack >= AttackSpeed;
 		private bool _attackAnimationDone = true;
 		private float _timeSinceLastAttack = GlobalValues.DefaultAttackSpeed;
 		private float _attackSpeed;
+		private BodyParts _bodyParts;
 		private Mover _mover;
 		private Health _target, _bufferedTarget;
 		private BaseStats _stats;
@@ -54,6 +53,7 @@ namespace RPG.Combat
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_mover = GetComponent<Mover>();
 			_stats = GetComponent<BaseStats>();
+			_bodyParts = GetComponent<BodyParts>();
 			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
 			attackListenerBehavior.OnAnimationComplete += () => _attackAnimationDone = true;
 			AttackSpeed = _currentWeaponConfig.AttackSpeed;
@@ -161,10 +161,18 @@ namespace RPG.Combat
 		{
 			_currentWeaponConfig = weapon;
 			_currentWeapon.Value = AttachWeapon(weapon);
+			if(_currentWeapon.Value.ProjectileLocation)
+			{
+				_bodyParts.ProjectileLocation = _currentWeapon.Value.ProjectileLocation;
+			}
+			else
+			{
+				_bodyParts.RevertProjectileLocation();
+			}
 			OnWeaponChanged?.Invoke(_currentWeaponConfig);
 		}
 
-		private Weapon AttachWeapon(WeaponConfig weapon) => weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
+		private Weapon AttachWeapon(WeaponConfig weapon) => weapon.Spawn(_bodyParts, _animator);
 
 		private void Attack()
 		{
@@ -195,7 +203,7 @@ namespace RPG.Combat
 			if(_target == null) return;
 			if(_currentWeaponConfig.HasProjectile())
 			{
-				_currentWeaponConfig.LaunchProjectile(rightHandTransform, leftHandTransform, _target, gameObject, damage);
+				_currentWeaponConfig.LaunchProjectile(_bodyParts.ProjectileLocation.position, _target, gameObject, damage);
 			}
 			else
 			{

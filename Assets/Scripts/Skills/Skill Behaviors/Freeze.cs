@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using RPG.Attributes;
 using RPG.Movement;
 using UnityEngine;
@@ -33,8 +34,9 @@ namespace RPG.Skills.Behaviors
 		}
 
 
-		public override void BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
+			yield break;
 		}
 
 		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)

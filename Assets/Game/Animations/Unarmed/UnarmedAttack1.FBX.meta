@@ -360,6 +360,9 @@ ModelImporter:
   - first:
       74: 6946849428409460505
     second: UnarmedSkill1_extra
+  - first:
+      74: -370714824807543930
+    second: BowRapidFire
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -1558,12 +1561,11 @@ ModelImporter:
     hasTranslationDoF: 1
     hasExtraRoot: 0
     skeletonHasParents: 0
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e42d9259129992a4d95e0b320ca2a43d,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 2
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 

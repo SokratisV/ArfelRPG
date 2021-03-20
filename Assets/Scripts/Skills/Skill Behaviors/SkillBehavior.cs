@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using RPG.Attributes;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace RPG.Skills.Behaviors
 
 		public virtual void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null) => OnStart?.Invoke(user, targets);
 
-		public abstract void BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null);
+		public abstract IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null);
 
 		public virtual void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{

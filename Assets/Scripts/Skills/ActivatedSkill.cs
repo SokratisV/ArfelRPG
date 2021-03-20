@@ -8,16 +8,15 @@ namespace RPG.Skills
 		{
 			public bool HasEnded;
 			public Skill Skill {get;}
+			public readonly SkillData Data;
 			private float _timer;
 			private readonly float _duration;
-			private readonly SkillData _data;
 
-			//TODO: create new instance of skill here?
 			public ActivatedSkill(Skill skill, SkillData data)
 			{
 				Skill = skill;
+				Data = data;
 				_duration = skill.Duration;
-				_data = data;
 				_timer = 0;
 			}
 
@@ -26,12 +25,11 @@ namespace RPG.Skills
 				if(_duration < 0) return false;
 				if(_timer <= _duration)
 				{
-					Skill.OnUpdate(_data);
 					_timer += Time.deltaTime;
 				}
 				else
 				{
-					Skill.OnEnd(_data);
+					Skill.OnEnd(Data);
 					HasEnded = true;
 					return true;
 				}

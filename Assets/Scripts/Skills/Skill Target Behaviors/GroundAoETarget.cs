@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using RPG.Combat;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.Skills.Behaviors
@@ -16,16 +16,13 @@ namespace RPG.Skills.Behaviors
 			targets = new List<GameObject>();
 			if(raycastPoint != null)
 			{
-				var colliders = Physics.OverlapSphere(raycastPoint.Value, radius);
+				var colliders = Physics.OverlapSphere(raycastPoint.Value, radius, Helper.CharactersMask);
 				foreach(var collider in colliders)
 				{
-					if(collider.TryGetComponent(out CombatTarget ai))
-					{
-						targets.Add(ai.gameObject);
-					}
+					targets.Add(collider.gameObject);
 				}
 			}
-			
+
 			return false;
 		}
 	}

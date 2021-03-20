@@ -11,21 +11,21 @@ namespace RPG.Combat
 
 		private void Awake()
 		{
-			_fighter = PlayerFinder.Player.GetComponent<Fighter>();
-			_text = GetComponent<TextMeshProUGUI>();
+			// _fighter = PlayerFinder.Player.GetComponent<Fighter>();
+			// _text = GetComponent<TextMeshProUGUI>();
 		}
 
 		private void Update()
 		{
-			if(_fighter.GetTarget() == null)
-			{
-				_text.SetText("N/A");
-			}
-			else
-			{
-				var health = _fighter.GetTarget();
-				_text.SetText($"{health.GetHealthPoints():0}/{health.GetMaxHealthPoints():0}");
-			}
+			// if(_fighter.GetTarget() == null)
+			// {
+			// 	_text.SetText("N/A");
+			// }
+			// else
+			// {
+			// 	var health = _fighter.GetTarget();
+			// 	_text.SetText($"{health.GetHealthPoints():0}/{health.GetMaxHealthPoints():0}");
+			// }
 		}
 	}
 }

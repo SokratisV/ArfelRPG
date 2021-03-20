@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbb570d5c8742349741be932ce484b4, type: 3}
   m_Name: Dash
   m_EditorClassIdentifier: 
-  duration: 0.65
+  duration: 1
   canTargetSelf: 0
   moveInRangeBeforeCasting: 0
-  distance: 4.5
-  dashDuration: 0.5
+  distance: 5
+  dashDuration: 0.65

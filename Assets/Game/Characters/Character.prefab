@@ -146,7 +146,8 @@ GameObject:
   - component: {fileID: 7833633318110227214}
   - component: {fileID: 3264097160167645682}
   - component: {fileID: 9092244093043633388}
-  m_Layer: 0
+  - component: {fileID: 6027821638293668026}
+  m_Layer: 7
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,9 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab355e524bc3d4060a15bab8c13dc11e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 1.5
-  rightHandTransform: {fileID: 0}
-  leftHandTransform: {fileID: 0}
   defaultWeapon: {fileID: 11400000, guid: 3177d12e4bf264f938c959a4a183c6d7, type: 2}
 --- !u!114 &1544227862947980035
 MonoBehaviour:
@@ -366,6 +364,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 6910127057034137501}
+--- !u!114 &6027821638293668026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2165176163035486376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9facf6ff883d40f2b76cbb3062c8f0d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHand: {fileID: 0}
+  leftHand: {fileID: 0}
+  rightFoot: {fileID: 0}
+  leftFoot: {fileID: 0}
+  projectileLocation: {fileID: 0}
 --- !u!1 &3656962007176267671
 GameObject:
   m_ObjectHideFlags: 0

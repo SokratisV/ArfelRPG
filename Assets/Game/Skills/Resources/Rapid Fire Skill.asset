@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 530737f8503545a192728a8cf16324fa, type: 3}
+  m_Name: Rapid Fire Skill
+  m_EditorClassIdentifier: 
+  skillID: aac5e1db-ca09-4e2b-ba09-82ba01e5b394
+  displayName: Rapid Fire
+  description: Super.robot.monkey.team.hyper.force.GO!
+  icon: {fileID: 21300000, guid: 5d7061fc7da05ce44add317708ec7215, type: 3}
+  cooldown: 2
+  canBeCancelled: 0
+  targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
+  skillBehavior: {fileID: 11400000, guid: 6bd79c6190770f94c853aa14c9979327, type: 2}
+  vfxOnUserStart: []
+  vfxOnTargetStart: []
+  sfxOnUserStart: []
+  sfxOnTargetStart: []
+  vfxOnUserEnd: []
+  vfxOnTargetEnd: []
+  sfxOnUserEnd: []
+  sfxOnTargetEnd: []

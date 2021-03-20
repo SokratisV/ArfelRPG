@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using RPG.Attributes;
 using RPG.Combat;
 using RPG.Movement;
@@ -8,7 +9,7 @@ namespace RPG.Skills.Behaviors
 {
 	public class CreateProjectile : SkillBehavior
 	{
-		[SerializeField] private Projectile projectile = null;
+		[SerializeField] private TargetedProjectile projectile = null;
 		[SerializeField] private float damage;
 		[SerializeField] private float castRange;
 
@@ -27,8 +28,9 @@ namespace RPG.Skills.Behaviors
 			base.BehaviorStart(user, targets, point);
 		}
 
-		public override void BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
+			yield break;
 		}
 
 		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
@@ -43,10 +45,7 @@ namespace RPG.Skills.Behaviors
 
 		private void ExecuteBehavior(GameObject user, List<GameObject> targets)
 		{
-			var projectileInstance = Instantiate(projectile);
-			var transform = projectileInstance.transform;
-			transform.position = user.transform.position;
-			transform.rotation = user.transform.rotation;
+			var projectileInstance = Instantiate(projectile, user.GetComponent<BodyParts>().ProjectileLocation.position, Quaternion.identity);
 			projectileInstance.SetTarget(targets[0].GetComponent<Health>(), user, damage);
 		}
 	}

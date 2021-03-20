@@ -17,7 +17,7 @@ namespace RPG.Combat
 		[SerializeField] private Weapon equippedPrefab = null;
 		[SerializeField] private float weaponRange = 2f, weaponDamage = 5f, percentageBonus = 0, attackSpeed;
 		[SerializeField] private bool isRightHanded = true;
-		[SerializeField] private Projectile projectile = null;
+		[SerializeField] private TargetedProjectile projectile = null;
 		[SerializeField] private string[] skillIds;
 
 		public string[] SkillIds => skillIds;
@@ -47,20 +47,20 @@ namespace RPG.Combat
 
 		public bool HasProjectile() => projectile != null;
 
-		public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator, float calculatedDamage)
+		public void LaunchProjectile(Vector3 position, Health target, GameObject instigator, float calculatedDamage)
 		{
-			var projectileInstance = Instantiate(projectile, GetTransform(rightHand, leftHand).position, Quaternion.identity);
+			var projectileInstance = Instantiate(projectile, position, Quaternion.identity);
 			projectileInstance.SetTarget(target, instigator, calculatedDamage);
 		}
 
-		public Weapon Spawn(Transform rightHand, Transform leftHand, Animator animator)
+		public Weapon Spawn(BodyParts bodyParts, Animator animator)
 		{
 			DestroyOldWeapon(animator);
 			Weapon weapon = null;
 
 			if(equippedPrefab != null)
 			{
-				var handTransform = GetTransform(rightHand, leftHand);
+				var handTransform = GetHoldingHand(bodyParts.RightHand, bodyParts.LeftHand);
 				weapon = Instantiate(equippedPrefab, handTransform);
 				weapon.gameObject.name = WeaponName;
 				WeaponPerPlayer[animator] = weapon;
@@ -87,7 +87,7 @@ namespace RPG.Combat
 			}
 		}
 
-		private Transform GetTransform(Transform rightHand, Transform leftHand)
+		private Transform GetHoldingHand(Transform rightHand, Transform leftHand)
 		{
 			var handTransform = isRightHanded? rightHand:leftHand;
 			return handTransform;
@@ -162,10 +162,10 @@ namespace RPG.Combat
 			Dirty();
 		}
 
-		private void SetProjectile(Projectile possibleProjectile)
+		private void SetProjectile(TargetedProjectile possibleProjectile)
 		{
 			if(possibleProjectile == null) return;
-			if(!possibleProjectile.TryGetComponent(out Projectile newProjectile)) return;
+			if(!possibleProjectile.TryGetComponent(out TargetedProjectile newProjectile)) return;
 			if(newProjectile == projectile) return;
 			SetUndo("Set Projectile");
 			projectile = newProjectile;
@@ -186,7 +186,7 @@ namespace RPG.Combat
 			SetPercentageBonus(EditorGUILayout.IntSlider("Percentage Bonus", (int)percentageBonus, -10, 100));
 			SetIsRightHanded(EditorGUILayout.Toggle("Is Right Handed", isRightHanded));
 			SetAnimatorOverride((AnimatorOverrideController)EditorGUILayout.ObjectField("Animator Override", animatorOverride, typeof(AnimatorOverrideController), false));
-			SetProjectile((Projectile)EditorGUILayout.ObjectField("Projectile", projectile, typeof(Projectile), false));
+			SetProjectile((TargetedProjectile)EditorGUILayout.ObjectField("Projectile", projectile, typeof(TargetedProjectile), false));
 		}
 #endif
 	}

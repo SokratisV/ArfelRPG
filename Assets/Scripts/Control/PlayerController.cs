@@ -199,7 +199,7 @@ namespace RPG.Control
 		private bool RaycastNavMesh(out Vector3 target, Func<Vector3, bool> extraCheck)
 		{
 			target = new Vector3();
-			var hasHit = Physics.Raycast(GetMouseRay(), out _movementRaycast);
+			var hasHit = Physics.Raycast(GetMouseRay(), out _movementRaycast, 50, LayerMask.GetMask("Terrain"));
 			if(!hasHit) return false;
 
 			var hasCastToNavMesh = NavMesh.SamplePosition(_movementRaycast.point, out var navMeshHit, maxNavMeshProjectionDistance, NavMesh.AllAreas);

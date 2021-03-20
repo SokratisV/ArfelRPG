@@ -247,6 +247,7 @@ namespace RPG.Skills
 				if(_currentCastingSkill.Update())
 				{
 					OnSkillEnd?.Invoke(_currentCastingSkill.Skill);
+					StopCoroutine(_currentCastingSkill.Data.UpdateBehavior);
 					CompleteAction();
 					_currentCastingSkill = null;
 					_selectedSkill = null;
@@ -268,6 +269,7 @@ namespace RPG.Skills
 				{
 					_activeListCleanup = true;
 					OnSkillEnd?.Invoke(activeSkill.Skill);
+					StopCoroutine(activeSkill.Data.UpdateBehavior);
 				}
 			}
 		}
@@ -323,6 +325,7 @@ namespace RPG.Skills
 			}
 
 			OnSkillCast?.Invoke(_selectedSkill);
+			StartCoroutine(data.UpdateBehavior);
 			_actionScheduler.StartAction(this);
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			if(_selectedSkill.HasCastTime)

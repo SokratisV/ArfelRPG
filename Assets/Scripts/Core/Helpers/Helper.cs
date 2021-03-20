@@ -65,5 +65,7 @@ namespace RPG.Core
 
 			return total;
 		}
+
+		public static LayerMask CharactersMask => LayerMask.GetMask("Characters");
 	}
 }

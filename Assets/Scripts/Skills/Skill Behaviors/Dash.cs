@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using RPG.Attributes;
 using RPG.Core;
 using RPG.Movement;
@@ -13,7 +14,7 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] [Range(0, 2)] private float dashDuration;
 
 		public override bool HasCastTime() => false;
-		public override bool UseExtraAnimation() => true;
+		public override bool UseExtraAnimation() => false;
 		public override int SkillAnimationNumber() => 3;
 		public override float GetCastingRange() => distance;
 
@@ -37,8 +38,9 @@ namespace RPG.Skills.Behaviors
 			base.BehaviorStart(user, targets, point);
 		}
 
-		public override void BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
+			yield break;
 		}
 
 		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)

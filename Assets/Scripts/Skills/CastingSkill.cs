@@ -7,15 +7,15 @@ namespace RPG.Skills
 		private class CastingSkill
 		{
 			public Skill Skill {get;}
+			public readonly SkillData Data;
 			private float _timer;
 			private readonly float _castTime;
-			private readonly SkillData _data;
 
 			public CastingSkill(Skill skill, SkillData data)
 			{
 				Skill = skill;
+				Data = data;
 				_castTime = skill.Duration;
-				_data = data;
 				_timer = 0;
 			}
 
@@ -24,12 +24,11 @@ namespace RPG.Skills
 				if(_castTime < 0) return false;
 				if(_timer <= _castTime)
 				{
-					Skill.OnUpdate(_data);
 					_timer += Time.deltaTime;
 				}
 				else
 				{
-					Skill.OnEnd(_data);
+					Skill.OnEnd(Data);
 					return true;
 				}
 
