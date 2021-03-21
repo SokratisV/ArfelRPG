@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ffbdfc24a984b4b9ed3ddadff7e1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trainingDummyPrefab: {fileID: 3782659656829733649}
   aggroDistance: 400
 --- !u!1 &5075727357449342862
 GameObject:
@@ -285,7 +284,7 @@ PrefabInstance:
     - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
         type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
         type: 3}
@@ -330,12 +329,12 @@ PrefabInstance:
     - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
         type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: AggroEverything
+      value: RestoreHealth
       objectReference: {fileID: 0}
     - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
         type: 3}
       propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: RPG.Combat.TrainingDummy, Assembly-CSharp
+      value: RPG.Combat.TrainingDummy, Combat
       objectReference: {fileID: 0}
     - target: {fileID: 8764441479758300247, guid: 0aa7d340331a4450b9e3162b98224e46,
         type: 3}

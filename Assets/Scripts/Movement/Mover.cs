@@ -14,10 +14,11 @@ namespace RPG.Movement
 	{
 		public event Action OnActionComplete;
 		public bool IsMoving => !_navMeshAgent.isStopped;
-		public float CurrentSpeed {get;set;}
-		
+		public float CurrentSpeed { get; set; }
+
 		[SerializeField] private float maxSpeed = 6f;
 
+		private bool _lockMovement;
 		private float _distanceBeforeReachingDestination;
 		private Health _health;
 		private Animator _animator;
@@ -63,9 +64,9 @@ namespace RPG.Movement
 		{
 			var path = new NavMeshPath();
 			var hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
-			if(!hasPath) return false;
-			if(path.status != NavMeshPathStatus.PathComplete) return false;
-			return!(Helper.GetPathLength(path) > GlobalValues.MaxNavPathLength);
+			if (!hasPath) return false;
+			if (path.status != NavMeshPathStatus.PathComplete) return false;
+			return !(Helper.GetPathLength(path) > GlobalValues.MaxNavPathLength);
 		}
 
 		public IAction Move(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
@@ -77,7 +78,7 @@ namespace RPG.Movement
 
 		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
-			if(!_navMeshAgent.enabled) return;
+			if (!_navMeshAgent.enabled || _lockMovement) return;
 			_navMeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
 			_navMeshAgent.speed = CurrentSpeed * Mathf.Clamp01(speedFraction);
@@ -86,10 +87,15 @@ namespace RPG.Movement
 
 		public void Dash(Vector3 destination, float duration)
 		{
+			_lockMovement = true;
 			var initialAcceleration = _navMeshAgent.acceleration;
 			var currentPosition = transform.position;
 			var speedRequired = Vector3.Distance(currentPosition, destination) / duration;
-			Helper.DoAfterSeconds(() => _navMeshAgent.acceleration = initialAcceleration, duration, this);
+			Helper.DoAfterSeconds(() =>
+			{
+				_navMeshAgent.acceleration = initialAcceleration;
+				_lockMovement = false;
+			}, duration, this);
 			_navMeshAgent.acceleration *= 2;
 			_navMeshAgent.destination = destination;
 			_navMeshAgent.speed = speedRequired;
@@ -104,7 +110,7 @@ namespace RPG.Movement
 
 		public void CancelAction()
 		{
-			if(!_navMeshAgent.enabled) return;
+			if (!_navMeshAgent.enabled) return;
 			_navMeshAgent.isStopped = true;
 		}
 
@@ -117,7 +123,7 @@ namespace RPG.Movement
 
 		public void ExecuteQueuedAction(IActionData data)
 		{
-			var moveData = (MoverActionData)data;
+			var moveData = (MoverActionData) data;
 			MoveWithoutAction(moveData.Destination, moveData.Speed, moveData.StopDistance);
 		}
 
@@ -136,7 +142,7 @@ namespace RPG.Movement
 			var currentRotation = transform.rotation;
 			var lookRotation = Quaternion.LookRotation(targetPosition - transform.position);
 			var progress = 0f;
-			while(progress < 1)
+			while (progress < 1)
 			{
 				transform.rotation = Quaternion.Slerp(currentRotation, lookRotation, progress);
 				progress += Time.deltaTime / time;
@@ -168,7 +174,7 @@ namespace RPG.Movement
 
 		private IEnumerator UpdateMover()
 		{
-			while(true)
+			while (true)
 			{
 				CheckIfDestinationIsReached();
 				UpdateAnimator();
@@ -178,9 +184,9 @@ namespace RPG.Movement
 
 		private void CheckIfDestinationIsReached()
 		{
-			if(!_navMeshAgent.isStopped)
+			if (!_navMeshAgent.isStopped)
 			{
-				if(Helper.IsWithinDistance(transform.position, _navMeshAgent.destination, _distanceBeforeReachingDestination))
+				if (Helper.IsWithinDistance(transform.position, _navMeshAgent.destination, _distanceBeforeReachingDestination))
 				{
 					CompleteAction();
 				}
@@ -201,7 +207,7 @@ namespace RPG.Movement
 
 		public void RestoreState(object state)
 		{
-			var position = (SerializableVector3)state;
+			var position = (SerializableVector3) state;
 			_navMeshAgent.enabled = false;
 			transform.position = position.ToVector();
 			_navMeshAgent.enabled = true;

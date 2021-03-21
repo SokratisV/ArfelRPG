@@ -15,7 +15,8 @@ namespace RPG.Attributes
 		[SerializeField] private UnityEvent onDie;
 
 		private BaseStats _baseStats;
-		public bool IsInvulnerable {get;set;}
+		public bool IsInvulnerable { get; set; }
+		public float LowestHealthValue { get; set; } = 0;
 
 		//TODO Move everything to C# event
 		public static event Action OnPlayerDeath;
@@ -29,7 +30,7 @@ namespace RPG.Attributes
 
 		private LazyValue<float> _healthPoints;
 
-		public bool IsDead {get;private set;}
+		public bool IsDead { get; private set; }
 
 		private static readonly int DieHash = Animator.StringToHash("die");
 
@@ -49,6 +50,17 @@ namespace RPG.Attributes
 
 		public void Heal(float healthToRestore) => _healthPoints.Value = Mathf.Min(_healthPoints.Value + healthToRestore, GetMaxHealthPoints());
 
+		/// <summary>
+		/// Heal for x % of max HP
+		/// </summary>
+		/// <param name="percent"></param>
+		public void HealPercent(float percent)
+		{
+			var maxHealthPoints = GetMaxHealthPoints();
+			var healValue = maxHealthPoints * percent * 0.01f;
+			_healthPoints.Value = Mathf.Min(_healthPoints.Value + healValue, maxHealthPoints);
+		}
+
 		private void RestoreHealth()
 		{
 			var regenHealthPoints = _baseStats.GetStat(Stat.Health) * (regenerationPercentage / 100);
@@ -65,17 +77,17 @@ namespace RPG.Attributes
 
 		public void TakeDamage(GameObject instigator, float damage)
 		{
-			if(IsInvulnerable) return;
-			_healthPoints.Value = Mathf.Max(_healthPoints.Value - damage, 0);
+			if (IsInvulnerable) return;
+			_healthPoints.Value = Mathf.Max(_healthPoints.Value - damage, LowestHealthValue);
 			takeDamage.Invoke(damage);
 			OnTakeDamage?.Invoke(instigator, damage);
-			if(_healthPoints.Value == 0)
+			if (_healthPoints.Value == 0)
 			{
 				Die();
 				AwardExperience(instigator);
 				onDie.Invoke();
 				//TODO: Remove from health (add in different script only for player and call it through unity event?)
-				if(tag.Equals("Player"))
+				if (tag.Equals("Player"))
 				{
 					OnPlayerDeath?.Invoke();
 				}
@@ -92,7 +104,7 @@ namespace RPG.Attributes
 
 		private void AwardExperience(GameObject instigator)
 		{
-			if(instigator.TryGetComponent(out Experience experience))
+			if (instigator.TryGetComponent(out Experience experience))
 				experience.GainExperience(_baseStats.GetStat(Stat.ExperienceReward));
 		}
 
@@ -102,7 +114,7 @@ namespace RPG.Attributes
 
 		private void Die()
 		{
-			if(IsDead) return;
+			if (IsDead) return;
 			GetComponent<Animator>().SetTrigger(DieHash);
 			GetComponent<ActionScheduler>().CancelCurrentAction();
 			IsDead = true;
@@ -110,8 +122,8 @@ namespace RPG.Attributes
 
 		public void RestoreState(object state)
 		{
-			_healthPoints.Value = (float)state;
-			if(_healthPoints.Value == 0) Die();
+			_healthPoints.Value = (float) state;
+			if (_healthPoints.Value == 0) Die();
 		}
 
 		public object CaptureState() => _healthPoints.Value;

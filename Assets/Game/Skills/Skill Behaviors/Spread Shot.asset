@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c05c1a87ce4353a0e5f6fc86e9e4a9, type: 3}
   m_Name: Spread Shot
   m_EditorClassIdentifier: 
-  duration: 0
+  duration: 0.5
   canTargetSelf: 0
   moveInRangeBeforeCasting: 0
   projectile: {fileID: 146506245599265125, guid: d061f64087026b644aedf069aa4c79e8,
     type: 3}
-  projectileSpeed: 2
-  damage: 1
-  numberOfProjectiles: 1
+  projectileSpeed: 25
+  damage: 25
+  angleBetweenEachProjectile: 3.5
+  dynamicAngle: 0
+  numberOfProjectiles: 11

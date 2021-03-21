@@ -1,16 +1,27 @@
-﻿namespace RPG.Combat
+﻿using RPG.Attributes;
+
+namespace RPG.Combat
 {
 	using UnityEngine;
 
 	public class TrainingDummy : MonoBehaviour
 	{
-		[SerializeField] private GameObject trainingDummyPrefab;
 		[SerializeField] [Range(-1, 400)] private float aggroDistance;
 
-		public void Respawn()
+		private Health _health;
+
+		private void Awake()
 		{
-			Instantiate(trainingDummyPrefab, transform.position, transform.rotation);
-			Destroy(gameObject, 0.1f);
+			_health = GetComponent<Health>();
+			_health.LowestHealthValue = 1;
+		}
+
+		public void RestoreHealth()
+		{
+			if (_health.GetHealthPoints() <= 1)
+			{
+				_health.HealPercent(100);
+			}
 		}
 	}
 }
