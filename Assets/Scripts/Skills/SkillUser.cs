@@ -317,6 +317,7 @@ namespace RPG.Skills
 		{
 			if(IsSkillOnCooldown(_selectedSkill)) return;
 
+			_actionScheduler.StartAction(this);
 			var data = _selectedSkill.OnStart(gameObject, target, hitPoint);
 			if(data == null)
 			{
@@ -326,7 +327,6 @@ namespace RPG.Skills
 
 			OnSkillCast?.Invoke(_selectedSkill);
 			StartCoroutine(data.UpdateBehavior);
-			_actionScheduler.StartAction(this);
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			if(_selectedSkill.HasCastTime)
 			{

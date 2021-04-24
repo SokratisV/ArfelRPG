@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Kill an enemy
   m_EditorClassIdentifier: 
   objectives:
-  - Kill any enemy.
+  - reference: 1
+    description: Kill enemies.
+  rewards:
+  - number: 1
+    item: {fileID: 11400000, guid: 2fd46f5da8a12974cab854c872ccbfaf, type: 2}

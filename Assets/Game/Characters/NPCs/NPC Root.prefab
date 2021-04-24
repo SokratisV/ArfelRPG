@@ -26,7 +26,119 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ba06868beb42e589f716535cb15a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 11400000, guid: 152bfe3e67aec8441afe05e39349a747, type: 2}
+  dialogue: {fileID: 11400000, guid: fbfc462a8c8645b48a8eeb93087768f0, type: 2}
+  dialogueName: Herbert
+--- !u!114 &1217483092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4176327929018204418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b992ddde5c49d6be4f91f0587ff953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respondToAction: 1
+  actionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RPG.Combat.AggroGroup, Combat
+        m_MethodName: Activate
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &1217483102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4176327929018204418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b992ddde5c49d6be4f91f0587ff953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respondToAction: 2
+  actionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1217483103}
+        m_TargetAssemblyTypeName: RPG.Quests.QuestGiver, Quests
+        m_MethodName: GiveQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1217483103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4176327929018204418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af377865e47d4ed3b0bbca8bafc61239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest: {fileID: 11400000, guid: 35789faeb9a92a04fbe67e9b4718612e, type: 2}
+--- !u!114 &1217483104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4176327929018204418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23eccf353c064860a3bb9b5cfbe4b012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest: {fileID: 11400000, guid: 35789faeb9a92a04fbe67e9b4718612e, type: 2}
+  objective: 1
+--- !u!114 &1217483105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4176327929018204418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b992ddde5c49d6be4f91f0587ff953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respondToAction: 3
+  actionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1217483104}
+        m_TargetAssemblyTypeName: RPG.Quests.QuestCompletion, Quests
+        m_MethodName: CompleteObjective
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &2880346770329819562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43,7 +155,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 021ed2d8525a1b7488aade4080c5a087, type: 2}
+      objectReference: {fileID: 22100000, guid: 083afb6f3090dd64983f6459f72dad89,
+        type: 2}
     - target: {fileID: 704220060066086866, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: m_ApplyRootMotion
@@ -52,7 +165,7 @@ PrefabInstance:
     - target: {fileID: 2165176163035486376, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: m_Name
-      value: NPC Root
+      value: NPC Root (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2165176163035486379, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
@@ -124,10 +237,16 @@ PrefabInstance:
       propertyPath: uniqueIdentifier
       value: 9a2355e2-10c2-4f93-95f9-f3103759908b
       objectReference: {fileID: 0}
+    - target: {fileID: 8602588964328835400, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4339557145984695365, guid: c9fc1e5f9753845c2b3bdff05b8cb07f, type: 3}
     - {fileID: 1544227862947980035, guid: c9fc1e5f9753845c2b3bdff05b8cb07f, type: 3}
     - {fileID: 3211224056665034830, guid: c9fc1e5f9753845c2b3bdff05b8cb07f, type: 3}
+    - {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c9fc1e5f9753845c2b3bdff05b8cb07f, type: 3}
 --- !u!1 &4176327929018204418 stripped
 GameObject:

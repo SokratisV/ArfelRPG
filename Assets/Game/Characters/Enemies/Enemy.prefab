@@ -803,7 +803,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scatterDistance: 1
   dropLibrary: {fileID: 11400000, guid: 08b7c0132b8e2a54a8bb7bd80dc2d548, type: 2}
-  numberOfDrops: 2
 --- !u!114 &8930283256544814967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,6 +881,18 @@ Transform:
 --- !u!4 &1379612859330422077 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 423694, guid: 30cf93deff988e74e88a144bd2127c18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1379612859330531891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1379612859330458251 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 450744, guid: 30cf93deff988e74e88a144bd2127c18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1379612859330531891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1379612859330345497 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 469034, guid: 30cf93deff988e74e88a144bd2127c18,
     type: 3}
   m_PrefabInstance: {fileID: 1379612859330531891}
   m_PrefabAsset: {fileID: 0}
@@ -969,7 +980,7 @@ PrefabInstance:
     - target: {fileID: 2051514496692203678, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2165176163035486376, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
@@ -1183,10 +1194,40 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.488
       objectReference: {fileID: 0}
+    - target: {fileID: 6027821638293668026, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: leftFoot
+      value: 
+      objectReference: {fileID: 1379612859330458251}
+    - target: {fileID: 6027821638293668026, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: leftHand
+      value: 
+      objectReference: {fileID: 1379612859330348351}
+    - target: {fileID: 6027821638293668026, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: rightFoot
+      value: 
+      objectReference: {fileID: 1379612859330345497}
+    - target: {fileID: 6027821638293668026, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: rightHand
+      value: 
+      objectReference: {fileID: 1379612859330422077}
+    - target: {fileID: 6027821638293668026, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: projectileLocation
+      value: 
+      objectReference: {fileID: 1379612859330422077}
     - target: {fileID: 7205849808503109497, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: m_Volume
       value: 0.488
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962337807538224116, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8602588964328835400, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}

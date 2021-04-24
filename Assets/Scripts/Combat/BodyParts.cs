@@ -13,7 +13,7 @@ namespace RPG.Combat
 
 		public Transform ProjectileLocation
 		{
-			get => projectileLocation;
+			get => projectileLocation == null ? transform : projectileLocation;
 			set => projectileLocation = value;
 		}
 
@@ -21,7 +21,7 @@ namespace RPG.Combat
 
 		public Transform RightFoot => rightFoot;
 		public Transform LeftFoot => leftFoot;
-		public Transform LeftHand => leftHand;
-		public Transform RightHand => rightHand;
+		public Transform LeftHand => leftHand == null ? transform : leftHand;
+		public Transform RightHand => rightHand == null ? transform : rightHand;
 	}
 }

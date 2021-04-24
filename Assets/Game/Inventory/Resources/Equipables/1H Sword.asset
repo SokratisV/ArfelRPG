@@ -20,7 +20,9 @@ MonoBehaviour:
   stackable: 0
   _rarity: {fileID: 11400000, guid: 52b1d6db300a6af4e817a7a2b5abb69e, type: 2}
   allowedEquipLocation: 5
-  additiveModifiers: []
+  additiveModifiers:
+  - stat: 0
+    value: 0
   percentageModifiers: []
   animatorOverride: {fileID: 22100000, guid: 9e87592448cb14bd2a1dcf8ccd72f853, type: 2}
   equippedPrefab: {fileID: 8588511950748160044, guid: 5d178ff400dc8401f976b0b1dd09855f,

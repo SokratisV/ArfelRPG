@@ -18,7 +18,7 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
-			if(point != null)
+			if (point != null)
 			{
 				user.GetComponent<Mover>().RotateOverTime(.2f, point.Value);
 			}
@@ -33,14 +33,16 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
-			if(targets != null)
+			if (targets != null)
 			{
-				for(var i = targets.Count - 1;i >= 0;i--)
+				for (var i = targets.Count - 1; i >= 0; i--)
 				{
 					var target = targets[i];
-					var health = target.GetComponent<Health>();
-					RemoveHealthFromList(health, targets);
-					health.TakeDamage(user, damage);
+					if (target.TryGetComponent(out Health health))
+					{
+						RemoveHealthFromList(health, targets);
+						health.TakeDamage(user, damage);
+					}
 				}
 			}
 

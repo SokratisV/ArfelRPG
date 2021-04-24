@@ -2,6 +2,7 @@
 using RPG.Dialogue;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace RPG.UI
@@ -9,7 +10,7 @@ namespace RPG.UI
 	public class DialogueUI : MonoBehaviour
 	{
 		private PlayerConversant _playerConversant;
-		[SerializeField] private ShowHideUI _showHideUI;
+		[FormerlySerializedAs("_showHideUI")] [SerializeField] private ShowHideUIOnButtonPress showHideUIOnButtonPress;
 		[SerializeField] private TextMeshProUGUI aiText;
 		[SerializeField] private Button nextButton;
 		[SerializeField] private Button quitButton;
@@ -35,7 +36,7 @@ namespace RPG.UI
 
 		private void UpdateUI(bool? status)
 		{
-			if(status == true || status == false) _showHideUI.Toggle(status.Value);
+			if(status == true || status == false) showHideUIOnButtonPress.Toggle(status.Value);
 			if(!_playerConversant.IsActive) return;
 			currentSpeaker.SetText(_playerConversant.Name);
 			nextButtonParent.SetActive(!_playerConversant.IsChoosing);

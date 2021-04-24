@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace RPG.UI
 {
-	public class ShowHideUI : MonoBehaviour
+	public class ShowHideUIOnButtonPress : MonoBehaviour
 	{
 		[SerializeField] private bool toggleOnEnable;
 		[SerializeField] private RectTransform uiContainer = null;

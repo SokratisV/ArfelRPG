@@ -1,0 +1,220 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6095123790648477953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 29b4d1ec-857d-4688-9283-da6904bdd99e
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: The bandits will no longer pose a threat to you.
+  children:
+  - 85315354-42e3-48b6-856b-cc12d1567f23
+  rect:
+    serializedVersion: 2
+    x: 333
+    y: 399
+    width: 200
+    height: 100
+  enterAction: 3
+  exitAction: 0
+  condition:
+    and:
+    - or:
+      - predicate: 2
+        parameters:
+        - Kill Enemies
+        negate: 0
+--- !u!114 &-5928466533952709718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 85315354-42e3-48b6-856b-cc12d1567f23
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Thank you so much! Here is your reward.
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 583
+    y: 399
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []
+--- !u!114 &-3891794572880401928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: db11d0aa-8859-4958-ab3d-8c098b4eb834
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: Sure can! Be right back.
+  children:
+  - 22868d0a-afab-49f1-ba5f-91cd51e3627d
+  rect:
+    serializedVersion: 2
+    x: 335
+    y: 180
+    width: 200
+    height: 100
+  enterAction: 2
+  exitAction: 0
+  condition:
+    and:
+    - or:
+      - predicate: 2
+        parameters:
+        - Kill Enemies
+        negate: 1
+--- !u!114 &-1184169668344180664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 22868d0a-afab-49f1-ba5f-91cd51e3627d
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: I'll be eternally greatful!
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 585
+    y: 180
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a805a3040deb4673b784488560465a44, type: 3}
+  m_Name: Kill Enemies
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 564587128056890447}
+  - {fileID: -3891794572880401928}
+  - {fileID: 8019123085243832464}
+  - {fileID: -6095123790648477953}
+  - {fileID: -5928466533952709718}
+  - {fileID: -1184169668344180664}
+  - {fileID: 4882130226379289615}
+  newNodeOffset: {x: 250, y: 0}
+--- !u!114 &564587128056890447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 6bd11a1e-5706-40e1-bdd4-d9122f0b21f1
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Hello! There are some bandits down the road, could you make sure they don't
+    pose a threat to my village?
+  children:
+  - db11d0aa-8859-4958-ab3d-8c098b4eb834
+  - e4f06a64-55d3-431a-bc41-4b65361c5632
+  - 29b4d1ec-857d-4688-9283-da6904bdd99e
+  rect:
+    serializedVersion: 2
+    x: 89
+    y: 284
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []
+--- !u!114 &4882130226379289615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: f3fd6008-210c-43ac-b5bb-7c77ded20f21
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Hopefully you'll find the time sooner rather than later.
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 584
+    y: 287
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []
+--- !u!114 &8019123085243832464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: e4f06a64-55d3-431a-bc41-4b65361c5632
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: I don't have the time right now, sorry.
+  children:
+  - f3fd6008-210c-43ac-b5bb-7c77ded20f21
+  rect:
+    serializedVersion: 2
+    x: 334
+    y: 287
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and:
+    - or:
+      - predicate: 2
+        parameters:
+        - Kill Enemies
+        negate: 1

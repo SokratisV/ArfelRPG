@@ -10,7 +10,7 @@ namespace RPG.Dialogue
 	public class DialogueNode : ScriptableObject
 	{
 		[SerializeField] private bool isPlayerSpeaking;
-		[SerializeField] private string text;
+		[SerializeField] [TextArea] private string text;
 		[SerializeField] private List<string> children = new List<string>();
 		[SerializeField] private Rect rect = new Rect(0, 0, 200, 100);
 		[SerializeField] private DialogueAction enterAction, exitAction;
@@ -45,7 +45,7 @@ namespace RPG.Dialogue
 
 		public void SetText(string value)
 		{
-			if(!string.Equals(value, text, StringComparison.Ordinal))
+			if (!string.Equals(value, text, StringComparison.Ordinal))
 			{
 				Undo.RecordObject(this, "Update Dialogue Text ");
 				text = value;
