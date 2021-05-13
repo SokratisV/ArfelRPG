@@ -24,12 +24,15 @@ namespace RPG.Saving
 
 		public void Save(string saveFile)
 		{
-			var state = LoadFile(saveFile);
-			CaptureState(state);
-			SaveFile(saveFile, state);
+			// var state = LoadFile(saveFile);
+			// CaptureState(state);
+			// SaveFile(saveFile, state);
 		}
 
-		public void Load(string saveFile) => RestoreState(LoadFile(saveFile));
+		public void Load(string saveFile)
+		{
+			// RestoreState(LoadFile(saveFile));
+		}
 
 		public void Delete(string saveFile) => File.Delete(GetPathFromSaveFile(saveFile));
 

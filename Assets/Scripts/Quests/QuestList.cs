@@ -33,6 +33,7 @@ namespace RPG.Quests
 		public void CompleteObjective(Quest quest, string objective)
 		{
 			var status = GetStatus(quest);
+			if (status == null) return; //TODO: It should not call complete on not-yet-pickedup quests
 			status.CompleteObjective(objective);
 			if(status.IsComplete)
 			{

@@ -13,7 +13,7 @@ namespace RPG.SceneManagement
 		private void Awake()
 		{
 			_saving = GetComponent<SavingSystem>();
-			StartCoroutine(LoadLastScene());
+			// StartCoroutine(LoadLastScene());
 		}
 
 		private IEnumerator LoadLastScene()

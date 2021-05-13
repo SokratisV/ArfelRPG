@@ -38,6 +38,7 @@ namespace RPG.Skills.Behaviors
 				for (var i = targets.Count - 1; i >= 0; i--)
 				{
 					var target = targets[i];
+					if (target == user) return;
 					if (target.TryGetComponent(out Health health))
 					{
 						RemoveHealthFromList(health, targets);
