@@ -20,15 +20,14 @@ namespace RPG.SceneManagement
 			E
 		}
 
-		[SerializeField] private Object sceneToLoad = null;
-		[SerializeField] private int sceneIndexToLoad = -1;
+		[SerializeField] private string sceneToLoad = "Test Scene";
 		[SerializeField] private Transform spawnPoint;
 		[SerializeField] private DestinationIdentifier destination;
 		[SerializeField] private float fadeInTime = 2f, fadeOutTime = 2f, fadeWaitTime = 2f;
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if(other.gameObject.CompareTag("Player"))
+			if (other.gameObject.CompareTag("Player"))
 			{
 				StartCoroutine(Transition());
 			}
@@ -36,7 +35,7 @@ namespace RPG.SceneManagement
 
 		private IEnumerator Transition()
 		{
-			if(sceneIndexToLoad < 0 && sceneToLoad == null)
+			if (string.IsNullOrEmpty(sceneToLoad))
 			{
 				Debug.LogError("Scene to load is not set.");
 				yield break;
@@ -52,14 +51,8 @@ namespace RPG.SceneManagement
 			playerController.enabled = false;
 
 			yield return fader.FadeOut(fadeOutTime);
-			if(sceneToLoad == null)
-			{
-				yield return SceneManager.LoadSceneAsync(sceneIndexToLoad);
-			}
-			else
-			{
-				yield return SceneManager.LoadSceneAsync(sceneToLoad.name);
-			}
+			yield return SceneManager.LoadSceneAsync(sceneToLoad);
+
 			PlayerFinder.ResetPlayer();
 			var newPlayerController = PlayerFinder.Player.GetComponent<PlayerController>();
 			newPlayerController.enabled = false;
