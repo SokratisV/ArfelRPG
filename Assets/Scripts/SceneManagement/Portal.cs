@@ -37,15 +37,16 @@ namespace RPG.SceneManagement
 		{
 			if (string.IsNullOrEmpty(sceneToLoad))
 			{
-				Debug.LogError("Scene to load is not set.");
-				yield break;
+				Debug.LogError("Scene to load was empty.");
+				sceneToLoad = "Sandbox";
 			}
 
 			DontDestroyOnLoad(gameObject);
 			var fader = FindObjectOfType<Fader>();
-
 			var wrapper = FindObjectOfType<SavingWrapper>();
+			
 			wrapper.Save();
+			
 			var player = PlayerFinder.Player;
 			var playerController = player.GetComponent<PlayerController>();
 			playerController.enabled = false;
