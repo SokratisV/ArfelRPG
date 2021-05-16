@@ -83,15 +83,15 @@ namespace RPG.Skills
 				if(targets == null)
 					return null;
 
-			skillBehavior.OnStart += StartVfxSfx;
-			skillBehavior.OnEnd += EndVfxSfx;
+			skillBehavior.OnStart += PlayFX;
+			skillBehavior.OnEnd += StopFX;
 			skillBehavior.BehaviorStart(user, targets, point);
 			return new SkillData(user, initialTarget, point, targets, skillBehavior.BehaviorUpdate(user, targets, point));
 		}
 		
 		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data.User, data.Targets, data.Point);
 
-		private void StartVfxSfx(GameObject user, List<GameObject> targets)
+		private void PlayFX(GameObject user, List<GameObject> targets)
 		{
 			foreach(var vfx in vfxOnUserStart)
 			{
@@ -119,7 +119,7 @@ namespace RPG.Skills
 			}
 		}
 
-		private void EndVfxSfx(GameObject user, List<GameObject> targets)
+		private void StopFX(GameObject user, List<GameObject> targets)
 		{
 			foreach(var vfx in vfxOnUserEnd)
 			{
