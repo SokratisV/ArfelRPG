@@ -22,10 +22,16 @@ MonoBehaviour:
   skillBehavior: {fileID: 11400000, guid: 9fdde4feed1773843a88a40af1b2943c, type: 2}
   vfxOnUserStart: []
   vfxOnTargetStart: []
+  vfxOnAreaStart: []
   sfxOnUserStart: []
   sfxOnTargetStart: []
+  sfxOnAreaStart: []
   vfxOnUserEnd: []
   vfxOnTargetEnd:
-  - {fileID: 100010, guid: 645413a00f7bd0242bbd6d0e5eb6f439, type: 3}
+  - {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
+  vfxOnAreaEnd:
+  - {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
   sfxOnUserEnd: []
   sfxOnTargetEnd: []
+  sfxOnAreaEnd:
+  - {fileID: 8300000, guid: 89e0f69e3ad999a4aa99111f0765d6b7, type: 3}

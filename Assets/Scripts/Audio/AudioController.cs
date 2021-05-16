@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace RPG.Core
 {
@@ -11,7 +12,7 @@ namespace RPG.Core
 			if (clip != null) audioSource.PlayOneShot(clip);
 		}
 
-		public void PlaySound(AudioClip[] clips)
+		public void PlaySound(IEnumerable<AudioClip> clips)
 		{
 			foreach(var clip in clips)
 			{

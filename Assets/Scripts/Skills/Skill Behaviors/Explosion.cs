@@ -15,6 +15,7 @@ namespace RPG.Skills.Behaviors
 		public override bool HasCastTime() => true;
 		public override bool UseExtraAnimation() => true;
 		public override int SkillAnimationNumber() => 2;
+		protected override bool RequiresRetarget => true;
 
 		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
@@ -38,7 +39,11 @@ namespace RPG.Skills.Behaviors
 				for (var i = targets.Count - 1; i >= 0; i--)
 				{
 					var target = targets[i];
-					if (target == user) return;
+					if (target == user)
+					{
+						targets[i] = null;
+						continue;
+					}
 					if (target.TryGetComponent(out Health health))
 					{
 						RemoveHealthFromList(health, targets);

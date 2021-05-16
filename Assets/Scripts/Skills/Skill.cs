@@ -48,14 +48,14 @@ namespace RPG.Skills
 		[Header("On Start")] [Space(15)] [SerializeField]
 		private GameObject[] vfxOnUserStart;
 
-		[SerializeField] private GameObject[] vfxOnTargetStart;
-		[SerializeField] private AudioClip[] sfxOnUserStart, sfxOnTargetStart;
+		[SerializeField] private GameObject[] vfxOnTargetStart, vfxOnAreaStart;
+		[SerializeField] private AudioClip[] sfxOnUserStart, sfxOnTargetStart, sfxOnAreaStart;
 
 		[Header("On End")] [Space(15)] [SerializeField]
 		private GameObject[] vfxOnUserEnd;
 
-		[SerializeField] private GameObject[] vfxOnTargetEnd;
-		[SerializeField] private AudioClip[] sfxOnUserEnd, sfxOnTargetEnd;
+		[SerializeField] private GameObject[] vfxOnTargetEnd, vfxOnAreaEnd;
+		[SerializeField] private AudioClip[] sfxOnUserEnd, sfxOnTargetEnd, sfxOnAreaEnd;
 
 		public Sprite Icon => icon;
 		public string SkillID => skillID;
@@ -79,83 +79,94 @@ namespace RPG.Skills
 		public SkillData OnStart(GameObject user, GameObject initialTarget = null, Vector3? point = null)
 		{
 			//if interested in targets, but targets are null, return
-			if(targetBehavior.GetTargets(out var targets, user, initialTarget, point))
-				if(targets == null)
+			if (targetBehavior.GetTargets(out var targets, user, initialTarget, point))
+				if (targets == null)
 					return null;
 
 			skillBehavior.OnStart += PlayFX;
-			skillBehavior.OnEnd += StopFX;
+			skillBehavior.OnEnd += EndFX;
 			skillBehavior.BehaviorStart(user, targets, point);
 			return new SkillData(user, initialTarget, point, targets, skillBehavior.BehaviorUpdate(user, targets, point));
 		}
-		
-		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data.User, data.Targets, data.Point);
 
-		private void PlayFX(GameObject user, List<GameObject> targets)
+		public void OnEnd(SkillData data)
 		{
-			foreach(var vfx in vfxOnUserStart)
+			if (skillBehavior.Retarget)
+			{
+				targetBehavior.GetTargets(out var targets, data.User, data.InitialTarget, data.Point);
+				skillBehavior.BehaviorEnd(data.User, targets, data.Point);
+			}
+			else skillBehavior.BehaviorEnd(data.User, data.Targets, data.Point);
+		}
+
+		private void PlayFX(GameObject user, List<GameObject> targets, Vector3? point)
+		{
+			FxOnUser(user, vfxOnUserStart, sfxOnUserStart);
+			FxOnArea(point, vfxOnAreaStart, sfxOnAreaStart);
+			FxOnTargets(targets, vfxOnTargetStart, sfxOnTargetStart);
+		}
+
+		private void EndFX(GameObject user, List<GameObject> targets, Vector3? point)
+		{
+			FxOnUser(user, vfxOnUserEnd, sfxOnUserEnd);
+			FxOnArea(point, vfxOnAreaEnd, sfxOnAreaEnd);
+			FxOnTargets(targets, vfxOnTargetEnd, sfxOnTargetEnd);
+		}
+
+		private static void FxOnUser(GameObject user, IEnumerable<GameObject> vfxOnUser, IEnumerable<AudioClip> sfxOnUser)
+		{
+			foreach (var vfx in vfxOnUser)
 			{
 				Destroy(Instantiate(vfx, user.transform), 2f);
 			}
 
-			if(user.TryGetComponent(out IAudioPlayer audioPlayer))
+			if (user.TryGetComponent(out IAudioPlayer audioPlayer))
 			{
-				audioPlayer.PlaySound(sfxOnUserStart);
-			}
-
-			if(targets == null) return;
-			foreach(var target in targets)
-			{
-				if(target == null) continue;
-				foreach(var vfx in vfxOnTargetStart)
-				{
-					Destroy(Instantiate(vfx, target.transform), 2f);
-				}
-
-				if(target.TryGetComponent(out audioPlayer))
-				{
-					audioPlayer.PlaySound(sfxOnTargetStart);
-				}
+				audioPlayer.PlaySound(sfxOnUser);
 			}
 		}
 
-		private void StopFX(GameObject user, List<GameObject> targets)
+		private static void FxOnArea(Vector3? point, IEnumerable<GameObject> vfxOnArea, IEnumerable<AudioClip> sfxOnArea)
 		{
-			foreach(var vfx in vfxOnUserEnd)
+			if (point == null) return;
+			foreach (var vfx in vfxOnArea)
 			{
-				Destroy(Instantiate(vfx, user.transform), 2f);
+				Destroy(Instantiate(vfx, point.Value + Vector3.up * 2, Quaternion.identity), 2f);
 			}
 
-			if(user.TryGetComponent(out IAudioPlayer audioPlayer))
+			foreach (var sfx in sfxOnArea)
 			{
-				audioPlayer.PlaySound(sfxOnUserEnd);
+				AudioSource.PlayClipAtPoint(sfx, point.Value);
 			}
+		}
 
-			if(targets == null) return;
-			foreach(var target in targets)
+		private static void FxOnTargets(IReadOnlyCollection<GameObject> targets, IReadOnlyCollection<GameObject> vfxOnTarget, AudioClip[] sfxOnTarget)
+		{
+			if (targets == null) return;
+			foreach (var target in targets)
 			{
-				if(target == null) continue;
-				foreach(var vfx in vfxOnTargetEnd)
+				if (target == null) continue;
+				foreach (var vfx in vfxOnTarget)
 				{
 					Destroy(Instantiate(vfx, target.transform), 2f);
 				}
 
-				if(target.TryGetComponent(out audioPlayer))
+				if (target.TryGetComponent(out IAudioPlayer audioPlayer))
 				{
-					audioPlayer.PlaySound(sfxOnTargetEnd);
+					audioPlayer.PlaySound(sfxOnTarget);
 				}
 			}
 		}
 
 		public static Skill GetFromID(string skillID)
 		{
-			if(ItemLookupCache == null)
+			if (ItemLookupCache == null)
 			{
 				ItemLookupCache = new Dictionary<string, Skill>();
 				var itemList = Resources.LoadAll<Skill>("");
-				foreach(var item in itemList)
+				foreach (var item in itemList)
 				{
-					if(ItemLookupCache.ContainsKey(item.skillID))
+					if (ItemLookupCache.ContainsKey(item.skillID))
 					{
 						Debug.LogError($"Looks like there's a duplicate RPG.UI.InventorySystem ID for objects: {ItemLookupCache[item.skillID]} and {item}");
 						continue;
@@ -165,18 +176,18 @@ namespace RPG.Skills
 				}
 			}
 
-			if(skillID == null || !ItemLookupCache.ContainsKey(skillID)) return null;
+			if (skillID == null || !ItemLookupCache.ContainsKey(skillID)) return null;
 			return ItemLookupCache[skillID];
 		}
 
 		public void OnBeforeSerialize()
 		{
-			if(string.IsNullOrWhiteSpace(skillID))
+			if (string.IsNullOrWhiteSpace(skillID))
 			{
 				skillID = Guid.NewGuid().ToString();
 			}
 
-			if(string.IsNullOrWhiteSpace(displayName))
+			if (string.IsNullOrWhiteSpace(displayName))
 			{
 				displayName = name;
 			}

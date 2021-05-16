@@ -18,7 +18,8 @@ namespace RPG.Movement
 
 		public void ShowIndicator(Vector3 position, float radius)
 		{
-			_projector.orthographicSize = radius;
+			var sizeAdjustment = radius * 3 / 100;
+			_projector.orthographicSize = radius + sizeAdjustment;
 			_parent.position = position;
 			_projector.enabled = true;
 		}
