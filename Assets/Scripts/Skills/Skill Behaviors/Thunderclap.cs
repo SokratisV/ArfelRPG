@@ -1,29 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using RPG.Attributes;
-using RPG.Movement;
 using UnityEngine;
 
 namespace RPG.Skills.Behaviors
 {
-	public class Freeze : SkillBehavior
+	public class Thunderclap : SkillBehavior
 	{
 		[Min(0)] [SerializeField] private float damage;
-		[Range(0, 100)] [SerializeField] private float slowPercent;
 
-		public override bool HasCastTime() => false;
+		public override bool HasCastTime() => true;
+
 		public override bool UseExtraAnimation() => false;
-		public override int SkillAnimationNumber() => 1;
+
+		public override int SkillAnimationNumber() => 3;
 
 		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
-			if(targets != null)
+			if (targets != null)
 			{
-				for(var i = targets.Count - 1;i >= 0;i--)
+				for (var i = targets.Count - 1; i >= 0; i--)
 				{
 					var target = targets[i];
-					var mover = target.GetComponent<Mover>();
-					mover.CurrentSpeed = mover.CurrentSpeed * slowPercent * 0.01f;
 					var health = target.GetComponent<Health>();
 					RemoveHealthFromList(health, targets);
 					health.TakeDamage(user, damage);
@@ -32,23 +30,10 @@ namespace RPG.Skills.Behaviors
 
 			base.BehaviorStart(user, targets, point);
 		}
-		
+
 		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
 			yield break;
-		}
-
-		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
-		{
-			if(targets != null)
-			{
-				foreach(var target in targets)
-				{
-					target.GetComponent<Mover>().RevertToOriginalSpeed();
-				}
-			}
-
-			base.BehaviorEnd(user, targets, point);
 		}
 	}
 }

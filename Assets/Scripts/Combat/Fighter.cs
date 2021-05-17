@@ -57,15 +57,15 @@ namespace RPG.Combat
 			var attackListenerBehavior = _animator.GetBehaviour<AttackAnimationInfo>();
 			attackListenerBehavior.OnAnimationComplete += () => _attackAnimationDone = true;
 			AttackSpeed = _currentWeaponConfig.AttackSpeed;
-			if(_equipment) _equipment.EquipmentUpdated += UpdateWeapon;
+			if (_equipment) _equipment.EquipmentUpdated += UpdateWeapon;
 		}
 
 		private void Start() => _currentWeapon.ForceInit();
 
 		private void Update()
 		{
-			if(_target == null) return;
-			if(_target.IsDead)
+			if (_target == null) return;
+			if (_target.IsDead)
 			{
 				CompleteAction();
 				_target = null;
@@ -73,14 +73,14 @@ namespace RPG.Combat
 			}
 
 			_timeSinceLastAttack += Time.deltaTime;
-			if(_attackAnimationDone && _mover.IsInRange(_target.transform, _currentWeaponConfig.GetRange()))
+			if (_attackAnimationDone && _mover.IsInRange(_target.transform, _currentWeaponConfig.GetRange()))
 			{
 				_mover.CancelAction();
 				Attack();
 			}
 			else
 			{
-				if(_attackAnimationDone) _mover.MoveWithoutAction(_target.transform.position);
+				if (_attackAnimationDone) _mover.MoveWithoutAction(_target.transform.position);
 			}
 		}
 
@@ -94,8 +94,8 @@ namespace RPG.Combat
 
 		public bool CanExecute(GameObject target)
 		{
-			if(target == null) return false;
-			if(!_mover.CanMoveTo(target.transform.position) && !_mover.IsInRange(target.transform, _currentWeaponConfig.GetRange())) return false;
+			if (target == null) return false;
+			if (!_mover.CanMoveTo(target.transform.position) && !_mover.IsInRange(target.transform, _currentWeaponConfig.GetRange())) return false;
 			var health = target.GetComponent<Health>();
 			return health != null && !health.IsDead;
 		}
@@ -104,7 +104,7 @@ namespace RPG.Combat
 
 		public void Execute(GameObject combatTarget)
 		{
-			if(!_attackAnimationDone)
+			if (!_attackAnimationDone)
 			{
 				_bufferedTarget = combatTarget.GetComponent<Health>();
 			}
@@ -130,7 +130,7 @@ namespace RPG.Combat
 
 		public void RestoreState(object state)
 		{
-			_currentWeaponConfig = Resources.Load<WeaponConfig>($"Equipables/{(string)state}");
+			_currentWeaponConfig = Resources.Load<WeaponConfig>($"Equipables/{(string) state}");
 			EquipWeapon(_currentWeaponConfig);
 			AttackSpeed = _currentWeaponConfig.AttackSpeed;
 		}
@@ -141,7 +141,7 @@ namespace RPG.Combat
 			_actionScheduler.CompleteAction();
 		}
 
-		public void ExecuteQueuedAction(IActionData data) => _target = ((FighterActionData)data).Target.GetComponent<Health>();
+		public void ExecuteQueuedAction(IActionData data) => _target = ((FighterActionData) data).Target.GetComponent<Health>();
 
 		#endregion
 
@@ -151,7 +151,7 @@ namespace RPG.Combat
 		private void UpdateWeapon()
 		{
 			var weapon = _equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;
-			EquipWeapon(!weapon? defaultWeapon:weapon);
+			EquipWeapon(!weapon ? defaultWeapon : weapon);
 			AttackSpeed = _currentWeaponConfig.AttackSpeed;
 		}
 
@@ -161,7 +161,7 @@ namespace RPG.Combat
 		{
 			_currentWeaponConfig = weapon;
 			_currentWeapon.Value = AttachWeapon(weapon);
-			if(_currentWeapon.Value.ProjectileLocation)
+			if (_currentWeapon.Value.ProjectileLocation)
 			{
 				_bodyParts.ProjectileLocation = _currentWeapon.Value.ProjectileLocation;
 			}
@@ -169,6 +169,7 @@ namespace RPG.Combat
 			{
 				_bodyParts.RevertProjectileLocation();
 			}
+
 			OnWeaponChanged?.Invoke(_currentWeaponConfig);
 		}
 
@@ -176,13 +177,14 @@ namespace RPG.Combat
 
 		private void Attack()
 		{
-			if(_bufferedTarget != null)
+			if (_bufferedTarget != null)
 			{
 				_target = _bufferedTarget;
 				_bufferedTarget = null;
 			}
+
 			_mover.RotateOverTime(.2f, _target.transform.position);
-			if(!CanAttack) return;
+			if (!CanAttack) return;
 			AttackAnimation();
 		}
 
@@ -198,10 +200,10 @@ namespace RPG.Combat
 		private void Hit()
 		{
 			var damage = _stats.GetStat(Stat.Damage);
-			if(_currentWeapon.Value != null) _currentWeapon.Value.OnHit();
+			if (_currentWeapon.Value != null) _currentWeapon.Value.OnHit();
 
-			if(_target == null) return;
-			if(_currentWeaponConfig.HasProjectile())
+			if (_target == null) return;
+			if (_currentWeaponConfig.HasProjectile())
 			{
 				_currentWeaponConfig.LaunchProjectile(_bodyParts.ProjectileLocation.position, _target, gameObject, damage);
 			}

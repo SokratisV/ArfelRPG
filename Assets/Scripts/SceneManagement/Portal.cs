@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using RoboRyanTron.SceneReference;
 using RPG.Control;
 using RPG.Core;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace RPG.SceneManagement
 			E
 		}
 
-		[SerializeField] private string sceneToLoad = "Test Scene";
+		[SerializeField] private SceneReference sceneToLoad;
 		[SerializeField] private Transform spawnPoint;
 		[SerializeField] private DestinationIdentifier destination;
 		[SerializeField] private float fadeInTime = 2f, fadeOutTime = 2f, fadeWaitTime = 2f;
@@ -35,10 +36,10 @@ namespace RPG.SceneManagement
 
 		private IEnumerator Transition()
 		{
-			if (string.IsNullOrEmpty(sceneToLoad))
+			if (sceneToLoad == null)
 			{
 				Debug.LogError("Scene to load was empty.");
-				sceneToLoad = "Sandbox";
+				yield return null;
 			}
 
 			DontDestroyOnLoad(gameObject);
@@ -52,7 +53,7 @@ namespace RPG.SceneManagement
 			playerController.enabled = false;
 
 			yield return fader.FadeOut(fadeOutTime);
-			yield return SceneManager.LoadSceneAsync(sceneToLoad);
+			yield return SceneManager.LoadSceneAsync(sceneToLoad.SceneName);
 
 			PlayerFinder.ResetPlayer();
 			var newPlayerController = PlayerFinder.Player.GetComponent<PlayerController>();

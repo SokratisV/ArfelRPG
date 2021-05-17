@@ -127,7 +127,6 @@ namespace RPG.Inventories
 			if(_slots[slot].Item != null)
 			{
 				return AddToFirstEmptySlot(item, number);
-				;
 			}
 
 			var i = FindStack(item);

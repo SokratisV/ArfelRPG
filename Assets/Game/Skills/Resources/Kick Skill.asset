@@ -10,21 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 530737f8503545a192728a8cf16324fa, type: 3}
-  m_Name: Skill
+  m_Name: Kick Skill
   m_EditorClassIdentifier: 
-  skillID: d6cc53c2-c4cc-4531-8ecd-bc089959992a
-  displayName: Skill
-  description: 
-  icon: {fileID: 0}
-  cooldown: 0
+  skillID: 71ce1e4a-ecaf-491e-b7d6-162ca664e35d
+  displayName: Kick Skill
+  description: Kick your enemy to deal a moderate amount of damage.
+  icon: {fileID: 21300000, guid: e420c5bc93cb2604695a893500c897e3, type: 3}
+  cooldown: 3
   canBeCancelled: 0
-  targetBehavior: {fileID: 0}
-  skillBehavior: {fileID: 0}
+  targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
+  skillBehavior: {fileID: 11400000, guid: eaf1998f4fcfe514cb36259c58d412c7, type: 2}
   vfxOnUserStart: []
   vfxOnTargetStart: []
+  vfxOnAreaStart: []
   sfxOnUserStart: []
   sfxOnTargetStart: []
+  sfxOnAreaStart: []
   vfxOnUserEnd: []
   vfxOnTargetEnd: []
+  vfxOnAreaEnd: []
   sfxOnUserEnd: []
   sfxOnTargetEnd: []
+  sfxOnAreaEnd: []

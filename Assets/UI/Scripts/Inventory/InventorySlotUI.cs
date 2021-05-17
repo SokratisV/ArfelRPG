@@ -45,18 +45,23 @@ namespace RPG.UI.Inventories
 			if(shouldAct)
 			{
 				var item = GetItem();
-				if(item is EquipableItem equipableItem)
-				{
-					RemoveItems(1);
-					var previousItem = _playerEquipment.GetItemInSlot(equipableItem.AllowedEquipLocation);
-					if(previousItem) AddItems(previousItem, 1);
-					_playerEquipment.AddItem(equipableItem.AllowedEquipLocation, equipableItem);
-				}
-				else if(item is ActionItem actionItem)
-				{
-					RemoveItems(1);
-					_playerActions.AddAction(actionItem);
-				}
+				EquipItem(item);
+			}
+		}
+
+		private void EquipItem(InventoryItem item)
+		{
+			if (item is EquipableItem equipableItem)
+			{
+				RemoveItems(1);
+				var previousItem = _playerEquipment.GetItemInSlot(equipableItem.AllowedEquipLocation);
+				if (previousItem) AddItems(previousItem, 1);
+				_playerEquipment.AddItem(equipableItem.AllowedEquipLocation, equipableItem);
+			}
+			else if (item is ActionItem actionItem)
+			{
+				RemoveItems(1);
+				_playerActions.AddAction(actionItem);
 			}
 		}
 	}
