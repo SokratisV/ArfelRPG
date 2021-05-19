@@ -16,12 +16,16 @@ namespace RPG.Movement
 			_projector.enabled = false;
 		}
 
-		public void ShowIndicator(Vector3 position, float radius)
+		public void ShowIndicator(float radius)
 		{
 			var sizeAdjustment = radius * 3 / 100;
 			_projector.orthographicSize = radius + sizeAdjustment;
-			_parent.position = position;
 			_projector.enabled = true;
+		}
+
+		public void UpdateIndicator(Vector3 position)
+		{
+			_parent.position = position;
 		}
 
 		public void HideIndicator() => _projector.enabled = false;

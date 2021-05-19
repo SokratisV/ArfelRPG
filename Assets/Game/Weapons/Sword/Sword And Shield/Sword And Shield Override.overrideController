@@ -6,7 +6,7 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 1H Sword Override Controller
+  m_Name: Sword And Shield Override
   m_Controller: {fileID: 9100000, guid: 4bf51327af6574ec5a4d454a2b768146, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 1315bcd7509173f44bc6655b2673dd4d, type: 3}
@@ -31,3 +31,6 @@ AnimatorOverrideController:
       type: 3}
     m_OverrideClip: {fileID: -203655887218126122, guid: f4d747cb9a79b094a9a9aec5df6f772f,
       type: 3}
+  - m_OriginalClip: {fileID: -5221398770875169088, guid: 69f3b1b43eb337548a8633b7b82d6fc6,
+      type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: cfcaee7e459130d489c153b3aeaaa3ae, type: 3}

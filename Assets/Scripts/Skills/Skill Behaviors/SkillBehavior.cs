@@ -22,7 +22,8 @@ namespace RPG.Skills.Behaviors
 		public bool MoveInRangeBefore => moveInRangeBeforeCasting;
 		public float Duration => duration;
 		public Action<GameObject, List<GameObject>, Vector3?> OnStart, OnEnd;
-		protected virtual bool RequiresRetarget => false; 
+		public virtual bool AdjustAnimationSpeed => true;
+		protected virtual bool RequiresRetarget => false;
 
 		public virtual void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null) => OnStart?.Invoke(user, targets, point);
 
@@ -43,6 +44,10 @@ namespace RPG.Skills.Behaviors
 				list.Remove(health.gameObject);
 			}
 			health.OnDeath += RemoveFromList;
+		}
+
+		public virtual void OnAnimationEvent()
+		{
 		}
 	}
 }

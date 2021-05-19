@@ -72,6 +72,7 @@ namespace RPG.Skills
 		public bool HasExtraAnimation => skillBehavior.UseExtraAnimation();
 		public bool CanBeCancelled => canBeCancelled;
 		public bool HasCastTime => skillBehavior.HasCastTime();
+		public bool AdjustAnimationSpeed => skillBehavior.AdjustAnimationSpeed;
 		public int AnimationHash => skillBehavior.SkillAnimationNumber();
 
 		private static Dictionary<string, Skill> ItemLookupCache;
@@ -195,6 +196,11 @@ namespace RPG.Skills
 
 		public void OnAfterDeserialize()
 		{
+		}
+
+		public void OnAnimationEvent()
+		{
+			skillBehavior.OnAnimationEvent();
 		}
 	}
 }

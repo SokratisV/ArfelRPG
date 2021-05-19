@@ -4,17 +4,17 @@ namespace RPG.Skills
 {
 	public class AnimationSpeedAdjustment : StateMachineBehaviour
 	{
-		private static SkillUser SkillUser;
+		private static SkillUser _skillUser;
 		private static readonly int SkillAnimSpeed = Animator.StringToHash("skillAnimSpeed");
 		private static readonly int ExtraSkillAnimation = Animator.StringToHash("skillExtra");
 
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			if(SkillUser == null) SkillUser = animator.GetComponent<SkillUser>();
+			if(_skillUser == null) _skillUser = animator.GetComponent<SkillUser>();
 
-			if(SkillUser.HasCastTime)
+			if(_skillUser.ShouldChangeAnimationSpeed)
 			{
-				var number = stateInfo.length / SkillUser.SelectedSkillDuration;
+				var number = stateInfo.length / _skillUser.SelectedSkillDuration;
 				animator.SetFloat(SkillAnimSpeed, number);
 			}
 		}

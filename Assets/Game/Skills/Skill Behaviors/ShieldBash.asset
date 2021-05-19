@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 777d2eab3a0e469396f2642cbdb9b462, type: 3}
-  m_Name: Kick
+  m_Script: {fileID: 11500000, guid: 2f7d7172105141daa52562d63560976b, type: 3}
+  m_Name: ShieldBash
   m_EditorClassIdentifier: 
-  duration: 0.7
+  duration: 0.5
   canTargetSelf: 0
   moveInRangeBeforeCasting: 1
-  damage: 25
-  kickRange: 1.5
+  damage: 40
+  bashRange: 1.5

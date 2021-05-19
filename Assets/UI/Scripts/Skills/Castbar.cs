@@ -37,7 +37,7 @@ namespace RPG.UI
 
 		private void ShowCastBar(Skill skill)
 		{
-			if(skill.HasCastTime)
+			if(skill.HasCastTime && !skill.CanBeCancelled)
 			{
 				castBarParent.SetActive(true);
 				castBarFill.fillAmount = 0;

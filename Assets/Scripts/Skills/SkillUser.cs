@@ -21,10 +21,11 @@ namespace RPG.Skills
 		public bool? SkillRequiresTarget => _selectedSkill.RequiresTarget;
 
 		public bool IsPreparingSkill => _selectedSkill != null;
+		public bool HasTarget => _target || _targetPoint != null;
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
 		public bool CanCurrentSkillBeCancelled => _currentCastingSkill == null || _selectedSkill != null && _selectedSkill.CanBeCancelled;
 		public float SelectedSkillDuration => _selectedSkill.Duration;
-		public bool HasCastTime => _selectedSkill != null && _selectedSkill.HasCastTime;
+		public bool ShouldChangeAnimationSpeed => _selectedSkill != null && _selectedSkill.HasCastTime && _selectedSkill.AdjustAnimationSpeed;
 		private bool _activeListCleanup, _cooldownListCleanup;
 		private float _globalCooldownTimer;
 		private Vector3? _targetPoint;
@@ -81,6 +82,12 @@ namespace RPG.Skills
 			MoveToCast();
 		}
 
+		// Animation event
+		public void SkillHit()
+		{
+			_currentCastingSkill?.Skill.OnAnimationEvent();
+		}
+
 		#endregion
 
 		#region Public
@@ -99,6 +106,7 @@ namespace RPG.Skills
 				if(!CanSkillBeUsed(skill)) return;
 				_selectedSkill = skill;
 				OnSkillSelected?.Invoke(_selectedSkill);
+				_skillIndicator.ShowIndicator(_selectedSkill.Radius);
 			}
 		}
 
@@ -158,6 +166,7 @@ namespace RPG.Skills
 		public void CancelAction()
 		{
 			OnActionCancelled?.Invoke();
+			if (HasTarget) _mover.CancelAction();
 			_skillIndicator.HideIndicator();
 			_currentCastingSkill = null;
 			_selectedSkill = null;
@@ -175,13 +184,13 @@ namespace RPG.Skills
 
 		public bool CanExecute(Vector3 target)
 		{
-			if(!CanCurrentSkillBeCancelled) return false;
+			if(!CanCurrentSkillBeCancelled || HasTarget) return false;
 			if(_selectedSkill.MinClickDistance > 0 && Helper.IsWithinDistance(target, transform.position, _selectedSkill.MinClickDistance))
 			{
 				return false;
 			}
 
-			_skillIndicator.ShowIndicator(target, _selectedSkill.Radius);
+			_skillIndicator.UpdateIndicator(target);
 			return _mover.CanMoveTo(target);
 		}
 

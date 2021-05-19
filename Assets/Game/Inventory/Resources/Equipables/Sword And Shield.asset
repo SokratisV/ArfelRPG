@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 752130efc96294aa3ae70f790754e58a, type: 3}
-  m_Name: 1H Sword
+  m_Name: Sword And Shield
   m_EditorClassIdentifier: 
   itemID: af256ae4-4501-4863-9801-75e59a6fc2aa
   displayName: Spathos
@@ -25,14 +25,16 @@ MonoBehaviour:
     value: 0
   percentageModifiers: []
   animatorOverride: {fileID: 22100000, guid: 9e87592448cb14bd2a1dcf8ccd72f853, type: 2}
-  equippedPrefab: {fileID: 8588511950748160044, guid: 5d178ff400dc8401f976b0b1dd09855f,
+  rightHandPrefab: {fileID: 8588511950748160044, guid: 5d178ff400dc8401f976b0b1dd09855f,
+    type: 3}
+  leftHandPrefab: {fileID: 8588511950748160044, guid: 2864f3e8dcdaec149b493968a805541c,
     type: 3}
   weaponRange: 2
   weaponDamage: 3
   percentageBonus: 0
   attackSpeed: 1.5
-  isRightHanded: 1
   projectile: {fileID: 0}
   skillIds:
+  - ShieldBash
   - Thunderclap
   - Kick

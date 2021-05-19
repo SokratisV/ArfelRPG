@@ -14,6 +14,7 @@ namespace RPG.Skills.Behaviors
 		public override bool UseExtraAnimation() => false;
 		public override int SkillAnimationNumber() => 3;
 		public override float GetCastingRange() => kickRange;
+		public override bool AdjustAnimationSpeed => false;
 
 		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{

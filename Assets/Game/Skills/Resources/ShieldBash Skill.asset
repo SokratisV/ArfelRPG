@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 530737f8503545a192728a8cf16324fa, type: 3}
-  m_Name: Kick Skill
+  m_Name: ShieldBash Skill
   m_EditorClassIdentifier: 
-  skillID: 71ce1e4a-ecaf-491e-b7d6-162ca664e35d
-  displayName: Kick
-  description: Kick your enemy to deal a moderate amount of damage.
-  icon: {fileID: 21300000, guid: e420c5bc93cb2604695a893500c897e3, type: 3}
-  cooldown: 3
+  skillID: 0c98239f-7632-4970-9ee1-e579aa7cf02a
+  displayName: ShieldBash
+  description: Bash your enemies with your shield!
+  icon: {fileID: 21300000, guid: 65d466afcff75fa428a0b237f81846d6, type: 3}
+  cooldown: 5
   canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
-  skillBehavior: {fileID: 11400000, guid: eaf1998f4fcfe514cb36259c58d412c7, type: 2}
+  skillBehavior: {fileID: 11400000, guid: d5ea3d00d631b1043aefb292bf671752, type: 2}
   vfxOnUserStart: []
   vfxOnTargetStart: []
   vfxOnAreaStart: []

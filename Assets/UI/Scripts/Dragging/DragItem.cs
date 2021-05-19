@@ -40,6 +40,7 @@ namespace RPG.UI.Dragging
 			// Else won't get the drop event.
 			_canvasGroup.blocksRaycasts = false;
 			transform.SetParent(_parentCanvas.transform, true);
+			_parentCanvas.transform.SetSiblingIndex(0);
 		}
 
 		void IDragHandler.OnDrag(PointerEventData eventData) => transform.position = eventData.position;
