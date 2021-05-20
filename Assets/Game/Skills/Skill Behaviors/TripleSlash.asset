@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f7d7172105141daa52562d63560976b, type: 3}
-  m_Name: ShieldBash
+  m_Script: {fileID: 11500000, guid: c30395da7d224603ae837464dc10485d, type: 3}
+  m_Name: TripleSlash
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 3
   canTargetSelf: 0
   moveInRangeBeforeCasting: 1
-  damage: 40
-  bashRange: 1.5
+  damage: 25
+  attackRange: 1.5

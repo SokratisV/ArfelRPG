@@ -212,6 +212,12 @@ namespace RPG.Combat
 				_target.TakeDamage(gameObject, damage);
 			}
 		}
+		
+		// Animation Event (visuals only)
+		private void OnHit()
+		{
+			if (_currentWeapon.Value != null) _currentWeapon.Value.OnHit();
+		}
 
 		private void StopAttack()
 		{

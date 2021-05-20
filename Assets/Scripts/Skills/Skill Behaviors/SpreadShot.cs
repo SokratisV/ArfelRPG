@@ -16,7 +16,6 @@ namespace RPG.Skills.Behaviors
 		[Min(1)] [SerializeField] private int numberOfProjectiles;
 
 		public override bool HasCastTime() => true;
-		public override bool UseExtraAnimation() => false;
 		public override int SkillAnimationNumber() => 2;
 
 		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)

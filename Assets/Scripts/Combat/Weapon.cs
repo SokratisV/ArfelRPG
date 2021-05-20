@@ -10,7 +10,6 @@ namespace RPG.Combat
 
 		public Transform ProjectileLocation => projectileLocation;
 
-		// Animation event
 		public void OnHit() => onHit.Invoke();
 
 		public void Destroy() => Destroy(gameObject);

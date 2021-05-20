@@ -11,10 +11,10 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] private float duration;
 		[SerializeField] private bool canTargetSelf;
 		[SerializeField] private bool moveInRangeBeforeCasting = true;
-
+		
 		//If true, duration means casting time
 		public abstract bool HasCastTime();
-		public abstract bool UseExtraAnimation();
+		public virtual bool UseExtraAnimation() => false;
 		public abstract int SkillAnimationNumber();
 		public virtual float GetCastingRange() => 0;
 		public bool Retarget => RequiresRetarget;

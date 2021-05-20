@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 530737f8503545a192728a8cf16324fa, type: 3}
-  m_Name: ShieldBash Skill
+  m_Name: Triple Slash Skill
   m_EditorClassIdentifier: 
-  skillID: 0c98239f-7632-4970-9ee1-e579aa7cf02a
-  displayName: ShieldBash
-  description: Bash your enemies with your shield!
-  icon: {fileID: 21300000, guid: 65d466afcff75fa428a0b237f81846d6, type: 3}
+  skillID: 802f7ca5-a4e9-44ab-a889-78063207154b
+  displayName: Triple Slash
+  description: Slash your enemies. Three times.
+  icon: {fileID: 21300000, guid: 5fd50594014b70e48bd6993443d46b32, type: 3}
   cooldown: 5
   canBeCancelled: 1
   targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
-  skillBehavior: {fileID: 11400000, guid: d5ea3d00d631b1043aefb292bf671752, type: 2}
+  skillBehavior: {fileID: 11400000, guid: 4a2f524bcaec2584c8918bbdedc9a5d4, type: 2}
   vfxOnUserStart: []
   vfxOnTargetStart: []
   vfxOnAreaStart: []

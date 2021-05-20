@@ -6,17 +6,15 @@ using UnityEngine;
 
 namespace RPG.Skills.Behaviors
 {
-	public class Kick : SkillBehavior
+	public class TripleSlash : SkillBehavior
 	{
 		[Min(0)] [SerializeField] private float damage;
-		[Min(0)] [SerializeField] private float kickRange;
-
+		[SerializeField] private float attackRange;
 		private Trigger _trigger;
 
 		public override bool HasCastTime() => true;
-		public override int SkillAnimationNumber() => 3;
-		public override float GetCastingRange() => kickRange;
-		public override bool AdjustAnimationSpeed => false;
+		public override float GetCastingRange() => attackRange;
+		public override int SkillAnimationNumber() => 1;
 
 		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{
@@ -28,7 +26,7 @@ namespace RPG.Skills.Behaviors
 					{
 						var health = targets[0].GetComponent<Health>();
 						health.TakeDamage(user, damage);
-						yield break;
+						yield return null;
 					}
 				}
 				else yield return null;

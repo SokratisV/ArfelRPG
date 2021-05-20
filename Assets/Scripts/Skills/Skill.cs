@@ -198,9 +198,6 @@ namespace RPG.Skills
 		{
 		}
 
-		public void OnAnimationEvent()
-		{
-			skillBehavior.OnAnimationEvent();
-		}
+		public void OnAnimationEvent() => skillBehavior.OnAnimationEvent();
 	}
 }

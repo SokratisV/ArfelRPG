@@ -14,7 +14,6 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] [Range(0, 2)] private float dashDuration;
 
 		public override bool HasCastTime() => false;
-		public override bool UseExtraAnimation() => false;
 		public override int SkillAnimationNumber() => 3;
 		public override float GetCastingRange() => distance;
 

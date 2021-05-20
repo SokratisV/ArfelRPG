@@ -10,10 +10,8 @@ namespace RPG.Skills.Behaviors
 		[Min(0)] [SerializeField] private float damage;
 
 		public override bool HasCastTime() => true;
-
-		public override bool UseExtraAnimation() => false;
-
-		public override int SkillAnimationNumber() => 3;
+		public override int SkillAnimationNumber() => 2;
+		public override bool AdjustAnimationSpeed => false;
 
 		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
 		{

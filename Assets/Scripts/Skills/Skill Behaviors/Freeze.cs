@@ -12,7 +12,6 @@ namespace RPG.Skills.Behaviors
 		[Range(0, 100)] [SerializeField] private float slowPercent;
 
 		public override bool HasCastTime() => false;
-		public override bool UseExtraAnimation() => false;
 		public override int SkillAnimationNumber() => 1;
 
 		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)

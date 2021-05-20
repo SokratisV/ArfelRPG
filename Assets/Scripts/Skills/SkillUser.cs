@@ -83,10 +83,7 @@ namespace RPG.Skills
 		}
 
 		// Animation event
-		public void SkillHit()
-		{
-			_currentCastingSkill?.Skill.OnAnimationEvent();
-		}
+		private void SkillHit() => _currentCastingSkill?.Skill.OnAnimationEvent();
 
 		#endregion
 

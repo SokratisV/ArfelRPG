@@ -193,7 +193,7 @@ namespace RPG.Control
 		private void ResetInput()
 		{
 			if(Input.GetMouseButtonUp(0)) _hasInputBeenReset = true;
-			if(Input.GetMouseButtonDown(1) && _skillUser.CanCurrentSkillBeCancelled) _skillUser.CancelAction();
+			if(Input.GetMouseButtonUp(1) && _skillUser.CanCurrentSkillBeCancelled) _skillUser.CancelAction();
 		}
 
 		private bool RaycastNavMesh(out Vector3 target, Func<Vector3, bool> extraCheck)
