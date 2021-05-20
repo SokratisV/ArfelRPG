@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace RPG.Combat
 {
@@ -23,5 +25,17 @@ namespace RPG.Combat
 		public Transform LeftFoot => leftFoot;
 		public Transform LeftHand => leftHand == null ? transform : leftHand;
 		public Transform RightHand => rightHand == null ? transform : rightHand;
+
+#if UNITY_EDITOR
+		[Button(ButtonSizes.Large)]
+		private void UpdateReferences()
+		{
+			rightHand = GetComponentsInChildren<Transform>().FirstOrDefault(c => c.gameObject.name == "Hand_R" || c.gameObject.name == "RightHand");
+			projectileLocation = rightHand;
+			leftHand = GetComponentsInChildren<Transform>().FirstOrDefault(c => c.gameObject.name == "Hand_L"|| c.gameObject.name == "LeftHand");
+			rightFoot = GetComponentsInChildren<Transform>().FirstOrDefault(c => c.gameObject.name == "Ankle_R"|| c.gameObject.name == "RightFoot");
+			leftFoot = GetComponentsInChildren<Transform>().FirstOrDefault(c => c.gameObject.name == "Ankle_L"|| c.gameObject.name == "LeftFoot");
+		}
+#endif
 	}
 }
