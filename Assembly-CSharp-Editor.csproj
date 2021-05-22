@@ -767,6 +767,10 @@
       <Project>{66be3833-5858-777d-9b37-91834931106f}</Project>
       <Name>LeanTween</Name>
     </ProjectReference>
+    <ProjectReference Include="CoreEditor.csproj">
+      <Project>{75a15461-8108-d6e6-91b6-b650c76fc9d1}</Project>
+      <Name>CoreEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="Outline.csproj">
       <Project>{3e64631f-bc48-1183-10b0-32032bb5a975}</Project>
       <Name>Outline</Name>
