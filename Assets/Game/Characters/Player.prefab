@@ -468,7 +468,7 @@ PrefabInstance:
         type: 3}
       propertyPath: rightHand
       value: 
-      objectReference: {fileID: 4915766684468877448}
+      objectReference: {fileID: 744817102873128463}
     - target: {fileID: 6027821638293668026, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: projectileLocation
@@ -593,6 +593,12 @@ Transform:
 --- !u!4 &4915766684468877448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3545859376264856352, guid: 8768d04e2488fb2468e6aafd892a29e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8434436786364013480}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &744817102873128463 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9176995343535289767, guid: 8768d04e2488fb2468e6aafd892a29e2,
     type: 3}
   m_PrefabInstance: {fileID: 8434436786364013480}
   m_PrefabAsset: {fileID: 0}
