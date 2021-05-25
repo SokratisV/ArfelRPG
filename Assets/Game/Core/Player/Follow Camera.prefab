@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4274947371637543670}
   - component: {fileID: 4274947371637543671}
-  - component: {fileID: 2446398703315233649}
   - component: {fileID: 1663378247792120652}
   - component: {fileID: 1397810677323393355}
   - component: {fileID: 7246480071776354612}
@@ -71,55 +70,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 4274947372079205868}
---- !u!114 &2446398703315233649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4274947371637543657}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e605c65410be9224285e2b376b1e96d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2.5
-  areaAngles:
-  - area: 0
-    angles:
-      x: 41
-      y: 0.5
-      z: 0
-  - area: 1
-    angles:
-      x: 18
-      y: -22.5
-      z: 0
-  - area: 2
-    angles:
-      x: 33
-      y: -22
-      z: 0
-  - area: 3
-    angles:
-      x: 41
-      y: -52
-      z: 0
-  - area: 4
-    angles:
-      x: 35.5
-      y: 24
-      z: 0
-  - area: 5
-    angles:
-      x: 16
-      y: 14
-      z: 0
-  - area: 6
-    angles:
-      x: 40
-      y: 0
-      z: 0
 --- !u!114 &1663378247792120652
 MonoBehaviour:
   m_ObjectHideFlags: 0

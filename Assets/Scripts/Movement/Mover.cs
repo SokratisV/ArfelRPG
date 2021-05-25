@@ -16,16 +16,18 @@ namespace RPG.Movement
 		public bool IsMoving => !_navMeshAgent.isStopped;
 		public float CurrentSpeed { get; set; }
 
-		[SerializeField] private float maxSpeed = 6f;
+		[SerializeField] private float maxSpeed = 6f, distanceBeforeStopAnimation = 5f, timeBeforeIdle = 5f;
 
-		private bool _lockMovement;
-		private float _distanceBeforeReachingDestination;
+		private bool _lockMovement, _travelledStopDistance;
+		private float _distanceBeforeReachingDestination, _idleTimer = 5f;
 		private Health _health;
 		private Animator _animator;
 		private NavMeshAgent _navMeshAgent;
 		private Coroutine _selfUpdateRoutine;
 		private ActionScheduler _actionScheduler;
 		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
+		private static readonly int StopAnimation = Animator.StringToHash("stopAnimation");
+		private static readonly int IdleAnimations = Animator.StringToHash("idleAnimations");
 
 		#region Unity
 
@@ -79,6 +81,7 @@ namespace RPG.Movement
 		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
 			if (!_navMeshAgent.enabled || _lockMovement) return;
+			_travelledStopDistance = (destination - transform.position).sqrMagnitude >= distanceBeforeStopAnimation * distanceBeforeStopAnimation;
 			_navMeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
 			_navMeshAgent.speed = CurrentSpeed * Mathf.Clamp01(speedFraction);
@@ -112,12 +115,14 @@ namespace RPG.Movement
 		{
 			if (!_navMeshAgent.enabled) return;
 			_navMeshAgent.isStopped = true;
+			_idleTimer = 0;
 		}
 
 		public void CompleteAction()
 		{
 			_navMeshAgent.isStopped = true;
 			_actionScheduler.CompleteAction();
+			_idleTimer = 0;
 			OnActionComplete?.Invoke();
 		}
 
@@ -176,6 +181,7 @@ namespace RPG.Movement
 		{
 			while (true)
 			{
+				_idleTimer += Time.deltaTime;
 				CheckIfDestinationIsReached();
 				UpdateAnimator();
 				yield return null;
@@ -199,6 +205,9 @@ namespace RPG.Movement
 			var localVelocity = transform.InverseTransformDirection(velocity);
 			var speed = localVelocity.z;
 			_animator.SetFloat(ForwardSpeed, speed);
+			_animator.SetBool(StopAnimation, _travelledStopDistance);
+			if (_idleTimer > timeBeforeIdle) _animator.SetBool(IdleAnimations, true);
+			else _animator.SetBool(IdleAnimations, false);
 		}
 
 		#endregion
