@@ -661,6 +661,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Dummy Target
       objectReference: {fileID: 0}
+    - target: {fileID: 3782659656829733649, guid: 9c9022d2647d50f4586eb131372fd232,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c9022d2647d50f4586eb131372fd232, type: 3}
 --- !u!4 &517600927 stripped
@@ -1013,6 +1018,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Archer (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7047174451362214280, guid: c7bf99b302831c3498cc73d34fbfe6c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7047174451362214294, guid: c7bf99b302831c3498cc73d34fbfe6c5,
         type: 3}
       propertyPath: m_RootOrder
@@ -1281,6 +1291,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Archer (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047174451362214280, guid: c7bf99b302831c3498cc73d34fbfe6c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7047174451362214294, guid: c7bf99b302831c3498cc73d34fbfe6c5,
         type: 3}
@@ -1786,6 +1801,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 599293297161273411, guid: e610e50c6c909474aa62aa5de44d61f6,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 255
       objectReference: {fileID: 0}
     - target: {fileID: 630333752191983310, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
@@ -2640,7 +2660,7 @@ PrefabInstance:
     - target: {fileID: 1376737078588745215, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -662.35004
+      value: -662.35
       objectReference: {fileID: 0}
     - target: {fileID: 1376742326987431053, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
@@ -3220,7 +3240,7 @@ PrefabInstance:
     - target: {fileID: 3688059568170451444, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000076293945
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 3805435196963736913, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
@@ -4326,6 +4346,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Archer (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7047174451362214280, guid: c7bf99b302831c3498cc73d34fbfe6c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7047174451362214294, guid: c7bf99b302831c3498cc73d34fbfe6c5,
         type: 3}
       propertyPath: m_RootOrder
@@ -4465,6 +4490,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Archer (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7047174451362214280, guid: c7bf99b302831c3498cc73d34fbfe6c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7047174451362214294, guid: c7bf99b302831c3498cc73d34fbfe6c5,
         type: 3}

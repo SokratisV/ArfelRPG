@@ -33,6 +33,7 @@ namespace RPG.Skills
 		private Mover _mover;
 		private Skill _selectedSkill;
 		private Animator _animator;
+		private Fighter _fighter;
 		private ActionScheduler _actionScheduler;
 		private SkillIndicator _skillIndicator;
 		private CastingSkill _currentCastingSkill;
@@ -60,17 +61,18 @@ namespace RPG.Skills
 			_skillIndicator = GetComponent<SkillIndicator>();
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_animator = GetComponent<Animator>();
+			_fighter = GetComponent<Fighter>();
 		}
 
 		private void OnEnable()
 		{
-			GetComponent<Fighter>().OnWeaponChanged += SwapSkills;
+			_fighter.OnWeaponChanged += SwapSkills;
 			OnSkillCast += UseSkillAnimation;
 		}
 
 		private void OnDisable()
 		{
-			GetComponent<Fighter>().OnWeaponChanged -= SwapSkills;
+			_fighter.OnWeaponChanged -= SwapSkills;
 			OnSkillCast -= UseSkillAnimation;
 		}
 
@@ -256,6 +258,8 @@ namespace RPG.Skills
 				{
 					OnSkillEnd?.Invoke(_currentCastingSkill.Skill);
 					StopCoroutine(_currentCastingSkill.Data.UpdateBehavior);
+					if (_currentCastingSkill.Skill.RequiresTarget == true) 
+						_actionScheduler.EnqueueAction(new FighterActionData(_fighter, _currentCastingSkill.Data.InitialTarget));
 					CompleteAction();
 					_currentCastingSkill = null;
 					_selectedSkill = null;
@@ -344,6 +348,7 @@ namespace RPG.Skills
 			else
 			{
 				_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data));
+				if (target != null) _actionScheduler.EnqueueAction(new FighterActionData(_fighter, target));
 				CompleteAction();
 				_selectedSkill = null;
 				_target = null;
