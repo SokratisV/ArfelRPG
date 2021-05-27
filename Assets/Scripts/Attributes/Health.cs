@@ -22,6 +22,7 @@ namespace RPG.Attributes
 		public static event Action OnPlayerDeath;
 		public event Action OnDeath;
 		public event Action<GameObject, float> OnTakeDamage;
+		public event Action<float> OnHealthChange;
 
 		[Serializable]
 		public class TakeDamageEvent : UnityEvent<float>
@@ -48,7 +49,11 @@ namespace RPG.Attributes
 
 		private float GetInitialHealth() => _baseStats.GetStat(Stat.Health);
 
-		public void Heal(float healthToRestore) => _healthPoints.Value = Mathf.Min(_healthPoints.Value + healthToRestore, GetMaxHealthPoints());
+		public void Heal(float healthToRestore)
+		{
+			_healthPoints.Value = Mathf.Min(_healthPoints.Value + healthToRestore, GetMaxHealthPoints());
+			OnHealthChange?.Invoke(healthToRestore);
+		}
 
 		/// <summary>
 		/// Heal for x % of max HP
@@ -58,7 +63,7 @@ namespace RPG.Attributes
 		{
 			var maxHealthPoints = GetMaxHealthPoints();
 			var healValue = maxHealthPoints * percent * 0.01f;
-			_healthPoints.Value = Mathf.Min(_healthPoints.Value + healValue, maxHealthPoints);
+			Heal(healValue);
 		}
 
 		private void RestoreHealth()
@@ -67,13 +72,11 @@ namespace RPG.Attributes
 			_healthPoints.Value = Mathf.Max(_healthPoints.Value, regenHealthPoints);
 		}
 
-		[ContextMenu("Take 60 damage")]
-		public void TakeTestDamage()
-		{
-			_healthPoints.Value = Mathf.Max(_healthPoints.Value - 60, 0);
-			takeDamage.Invoke(60);
-			OnTakeDamage?.Invoke(null, 60);
-		}
+		[ContextMenu("Take 30 damage")]
+		public void TakeTestDamage() => TakeDamage(null, 30);
+
+		[ContextMenu("Heal 40 points")]
+		public void HealthTest() => Heal(40);
 
 		public void TakeDamage(GameObject instigator, float damage)
 		{
@@ -81,6 +84,7 @@ namespace RPG.Attributes
 			_healthPoints.Value = Mathf.Max(_healthPoints.Value - damage, LowestHealthValue);
 			takeDamage.Invoke(damage);
 			OnTakeDamage?.Invoke(instigator, damage);
+			OnHealthChange?.Invoke(damage);
 			if (_healthPoints.Value == 0)
 			{
 				Die();
