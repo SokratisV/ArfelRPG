@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 566492515d1361242a453f198eb35943
+guid: bd831590c9d14aa48bfc01ec7ea96a4a
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Standing Taunt Battlecry
+    second: Bow Walk
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,19 +35,19 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Standing Taunt Battlecry
+      name: Bow Walk
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 85
+      lastFrame: 36
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1

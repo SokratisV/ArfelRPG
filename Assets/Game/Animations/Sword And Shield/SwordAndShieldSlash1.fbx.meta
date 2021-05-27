@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: 566492515d1361242a453f198eb35943
+guid: b9292959504f52e4a9c277aa3e2cdeff
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Standing Taunt Battlecry
+    second: Sword And Shield Slash (1)
+  - first:
+      74: 3759777152582214702
+    second: Sword And Shield Slash 1
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,11 +38,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Standing Taunt Battlecry
+      name: Sword And Shield Slash 1
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 85
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -58,7 +61,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.49329695
+        functionName: Hit
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

@@ -12,7 +12,7 @@ namespace RPG.Control
 {
 	public class PlayerController : MonoBehaviour
 	{
-		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius;
+		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius, dodgeCooldown;
 
 		private RaycastHit[] _hits;
 		private RaycastHit _movementRaycast;
@@ -21,6 +21,7 @@ namespace RPG.Control
 		private Mover _mover;
 		private SkillUser _skillUser;
 		private Camera _mainCamera;
+		private float _dodgeTimer;
 		private bool _isDraggingUI = false;
 		private bool _hasInputBeenReset = true;
 
@@ -44,38 +45,65 @@ namespace RPG.Control
 
 		private void Update()
 		{
-			if(InteractWithUI()) return;
-			if(_health.IsDead)
+			if (HandleDodge()) return;
+			if (InteractWithUI()) return;
+			if (_health.IsDead)
 			{
 				SetCursor(CursorType.None);
 				return;
 			}
 
 			ResetInput();
-			if(HandleSkillUsage()) return;
-			if(InteractWithComponent()) return;
-			if(InteractWithMovement()) return;
+			if (HandleSkillUsage()) return;
+			if (InteractWithComponent()) return;
+			if (InteractWithMovement()) return;
 
 			SetCursor(CursorType.None);
 		}
 
+		private bool HandleDodge()
+		{
+			if (_dodgeTimer > 0)
+			{
+				_dodgeTimer -= Time.deltaTime;
+				return false;
+			}
+
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				if (!Physics.Raycast(GetMouseRay(), out _movementRaycast, 50, LayerMask.GetMask("Terrain"))) return false;
+				var currentPosition = transform.position;
+				var direction = (_movementRaycast.point - currentPosition).normalized;
+				var targetPosition = currentPosition + direction * 3;
+				if (Helper.RandomPointAroundNavMesh(out var outcome, targetPosition, .1f))
+				{
+					_mover.Dodge(outcome);
+					_dodgeTimer = dodgeCooldown;
+				}
+
+				return true;
+			}
+
+			return false;
+		}
+
 		private bool HandleSkillUsage()
 		{
-			if(!_skillUser.IsPreparingSkill && !_skillUser.CanCurrentSkillBeUsed) return false;
-			if(_skillUser.SkillRequiresTarget == null)
+			if (!_skillUser.IsPreparingSkill && !_skillUser.CanCurrentSkillBeUsed) return false;
+			if (_skillUser.SkillRequiresTarget == null)
 			{
 				_skillUser.Execute(gameObject);
 				return true;
 			}
 
-			if(_skillUser.SkillRequiresTarget.Value)
+			if (_skillUser.SkillRequiresTarget.Value)
 			{
-				if(RaycastForSkillTarget()) return true;
+				if (RaycastForSkillTarget()) return true;
 				SetCursor(CursorType.None);
 				return true;
 			}
 
-			if(HasHitNavMesh(CursorType.Skill, _skillUser.CanExecute)) return true;
+			if (HasHitNavMesh(CursorType.Skill, _skillUser.CanExecute)) return true;
 			SetCursor(CursorType.None);
 			return true;
 		}
@@ -83,12 +111,12 @@ namespace RPG.Control
 		private bool RaycastForSkillTarget()
 		{
 			_hits = RaycastAllSorted();
-			foreach(var hit in _hits)
+			foreach (var hit in _hits)
 			{
 				var skillcastables = hit.transform.GetComponents<ISkillcastable>();
-				foreach(var raycastable in skillcastables)
+				foreach (var raycastable in skillcastables)
 				{
-					if(raycastable.HandleSkillcast(gameObject))
+					if (raycastable.HandleSkillcast(gameObject))
 					{
 						raycastable.ShowInteractivity();
 						SetCursor(raycastable.GetSkillCursorType());
@@ -103,12 +131,12 @@ namespace RPG.Control
 		private bool InteractWithComponent()
 		{
 			_hits = RaycastAllSorted();
-			foreach(var hit in _hits)
+			foreach (var hit in _hits)
 			{
 				var raycastables = hit.transform.GetComponents<IRaycastable>();
-				foreach(var raycastable in raycastables)
+				foreach (var raycastable in raycastables)
 				{
-					if(raycastable.HandleRaycast(gameObject))
+					if (raycastable.HandleRaycast(gameObject))
 					{
 						raycastable.ShowInteractivity();
 						SetCursor(raycastable.GetCursorType());
@@ -124,7 +152,7 @@ namespace RPG.Control
 		{
 			var hits = Physics.SphereCastAll(GetMouseRay(), raycastRadius);
 			var distances = new float[hits.Length];
-			for(var i = 0;i < hits.Length;i++)
+			for (var i = 0; i < hits.Length; i++)
 			{
 				distances[i] = hits[i].distance;
 			}
@@ -135,10 +163,10 @@ namespace RPG.Control
 
 		private bool InteractWithUI()
 		{
-			if(Input.GetMouseButtonUp(0)) _isDraggingUI = false;
-			if(EventSystem.current.IsPointerOverGameObject())
+			if (Input.GetMouseButtonUp(0)) _isDraggingUI = false;
+			if (EventSystem.current.IsPointerOverGameObject())
 			{
-				if(Input.GetMouseButtonDown(0)) _isDraggingUI = true;
+				if (Input.GetMouseButtonDown(0)) _isDraggingUI = true;
 				SetCursor(CursorType.UI);
 				return true;
 			}
@@ -151,7 +179,7 @@ namespace RPG.Control
 		private bool HasHitNavMesh(CursorType cursor, Func<Vector3, bool> extraCheck)
 		{
 			var hasHit = RaycastNavMesh(out var target, extraCheck);
-			if(!hasHit) return false;
+			if (!hasHit) return false;
 			CheckPressedButtons(target);
 			SetCursor(cursor);
 			return true;
@@ -159,10 +187,10 @@ namespace RPG.Control
 
 		private void CheckPressedButtons(Vector3 target)
 		{
-			if(Input.GetKey(KeyCode.LeftControl))
+			if (Input.GetKey(KeyCode.LeftControl))
 			{
-				if(!Input.GetMouseButtonDown(0)) return;
-				if(_skillUser.IsPreparingSkill) _skillUser.Execute(target);
+				if (!Input.GetMouseButtonDown(0)) return;
+				if (_skillUser.IsPreparingSkill) _skillUser.Execute(target);
 				else
 				{
 					_mover.QueueMoveAction(target);
@@ -172,10 +200,10 @@ namespace RPG.Control
 			}
 			else
 			{
-				if(!Input.GetMouseButton(0)) return;
-				if(!_hasInputBeenReset) return;
+				if (!Input.GetMouseButton(0)) return;
+				if (!_hasInputBeenReset) return;
 
-				if(_skillUser.IsPreparingSkill)
+				if (_skillUser.IsPreparingSkill)
 				{
 					_hasInputBeenReset = false;
 					_skillUser.Execute(target);
@@ -192,18 +220,18 @@ namespace RPG.Control
 
 		private void ResetInput()
 		{
-			if(Input.GetMouseButtonUp(0)) _hasInputBeenReset = true;
-			if(Input.GetMouseButtonUp(1) && _skillUser.CanCurrentSkillBeCancelled) _skillUser.CancelAction();
+			if (Input.GetMouseButtonUp(0)) _hasInputBeenReset = true;
+			if (Input.GetMouseButtonUp(1) && _skillUser.CanCurrentSkillBeCancelled) _skillUser.CancelAction();
 		}
 
 		private bool RaycastNavMesh(out Vector3 target, Func<Vector3, bool> extraCheck)
 		{
 			target = new Vector3();
 			var hasHit = Physics.Raycast(GetMouseRay(), out _movementRaycast, 50, LayerMask.GetMask("Terrain"));
-			if(!hasHit) return false;
+			if (!hasHit) return false;
 
 			var hasCastToNavMesh = NavMesh.SamplePosition(_movementRaycast.point, out var navMeshHit, maxNavMeshProjectionDistance, NavMesh.AllAreas);
-			if(!hasCastToNavMesh) return false;
+			if (!hasCastToNavMesh) return false;
 
 			target = navMeshHit.position;
 			return extraCheck.Invoke(target);
@@ -211,7 +239,7 @@ namespace RPG.Control
 
 		private void MovementFeedback(Vector3 target)
 		{
-			if(Input.GetMouseButtonDown(0)) _movementFeedbackPrefab.Spawn(target, _movementRaycast.normal);
+			if (Input.GetMouseButtonDown(0)) _movementFeedbackPrefab.Spawn(target, _movementRaycast.normal);
 		}
 
 		private void SetCursor(CursorType type)
@@ -220,7 +248,7 @@ namespace RPG.Control
 			Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
 		}
 
-		private CursorMapping GetCursorMapping(CursorType type) => cursorMappings.TryGetValue(type, out var mapping)? mapping:cursorMappings[0];
+		private CursorMapping GetCursorMapping(CursorType type) => cursorMappings.TryGetValue(type, out var mapping) ? mapping : cursorMappings[0];
 
 		private Ray GetMouseRay() => _mainCamera.ScreenPointToRay(Input.mousePosition);
 

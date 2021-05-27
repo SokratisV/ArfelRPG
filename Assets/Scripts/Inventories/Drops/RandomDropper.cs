@@ -1,7 +1,6 @@
-﻿using RPG.Stats;
+﻿using RPG.Core;
+using RPG.Stats;
 using UnityEngine;
-using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 namespace RPG.Inventories
 {
@@ -20,10 +19,9 @@ namespace RPG.Inventories
 		{
 			for(var i = 0;i < Attempts;i++)
 			{
-				var randomPoint = transform.position + Random.insideUnitSphere * scatterDistance;
-				if(NavMesh.SamplePosition(randomPoint, out var hit, 0.1f, NavMesh.AllAreas))
+				if (Helper.RandomPointAroundNavMesh(out var outcome, transform.position, scatterDistance))
 				{
-					return hit.position;
+					return outcome;
 				}
 			}
 

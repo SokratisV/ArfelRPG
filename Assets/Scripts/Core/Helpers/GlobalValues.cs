@@ -14,5 +14,6 @@ namespace RPG.Core
 		public static int ActionBarCount {get;} = 4;
 		public static float GlobalCooldown {get;} = 1f;
 		public static string PlayerName {get;} = "Adramalikh";
+		public static float DodgeDuration { get; } = .2f;
 	}
 }

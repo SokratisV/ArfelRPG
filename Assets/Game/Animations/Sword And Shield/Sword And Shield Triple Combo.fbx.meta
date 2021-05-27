@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 566492515d1361242a453f198eb35943
+guid: 9adb7ace21140e047b165b844b42f497
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Standing Taunt Battlecry
+    second: Sword And Shield Triple Combo
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Standing Taunt Battlecry
+      name: Sword And Shield Triple Combo
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 85
+      lastFrame: 126
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -58,7 +58,42 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.231454
+        functionName: SkillHit
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.23442136
+        functionName: OnHit
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.37982196
+        functionName: SkillHit
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.38058367
+        functionName: OnHit
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.62611276
+        functionName: OnHit
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

@@ -45,6 +45,7 @@ namespace RPG.Skills
 		private static readonly int UseSkill = Animator.StringToHash("useSkill");
 		private static readonly int ExtraSkillAnimation = Animator.StringToHash("skillExtra");
 		private static readonly int SkillAnimationIndex = Animator.StringToHash("skillIndex");
+		private static readonly int CancelAnimation = Animator.StringToHash("cancelAnimation");
 
 		#region Unity
 
@@ -163,6 +164,7 @@ namespace RPG.Skills
 		public void CancelAction()
 		{
 			OnActionCancelled?.Invoke();
+			_animator.SetTrigger(CancelAnimation);
 			if (HasTarget) _mover.CancelAction();
 			_skillIndicator.HideIndicator();
 			_currentCastingSkill = null;
@@ -332,6 +334,7 @@ namespace RPG.Skills
 			}
 
 			OnSkillCast?.Invoke(_selectedSkill);
+			_animator.ResetTrigger(CancelAnimation);
 			StartCoroutine(data.UpdateBehavior);
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			if(_selectedSkill.HasCastTime)

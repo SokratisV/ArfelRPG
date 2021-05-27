@@ -241,6 +241,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 6
+  distanceBeforeStopAnimation: 6
+  timeBeforeIdle: 5
 --- !u!114 &4339557145984695365
 MonoBehaviour:
   m_ObjectHideFlags: 0

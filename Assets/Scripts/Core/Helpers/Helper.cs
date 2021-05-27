@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace RPG.Core
 {
@@ -18,10 +19,10 @@ namespace RPG.Core
 		{
 			float soFar = 0;
 			Vector3 finalPoint = default;
-			for(var i = 0;i < path.corners.Length - 1;i++)
+			for (var i = 0; i < path.corners.Length - 1; i++)
 			{
 				var segmentDistance = (path.corners[i + 1] - path.corners[i]).magnitude;
-				if(soFar + segmentDistance <= distance)
+				if (soFar + segmentDistance <= distance)
 				{
 					soFar += segmentDistance;
 				}
@@ -52,13 +53,13 @@ namespace RPG.Core
 			{KeyCode.Alpha4, "4"}
 		};
 
-		public static string KeyCodeName(KeyCode keyCode) => NiceKeyCodeNames.TryGetValue(keyCode, out var name)? name:"";
+		public static string KeyCodeName(KeyCode keyCode) => NiceKeyCodeNames.TryGetValue(keyCode, out var name) ? name : "";
 
 		public static float GetPathLength(NavMeshPath path)
 		{
 			var total = 0f;
-			if(path.corners.Length < 2) return total;
-			for(var i = 0;i < path.corners.Length - 1;i++)
+			if (path.corners.Length < 2) return total;
+			for (var i = 0; i < path.corners.Length - 1; i++)
 			{
 				total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
 			}
@@ -67,5 +68,26 @@ namespace RPG.Core
 		}
 
 		public static LayerMask CharactersMask => LayerMask.GetMask("Characters");
+
+		public static bool RandomPointAroundNavMesh(out Vector3 outcome, Vector3 fromPosition, float distance)
+		{
+			outcome = fromPosition;
+			var randomPoint = fromPosition + Random.insideUnitSphere * distance;
+			if (!NavMesh.SamplePosition(randomPoint, out var hit, 1, NavMesh.AllAreas)) return false;
+			outcome = hit.position;
+			return true;
+		}
+
+		public static Vector3 NavMeshPointInDirection(Vector3 fromPosition, Vector3 direction, float distance)
+		{
+			var targetPosition = fromPosition;
+			targetPosition.z += direction.z * distance;
+			if (NavMesh.SamplePosition(targetPosition, out var hit, distance, NavMesh.AllAreas))
+			{
+				return hit.position;
+			}
+
+			return fromPosition;
+		}
 	}
 }

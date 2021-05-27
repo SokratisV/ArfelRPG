@@ -16,7 +16,7 @@ namespace RPG.Movement
 		public bool IsMoving => !_navMeshAgent.isStopped;
 		public float CurrentSpeed { get; set; }
 
-		[SerializeField] private float maxSpeed = 6f, distanceBeforeStopAnimation = 5f, timeBeforeIdle = 5f;
+		[SerializeField] private float maxSpeed = 6f, distanceBeforeStopAnimation = 5f, timeBeforeIdle = 10f;
 
 		private bool _lockMovement, _travelledStopDistance;
 		private float _distanceBeforeReachingDestination, _idleTimer = 5f;
@@ -28,6 +28,8 @@ namespace RPG.Movement
 		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 		private static readonly int StopAnimation = Animator.StringToHash("stopAnimation");
 		private static readonly int IdleAnimations = Animator.StringToHash("idleAnimations");
+		private static readonly int DodgeHash = Animator.StringToHash("dodge");
+		private static readonly int DodgeDirection = Animator.StringToHash("dodgeDirection");
 
 		#region Unity
 
@@ -103,6 +105,12 @@ namespace RPG.Movement
 			_navMeshAgent.destination = destination;
 			_navMeshAgent.speed = speedRequired;
 			_navMeshAgent.isStopped = false;
+		}
+
+		public void Dodge(Vector3 destination)
+		{
+			_animator.SetTrigger(DodgeHash);
+			Dash(destination, GlobalValues.DodgeDuration);
 		}
 
 		public void Blink(Vector3 point)
@@ -206,8 +214,11 @@ namespace RPG.Movement
 			var speed = localVelocity.z;
 			_animator.SetFloat(ForwardSpeed, speed);
 			_animator.SetBool(StopAnimation, _travelledStopDistance);
-			if (_idleTimer > timeBeforeIdle) _animator.SetBool(IdleAnimations, true);
-			else _animator.SetBool(IdleAnimations, false);
+			if (_idleTimer > timeBeforeIdle)
+			{
+				_animator.SetTrigger(IdleAnimations);
+				_idleTimer = 0;
+			}
 		}
 
 		#endregion
