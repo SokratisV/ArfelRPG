@@ -7,7 +7,7 @@ namespace RPG.UI
 	{
 		[SerializeField] private bool toggleOnEnable;
 		[SerializeField] private RectTransform uiContainer = null;
-		[SerializeField] private KeyCode toggleKey = KeyCode.Escape;
+		[SerializeField] private KeyCode toggleKey = KeyCode.Escape, alternateToggle = KeyCode.None;
 		[SerializeField] private Vector2 hiddenPosition;
 		[SerializeField] private float tweenTime = .2f;
 		[SerializeField] private bool startState;
@@ -37,7 +37,7 @@ namespace RPG.UI
 
 		private void Update()
 		{
-			if(Input.GetKeyDown(toggleKey))
+			if(Input.GetKeyDown(toggleKey) || Input.GetKeyDown(alternateToggle))
 			{
 				Toggle(!_canvas.enabled);
 			}

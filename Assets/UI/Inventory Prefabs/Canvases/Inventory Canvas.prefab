@@ -477,10 +477,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggleOnEnable: 0
   uiContainer: {fileID: 6581010853545538089}
-  toggleKey: 98
+  toggleKey: 105
+  alternateToggle: 98
   hiddenPosition: {x: 1075, y: -863}
   tweenTime: 0.2
   startState: 0
+  disableRaycastingOnHide: 0
 --- !u!1001 &1820762512732070243
 PrefabInstance:
   m_ObjectHideFlags: 0

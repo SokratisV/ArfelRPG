@@ -592,9 +592,11 @@ MonoBehaviour:
   toggleOnEnable: 0
   uiContainer: {fileID: 728153509246623545}
   toggleKey: 105
+  alternateToggle: 98
   hiddenPosition: {x: -500, y: -863}
   tweenTime: 0.2
   startState: 0
+  disableRaycastingOnHide: 0
 --- !u!114 &7800831611079942606
 MonoBehaviour:
   m_ObjectHideFlags: 0
