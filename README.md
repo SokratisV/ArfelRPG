@@ -8,4 +8,4 @@ where you're being introduced to the world and the game's mechanics, but not on 
 
 I plan on having a playable version of this project on sokratisv.itch.io/rpg, but this obviously will change when/if the game can no longer be supported by WebGL/browsers.
 
-Please feel free to send me any suggestions or feedback, whether good and bad.
+Please feel free to send me any suggestions or feedback, whether good or bad.
