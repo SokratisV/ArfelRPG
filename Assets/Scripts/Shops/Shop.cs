@@ -13,7 +13,7 @@ namespace RPG.Shops
 
 		public event Action OnChange;
 
-		private Shopper _shopper = null;
+		private Shopper _currentShopper = null;
 		private OutlineableComponent _outlineableComponent;
 		private Dictionary<InventoryItem, int> _transaction = new Dictionary<InventoryItem, int>();
 
@@ -23,13 +23,15 @@ namespace RPG.Shops
 
 		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject, GlobalValues.ShopInteractableColor);
 
-		private void Start() => _shopper = Shopper.GetPlayerShopper();
+		private void Start() => _currentShopper = Shopper.GetPlayerShopper();
 
 		#endregion
 
 		#region Public
 
-		public IEnumerable<ShopItem> GetFilteredItems()
+		public IEnumerable<ShopItem> GetFilteredItems() => GetAllitems();
+
+		public IEnumerable<ShopItem> GetAllitems()
 		{
 			foreach (var stockItemConfig in stockConfig)
 			{
@@ -41,6 +43,26 @@ namespace RPG.Shops
 
 		public void ConfirmTransaction()
 		{
+			var shopperInventory = _currentShopper.GetComponent<Inventory>();
+			var purse = _currentShopper.GetComponent<Purse>();
+			if (shopperInventory == null || purse == null) return;
+			
+			foreach (var shopItem in GetAllitems())
+			{
+				var item = shopItem.InventoryItem;
+				var quantity = shopItem.QuantityInTransaction;
+				var price = shopItem.Price;
+				for (var i = 0; i < quantity; i++)
+				{
+					if (purse.Balance < price) break;
+					var success = shopperInventory.AddToFirstEmptySlot(item, 1);
+					if (success)
+					{
+						AddToTransaction(item, -1);
+						purse.UpdateBalance(-price);
+					}
+				}
+			}
 		}
 
 		public void SelectFilter(ItemCategory category)
@@ -53,9 +75,21 @@ namespace RPG.Shops
 		{
 		}
 
+		public void SetShopper(Shopper shopper) => _currentShopper = shopper;
+
 		public bool IsBuyingMode => true;
 		public bool CanTransact => true;
-		public float TransactionTotal() => 0;
+
+		public float TransactionTotal()
+		{
+			float total = 0;
+			foreach (var item in GetAllitems())
+			{
+				total += item.Price * item.QuantityInTransaction;
+			}
+
+			return total;
+		}
 
 		public void AddToTransaction(InventoryItem item, int quantity)
 		{
@@ -73,7 +107,7 @@ namespace RPG.Shops
 
 		public bool HandleRaycast(GameObject player)
 		{
-			CheckPressedButtons(_shopper);
+			CheckPressedButtons(_currentShopper);
 			return true;
 		}
 
@@ -99,7 +133,7 @@ namespace RPG.Shops
 
 		public Transform GetTransform() => transform;
 
-		public void Interact() => _shopper.SetActiveShop(this);
+		public void Interact() => _currentShopper.SetActiveShop(this);
 
 		public float InteractionDistance() => 1.5f;
 

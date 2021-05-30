@@ -49,7 +49,17 @@ namespace RPG.Shops
 
 		public void SetActiveShop(Shop shop)
 		{
+			if (_activeShop != null)
+			{
+				_activeShop.SetShopper(null);
+			}
+
 			_activeShop = shop;
+			if (_activeShop != null)
+			{
+				_activeShop.SetShopper(this);
+			}
+
 			ActiveShopChange?.Invoke();
 		}
 

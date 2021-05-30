@@ -7,7 +7,7 @@ namespace RPG.UI.Shops
 	public class ShopUI : MonoBehaviour
 	{
 		[SerializeField] private ShowHideUIOnButtonPress showHideUIOnButtonPress;
-		[SerializeField] private TextMeshProUGUI shopName;
+		[SerializeField] private TextMeshProUGUI shopName, totalField;
 		[SerializeField] private Transform listRoot;
 		[SerializeField] private RowUI rowPrefab;
 		
@@ -47,11 +47,9 @@ namespace RPG.UI.Shops
 				var row = Instantiate(rowPrefab, listRoot);
 				row.Setup(_currentShop, item);
 			}
+			
+			totalField.SetText($"{_currentShop.TransactionTotal():N2}");
 		}
-
-		public void Close()
-		{
-			_shopper.SetActiveShop(null);
-		}
+		public void ConfirmTransaction() => _currentShop.ConfirmTransaction();
 	}
 }

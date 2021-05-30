@@ -10,14 +10,14 @@ namespace RPG.Shops
 		private InventoryItem _item;
 		private int _availability;
 		private float _price;
-		private int _quantityInTransaction;
+		private int _quantityInTransactionInTransaction;
 
-		public ShopItem(InventoryItem item, int availability, float price, int quantityInTransaction)
+		public ShopItem(InventoryItem item, int availability, float price, int quantityInTransactionInTransaction)
 		{
 			_item = item;
 			_availability = availability;
 			_price = price;
-			_quantityInTransaction = quantityInTransaction;
+			_quantityInTransactionInTransaction = quantityInTransactionInTransaction;
 		}
 
 		public string Name => _item.DisplayName;
@@ -25,6 +25,6 @@ namespace RPG.Shops
 		public int Availability => _availability;
 		public float Price => _price;
 		public InventoryItem InventoryItem => _item;
-		public int Quantity => _quantityInTransaction;
+		public int QuantityInTransaction => _quantityInTransactionInTransaction;
 	}
 }

@@ -19,7 +19,7 @@ namespace RPG.UI.Shops
 			itemImage.sprite = item.Icon;
 			availabilityField.SetText($"{item.Availability}");
 			priceField.SetText($"{item.Price:N1}");
-			quantityField.SetText($"{item.Quantity}");
+			quantityField.SetText($"{item.QuantityInTransaction}");
 			_currentShop = currentShop;
 			_item = item;
 		}
