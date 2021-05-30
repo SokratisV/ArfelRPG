@@ -8,6 +8,8 @@ namespace RPG.UI.Shops
 	{
 		[SerializeField] private ShowHideUIOnButtonPress showHideUIOnButtonPress;
 		[SerializeField] private TextMeshProUGUI shopName;
+		[SerializeField] private Transform listRoot;
+		[SerializeField] private RowUI rowPrefab;
 		
 		private Shopper _shopper;
 		private Shop _currentShop = null;
@@ -22,11 +24,29 @@ namespace RPG.UI.Shops
 
 		private void ShopChanged()
 		{
+			if (_currentShop != null) _currentShop.OnChange -= RefreshUI;
 			_currentShop = _shopper.GetActiveShop();
 			showHideUIOnButtonPress.Toggle(_currentShop != null);
 			
 			if (_currentShop == null) return;
 			shopName.SetText(_currentShop.ShopName);
+
+			_currentShop.OnChange += RefreshUI;
+			RefreshUI();
+		}
+
+		private void RefreshUI()
+		{
+			foreach (Transform child in listRoot)
+			{
+				Destroy(child.gameObject);
+			}
+
+			foreach (var item in _currentShop.GetFilteredItems())
+			{
+				var row = Instantiate(rowPrefab, listRoot);
+				row.Setup(_currentShop, item);
+			}
 		}
 
 		public void Close()

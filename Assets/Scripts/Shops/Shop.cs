@@ -8,21 +8,14 @@ namespace RPG.Shops
 {
 	public class Shop : MonoBehaviour, IRaycastable, IInteractable
 	{
-		[Serializable]
-		public class ShopItem
-		{
-			public InventoryItem item;
-			public int availability;
-			public float price;
-			public int quantityInTransaction;
-		}
-
 		[SerializeField] private string shopName;
+		[SerializeField] private StockItemConfig[] stockConfig;
 
 		public event Action OnChange;
 
 		private Shopper _shopper = null;
 		private OutlineableComponent _outlineableComponent;
+		private Dictionary<InventoryItem, int> _transaction = new Dictionary<InventoryItem, int>();
 
 		#region Unity
 
@@ -38,7 +31,12 @@ namespace RPG.Shops
 
 		public IEnumerable<ShopItem> GetFilteredItems()
 		{
-			return null;
+			foreach (var stockItemConfig in stockConfig)
+			{
+				var price = stockItemConfig.item.Price * (1 - stockItemConfig.discountPercentage / 100);
+				_transaction.TryGetValue(stockItemConfig.item, out var quantity);
+				yield return new ShopItem(stockItemConfig.item, stockItemConfig.initialStock, price, quantity);
+			}
 		}
 
 		public void ConfirmTransaction()
@@ -61,6 +59,10 @@ namespace RPG.Shops
 
 		public void AddToTransaction(InventoryItem item, int quantity)
 		{
+			if (!_transaction.ContainsKey(item)) _transaction[item] = 0;
+			_transaction[item] += quantity;
+			if (_transaction[item] <= 0) _transaction.Remove(item);
+			OnChange?.Invoke();
 		}
 
 		#endregion
@@ -102,5 +104,13 @@ namespace RPG.Shops
 		public float InteractionDistance() => 1.5f;
 
 		#endregion
+	}
+
+	[Serializable]
+	internal class StockItemConfig
+	{
+		public InventoryItem item;
+		public int initialStock;
+		[Range(0, 100)] public float discountPercentage;
 	}
 }
