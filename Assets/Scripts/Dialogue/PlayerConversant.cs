@@ -106,9 +106,7 @@ namespace RPG.Dialogue
 			TriggerEnterAction();
 			OnUpdated?.Invoke(null);
 		}
-
-		public bool CanInteract(IInteractable interactable) => interactable != null && _mover.CanMoveTo(interactable.GetTransform().position);
-
+		
 		public void CancelAction()
 		{
 			_interactTarget = null;
@@ -144,10 +142,7 @@ namespace RPG.Dialogue
 			}
 		}
 
-		private IEnumerable<IPredicateEvaluator> GetEvaluators()
-		{
-			return GetComponents<IPredicateEvaluator>();
-		}
+		private IEnumerable<IPredicateEvaluator> GetEvaluators() => GetComponents<IPredicateEvaluator>();
 
 		private void TriggerEnterAction()
 		{

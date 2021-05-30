@@ -4,10 +4,8 @@ using RPG.Attributes;
 using RPG.Core;
 using RPG.Inventories;
 using RPG.Stats;
-using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 namespace RPG.Combat

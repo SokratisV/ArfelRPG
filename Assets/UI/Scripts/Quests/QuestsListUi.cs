@@ -22,8 +22,7 @@ namespace RPG.UI.Quests
 			{
 				Destroy(child.gameObject);
 			}
-
-
+			
 			foreach(var stats in _questList.Statuses)
 			{
 				var questObject = Instantiate(questPrefab, transform);

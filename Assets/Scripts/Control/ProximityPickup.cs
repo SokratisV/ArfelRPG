@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using RPG.Attributes;
-using RPG.Control;
 using RPG.Core;
 using UnityEngine;
 

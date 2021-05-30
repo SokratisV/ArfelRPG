@@ -747,6 +747,10 @@
       <Project>{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}</Project>
       <Name>SceneManagement</Name>
     </ProjectReference>
+    <ProjectReference Include="Shops.csproj">
+      <Project>{e155acbc-526f-78b6-5733-7a9d1519bb48}</Project>
+      <Name>Shops</Name>
+    </ProjectReference>
     <ProjectReference Include="Inventories.csproj">
       <Project>{9bd45c65-5ef1-5218-e6a8-6d63c7c624c7}</Project>
       <Name>Inventories</Name>

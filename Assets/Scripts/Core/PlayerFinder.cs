@@ -4,21 +4,21 @@ namespace RPG.Core
 {
 	public static class PlayerFinder
 	{
-		private static GameObject PlayerObject = null;
+		private static GameObject _playerObject = null;
 
 		public static GameObject Player
 		{
 			get
 			{
-				if(PlayerObject == null)
+				if(!_playerObject)
 				{
-					PlayerObject = GameObject.FindWithTag("Player");
+					_playerObject = GameObject.FindWithTag("Player");
 				}
 
-				return PlayerObject;
+				return _playerObject;
 			}
 		}
 
-		public static void ResetPlayer() => PlayerObject = null;
+		public static void ResetPlayer() => _playerObject = null;
 	}
 }

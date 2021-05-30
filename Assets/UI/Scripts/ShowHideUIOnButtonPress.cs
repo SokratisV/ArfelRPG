@@ -67,7 +67,7 @@ namespace RPG.UI
 		private void ToggleRaycaster()
 		{
 			if (!disableRaycastingOnHide) return;
-			_raycaster.enabled = !_raycaster.enabled;
+			_raycaster.enabled = _canvas.enabled;
 		}
 	}
 }

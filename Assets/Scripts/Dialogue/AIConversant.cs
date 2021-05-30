@@ -6,16 +6,18 @@ namespace RPG.Dialogue
 	public class AIConversant : MonoBehaviour, IRaycastable, IInteractable
 	{
 		[SerializeField] private Dialogue dialogue;
-		[SerializeField] private string dialogueName;
+		[SerializeField] private string characterName;
 
 		private OutlineableComponent _outlineableComponent;
 		private PlayerConversant _playerConversant = null;
 
-		public string Name => dialogueName;
+		public string Name => characterName;
 
 		#region Unity
 
 		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject, GlobalValues.InteractColor);
+
+		private void Start() => _playerConversant = PlayerFinder.Player.GetComponent<PlayerConversant>();
 
 		#endregion
 
@@ -26,12 +28,6 @@ namespace RPG.Dialogue
 		public bool HandleRaycast(GameObject player)
 		{
 			if(dialogue == null) return false;
-			if(_playerConversant == null)
-			{
-				_playerConversant = player.GetComponent<PlayerConversant>();
-			}
-
-			if(!_playerConversant.CanInteract(this)) return false;
 			CheckPressedButtons(_playerConversant);
 			return true;
 		}

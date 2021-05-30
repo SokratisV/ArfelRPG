@@ -1,4 +1,3 @@
-using RPG.Core;
 using TMPro;
 using UnityEngine;
 

@@ -15,18 +15,7 @@ namespace RPG.Inventories
 	public class Equipment : MonoBehaviour, ISaveable
 	{
 		private Dictionary<EquipLocation, EquipableItem> _equippedItems = new Dictionary<EquipLocation, EquipableItem>();
-		private Inventory _playerInventory;
-
-		private void Awake()
-		{
-			_playerInventory = Inventory.GetPlayerInventory();
-		}
-
-		private void OnInventoryUpdated(InventoryItem inventoryItem)
-		{
-
-		}
-
+		
 		/// <summary>
 		/// Broadcasts when the items in the slots are added/removed.
 		/// </summary>

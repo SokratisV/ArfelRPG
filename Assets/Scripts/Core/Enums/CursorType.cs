@@ -9,6 +9,7 @@ namespace RPG.Core
         Pickup,
         InventoryFull,
         Dialogue,
-        Skill
+        Skill,
+        Shop
     }
 }
