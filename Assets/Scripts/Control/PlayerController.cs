@@ -193,7 +193,7 @@ namespace RPG.Control
 				if (_skillUser.IsPreparingSkill) _skillUser.Execute(target);
 				else
 				{
-					_mover.QueueMoveAction(target);
+					_mover.QueueAction(new MoverActionData(_mover, target, 1, 0));
 				}
 
 				MovementFeedback(target);

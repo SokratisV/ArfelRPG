@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using RPG.Core.Interfaces;
 using RPG.Core;
 using UnityEngine;
@@ -16,7 +18,7 @@ namespace RPG.Inventories
 	{
 		[Tooltip("Allowed size")] [SerializeField]
 		private int inventorySize = 16;
-		
+
 		private InventorySlot[] _slots;
 
 		public struct InventorySlot
@@ -44,6 +46,28 @@ namespace RPG.Inventories
 		/// </summary>
 		public bool HasSpaceFor(InventoryItem item) => FindSlot(item) >= 0;
 
+		public bool HasSpaceFor(IEnumerable<InventoryItem> items)
+		{
+			var freeSlots = FreeSlots();
+			var stackedItems = new List<InventoryItem>();
+			foreach (var item in items)
+			{
+				if (item.IsStackable)
+				{
+					if (HasItem(item)) continue;
+					if (stackedItems.Contains(item)) continue;
+					stackedItems.Add(item);
+				}
+
+				if (freeSlots <= 0) return false;
+				freeSlots--;
+			}
+
+			return true;
+		}
+
+		private int FreeSlots() => _slots.Count(slot => slot.Number == 0);
+
 		/// <summary>
 		/// How many slots are in the inventory?
 		/// </summary>
@@ -59,7 +83,7 @@ namespace RPG.Inventories
 		{
 			var i = FindSlot(item);
 
-			if(i < 0)
+			if (i < 0)
 			{
 				return false;
 			}
@@ -76,9 +100,9 @@ namespace RPG.Inventories
 		/// </summary>
 		public bool HasItem(InventoryItem item)
 		{
-			for(var i = 0;i < _slots.Length;i++)
+			for (var i = 0; i < _slots.Length; i++)
 			{
-				if(ReferenceEquals(_slots[i].Item, item))
+				if (ReferenceEquals(_slots[i].Item, item))
 				{
 					return true;
 				}
@@ -104,7 +128,7 @@ namespace RPG.Inventories
 		public void RemoveFromSlot(int slot, int number)
 		{
 			_slots[slot].Number -= number;
-			if(_slots[slot].Number <= 0)
+			if (_slots[slot].Number <= 0)
 			{
 				_slots[slot].Number = 0;
 				_slots[slot].Item = null;
@@ -124,13 +148,13 @@ namespace RPG.Inventories
 		/// <returns>True if the item was added anywhere in the inventory.</returns>
 		public bool AddItemToSlot(int slot, InventoryItem item, int number)
 		{
-			if(_slots[slot].Item != null)
+			if (_slots[slot].Item != null)
 			{
 				return AddToFirstEmptySlot(item, number);
 			}
 
 			var i = FindStack(item);
-			if(i >= 0)
+			if (i >= 0)
 			{
 				slot = i;
 			}
@@ -150,7 +174,7 @@ namespace RPG.Inventories
 		private int FindSlot(InventoryItem item)
 		{
 			var i = FindStack(item);
-			if(i < 0)
+			if (i < 0)
 			{
 				i = FindEmptySlot();
 			}
@@ -164,15 +188,15 @@ namespace RPG.Inventories
 		/// <returns>-1 if all slots are full.</returns>
 		private int FindEmptySlot()
 		{
-			for(var i = 0;i < _slots.Length;i++)
+			for (var i = 0; i < _slots.Length; i++)
 			{
-				if(_slots[i].Item == null)
+				if (_slots[i].Item == null)
 				{
 					return i;
 				}
 			}
 
-			return-1;
+			return -1;
 		}
 
 		/// <summary>
@@ -181,20 +205,20 @@ namespace RPG.Inventories
 		/// <returns>-1 if no stack exists or if the item is not stackable.</returns>
 		private int FindStack(InventoryItem item)
 		{
-			if(!item.IsStackable)
+			if (!item.IsStackable)
 			{
-				return-1;
+				return -1;
 			}
 
-			for(var i = 0;i < _slots.Length;i++)
+			for (var i = 0; i < _slots.Length; i++)
 			{
-				if(ReferenceEquals(_slots[i].Item, item))
+				if (ReferenceEquals(_slots[i].Item, item))
 				{
 					return i;
 				}
 			}
 
-			return-1;
+			return -1;
 		}
 
 		[Serializable]
@@ -207,9 +231,9 @@ namespace RPG.Inventories
 		object ISaveable.CaptureState()
 		{
 			var slotStrings = new InventorySlotRecord[inventorySize];
-			for(var i = 0;i < inventorySize;i++)
+			for (var i = 0; i < inventorySize; i++)
 			{
-				if(_slots[i].Item != null)
+				if (_slots[i].Item != null)
 				{
 					slotStrings[i].itemID = _slots[i].Item.ItemID;
 					slotStrings[i].number = _slots[i].Number;
@@ -221,8 +245,8 @@ namespace RPG.Inventories
 
 		void ISaveable.RestoreState(object state)
 		{
-			var slotStrings = (InventorySlotRecord[])state;
-			for(var i = 0;i < inventorySize;i++)
+			var slotStrings = (InventorySlotRecord[]) state;
+			for (var i = 0; i < inventorySize; i++)
 			{
 				_slots[i].Item = InventoryItem.GetFromID(slotStrings[i].itemID);
 				_slots[i].Number = slotStrings[i].number;
@@ -233,7 +257,7 @@ namespace RPG.Inventories
 
 		public bool? Evaluate(DialoguePredicates predicate, string[] parameters)
 		{
-			switch(predicate)
+			switch (predicate)
 			{
 				case DialoguePredicates.HasItem:
 					return HasItem(InventoryItem.GetFromID(parameters[0]));

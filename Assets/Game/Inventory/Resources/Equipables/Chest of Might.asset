@@ -18,7 +18,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 7bcee3dac4c974d43b329ee45aef4c99, type: 3}
   pickup: {fileID: 8463999928626207292, guid: 632d7d0834987f64cafc32e664311048, type: 3}
   stackable: 0
-  _rarity: {fileID: 11400000, guid: 53e1bb8804df4a34bba2ac3bbcb29d8d, type: 2}
+  price: 0
+  rarity: {fileID: 0}
+  category: 1
   allowedEquipLocation: 5
   additiveModifiers:
   - stat: 0

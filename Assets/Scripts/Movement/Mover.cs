@@ -137,10 +137,10 @@ namespace RPG.Movement
 		public void ExecuteQueuedAction(IActionData data)
 		{
 			var moveData = (MoverActionData) data;
-			MoveWithoutAction(moveData.Destination, moveData.Speed, moveData.StopDistance);
+			MoveWithoutAction(moveData.Destination, moveData.SpeedFraction, moveData.StopDistance);
 		}
 
-		public void QueueMoveAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f) => _actionScheduler.EnqueueAction(new MoverActionData(this, destination, speedFraction, withinDistance));
+		public void QueueAction(IActionData data) => _actionScheduler.EnqueueAction(data);
 
 		public void RotateOverTime(float time, Vector3 targetPosition) => StartCoroutine(_RotateOverTime(time, targetPosition));
 

@@ -19,14 +19,8 @@ namespace RPG.UI
 			RefreshUi(0);
 		}
 
-		private void OnDestroy()
-		{
-			_playerPurse.OnChange -= RefreshUi;
-		}
+		private void OnDestroy() => _playerPurse.OnChange -= RefreshUi;
 
-		private void RefreshUi(float changedBy)
-		{
-			balanceField.SetText($"{_playerPurse.Balance:N1}");
-		}
+		private void RefreshUi(float changedBy) => balanceField.SetText($"{_playerPurse.Balance:N1}");
 	}
 }

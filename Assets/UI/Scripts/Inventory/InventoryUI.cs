@@ -32,7 +32,8 @@ namespace RPG.UI.Inventories
 				Destroy(child.gameObject);
 			}
 
-			for(var i = 0;i < _playerInventory.GetSize();i++)
+			var inventorySize = _playerInventory.GetSize();
+			for(var i = 0;i < inventorySize;i++)
 			{
 				var itemUI = Instantiate(inventoryItemPrefab, transform);
 				itemUI.Setup(_playerInventory, _equipment, _playerActions, i);

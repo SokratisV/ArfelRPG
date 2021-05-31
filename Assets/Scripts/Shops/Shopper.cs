@@ -49,38 +49,35 @@ namespace RPG.Shops
 
 		public void SetActiveShop(Shop shop)
 		{
-			if (_activeShop != null)
-			{
-				_activeShop.SetShopper(null);
-			}
-
 			_activeShop = shop;
-			if (_activeShop != null)
-			{
-				_activeShop.SetShopper(this);
-			}
-
 			ActiveShopChange?.Invoke();
 		}
 
 		public Shop GetActiveShop() => _activeShop;
 
+		#endregion
+
+		#region Interface
+
 		public void CancelAction()
 		{
+			_mover.CancelAction();
+			_interactTarget = null;
 		}
 
 		public void CompleteAction()
 		{
+			OnActionComplete?.Invoke();
+			_actionScheduler.CompleteAction();
 		}
 
 		public void ExecuteQueuedAction(IActionData data)
 		{
+			var interactData = (InteractableActionData) data;
+			_interactTarget = interactData.Target.GetComponent<IInteractable>();
 		}
 
-		public void QueueInteractAction(GameObject obj)
-		{
-			_actionScheduler.EnqueueAction(new InteractableActionData(this, obj.transform));
-		}
+		public void QueueAction(IActionData data) => _actionScheduler.EnqueueAction(data);
 
 		public void StartInteractAction(IInteractable interactable)
 		{

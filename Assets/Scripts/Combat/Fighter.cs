@@ -115,6 +115,8 @@ namespace RPG.Combat
 
 			_actionScheduler.StartAction(this);
 		}
+		
+		public void QueueAction(IActionData data) {}
 
 		public void QueueExecution(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
 

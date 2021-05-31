@@ -16,5 +16,6 @@ namespace RPG.Core
 		public static float GlobalCooldown {get;} = 1f;
 		public static string PlayerName {get;} = "Adramalikh";
 		public static float DodgeDuration { get; } = .2f;
+		public const int MaxLevel = 10;
 	}
 }

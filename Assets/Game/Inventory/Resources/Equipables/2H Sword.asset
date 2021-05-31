@@ -19,7 +19,8 @@ MonoBehaviour:
   pickup: {fileID: 1371738316370091760, guid: 8aabc7462a4ff054facd26bf84fce1a9, type: 3}
   stackable: 0
   price: 20
-  _rarity: {fileID: 11400000, guid: e39e5b0995dc7154ca2f8775b3c92962, type: 2}
+  rarity: {fileID: 0}
+  category: 2
   allowedEquipLocation: 5
   additiveModifiers:
   - stat: 0

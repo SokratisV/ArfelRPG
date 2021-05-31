@@ -90,7 +90,7 @@ namespace RPG.Control
 		{
 			if(Input.GetKey(KeyCode.LeftControl))
 			{
-				if(Input.GetMouseButtonDown(0)) collector.QueueCollectAction(gameObject);
+				if(Input.GetMouseButtonDown(0)) collector.QueueAction(new InteractableActionData(collector, transform));
 			}
 			else
 			{

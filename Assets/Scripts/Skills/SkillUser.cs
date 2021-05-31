@@ -52,7 +52,7 @@ namespace RPG.Skills
 
 		private void Awake()
 		{
-			if(SkillsDatabase == null)
+			if (SkillsDatabase == null)
 			{
 				SkillsDatabase = Resources.Load<SkillNamesAndIds>("SkillDatabase");
 			}
@@ -81,7 +81,7 @@ namespace RPG.Skills
 			SkillListCleanup();
 			UpdateCooldowns();
 			UpdateActiveSkills();
-			if(UpdateCastingSkill()) return;
+			if (UpdateCastingSkill()) return;
 			MoveToCast();
 		}
 
@@ -94,16 +94,16 @@ namespace RPG.Skills
 
 		public void AddSkill(Skill skill, int index = -1)
 		{
-			if(index >= 0) AddToKnownIndex(skill, index);
+			if (index >= 0) AddToKnownIndex(skill, index);
 			else AddToFirstAvailableSlot(skill);
 			SkillsUpdated?.Invoke();
 		}
 
 		public void SelectSkill(int index)
 		{
-			if(_learnedSkills.TryGetValue(index, out var skill))
+			if (_learnedSkills.TryGetValue(index, out var skill))
 			{
-				if(!CanSkillBeUsed(skill)) return;
+				if (!CanSkillBeUsed(skill)) return;
 				_selectedSkill = skill;
 				OnSkillSelected?.Invoke(_selectedSkill);
 				_skillIndicator.ShowIndicator(_selectedSkill.Radius);
@@ -112,7 +112,7 @@ namespace RPG.Skills
 
 		public void Execute(GameObject target)
 		{
-			if(_selectedSkill.MoveInRangeBeforeCasting)
+			if (_selectedSkill.MoveInRangeBeforeCasting)
 			{
 				_target = target;
 			}
@@ -124,7 +124,7 @@ namespace RPG.Skills
 
 		public void Execute(Vector3 hitPoint)
 		{
-			if(_selectedSkill.MoveInRangeBeforeCasting)
+			if (_selectedSkill.MoveInRangeBeforeCasting)
 			{
 				_targetPoint = hitPoint;
 			}
@@ -140,10 +140,14 @@ namespace RPG.Skills
 			Execute(target);
 		}
 
+		public void QueueAction(IActionData data)
+		{
+		}
+
 		public object CaptureState()
 		{
 			var state = new Dictionary<int, DockedItemRecord>();
-			foreach(var pair in _learnedSkills)
+			foreach (var pair in _learnedSkills)
 			{
 				var record = new DockedItemRecord {skillID = pair.Value.SkillID};
 				state[pair.Key] = record;
@@ -154,14 +158,14 @@ namespace RPG.Skills
 
 		public void RestoreState(object state)
 		{
-			var stateDict = (Dictionary<int, DockedItemRecord>)state;
-			foreach(var pair in stateDict)
+			var stateDict = (Dictionary<int, DockedItemRecord>) state;
+			foreach (var pair in stateDict)
 			{
 				AddSkill(Skill.GetFromID(pair.Value.skillID), pair.Key);
 			}
 		}
 
-		public Skill GetSkill(int index) => _learnedSkills.TryGetValue(index, out var skill)? skill:null;
+		public Skill GetSkill(int index) => _learnedSkills.TryGetValue(index, out var skill) ? skill : null;
 
 		public void CancelAction()
 		{
@@ -185,8 +189,8 @@ namespace RPG.Skills
 
 		public bool CanExecute(Vector3 target)
 		{
-			if(!CanCurrentSkillBeCancelled || HasTarget) return false;
-			if(_selectedSkill.MinClickDistance > 0 && Helper.IsWithinDistance(target, transform.position, _selectedSkill.MinClickDistance))
+			if (!CanCurrentSkillBeCancelled || HasTarget) return false;
+			if (_selectedSkill.MinClickDistance > 0 && Helper.IsWithinDistance(target, transform.position, _selectedSkill.MinClickDistance))
 			{
 				return false;
 			}
@@ -198,14 +202,14 @@ namespace RPG.Skills
 		//if is within range or if can self target
 		public bool CanExecute(GameObject target)
 		{
-			if(!CanExecute(target.transform.position)) return false;
+			if (!CanExecute(target.transform.position)) return false;
 			return _selectedSkill.CanTargetSelf || gameObject != target;
 		}
 
 		public void RemoveSkill(int index)
 		{
-			if(index > GlobalValues.ActionBarCount) return;
-			if(_learnedSkills.ContainsKey(index))
+			if (index > GlobalValues.ActionBarCount) return;
+			if (_learnedSkills.ContainsKey(index))
 			{
 				_learnedSkills.Remove(index);
 				SkillsUpdated?.Invoke();
@@ -224,9 +228,9 @@ namespace RPG.Skills
 
 		private void MoveToCast()
 		{
-			if(_targetPoint != null)
+			if (_targetPoint != null)
 			{
-				if(_mover.IsInRange(_targetPoint.Value, _selectedSkill.CastingRange))
+				if (_mover.IsInRange(_targetPoint.Value, _selectedSkill.CastingRange))
 				{
 					_mover.CancelAction();
 					UseSelectedSkill(null, _targetPoint);
@@ -236,9 +240,9 @@ namespace RPG.Skills
 					_mover.MoveWithoutAction(_targetPoint.Value);
 				}
 			}
-			else if(_target != null)
+			else if (_target != null)
 			{
-				if(_mover.IsInRange(_target.transform, _selectedSkill.CastingRange))
+				if (_mover.IsInRange(_target.transform, _selectedSkill.CastingRange))
 				{
 					_mover.CancelAction();
 					UseSelectedSkill(_target, null);
@@ -252,13 +256,13 @@ namespace RPG.Skills
 
 		private bool UpdateCastingSkill()
 		{
-			if(_currentCastingSkill != null)
+			if (_currentCastingSkill != null)
 			{
-				if(_currentCastingSkill.Update())
+				if (_currentCastingSkill.Update())
 				{
 					OnSkillEnd?.Invoke(_currentCastingSkill.Skill);
 					StopCoroutine(_currentCastingSkill.Data.UpdateBehavior);
-					if (_currentCastingSkill.Skill.RequiresTarget == true) 
+					if (_currentCastingSkill.Skill.RequiresTarget == true)
 						_actionScheduler.EnqueueAction(new FighterActionData(_fighter, _currentCastingSkill.Data.InitialTarget));
 					CompleteAction();
 					_currentCastingSkill = null;
@@ -275,9 +279,9 @@ namespace RPG.Skills
 
 		private void UpdateActiveSkills()
 		{
-			foreach(var activeSkill in _activatedSkills)
+			foreach (var activeSkill in _activatedSkills)
 			{
-				if(activeSkill.Update())
+				if (activeSkill.Update())
 				{
 					_activeListCleanup = true;
 					OnSkillEnd?.Invoke(activeSkill.Skill);
@@ -288,10 +292,10 @@ namespace RPG.Skills
 
 		private void UpdateCooldowns()
 		{
-			if(_globalCooldownTimer > 0) _globalCooldownTimer -= Time.deltaTime;
-			foreach(var skill in _skillsOnCooldown)
+			if (_globalCooldownTimer > 0) _globalCooldownTimer -= Time.deltaTime;
+			foreach (var skill in _skillsOnCooldown)
 			{
-				if(skill.Update())
+				if (skill.Update())
 				{
 					_cooldownListCleanup = true;
 				}
@@ -300,13 +304,13 @@ namespace RPG.Skills
 
 		private void SkillListCleanup()
 		{
-			if(_activeListCleanup)
+			if (_activeListCleanup)
 			{
 				_activatedSkills.RemoveAll(activatedSkill => activatedSkill.HasEnded);
 				_activeListCleanup = false;
 			}
 
-			if(_cooldownListCleanup)
+			if (_cooldownListCleanup)
 			{
 				_skillsOnCooldown.RemoveAll(cooldownSkill => cooldownSkill.HasCooledDown);
 				_cooldownListCleanup = false;
@@ -315,9 +319,9 @@ namespace RPG.Skills
 
 		private void AddToFirstAvailableSlot(Skill skill)
 		{
-			for(var i = 0;i < GlobalValues.ActionBarCount;i++)
+			for (var i = 0; i < GlobalValues.ActionBarCount; i++)
 			{
-				if(_learnedSkills.ContainsKey(i)) continue;
+				if (_learnedSkills.ContainsKey(i)) continue;
 				AddToKnownIndex(skill, i);
 				return;
 			}
@@ -327,11 +331,11 @@ namespace RPG.Skills
 
 		private void UseSelectedSkill(GameObject target, Vector3? hitPoint)
 		{
-			if(IsSkillOnCooldown(_selectedSkill)) return;
+			if (IsSkillOnCooldown(_selectedSkill)) return;
 
 			_actionScheduler.StartAction(this);
 			var data = _selectedSkill.OnStart(gameObject, target, hitPoint);
-			if(data == null)
+			if (data == null)
 			{
 				_selectedSkill = null;
 				return;
@@ -341,7 +345,7 @@ namespace RPG.Skills
 			_animator.ResetTrigger(CancelAnimation);
 			StartCoroutine(data.UpdateBehavior);
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
-			if(_selectedSkill.HasCastTime)
+			if (_selectedSkill.HasCastTime)
 			{
 				_currentCastingSkill = new CastingSkill(_selectedSkill, data);
 			}
@@ -361,9 +365,9 @@ namespace RPG.Skills
 
 		private bool IsSkillOnCooldown(Skill selectedSkill)
 		{
-			foreach(var skill in _skillsOnCooldown)
+			foreach (var skill in _skillsOnCooldown)
 			{
-				if(skill.Skill == selectedSkill) return true;
+				if (skill.Skill == selectedSkill) return true;
 			}
 
 			// _audioPlayer.PlaySound(cooldownAudio);
@@ -372,13 +376,13 @@ namespace RPG.Skills
 
 		private bool CanSkillBeUsed(Skill skill)
 		{
-			if(_globalCooldownTimer > 0) return false;
-			return!IsSkillOnCooldown(skill);
+			if (_globalCooldownTimer > 0) return false;
+			return !IsSkillOnCooldown(skill);
 		}
 
 		private void UseSkillAnimation(Skill selectedSkill)
 		{
-			if(selectedSkill.HasExtraAnimation) _animator.SetBool(ExtraSkillAnimation, true);
+			if (selectedSkill.HasExtraAnimation) _animator.SetBool(ExtraSkillAnimation, true);
 			_animator.SetTrigger(UseSkill);
 			_animator.SetInteger(SkillAnimationIndex, selectedSkill.AnimationHash);
 		}
@@ -386,12 +390,12 @@ namespace RPG.Skills
 		private void SwapSkills(WeaponConfig config)
 		{
 			RemoveAllSkills();
-			foreach(var activatedSkill in _activatedSkills)
+			foreach (var activatedSkill in _activatedSkills)
 			{
 				activatedSkill.HasEnded = true; //temp until I have to end it forcefully
 			}
 
-			for(var index = 0;index < config.SkillIds.Length;index++)
+			for (var index = 0; index < config.SkillIds.Length; index++)
 			{
 				AddSkill(Skill.GetFromID(SkillsDatabase.GetSkillId(config.SkillIds[index])), index);
 			}

@@ -6,14 +6,14 @@ namespace RPG.Core
 	{
 		private IAction _action;
 		public Vector3 Destination;
-		public float Speed;
+		public float SpeedFraction;
 		public float StopDistance;
 
-		public MoverActionData(IAction action, Vector3 destination, float speed, float stopWithinDistance)
+		public MoverActionData(IAction action, Vector3 destination, float speedFraction, float stopWithinDistance)
 		{
 			_action = action;
 			Destination = destination;
-			Speed = speed;
+			SpeedFraction = speedFraction;
 			StopDistance = stopWithinDistance;
 		}
 

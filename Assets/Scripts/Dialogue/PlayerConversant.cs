@@ -128,7 +128,7 @@ namespace RPG.Dialogue
 			_actionScheduler.StartAction(this);
 		}
 
-		public void QueueInteractAction(GameObject obj) => _actionScheduler.EnqueueAction(new InteractableActionData(this, obj.transform));
+		public void QueueAction(IActionData data) => _actionScheduler.EnqueueAction(data);
 
 		#endregion
 

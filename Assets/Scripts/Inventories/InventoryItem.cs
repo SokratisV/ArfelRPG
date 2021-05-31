@@ -35,6 +35,7 @@ namespace RPG.Inventories
 
 		[SerializeField] private float price;
 		[SerializeField] private Rarity rarity = null;
+		[SerializeField] private ItemCategory category = ItemCategory.None;
 
 		private static Dictionary<string, InventoryItem> ItemLookupCache;
 
@@ -92,6 +93,7 @@ namespace RPG.Inventories
 		public virtual string StatDescription => description;
 		public string RawDescription => description;
 		public float Price => price;
+		public ItemCategory Category => category;
 
 		void ISerializationCallbackReceiver.OnBeforeSerialize()
 		{

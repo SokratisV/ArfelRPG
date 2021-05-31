@@ -50,7 +50,7 @@ namespace RPG.Dialogue
 			{
 				if(Input.GetMouseButtonDown(0))
 				{
-					playerConversant.QueueInteractAction(gameObject);
+					playerConversant.QueueAction(new InteractableActionData(playerConversant, transform));
 				}
 			}
 			else

@@ -50,7 +50,7 @@ namespace RPG.Control
 			_mover.CancelAction();
 		}
 
-		public void QueueCollectAction(GameObject obj) => _actionScheduler.EnqueueAction(new PickableActionData(this, obj.transform));
+		public void QueueAction(IActionData actionData) => _actionScheduler.EnqueueAction(actionData);
 
 		public void CompleteAction()
 		{
@@ -58,7 +58,7 @@ namespace RPG.Control
 			_actionScheduler.CompleteAction();
 		}
 
-		public void ExecuteQueuedAction(IActionData data) => _collectible = ((PickableActionData)data).Treasure.GetComponent<ICollectable>();
+		public void ExecuteQueuedAction(IActionData data) => _collectible = ((InteractableActionData)data).Target.GetComponent<ICollectable>();
 
 		public bool CanCollect(ICollectable collectable) => collectable != null && _mover.CanMoveTo(collectable.GetTransform().position);
 
