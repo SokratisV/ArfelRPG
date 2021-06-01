@@ -12,6 +12,7 @@ namespace RPG.Inventories
 		private float _balance = 0;
 
 		public float Balance => _balance;
+
 		public void UpdateBalance(float amount)
 		{
 			_balance += amount;
@@ -19,7 +20,7 @@ namespace RPG.Inventories
 		}
 
 		private void Awake() => _balance = startingBalance;
-		
+
 		public object CaptureState() => _balance;
 
 		public void RestoreState(object state) => _balance = (float) state;
