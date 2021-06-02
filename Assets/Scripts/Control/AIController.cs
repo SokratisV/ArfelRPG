@@ -57,7 +57,7 @@ namespace RPG.Control
 
 		private void AttackAttacker(GameObject obj, float _)
 		{
-			if(_health.IsDead)
+			if (_health.IsDead)
 			{
 				_health.OnTakeDamage -= AttackAttacker;
 				return;
@@ -70,13 +70,13 @@ namespace RPG.Control
 
 		private void Update()
 		{
-			if(_health.IsDead) return;
+			if (_health.IsDead) return;
 
-			if(IsAggrevated() && _fighter.CanExecute(_player))
+			if (IsAggrevated() && _fighter.CanExecute(_player))
 			{
 				AttackBehaviour();
 			}
-			else if(IsSuspicious())
+			else if (IsSuspicious())
 			{
 				SuspicionBehaviour();
 			}
@@ -90,7 +90,7 @@ namespace RPG.Control
 
 		private void MarkDead()
 		{
-			if(_hasInformedPlayerOfAggro)
+			if (_hasInformedPlayerOfAggro)
 			{
 				OnPlayerAggro?.Invoke(false, combatMusic);
 				_hasInformedPlayerOfAggro = false;
@@ -101,9 +101,9 @@ namespace RPG.Control
 
 		private bool IsSuspicious()
 		{
-			if(_timeSinceLastSawPlayer < suspicionTime) return true;
+			if (_timeSinceLastSawPlayer < suspicionTime) return true;
 
-			if(_hasInformedPlayerOfAggro)
+			if (_hasInformedPlayerOfAggro)
 			{
 				OnPlayerAggro?.Invoke(false, combatMusic);
 				_hasInformedPlayerOfAggro = false;
@@ -128,9 +128,9 @@ namespace RPG.Control
 		{
 			var nextPosition = _guardPosition.Value;
 
-			if(patrolPath != null)
+			if (patrolPath != null)
 			{
-				if(AtWaypoint())
+				if (AtWaypoint())
 				{
 					_timeSinceArrivedAtWaypoint = 0;
 					CycleWaypoint();
@@ -139,7 +139,7 @@ namespace RPG.Control
 				nextPosition = GetCurrentWaypoint();
 			}
 
-			if(_timeSinceArrivedAtWaypoint > wayPointDwellTime)
+			if (_timeSinceArrivedAtWaypoint > wayPointDwellTime)
 			{
 				_mover.Move(nextPosition, patrolSpeedFraction);
 			}
@@ -155,7 +155,7 @@ namespace RPG.Control
 
 		private void AttackBehaviour()
 		{
-			if(!_hasInformedPlayerOfAggro)
+			if (!_hasInformedPlayerOfAggro)
 			{
 				_hasInformedPlayerOfAggro = true;
 				OnPlayerAggro?.Invoke(true, combatMusic);
@@ -168,16 +168,16 @@ namespace RPG.Control
 
 		private void AggrevateNearbyEnemies()
 		{
-			if(_timeSinceNotifiedOthers <= aggroShoutInterval) return;
+			if (_timeSinceNotifiedOthers <= aggroShoutInterval) return;
 			_timeSinceNotifiedOthers = 0f;
 
 			var hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0);
-			foreach(var hit in hits)
+			foreach (var hit in hits)
 			{
-				if(hit.transform.TryGetComponent(out AIController ai))
+				if (hit.transform.TryGetComponent(out AIController ai))
 				{
-					if(ai == this) continue;
-					if(ai.IsAggrevated()) continue;
+					if (ai == this) continue;
+					if (ai.IsAggrevated()) continue;
 					ai.Aggrevate();
 				}
 			}
