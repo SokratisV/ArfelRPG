@@ -60,8 +60,8 @@ MonoBehaviour:
         elementIcon: {fileID: 0}
       reqReferences: {fileID: 0}
       isExpanded: 1
-      _keyValues: 000000000300000002000000
-      _keys: 000000000300000002000000
+      _keyValues: 00000000030000000200000004000000
+      _keys: 00000000030000000200000004000000
       _values:
       - levels:
         - 100
@@ -91,6 +91,11 @@ MonoBehaviour:
         - 15
         - 15
         - 15
+      - levels:
+        - 50
+        - 100
+        - 150
+        - 250
     - reorderableList:
         canAdd: 1
         canRemove: 1

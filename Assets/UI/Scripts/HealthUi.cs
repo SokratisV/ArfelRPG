@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Globalization;
 using RPG.Attributes;
@@ -14,47 +15,33 @@ namespace RPG.UI
 		[SerializeField] private Image healthImage, healthAnimationImage;
 		[SerializeField] private Gradient healthBarColor;
 		[SerializeField] private TextMeshProUGUI healthText;
+		[SerializeField] private GameObject percentText;
 
 		private Coroutine _animationRoutine;
 		private Health _playerHealth;
 		private float _animationTimer;
-		private float _initialAlpha;
 
-		private void Awake()
-		{
-			_playerHealth = PlayerFinder.Player.GetComponent<Health>();
-			_initialAlpha = healthImage.color.a;
-			AdjustAlpha();
-		}
+		private void Awake() => _playerHealth = PlayerFinder.Player.GetComponent<Health>();
+		private void Start() => CalculateHealthFill(0);
 
 		private void OnEnable() => _playerHealth.OnHealthChange += CalculateHealthFill;
-
 		private void OnDisable() => _playerHealth.OnHealthChange -= CalculateHealthFill;
 
 		private void CalculateHealthFill(float _)
 		{
 			var healthFraction = _playerHealth.GetFraction();
 			healthImage.fillAmount = healthFraction;
-			AdjustAlpha();
 			healthImage.color = healthBarColor.Evaluate(healthFraction);
-			healthText.SetText((healthFraction * 100).ToString(CultureInfo.InvariantCulture));
+			DisableText();
+			healthText.SetText($"{healthFraction * 100:N0}");
 			_animationRoutine = _animationRoutine.StartCoroutine(this, AnimationCoroutine());
 		}
 
-		private void AdjustAlpha()
+		private void DisableText()
 		{
-			if (healthImage.fillAmount >= .95f)
-			{
-				var targetColor = healthImage.color;
-				targetColor.a = _initialAlpha * .5f;
-				healthImage.color = targetColor;
-			}
-			else
-			{
-				var targetColor = healthImage.color;
-				targetColor.a = _initialAlpha;
-				healthImage.color = targetColor;
-			}
+			var toggle = healthImage.fillAmount >= .95f;
+			percentText.SetActive(!toggle);
+			healthText.gameObject.SetActive(!toggle);
 		}
 
 		private IEnumerator AnimationCoroutine()
