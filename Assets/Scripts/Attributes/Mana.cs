@@ -1,35 +1,31 @@
 ﻿using System;
+using RPG.Saving;
 using RPG.Stats;
+using RPG.Utils;
 using UnityEngine;
 
 namespace RPG.Attributes
 {
-	public class Mana : MonoBehaviour
+	public class Mana : MonoBehaviour, ISaveable
 	{
 		public event Action<float> OnManaChange;
 
-		public float CurrentMana => _mana;
-		public float MaxMana => maxMana;
-
-		[SerializeField] private float maxMana = 200;
-		[SerializeField] private float manaRegen = 5;
-
-		private float _mana;
+		private LazyValue<float> _mana;
 		private BaseStats _baseStats;
 
 		#region Unity
 
 		private void Awake()
 		{
-			_mana = maxMana;
+			_mana = new LazyValue<float>(GetMaxMana);
 			_baseStats = GetComponent<BaseStats>();
 		}
 
 		private void Update()
 		{
-			if (_mana < maxMana)
+			if (_mana.Value < GetMaxMana())
 			{
-				RestoreMana(manaRegen * Time.deltaTime);
+				RestoreMana(GetManaRegen() * Time.deltaTime);
 			}
 		}
 
@@ -41,23 +37,26 @@ namespace RPG.Attributes
 
 		#region Public
 
+		public float GetMaxMana() => _baseStats.GetStat(Stat.Mana);
+		public float GetManaRegen() => _baseStats.GetStat(Stat.ManaRegen);
+
 		public bool UseMana(float manaToUse)
 		{
-			if (manaToUse > _mana)
+			if (manaToUse > _mana.Value)
 			{
 				return false;
 			}
 
-			_mana -= manaToUse;
-			_mana = Mathf.Clamp(_mana, 0, maxMana);
+			_mana.Value -= manaToUse;
+			_mana.Value = Mathf.Clamp(_mana.Value, 0, GetMaxMana());
 			OnManaChange?.Invoke(manaToUse);
 			return true;
 		}
 
 		public void RestoreMana(float manaToRestore)
 		{
-			_mana += manaToRestore;
-			_mana = Mathf.Clamp(_mana, 0, maxMana);
+			_mana.Value += manaToRestore;
+			_mana.Value = Mathf.Clamp(_mana.Value, 0, GetMaxMana());
 			OnManaChange?.Invoke(manaToRestore);
 		}
 
@@ -65,8 +64,8 @@ namespace RPG.Attributes
 
 		#region Private
 
-		private void RestoreAllMana() => _mana = maxMana;
-		
+		private void RestoreAllMana() => _mana.Value = GetMaxMana();
+
 		[ContextMenu("Use 30 mana")]
 		public void ManaUseTest() => UseMana(30);
 
@@ -75,6 +74,10 @@ namespace RPG.Attributes
 
 		#endregion
 
-		public float GetFraction() => _mana / maxMana;
+		public float GetFraction() => _mana.Value / GetMaxMana();
+
+		public object CaptureState() => _mana.Value;
+
+		public void RestoreState(object state) => _mana.Value = (float) state;
 	}
 }

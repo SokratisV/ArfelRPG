@@ -61,7 +61,7 @@ MonoBehaviour:
       reqReferences: {fileID: 0}
       isExpanded: 1
       _keyValues: 00000000030000000200000004000000
-      _keys: 00000000030000000200000004000000
+      _keys: 0000000003000000020000000400000005000000
       _values:
       - levels:
         - 100
@@ -96,6 +96,10 @@ MonoBehaviour:
         - 100
         - 150
         - 250
+      - levels:
+        - 2
+        - 4
+        - 6
     - reorderableList:
         canAdd: 1
         canRemove: 1

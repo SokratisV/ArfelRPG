@@ -6,6 +6,7 @@ namespace RPG.Stats
         ExperienceReward,
         Damage,
         ExperienceToLevelUp,
-        Mana
+        Mana,
+        ManaRegen
     }
 }
