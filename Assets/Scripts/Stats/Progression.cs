@@ -10,10 +10,9 @@ namespace RPG.Stats
 
 		public float GetStat(Stat stat, CharacterClass characterClass, int level)
 		{
-			var levels = progressionDictionary[characterClass][stat];
-			if(levels.levels.Length < level) return 0;
-
-			return levels.levels[level - 1];
+			var levels = progressionDictionary[characterClass][stat].levels;
+			if (levels.Length == 0) return 0;
+			return levels.Length < level ? levels[levels.Length - 1] : levels[level - 1];
 		}
 
 		public int GetLevels(Stat stat, CharacterClass characterClass)

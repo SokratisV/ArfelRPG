@@ -27,7 +27,7 @@ namespace RPG.Stats
 
 		private void OnEnable()
 		{
-			if(_experience != null)
+			if (_experience != null)
 			{
 				_experience.OnExperienceGained += UpdateLevel;
 			}
@@ -35,16 +35,16 @@ namespace RPG.Stats
 
 		private void OnDisable()
 		{
-			if(_experience != null)
+			if (_experience != null)
 			{
 				_experience.OnExperienceGained -= UpdateLevel;
 			}
 		}
 
-		private void UpdateLevel()
+		private void UpdateLevel(float _)
 		{
 			var newLevel = CalculateLevel();
-			if(newLevel > _currentLevel.Value)
+			if (newLevel > _currentLevel.Value)
 			{
 				_currentLevel.Value = newLevel;
 				LevelUpEffect();
@@ -60,28 +60,31 @@ namespace RPG.Stats
 
 		private float GetAdditiveModifier(Stat stat)
 		{
-			if(!shouldUseModifiers) return 0;
+			if (!shouldUseModifiers) return 0;
 			return GetComponents<IModifierProvider>().SelectMany(provider => provider.GetAdditiveModifiers(stat)).Sum();
 		}
 
 		private float GetPercentageModifier(Stat stat)
 		{
-			if(!shouldUseModifiers) return 0;
+			if (!shouldUseModifiers) return 0;
 			return GetComponents<IModifierProvider>().SelectMany(provider => provider.GetPercentageModifiers(stat)).Sum();
 		}
 
 		public int GetLevel() => _currentLevel.Value;
 
+		public float GetCurrentLevelExperience() => progression.GetStat(Stat.ExperienceToLevelUp, characterClass, GetLevel());
+		public float GetPreviousLevelExperience() => progression.GetStat(Stat.ExperienceToLevelUp, characterClass, GetLevel() - 1);
+
 		public int CalculateLevel()
 		{
-			if(_experience == null) return startingLevel;
+			if (_experience == null) return startingLevel;
 
 			var currentXp = _experience.GetPoints();
 			var penultimateLevel = progression.GetLevels(Stat.ExperienceToLevelUp, characterClass);
-			for(var level = 1;level <= penultimateLevel;level++)
+			for (var level = 1; level <= penultimateLevel; level++)
 			{
 				var xpToLevelUp = progression.GetStat(Stat.ExperienceToLevelUp, characterClass, level);
-				if(xpToLevelUp > currentXp)
+				if (xpToLevelUp > currentXp)
 				{
 					return level;
 				}
