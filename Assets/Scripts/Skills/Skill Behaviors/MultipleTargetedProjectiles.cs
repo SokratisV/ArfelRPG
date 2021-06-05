@@ -8,7 +8,7 @@ namespace RPG.Skills.Behaviors
 {
 	public class MultipleTargetedProjectiles : SkillBehavior
 	{
-		[SerializeField] private TargetedProjectile projectile = null;
+		[SerializeField] private Projectile projectile = null;
 		[SerializeField] private float projectileSpeed;
 		[SerializeField] private float damage;
 
@@ -36,7 +36,7 @@ namespace RPG.Skills.Behaviors
 			{
 				if(target == user) continue;
 				var projectileInstance = Instantiate(projectile, user.GetComponent<BodyParts>().ProjectileLocation.position, Quaternion.identity);
-				projectileInstance.SetTarget(target.GetComponent<Health>(), user, damage, projectileSpeed);
+				projectileInstance.Setup(target.GetComponent<Health>(), user, damage, projectileSpeed);
 			}
 		}
 	}

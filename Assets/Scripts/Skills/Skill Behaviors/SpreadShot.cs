@@ -8,7 +8,7 @@ namespace RPG.Skills.Behaviors
 {
 	public class SpreadShot : SkillBehavior
 	{
-		[SerializeField] private DirectedProjectile projectile;
+		[SerializeField] private Projectile projectile;
 		[Min(0)] [SerializeField] private float projectileSpeed;
 		[Min(0)] [SerializeField] private float damage;
 		[Range(1, 90)] [SerializeField] private float angleBetweenEachProjectile;
@@ -56,15 +56,13 @@ namespace RPG.Skills.Behaviors
 			projectileInstance.Setup(user, damage, projectileSpeed);
 			for (var i = 1; i <= (numberOfProjectiles - 1) / 2; i++)
 			{
-				projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position,
-					Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
+				projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
 				projectileInstance.Setup(user, damage, projectileSpeed);
 			}
 
 			for (var i = -1; i >= -(numberOfProjectiles - 1) / 2; i--)
 			{
-				projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position,
-					Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
+				projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
 				projectileInstance.Setup(user, damage, projectileSpeed);
 			}
 		}
@@ -74,8 +72,7 @@ namespace RPG.Skills.Behaviors
 			for (var i = -numberOfProjectiles / 2; i <= numberOfProjectiles / 2; i++)
 			{
 				if (i == 0) continue;
-				var projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position,
-					Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
+				var projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
 				projectileInstance.Setup(user, damage, projectileSpeed);
 			}
 		}

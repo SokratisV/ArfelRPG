@@ -174,6 +174,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -317,11 +318,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5674789847027819555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eedfcc51eb5cff142beb5f9d8e7be29c, type: 3}
+  m_Script: {fileID: 11500000, guid: 18e131082c7e66a48b314420c7d29db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 27
-  maxLifeTime: 4
+  speed: 10
+  maxLifeTime: 2
   lifeAfterImpact: 2
   isHoming: 0
   hitEffect: {fileID: 8393786005770467393, guid: e056876165817d643a193ea3e8905a9b,
@@ -332,6 +333,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9088041035089198853}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
@@ -526,6 +528,10 @@ PrefabInstance:
       value: Simple Arrow
       objectReference: {fileID: 0}
     - target: {fileID: 4750687242688692, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750687242688692, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -538,6 +544,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4750687242688692, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750687242688692, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.7071068
       objectReference: {fileID: 0}
@@ -547,14 +557,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4750687242688692, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4750687242688692, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4750687242688692, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4750687242688692, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}

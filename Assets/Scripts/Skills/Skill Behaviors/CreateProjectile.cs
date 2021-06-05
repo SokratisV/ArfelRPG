@@ -9,7 +9,7 @@ namespace RPG.Skills.Behaviors
 {
 	public class CreateProjectile : SkillBehavior
 	{
-		[SerializeField] private TargetedProjectile projectile = null;
+		[SerializeField] private Projectile projectile = null;
 		[SerializeField] private float damage;
 		[SerializeField] private float castRange;
 
@@ -46,7 +46,7 @@ namespace RPG.Skills.Behaviors
 		private void ExecuteBehavior(GameObject user, List<GameObject> targets)
 		{
 			var projectileInstance = Instantiate(projectile, user.GetComponent<BodyParts>().ProjectileLocation.position, Quaternion.identity);
-			projectileInstance.SetTarget(targets[0].GetComponent<Health>(), user, damage);
+			projectileInstance.Setup(targets[0].GetComponent<Health>(), user, damage);
 		}
 	}
 }
