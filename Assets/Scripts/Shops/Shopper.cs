@@ -7,7 +7,7 @@ namespace RPG.Shops
 {
 	public class Shopper : MonoBehaviour, IAction
 	{
-		public event Action ActiveShopChange;
+		public event Action OnActiveShopChange;
 		public event Action OnActionComplete;
 
 		private Shop _activeShop = null;
@@ -50,7 +50,7 @@ namespace RPG.Shops
 		public void SetActiveShop(Shop shop)
 		{
 			_activeShop = shop;
-			ActiveShopChange?.Invoke();
+			OnActiveShopChange?.Invoke();
 		}
 
 		public Shop GetActiveShop() => _activeShop;

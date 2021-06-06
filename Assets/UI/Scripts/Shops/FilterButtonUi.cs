@@ -17,16 +17,16 @@ namespace RPG.UI.Shops
 			_button.onClick.AddListener(SelectFilter);
 		}
 
-		private void RefreshUi() => _button.interactable = _currentShop.GetFilter() != category;
+		private void UpdateUi() => _button.interactable = _currentShop.GetFilter() != category;
 
 		public void SetShop(Shop currentShop)
 		{
-			if (_currentShop != null) _currentShop.OnChange -= RefreshUi;
+			if (_currentShop != null) _currentShop.OnChange -= UpdateUi;
 			_currentShop = currentShop;
 			if (_currentShop != null)
 			{
-				_currentShop.OnChange += RefreshUi;
-				RefreshUi();
+				_currentShop.OnChange += UpdateUi;
+				UpdateUi();
 			}
 		}
 

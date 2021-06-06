@@ -8,6 +8,7 @@ namespace RPG.Stats
         ExperienceToLevelUp,
         Mana,
         ManaRegen,
-        TraitPoints
+        TraitPoints,
+        Bartering
     }
 }

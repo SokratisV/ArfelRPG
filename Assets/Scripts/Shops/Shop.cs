@@ -11,7 +11,7 @@ namespace RPG.Shops
 	public class Shop : MonoBehaviour, IRaycastable, IInteractable, ISaveable
 	{
 		[SerializeField] private string shopName;
-		[Range(0, 100)] [SerializeField] private float sellingPercent = 80f;
+		[Range(0, 100)] [SerializeField] private float sellingPercent = 80f, maximumBarterDiscount = 80f;
 		[SerializeField] private StockItemConfig[] stockConfig;
 
 		public event Action OnChange;
@@ -328,10 +328,10 @@ namespace RPG.Shops
 				{
 					if (!prices.ContainsKey(config.item))
 					{
-						prices[config.item] = config.item.Price;
+						prices[config.item] = config.item.Price * GetBarterDiscount();
 					}
 
-					prices[config.item] *= config.discountPercentage;
+					prices[config.item] *= 1 - config.discountPercentage / 100;
 				}
 				else
 				{
@@ -340,6 +340,12 @@ namespace RPG.Shops
 			}
 
 			return prices;
+		}
+
+		private float GetBarterDiscount()
+		{
+			var min = Mathf.Min(_stats.GetStat(Stat.Bartering), maximumBarterDiscount);
+			return 1f - min / 100f;
 		}
 
 		private IEnumerable<StockItemConfig> GetAvailableConfigs()

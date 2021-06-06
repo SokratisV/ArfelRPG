@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RPG.Saving;
 using UnityEngine;
 
 namespace RPG.Stats
 {
-	public class TraitStore : MonoBehaviour, IModifierProvider
+	public class TraitStore : MonoBehaviour, IModifierProvider, ISaveable
 	{
 		public event Action<Trait, int> OnStagedPointsChanged;
 		[SerializeField] private TraitBonus[] bonusConfig;
@@ -64,6 +65,9 @@ namespace RPG.Stats
 		#endregion
 
 		#region Interface
+
+		public object CaptureState() => _assignedPoints;
+		public void RestoreState(object state) => _assignedPoints = new Dictionary<Trait, int>((IDictionary<Trait, int>) state);
 
 		public IEnumerable<float> GetAdditiveModifiers(Stat stat)
 		{

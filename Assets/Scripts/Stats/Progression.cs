@@ -10,6 +10,7 @@ namespace RPG.Stats
 
 		public float GetStat(Stat stat, CharacterClass characterClass, int level)
 		{
+			if (!progressionDictionary[characterClass].ContainsKey(stat)) return 0;
 			var levels = progressionDictionary[characterClass][stat].levels;
 			if (levels.Length == 0) return 0;
 			return levels.Length < level ? levels[levels.Length - 1] : levels[level - 1];

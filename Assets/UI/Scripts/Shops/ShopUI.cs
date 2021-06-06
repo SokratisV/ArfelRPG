@@ -1,4 +1,5 @@
 using RPG.Shops;
+using RPG.Stats;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ namespace RPG.UI.Shops
 		[SerializeField] private FilterButtonUi[] filterButtons;
 
 		private Shopper _shopper = null;
+		private TraitStore _traitStore;
 		private Shop _currentShop = null;
 		private Color _originalTextColor;
 
@@ -22,8 +24,10 @@ namespace RPG.UI.Shops
 		{
 			_originalTextColor = totalField.color;
 			_shopper = Shopper.GetPlayerShopper();
+			_traitStore = _shopper.GetComponent<TraitStore>();
 			if (_shopper == null) return;
-			_shopper.ActiveShopChange += ShopChanged;
+			_shopper.OnActiveShopChange += ShopChanged;
+			_traitStore.OnStagedPointsChanged += UpdateUiForStatChange;
 			confirmButton.onClick.AddListener(ConfirmTransaction);
 			switchButton.onClick.AddListener(SwitchMode);
 			ShopChanged();
@@ -31,7 +35,7 @@ namespace RPG.UI.Shops
 
 		private void ShopChanged()
 		{
-			if (_currentShop != null) _currentShop.OnChange -= RefreshUI;
+			if (_currentShop != null) _currentShop.OnChange -= UpdateUi;
 			_currentShop = _shopper.GetActiveShop();
 			showHideUIOnButtonPress.Toggle(_currentShop != null);
 
@@ -43,11 +47,17 @@ namespace RPG.UI.Shops
 			if (_currentShop == null) return;
 			shopName.SetText(_currentShop.ShopName);
 
-			_currentShop.OnChange += RefreshUI;
-			RefreshUI();
+			_currentShop.OnChange += UpdateUi;
+			UpdateUi();
 		}
 
-		private void RefreshUI()
+		private void UpdateUiForStatChange(Trait _, int __)
+		{
+			if (_currentShop == null) return;
+			UpdateUi();
+		}
+
+		private void UpdateUi()
 		{
 			foreach (Transform child in listRoot)
 			{
