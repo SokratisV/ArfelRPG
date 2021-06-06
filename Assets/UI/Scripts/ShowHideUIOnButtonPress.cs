@@ -15,8 +15,9 @@ namespace RPG.UI
 		[SerializeField] private float tweenTime = .2f;
 		[SerializeField] private bool startState;
 		[SerializeField] private bool disableRaycastingOnHide = false;
+		[SerializeField] private bool changeSortingOrder = true;
 
-
+		private static int _sortingOrder;
 		private Vector2 _initialPosition;
 		private Canvas _canvas;
 		private GraphicRaycaster _raycaster;
@@ -68,7 +69,13 @@ namespace RPG.UI
 			}
 		}
 
-		private void ToggleCanvas() => _canvas.enabled = !_canvas.enabled;
+		private void ToggleCanvas()
+		{
+			_canvas.enabled = !_canvas.enabled;
+			if (!changeSortingOrder) return;
+			if (_canvas.enabled) _canvas.sortingOrder = ++_sortingOrder;
+			else _canvas.sortingOrder = 0;
+		}
 
 		private void ToggleRaycaster()
 		{

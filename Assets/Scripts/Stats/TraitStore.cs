@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using RPG.Saving;
@@ -30,6 +31,8 @@ namespace RPG.Stats
 		#region Public
 
 		public int UnassignedPoints => GetAssignablePoints() - GetTotalProposedPoints();
+
+		public IEnumerable<TraitBonus> BonusesOfTrait(Trait trait) => bonusConfig.Where(traitBonus => traitBonus.trait == trait);
 
 		public int GetTotalProposedPoints() => _assignedPoints.Values.Sum() + _stagedPoints.Values.Sum();
 		public int GetProposedPoints(Trait trait) => GetPoints(trait) + GetStagedPoints(trait);
