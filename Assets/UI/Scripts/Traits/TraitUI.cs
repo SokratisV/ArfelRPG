@@ -12,15 +12,19 @@ namespace RPG.UI
 		[SerializeField] private Button commitButton;
 
 		private TraitStore _traitStore;
+		private bool _isUpdating;
 
 		private void Start()
 		{
 			_traitStore = PlayerFinder.Player.GetComponent<TraitStore>();
 			commitButton.onClick.AddListener(_traitStore.Commit);
-			_traitStore.OnStagedPointsChanged += UpdateUi;
-			UpdateUi(Trait.Constitution, 0);
 		}
 
-		private void UpdateUi(Trait _, int __) => unassignedPoints.SetText(_traitStore.UnassignedPoints.ToString());
+		private void Update()
+		{
+			if (_isUpdating) unassignedPoints.SetText(_traitStore.UnassignedPoints.ToString());
+		}
+
+		public void ToggleUpdating(bool toggle) => _isUpdating = toggle;
 	}
 }

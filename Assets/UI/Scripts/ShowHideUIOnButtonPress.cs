@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace RPG.UI
 {
 	public class ShowHideUIOnButtonPress : MonoBehaviour
 	{
+		public UnityEvent<bool> ActionOnToggle;
+
 		[SerializeField] private bool toggleOnEnable;
 		[SerializeField] private RectTransform uiContainer = null;
 		[SerializeField] private KeyCode toggleKey = KeyCode.Escape, alternateToggle = KeyCode.None;
@@ -12,7 +15,8 @@ namespace RPG.UI
 		[SerializeField] private float tweenTime = .2f;
 		[SerializeField] private bool startState;
 		[SerializeField] private bool disableRaycastingOnHide = false;
-		
+
+
 		private Vector2 _initialPosition;
 		private Canvas _canvas;
 		private GraphicRaycaster _raycaster;
@@ -27,17 +31,17 @@ namespace RPG.UI
 
 		private void OnEnable()
 		{
-			if(toggleOnEnable) Toggle(true);
+			if (toggleOnEnable) Toggle(true);
 		}
 
 		private void OnDisable()
 		{
-			if(toggleOnEnable) Toggle(false);
+			if (toggleOnEnable) Toggle(false);
 		}
 
 		private void Update()
 		{
-			if(Input.GetKeyDown(toggleKey) || Input.GetKeyDown(alternateToggle))
+			if (Input.GetKeyDown(toggleKey) || Input.GetKeyDown(alternateToggle))
 			{
 				Toggle(!_canvas.enabled);
 			}
@@ -48,8 +52,9 @@ namespace RPG.UI
 
 		public void Toggle(bool toggle)
 		{
-			if(toggle == _canvas.enabled) return;
-			if(!toggle)
+			if (toggle == _canvas.enabled) return;
+			ActionOnToggle?.Invoke(toggle);
+			if (!toggle)
 			{
 				LeanTween.cancel(uiContainer);
 				LeanTween.move(uiContainer, hiddenPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleCanvas);
@@ -64,6 +69,7 @@ namespace RPG.UI
 		}
 
 		private void ToggleCanvas() => _canvas.enabled = !_canvas.enabled;
+
 		private void ToggleRaycaster()
 		{
 			if (!disableRaycastingOnHide) return;
