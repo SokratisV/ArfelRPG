@@ -2913,7 +2913,7 @@ PrefabInstance:
     - target: {fileID: 1376737078588745215, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -662.35004
+      value: -662.35
       objectReference: {fileID: 0}
     - target: {fileID: 1376742326987431053, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
@@ -3769,6 +3769,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5007662618414449223, guid: e610e50c6c909474aa62aa5de44d61f6,
+        type: 3}
+      propertyPath: bonusConfig.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5007662618414449223, guid: e610e50c6c909474aa62aa5de44d61f6,
+        type: 3}
+      propertyPath: bonusConfig.Array.data[4].stat
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5007662618414449223, guid: e610e50c6c909474aa62aa5de44d61f6,
+        type: 3}
+      propertyPath: bonusConfig.Array.data[4].trait
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5007662618414449223, guid: e610e50c6c909474aa62aa5de44d61f6,
+        type: 3}
+      propertyPath: bonusConfig.Array.data[4].additiveBonusPerPoint
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5043690998301089495, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}

@@ -41,9 +41,9 @@ namespace RPG.Attributes
 			_baseStats = GetComponent<BaseStats>();
 		}
 
-		private void OnEnable() => _baseStats.OnLevelUp += RestoreHealth;
+		private void OnEnable() => _baseStats.OnLevelUp += RestoreHealthOnLevelUp;
 
-		private void OnDisable() => _baseStats.OnLevelUp -= RestoreHealth;
+		private void OnDisable() => _baseStats.OnLevelUp -= RestoreHealthOnLevelUp;
 
 		private void Start() => _healthPoints.ForceInit();
 
@@ -66,11 +66,7 @@ namespace RPG.Attributes
 			Heal(healValue);
 		}
 
-		private void RestoreHealth()
-		{
-			var regenHealthPoints = _baseStats.GetStat(Stat.Health) * (regenerationPercentage / 100);
-			_healthPoints.Value = Mathf.Max(_healthPoints.Value, regenHealthPoints);
-		}
+		private void RestoreHealthOnLevelUp() => Heal(_baseStats.GetStat(Stat.Health) * (regenerationPercentage / 100));
 
 		[ContextMenu("Take 30 damage")]
 		public void TakeTestDamage() => TakeDamage(null, 30);

@@ -30,13 +30,13 @@ namespace RPG.Attributes
 		}
 
 		private void OnEnable() => _baseStats.OnLevelUp += RestoreAllMana;
-
 		private void OnDisable() => _baseStats.OnLevelUp -= RestoreAllMana;
 
 		#endregion
 
 		#region Public
 
+		public float GetFraction() => _mana.Value / GetMaxMana();
 		public float GetMaxMana() => _baseStats.GetStat(Stat.Mana);
 		public float GetManaRegen() => _baseStats.GetStat(Stat.ManaRegen);
 
@@ -62,9 +62,17 @@ namespace RPG.Attributes
 
 		#endregion
 
+		#region Interface
+
+		public object CaptureState() => _mana.Value;
+
+		public void RestoreState(object state) => _mana.Value = (float) state;
+
+		#endregion
+
 		#region Private
 
-		private void RestoreAllMana() => _mana.Value = GetMaxMana();
+		private void RestoreAllMana() => RestoreMana(GetMaxMana());
 
 		[ContextMenu("Use 30 mana")]
 		public void ManaUseTest() => UseMana(30);
@@ -73,11 +81,5 @@ namespace RPG.Attributes
 		public void ManRestoreTest() => RestoreMana(40);
 
 		#endregion
-
-		public float GetFraction() => _mana.Value / GetMaxMana();
-
-		public object CaptureState() => _mana.Value;
-
-		public void RestoreState(object state) => _mana.Value = (float) state;
 	}
 }

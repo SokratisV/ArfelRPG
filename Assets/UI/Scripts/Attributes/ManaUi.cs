@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Globalization;
+﻿using System.Collections;
 using RPG.Attributes;
 using RPG.Core;
+using RPG.Stats;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,15 +18,33 @@ namespace RPG.UI
 
 		private Coroutine _animationRoutine;
 		private Mana _playerMana;
+		private TraitStore _traitStore;
 		private float _animationTimer;
 
-		private void Awake() => _playerMana = PlayerFinder.Player.GetComponent<Mana>();
-		private void Start() => CalculateManaFill(0);
+		private void Awake()
+		{
+			_playerMana = PlayerFinder.Player.GetComponent<Mana>();
+			_traitStore = _playerMana.GetComponent<TraitStore>();
+		}
 
-		private void OnEnable() => _playerMana.OnManaChange += CalculateManaFill;
-		private void OnDisable() => _playerMana.OnManaChange -= CalculateManaFill;
+		private void Start() => CalculateManaFill();
 
-		private void CalculateManaFill(float _)
+		private void OnEnable()
+		{
+			_playerMana.OnManaChange += UpdateUi;
+			_traitStore.OnStagedPointsChanged += UpdateUi;
+		}
+
+		private void OnDisable()
+		{
+			_playerMana.OnManaChange -= UpdateUi;
+			_traitStore.OnStagedPointsChanged -= UpdateUi;
+		}
+
+		private void UpdateUi(float _) => CalculateManaFill();
+		private void UpdateUi(Trait _, int __) => CalculateManaFill();
+
+		private void CalculateManaFill()
 		{
 			var manaFraction = _playerMana.GetFraction();
 			manaImage.fillAmount = manaFraction;

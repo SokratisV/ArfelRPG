@@ -18,13 +18,13 @@ namespace RPG.Stats
 
 		private void Update()
 		{
-			if (Input.GetKey(KeyCode.K))
+			if (Input.GetKeyDown(KeyCode.K))
 			{
 				AddTestExperience();
 			}
 		}
 
-		[ContextMenu("Add 1 experience points")]
+		[ContextMenu("Add 10 experience points")]
 		public void AddTestExperience() => GainExperience(10);
 
 		public object CaptureState() => experiencePoints;
