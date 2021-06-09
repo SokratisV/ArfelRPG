@@ -14,14 +14,13 @@ namespace UI.Scripts.Attributes
 		public override void UpdateTooltip(GameObject tooltip)
 		{
 			var description = string.Empty;
-			float tempValue;
 			foreach (var traitBonus in _playerStats.BonusesOfTrait(GetComponent<AttributeUi>().Trait))
 			{
 				description += $"Every point in {traitBonus.trait} increases {traitBonus.stat} by: ";
-				tempValue = traitBonus.additiveBonusPerPoint;
-				if (tempValue > 0) description += $"{tempValue}.";
+				var tempValue = traitBonus.additiveBonusPerPoint;
+				if (tempValue > 0) description += $"<color=green>{tempValue}</color>.\n";
 				tempValue = traitBonus.percentageBonusPerPoint;
-				if (tempValue > 0) description += $"{tempValue}%.";
+				if (tempValue > 0) description += $"<color=green>{tempValue}%</color>.\n";
 			}
 
 			tooltip.GetComponent<AttributeTooltipUi>().Setup(description);

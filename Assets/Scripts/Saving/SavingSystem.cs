@@ -9,13 +9,15 @@ namespace RPG.Saving
 {
 	public class SavingSystem : MonoBehaviour
 	{
+		#region Public
+
 		public IEnumerator LoadLastScene(string saveFile)
 		{
 			var state = LoadFile(saveFile);
 			var buildIndex = SceneManager.GetActiveScene().buildIndex;
-			if(state.ContainsKey("lastSceneBuildIndex"))
+			if (state.ContainsKey("lastSceneBuildIndex"))
 			{
-				buildIndex = (int)state["lastSceneBuildIndex"];
+				buildIndex = (int) state["lastSceneBuildIndex"];
 			}
 
 			yield return SceneManager.LoadSceneAsync(buildIndex);
@@ -24,29 +26,44 @@ namespace RPG.Saving
 
 		public void Save(string saveFile)
 		{
-			// var state = LoadFile(saveFile);
-			// CaptureState(state);
-			// SaveFile(saveFile, state);
+			var state = LoadFile(saveFile);
+			CaptureState(state);
+			SaveFile(saveFile, state);
 		}
 
 		public void Load(string saveFile)
 		{
-			// RestoreState(LoadFile(saveFile));
+			RestoreState(LoadFile(saveFile));
 		}
 
-		public void Delete(string saveFile) => File.Delete(GetPathFromSaveFile(saveFile));
+		public static void Delete(string saveFile) => File.Delete(GetPathFromSaveFile(saveFile));
+
+		public IEnumerable<string> ListSaves()
+		{
+			foreach (var path in Directory.EnumerateFiles(Application.persistentDataPath))
+			{
+				if (Path.GetExtension(path).Equals(".sav"))
+				{
+					yield return Path.GetFileNameWithoutExtension(path);
+				}
+			}
+		}
+
+		#endregion
+
+		#region Private
 
 		private Dictionary<string, object> LoadFile(string saveFile)
 		{
 			var path = GetPathFromSaveFile(saveFile);
-			if(!File.Exists(path))
+			if (!File.Exists(path))
 			{
 				return new Dictionary<string, object>();
 			}
 
 			using var stream = File.Open(path, FileMode.Open);
 			var formatter = new BinaryFormatter();
-			return(Dictionary<string, object>)formatter.Deserialize(stream);
+			return (Dictionary<string, object>) formatter.Deserialize(stream);
 		}
 
 		private void SaveFile(string saveFile, object state)
@@ -60,7 +77,7 @@ namespace RPG.Saving
 
 		private void CaptureState(Dictionary<string, object> state)
 		{
-			foreach(var saveable in FindObjectsOfType<SaveableEntity>())
+			foreach (var saveable in FindObjectsOfType<SaveableEntity>())
 			{
 				state[saveable.UniqueIdentifier] = saveable.CaptureState();
 			}
@@ -70,10 +87,10 @@ namespace RPG.Saving
 
 		private void RestoreState(Dictionary<string, object> state)
 		{
-			foreach(var saveable in FindObjectsOfType<SaveableEntity>())
+			foreach (var saveable in FindObjectsOfType<SaveableEntity>())
 			{
 				var id = saveable.UniqueIdentifier;
-				if(state.ContainsKey(id))
+				if (state.ContainsKey(id))
 				{
 					saveable.RestoreState(state[id]);
 				}
@@ -81,5 +98,7 @@ namespace RPG.Saving
 		}
 
 		private static string GetPathFromSaveFile(string saveFile) => Path.Combine(Application.persistentDataPath, saveFile + ".sav");
+
+		#endregion
 	}
 }

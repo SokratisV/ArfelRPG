@@ -25,11 +25,7 @@ namespace UI.Scripts.Attributes
 			}
 		}
 
-		private void Start()
-		{
-			Debug.Log(name);
-			attributeText.SetText(traitToShow.ToString());
-		}
+		private void Start() => attributeText.SetText(traitToShow.ToString());
 
 		public void ToggleUpdating(bool toggle) => _isUpdating = toggle;
 	}

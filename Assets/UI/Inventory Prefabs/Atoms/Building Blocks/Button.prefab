@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4028442170737564930}
   - component: {fileID: 3364349109318101240}
   m_Layer: 0
-  m_Name: Choice Button
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,8 +188,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 784e7d396ea55b4498e3dfdafe6c3607, type: 2}
+  m_sharedMaterial: {fileID: -4620350422494267778, guid: 784e7d396ea55b4498e3dfdafe6c3607,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
