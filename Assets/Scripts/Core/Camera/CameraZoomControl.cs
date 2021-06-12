@@ -5,10 +5,10 @@ namespace RPG.Core
 {
 	public class CameraZoomControl : MonoBehaviour
 	{
-		[SerializeField] private float zoomSpeed = 3f;
-
 		private float _zoom = 18f;
 		private CinemachineFramingTransposer _cmCam;
+
+		public float ZoomSpeed { get; set; } = 3;
 
 		private void Awake()
 		{
@@ -18,12 +18,15 @@ namespace RPG.Core
 
 		private void LateUpdate()
 		{
-			var mouseScroll = Input.mouseScrollDelta.y;
-			if(mouseScroll < 0 || mouseScroll > 0)
+			if (Time.timeScale > 0)
 			{
-				_zoom -= mouseScroll * zoomSpeed;
-				_zoom = Mathf.Clamp(_zoom, 5f, 20f);
-				_cmCam.m_CameraDistance = _zoom;
+				var mouseScroll = Input.mouseScrollDelta.y;
+				if(mouseScroll < 0 || mouseScroll > 0)
+				{
+					_zoom -= mouseScroll * ZoomSpeed;
+					_zoom = Mathf.Clamp(_zoom, 5f, 20f);
+					_cmCam.m_CameraDistance = _zoom;
+				}
 			}
 		}
 	}

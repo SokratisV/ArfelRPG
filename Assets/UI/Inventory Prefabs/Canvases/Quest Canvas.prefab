@@ -466,14 +466,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b6a7fac6e2d604a8e529f6dddf65b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActionOnToggle:
+    m_PersistentCalls:
+      m_Calls: []
   toggleOnEnable: 0
-  uiContainer: {fileID: 5848914046802147563}
+  uiContainer: {fileID: 2845250952895357880}
   toggleKey: 108
   alternateToggle: 0
   hiddenPosition: {x: 2470, y: 400}
   tweenTime: 0.2
   startState: 0
   disableRaycastingOnHide: 0
+  changeSortingOrder: 1
 --- !u!1 &3952951007102308447
 GameObject:
   m_ObjectHideFlags: 0
