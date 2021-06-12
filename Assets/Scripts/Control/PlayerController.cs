@@ -13,6 +13,7 @@ namespace RPG.Control
 	public class PlayerController : MonoBehaviour
 	{
 		[SerializeField] private float maxNavMeshProjectionDistance = 1f, raycastRadius, dodgeCooldown;
+		[SerializeField] private CursorMappings cursorMappings = new CursorMappings();
 
 		private RaycastHit[] _hits;
 		private RaycastHit _movementRaycast;
@@ -25,14 +26,7 @@ namespace RPG.Control
 		private bool _isDraggingUI = false;
 		private bool _hasInputBeenReset = true;
 
-		[Serializable]
-		private struct CursorMapping
-		{
-			public Texture2D texture;
-			public Vector2 hotspot;
-		}
-
-		[SerializeField] private CursorMappings cursorMappings = new CursorMappings();
+		#region Unity
 
 		private void Awake()
 		{
@@ -60,6 +54,20 @@ namespace RPG.Control
 
 			SetCursor(CursorType.None);
 		}
+
+		#endregion
+
+		#region Public
+
+		public void SetCursor(CursorType type)
+		{
+			var mapping = GetCursorMapping(type);
+			Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
+		}
+
+		#endregion
+
+		#region Private
 
 		private bool HandleDodge()
 		{
@@ -242,15 +250,18 @@ namespace RPG.Control
 			if (Input.GetMouseButtonDown(0)) _movementFeedbackPrefab.Spawn(target, _movementRaycast.normal);
 		}
 
-		private void SetCursor(CursorType type)
-		{
-			var mapping = GetCursorMapping(type);
-			Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
-		}
-
 		private CursorMapping GetCursorMapping(CursorType type) => cursorMappings.TryGetValue(type, out var mapping) ? mapping : cursorMappings[0];
 
 		private Ray GetMouseRay() => _mainCamera.ScreenPointToRay(Input.mousePosition);
+
+		#endregion
+		
+		[Serializable]
+		private struct CursorMapping
+		{
+			public Texture2D texture;
+			public Vector2 hotspot;
+		}
 
 		[Serializable]
 		private class CursorMappings : SerializableDictionaryBase<CursorType, CursorMapping>

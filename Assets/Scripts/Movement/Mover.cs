@@ -29,7 +29,6 @@ namespace RPG.Movement
 		private static readonly int StopAnimation = Animator.StringToHash("stopAnimation");
 		private static readonly int IdleAnimations = Animator.StringToHash("idleAnimations");
 		private static readonly int DodgeHash = Animator.StringToHash("dodge");
-		private static readonly int DodgeDirection = Animator.StringToHash("dodgeDirection");
 
 		#region Unity
 

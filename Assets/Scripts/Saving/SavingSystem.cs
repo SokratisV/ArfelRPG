@@ -31,12 +31,9 @@ namespace RPG.Saving
 			SaveFile(saveFile, state);
 		}
 
-		public void Load(string saveFile)
-		{
-			RestoreState(LoadFile(saveFile));
-		}
+		public void Load(string saveFile) => RestoreState(LoadFile(saveFile));
 
-		public static void Delete(string saveFile) => File.Delete(GetPathFromSaveFile(saveFile));
+		public void Delete(string saveFile) => File.Delete(GetPathFromSaveFile(saveFile));
 
 		public IEnumerable<string> ListSaves()
 		{

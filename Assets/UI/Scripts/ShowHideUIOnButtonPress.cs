@@ -58,14 +58,14 @@ namespace RPG.UI
 			if (!toggle)
 			{
 				LeanTween.cancel(uiContainer);
-				LeanTween.move(uiContainer, hiddenPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleCanvas);
+				LeanTween.move(uiContainer, hiddenPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleCanvas).setIgnoreTimeScale(true);
 				ToggleRaycaster();
 			}
 			else
 			{
 				ToggleCanvas();
 				LeanTween.cancel(uiContainer);
-				LeanTween.move(uiContainer, _initialPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleRaycaster);
+				LeanTween.move(uiContainer, _initialPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleRaycaster).setIgnoreTimeScale(true);
 			}
 		}
 

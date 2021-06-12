@@ -27,7 +27,7 @@ namespace RPG.SceneManagement
 		{
 			while(!Mathf.Approximately(_canvasGroup.alpha, target))
 			{
-				_canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, target, Time.deltaTime / time);
+				_canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, target, Time.unscaledDeltaTime / time);
 				yield return null;
 			}
 		}
