@@ -300,6 +300,12 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4159312418653268977, guid: 698d85d5f4d6a654487e0ffadab088b4,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 9805ecc42bd2a6843985bc484a4b2182,
+        type: 2}
     - target: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
         type: 3}
       propertyPath: areaToBossMusic.isExpanded

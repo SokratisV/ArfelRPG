@@ -15,6 +15,7 @@ namespace RPG.UI
 		private const string CameraRotationSpeed = "cameraRotationSpeed";
 		private const string CameraZoomSpeed = "cameraZoomSpeed";
 
+		[SerializeField] private Button revertChanges, saveChanges;
 		[SerializeField] private TMP_Dropdown resolutionDropdown;
 		[SerializeField] private Slider musicVolume, cameraRotationSpeed, cameraZoomSpeed;
 
@@ -24,11 +25,12 @@ namespace RPG.UI
 		[SerializeField] private CameraZoomControl zoomController;
 		[SerializeField] private CameraController cameraRotator;
 
-
 		private Resolution[] _resolutions;
 		private float _currentVolume;
 
-		private void Start() => SetupResolutions();
+		private void Awake() => SetupResolutions();
+
+		private void OnEnable() => LoadSettings();
 
 		private void SetupResolutions()
 		{
@@ -47,13 +49,21 @@ namespace RPG.UI
 			}
 
 			resolutionDropdown.AddOptions(options);
-			resolutionDropdown.value = currentResolutionIndex;
+			resolutionDropdown.SetValueWithoutNotify(currentResolutionIndex);
 			resolutionDropdown.RefreshShownValue();
+		}
+
+		#region Public
+
+		public void OnChangesMade(bool toggle)
+		{
+			revertChanges.interactable = toggle;
+			saveChanges.interactable = toggle;
 		}
 
 		public void SetZoomSpeed(float value) => zoomController.ZoomSpeed = value;
 
-		public void SetRotationSpeed(float value) => cameraRotator.RotationSpeed = value;
+		public void SetRotationSpeed(float value) => cameraRotator.RotationAdjustedSpeed = value;
 
 		public void SetResolution(int resolutionIndex)
 		{
@@ -61,47 +71,48 @@ namespace RPG.UI
 			Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
 		}
 
-		public void SetVolume(float volume)
+		public void SetVolume(float value)
 		{
-			musicMixer.SetFloat("Volume", volume);
-			_currentVolume = volume;
+			musicMixer.SetFloat("Volume", Mathf.Log10(value) * 20);
+			_currentVolume = value;
 		}
 
-		public void ToggleLoadSaveSettings(bool toggle)
-		{
-			if (toggle) LoadSettings();
-			else SaveSettings();
-		}
-
-		private void SaveSettings()
+		public void SaveSettings()
 		{
 			PlayerPrefs.SetInt(Resolution, resolutionDropdown.value);
-			PlayerPrefs.SetFloat(MusicVolume, musicVolume.value);
+			PlayerPrefs.SetFloat(MusicVolume, _currentVolume);
 			PlayerPrefs.SetFloat(CameraRotationSpeed, cameraRotationSpeed.value);
 			PlayerPrefs.SetFloat(CameraZoomSpeed, cameraZoomSpeed.value);
+			OnChangesMade(false);
+			LogPlayerPrefs();
 		}
 
-		private void LoadSettings()
+		public void LoadSettings()
 		{
-			if (PlayerPrefs.HasKey(Resolution))
-			{
-				resolutionDropdown.value = PlayerPrefs.GetInt(Resolution);
-			}
-
-			if (PlayerPrefs.HasKey(MusicVolume))
-			{
-				musicVolume.value = PlayerPrefs.GetFloat(MusicVolume);
-			}
-
-			if (PlayerPrefs.HasKey(CameraRotationSpeed))
-			{
-				cameraRotationSpeed.value = PlayerPrefs.GetFloat(CameraRotationSpeed);
-			}
-
-			if (PlayerPrefs.HasKey(CameraZoomSpeed))
-			{
-				cameraZoomSpeed.value = PlayerPrefs.GetFloat(CameraRotationSpeed);
-			}
+			OnChangesMade(false);
+			resolutionDropdown.value = PlayerPrefs.HasKey(Resolution) ? PlayerPrefs.GetInt(Resolution) : 0;
+			musicVolume.value = PlayerPrefs.HasKey(MusicVolume) ? PlayerPrefs.GetFloat(MusicVolume) : 1;
+			cameraRotationSpeed.value = PlayerPrefs.HasKey(CameraRotationSpeed) ? PlayerPrefs.GetFloat(CameraRotationSpeed) : 15f;
+			cameraZoomSpeed.value = PlayerPrefs.HasKey(CameraZoomSpeed) ? PlayerPrefs.GetFloat(CameraZoomSpeed) : 5;
+			LogPlayerPrefs();
 		}
+
+		public void LoadDefaultSettings()
+		{
+			musicVolume.value = 1;
+			cameraRotationSpeed.value = 15f;
+			cameraZoomSpeed.value = 5;
+			SaveSettings();
+		}
+
+		private void LogPlayerPrefs()
+		{
+			Debug.Log($"Resolution {PlayerPrefs.GetInt(Resolution)}" );
+			Debug.Log($"Music Volume {PlayerPrefs.GetFloat(MusicVolume)}" );
+			Debug.Log($"Camera Rotation Speed {PlayerPrefs.GetFloat(CameraRotationSpeed)}" );
+			Debug.Log($"Camera Zoom Speed {PlayerPrefs.GetFloat(CameraZoomSpeed)}" );
+		}
+
+		#endregion
 	}
 }

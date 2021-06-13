@@ -42,7 +42,7 @@ namespace RPG.SceneManagement
 		public void Load() => _saving.Load(GetCurrentSave());
 		public void Delete() => _saving.Delete(GetCurrentSave());
 
-		public void DeleteAllSaves()
+		private void DeleteAllSaves()
 		{
 			foreach (var save in ListSaves())
 			{
@@ -50,6 +50,7 @@ namespace RPG.SceneManagement
 			}
 
 			SetCurrentSave(string.Empty);
+			PlayerPrefs.DeleteAll();
 		}
 
 		public IEnumerable<string> ListSaves() => _saving.ListSaves();

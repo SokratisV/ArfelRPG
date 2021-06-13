@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ namespace RPG.UI
 		[SerializeField] private bool changeSortingOrder = true;
 
 		private static int _sortingOrder;
+		private bool _toggleOnEnable;
 		private Vector2 _initialPosition;
 		private Canvas _canvas;
 		private GraphicRaycaster _raycaster;
@@ -30,14 +32,16 @@ namespace RPG.UI
 			Toggle(startState);
 		}
 
+		private void Start() => _toggleOnEnable = toggleOnEnable; //To avoid double callback on Awake/Enabled
+
 		private void OnEnable()
 		{
-			if (toggleOnEnable) Toggle(true);
+			if (_toggleOnEnable) Toggle(true);
 		}
 
 		private void OnDisable()
 		{
-			if (toggleOnEnable) Toggle(false);
+			if (_toggleOnEnable) Toggle(false);
 		}
 
 		private void Update()
