@@ -65,26 +65,26 @@ namespace RPG.SceneManagement
 		private IEnumerator LoadMenuScene()
 		{
 			if (_fader == null) _fader = FindObjectOfType<Fader>();
-			yield return _fader.FadeOut(fadeOutTime);
+			yield return _fader.FadeOutRoutine(fadeOutTime);
 			yield return SceneManager.LoadSceneAsync(0);
-			yield return _fader.FadeIn(fadeInTime);
+			yield return _fader.FadeInRoutine(fadeInTime);
 		}
 
 		private IEnumerator LoadFirstScene()
 		{
 			if (_fader == null) _fader = FindObjectOfType<Fader>();
-			yield return _fader.FadeOut(fadeOutTime);
+			yield return _fader.FadeOutRoutine(fadeOutTime);
 			yield return SceneManager.LoadSceneAsync(1);
-			yield return _fader.FadeIn(fadeInTime);
+			yield return _fader.FadeInRoutine(fadeInTime);
 			Save();
 		}
 
 		private IEnumerator LoadLastScene()
 		{
 			if (_fader == null) _fader = FindObjectOfType<Fader>();
-			yield return _fader.FadeOut(fadeOutTime);
+			yield return _fader.FadeOutRoutine(fadeOutTime);
 			yield return _saving.LoadLastScene(GetCurrentSave());
-			yield return _fader.FadeIn(fadeInTime);
+			yield return _fader.FadeInRoutine(fadeInTime);
 		}
 
 		#endregion

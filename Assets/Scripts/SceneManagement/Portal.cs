@@ -52,7 +52,7 @@ namespace RPG.SceneManagement
 			var playerController = player.GetComponent<PlayerController>();
 			playerController.enabled = false;
 
-			yield return fader.FadeOut(fadeOutTime);
+			yield return fader.FadeOutRoutine(fadeOutTime);
 			yield return SceneManager.LoadSceneAsync(sceneToLoad.SceneName);
 
 			PlayerFinder.ResetPlayer();
@@ -67,7 +67,7 @@ namespace RPG.SceneManagement
 			wrapper.Save();
 
 			yield return new WaitForSeconds(fadeWaitTime);
-			fader.FadeIn(fadeInTime);
+			fader.FadeInRoutine(fadeInTime);
 
 			newPlayerController.enabled = true;
 			Destroy(gameObject);

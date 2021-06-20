@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using RPG.Core;
 using UnityEngine;
@@ -8,14 +9,17 @@ namespace RPG.SceneManagement
 	{
 		private CanvasGroup _canvasGroup;
 		private Coroutine _currentActiveFade = null;
+		private bool _hasFadedOut;
 
 		private void Awake() => _canvasGroup = GetComponent<CanvasGroup>();
 
 		public void FadeOutImmediate() => _canvasGroup.alpha = 1;
 
-		public Coroutine FadeOut(float time) => Fade(1, time);
+		//Called by FloatEvent
+		public void Fade(float time) => Fade(_hasFadedOut ? 0 : 1, time);
 
-		public Coroutine FadeIn(float time) => Fade(0, time);
+		public Coroutine FadeOutRoutine(float time) => Fade(1, time);
+		public Coroutine FadeInRoutine(float time) => Fade(0, time);
 
 		private Coroutine Fade(float target, float time)
 		{
@@ -30,6 +34,8 @@ namespace RPG.SceneManagement
 				_canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, target, Time.unscaledDeltaTime / time);
 				yield return null;
 			}
+
+			_hasFadedOut = !_hasFadedOut;
 		}
 	}
 }
