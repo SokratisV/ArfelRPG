@@ -84,7 +84,7 @@ namespace RPG.UI
 			PlayerPrefs.SetFloat(CameraRotationSpeed, cameraRotationSpeed.value);
 			PlayerPrefs.SetFloat(CameraZoomSpeed, cameraZoomSpeed.value);
 			OnChangesMade(false);
-			LogPlayerPrefs();
+			// LogPlayerPrefs();
 		}
 
 		public void LoadSettings()
@@ -94,7 +94,7 @@ namespace RPG.UI
 			musicVolume.value = PlayerPrefs.HasKey(MusicVolume) ? PlayerPrefs.GetFloat(MusicVolume) : 1;
 			cameraRotationSpeed.value = PlayerPrefs.HasKey(CameraRotationSpeed) ? PlayerPrefs.GetFloat(CameraRotationSpeed) : 15f;
 			cameraZoomSpeed.value = PlayerPrefs.HasKey(CameraZoomSpeed) ? PlayerPrefs.GetFloat(CameraZoomSpeed) : 5;
-			LogPlayerPrefs();
+			// LogPlayerPrefs();
 		}
 
 		public void LoadDefaultSettings()

@@ -9,6 +9,7 @@ namespace Control
 	public class Respawner : MonoBehaviour
 	{
 		[SerializeField] private FloatEvent faderEvent;
+		[SerializeField] private VoidEvent respawnEvent;
 		[SerializeField] private Transform respawnLocation;
 		[SerializeField] [Min(0)] private float respawnDelay = 3f;
 		[SerializeField] [Min(0)] private float fadeTime = 3f;
@@ -41,6 +42,7 @@ namespace Control
 			yield return new WaitForSeconds(fadeTime);
 			GetComponent<NavMeshAgent>().Warp(respawnLocation.position);
 			faderEvent.Raise(fadeTime);
+			respawnEvent.Raise();
 			yield return new WaitForSeconds(fadeTime);
 		}
 	}

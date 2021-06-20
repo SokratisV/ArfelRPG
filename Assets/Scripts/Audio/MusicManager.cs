@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using RotaryHeart.Lib.SerializableDictionary;
-using RPG.Attributes;
 using RPG.Control;
 using UnityEngine;
 
@@ -28,53 +27,47 @@ namespace RPG.Core
 		[SerializeField] private MusicAreaToMusicDictionary musicAreaToMusic = new MusicAreaToMusicDictionary();
 		[SerializeField] private CombatMusicAreaToMusicDictionary areaToBossMusic = new CombatMusicAreaToMusicDictionary();
 
-		private AudioSource _mAudio;
+		private AudioSource _audio;
 		private MusicAreas _currentMusicArea;
 		private Coroutine _combatMusicCoroutine;
-		private static int EnemiesInCombatWith = 0;
+		private static int _enemiesInCombatWith = 0;
 
-		private void Awake() => _mAudio = GetComponent<AudioSource>();
+		private void Awake() => _audio = GetComponent<AudioSource>();
 
 		private void OnEnable()
 		{
 			AIController.OnPlayerAggro += ToggleCombatMusic;
 			AreaEventManager.OnEnterArea += PlayAreaMusic;
-			Health.OnPlayerDeath += PlayDeathMusic;
 		}
 
 		private void OnDisable()
 		{
 			AIController.OnPlayerAggro -= ToggleCombatMusic;
 			AreaEventManager.OnEnterArea -= PlayAreaMusic;
-			Health.OnPlayerDeath -= PlayDeathMusic;
 		}
 
 		public void PlayAreaMusic(Areas area)
 		{
-			if(_combatMusicCoroutine != null)
-				return;
+			if(_combatMusicCoroutine != null) return;
 
 			areaToMusicArea.TryGetValue(area, out var musicArea);
-			if(_currentMusicArea == musicArea)
-				return;
+			if(_currentMusicArea == musicArea) return;
 
 			_currentMusicArea = musicArea;
 			musicAreaToMusic.TryGetValue(musicArea, out var music);
-			_mAudio.clip = music; // TODO: Fade out/in
-			_mAudio.Play();
+			_audio.clip = music; // TODO: Fade out/in
+			_audio.Play();
 		}
 
 		private void ToggleCombatMusic(bool combat, CombatMusicAreas combatMusic = CombatMusicAreas.CombatNormal)
 		{
-			if(combat)
-				PlayCombatMusic(combatMusic);
-			else
-				EndCombatMusic();
+			if(combat) PlayCombatMusic(combatMusic);
+			else EndCombatMusic();
 		}
 
 		private void PlayCombatMusic(CombatMusicAreas combatMusic)
 		{
-			EnemiesInCombatWith++;
+			_enemiesInCombatWith++;
 			if(_combatMusicCoroutine == null)
 				_combatMusicCoroutine = _combatMusicCoroutine.StartCoroutine(this, _PlayCombatMusic(combatMusic));
 			else
@@ -91,46 +84,45 @@ namespace RPG.Core
 		private IEnumerator _PlayCombatMusic(CombatMusicAreas area)
 		{
 			areaToBossMusic.TryGetValue(area, out var music);
-
-			_mAudio.clip = music; // TODO: Fade out/in
-			_mAudio.Play();
+			_audio.clip = music; // TODO: Fade out/in
+			_audio.Play();
 			yield return null;
 		}
 
-		private void EndCombatMusic()
+		public void EndCombatMusic()
 		{
-			EnemiesInCombatWith--;
-			if(EnemiesInCombatWith == 0)
+			_enemiesInCombatWith--;
+			if(_enemiesInCombatWith == 0)
 			{
 				musicAreaToMusic.TryGetValue(_currentMusicArea, out var music);
-				_mAudio.clip = music; // TODO: Fade out/in
-				_mAudio.Play();
+				_audio.clip = music; // TODO: Fade out/in
+				_audio.Play();
 				_combatMusicCoroutine = null;
 			}
 		}
 
-		private void PlayDeathMusic()
+		public void PlayDeathMusic()
 		{
-			EnemiesInCombatWith = 0;
+			_enemiesInCombatWith = 0;
 			_combatMusicCoroutine = null;
 
 			musicAreaToMusic.TryGetValue(MusicAreas.Death, out var music);
-			_mAudio.clip = music; // TODO: Fade out/in
-			_mAudio.Play();
+			_audio.clip = music; // TODO: Fade out/in
+			_audio.Play();
 		}
 
 		public void ResetMusicPlayer()
 		{
-			EnemiesInCombatWith = 0;
+			_enemiesInCombatWith = 0;
 			_combatMusicCoroutine = null;
 
 			musicAreaToMusic.TryGetValue(MusicAreas.Town, out var music);
-			_mAudio.clip = music; // TODO: Fade out/in
-			_mAudio.Play();
+			_audio.clip = music; // TODO: Fade out/in
+			_audio.Play();
 		}
 
-		public void LowerVolume(float volumeLevel) => _mAudio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
+		public void LowerVolume(float volumeLevel) => _audio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
 
-		public void IncreaseVolume(float volumeLevel) => _mAudio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
+		public void IncreaseVolume(float volumeLevel) => _audio.volume = Mathf.Clamp(volumeLevel, 0.1f, 1.0f);
 	}
 }

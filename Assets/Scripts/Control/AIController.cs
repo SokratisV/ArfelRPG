@@ -51,7 +51,7 @@ namespace RPG.Control
 
 		private void OnEnable()
 		{
-			_health.OnTakeDamage += AttackAttacker;
+			_health.OnHealthChange += AttackAttacker;
 			_health.OnDeath += MarkDead;
 		}
 
@@ -59,7 +59,7 @@ namespace RPG.Control
 		{
 			if (_health.IsDead)
 			{
-				_health.OnTakeDamage -= AttackAttacker;
+				_health.OnHealthChange -= AttackAttacker;
 				return;
 			}
 

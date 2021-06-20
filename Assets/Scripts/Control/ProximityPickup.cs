@@ -31,7 +31,7 @@ namespace RPG.Combat
 			if(!Helper.IsWithinDistance(transform, subject.transform, InteractionDistance())) return false;
 			if(healthToRestore > 0)
 			{
-				subject.GetComponent<Health>().Heal(healthToRestore);
+				subject.GetComponent<Health>().Heal(gameObject, healthToRestore);
 			}
 
 			if(respawnTime > 0)

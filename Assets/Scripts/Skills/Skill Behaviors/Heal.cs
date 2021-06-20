@@ -22,7 +22,7 @@ namespace RPG.Skills.Behaviors
 			{
 				if(!health.IsDead && !(health.GetPercentage() >= 100.0f))
 				{
-					health.Heal(amountToHeal);
+					health.Heal(user, amountToHeal);
 				}
 			}
 

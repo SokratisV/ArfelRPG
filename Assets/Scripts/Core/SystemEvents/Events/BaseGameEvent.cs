@@ -20,7 +20,7 @@ namespace RPG.Core.SystemEvents
 			_listeners.Remove(listener);
 		}
 
-		public virtual void Raise(T data)
+		public void Raise(T data)
 		{
 			for (var i = _listeners.Count - 1; i >= 0; --i)
 			{

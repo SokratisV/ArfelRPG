@@ -43,14 +43,12 @@ namespace RPG.Movement
 
 		private void OnEnable()
 		{
-			Health.OnPlayerDeath += DisableMover;
 			_health.OnDeath += DisableMover;
 			_selfUpdateRoutine = _selfUpdateRoutine.StartCoroutine(this, UpdateMover());
 		}
 
 		private void OnDisable()
 		{
-			Health.OnPlayerDeath -= DisableMover;
 			_health.OnDeath -= DisableMover;
 			DisableMover();
 		}
@@ -145,6 +143,12 @@ namespace RPG.Movement
 
 		public void RevertToOriginalSpeed() => CurrentSpeed = maxSpeed;
 
+		public void EnableMover()
+		{
+			_navMeshAgent.enabled = true;
+			_selfUpdateRoutine = _selfUpdateRoutine.StartCoroutine(this, UpdateMover());
+		}
+
 		#endregion
 
 		#region Private
@@ -176,12 +180,6 @@ namespace RPG.Movement
 		{
 			_navMeshAgent.enabled = false;
 			_selfUpdateRoutine.StopCoroutine(this);
-		}
-
-		private void EnableMover()
-		{
-			_navMeshAgent.enabled = true;
-			_selfUpdateRoutine = _selfUpdateRoutine.StartCoroutine(this, UpdateMover());
 		}
 
 		private IEnumerator UpdateMover()

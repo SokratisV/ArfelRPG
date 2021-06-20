@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using RPG.Core;
 using UnityEngine;

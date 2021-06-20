@@ -27,7 +27,7 @@ namespace RPG.UI
 			_traitStore = _playerHealth.GetComponent<TraitStore>();
 		}
 
-		private void Start() => UpdateUi(0);
+		private void Start() => UpdateUi(null, 0);
 
 		private void OnEnable()
 		{
@@ -41,7 +41,7 @@ namespace RPG.UI
 			_traitStore.OnStagedPointsChanged -= UpdateUi;
 		}
 
-		private void UpdateUi(float _) => CalculateHealthFill();
+		private void UpdateUi(GameObject _, float __) => CalculateHealthFill();
 
 		private void UpdateUi(Trait _, int __) => CalculateHealthFill();
 

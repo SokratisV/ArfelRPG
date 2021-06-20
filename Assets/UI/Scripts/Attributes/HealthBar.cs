@@ -9,8 +9,8 @@ namespace RPG.UI
 		[SerializeField] private RectTransform foreground = null;
 		[SerializeField] private Canvas rootCanvas = null;
 
-		private void OnEnable() => health.OnTakeDamage += UpdateHealthBar;
-		private void OnDisable() => health.OnTakeDamage -= UpdateHealthBar;
+		private void OnEnable() => health.OnHealthChange += UpdateHealthBar;
+		private void OnDisable() => health.OnHealthChange -= UpdateHealthBar;
 
 		private void Start() => UpdateHealthBar(null, 0);
 

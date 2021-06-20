@@ -34,7 +34,7 @@ namespace RPG.Inventories
 			base.Use(user);
 			if(!user.TryGetComponent(out Health health)) return;
 			if(health.IsDead) return;
-			health.Heal(isPercentage? health.GetMaxHealthPoints() * amountToHeal / 100.0f:amountToHeal);
+			health.Heal(user, isPercentage? health.GetMaxHealthPoints() * amountToHeal / 100.0f:amountToHeal);
 		}
 
 #if UNITY_EDITOR

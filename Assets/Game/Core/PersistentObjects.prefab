@@ -66,6 +66,34 @@ MonoBehaviour:
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
+--- !u!114 &2595718949120173930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461593088036020231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa4b7315f6f47b2ac07dd18d06a56e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8cac5261f9e478e48819d679a86fcbe9, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2517509783738577430}
+        m_TargetAssemblyTypeName: RPG.Core.MusicManager, Audio
+        m_MethodName: PlayDeathMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8428534683159464908
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,9 +436,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 698d85d5f4d6a654487e0ffadab088b4, type: 3}
+--- !u!1 &6461593088036020231 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1538710994139267849, guid: 698d85d5f4d6a654487e0ffadab088b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5545806713215083278}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4000357028817738350 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8895372699916990816, guid: 698d85d5f4d6a654487e0ffadab088b4,
     type: 3}
   m_PrefabInstance: {fileID: 5545806713215083278}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2517509783738577430 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7933464705415745816, guid: 698d85d5f4d6a654487e0ffadab088b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5545806713215083278}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461593088036020231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9220a9194726b7469773304718cd90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

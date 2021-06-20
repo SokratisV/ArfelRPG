@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Control", "Control.csproj", "{62ba2814-d88d-74e0-0f77-67289fddf2da}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core.csproj", "{bb3d43e7-04ee-c47a-905f-d98699edfa32}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI.csproj", "{1cd77628-a7a2-5c04-4ca5-20c16974f46c}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outline", "Outline.csproj", "{3e64631f-bc48-1183-10b0-32032bb5a975}"
@@ -10,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventories", "Inventories.csproj", "{9bd45c65-5ef1-5218-e6a8-6d63c7c624c7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audio", "Audio.csproj", "{878500fc-3137-686f-4779-1eeb77883f70}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core.csproj", "{bb3d43e7-04ee-c47a-905f-d98699edfa32}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shops", "Shops.csproj", "{e155acbc-526f-78b6-5733-7a9d1519bb48}"
 EndProject
@@ -65,6 +65,10 @@ Global
 		{62ba2814-d88d-74e0-0f77-67289fddf2da}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62ba2814-d88d-74e0-0f77-67289fddf2da}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62ba2814-d88d-74e0-0f77-67289fddf2da}.Release|Any CPU.Build.0 = Release|Any CPU
+		{bb3d43e7-04ee-c47a-905f-d98699edfa32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{bb3d43e7-04ee-c47a-905f-d98699edfa32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{bb3d43e7-04ee-c47a-905f-d98699edfa32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{bb3d43e7-04ee-c47a-905f-d98699edfa32}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1cd77628-a7a2-5c04-4ca5-20c16974f46c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1cd77628-a7a2-5c04-4ca5-20c16974f46c}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1cd77628-a7a2-5c04-4ca5-20c16974f46c}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -81,10 +85,6 @@ Global
 		{878500fc-3137-686f-4779-1eeb77883f70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{878500fc-3137-686f-4779-1eeb77883f70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{878500fc-3137-686f-4779-1eeb77883f70}.Release|Any CPU.Build.0 = Release|Any CPU
-		{bb3d43e7-04ee-c47a-905f-d98699edfa32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{bb3d43e7-04ee-c47a-905f-d98699edfa32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{bb3d43e7-04ee-c47a-905f-d98699edfa32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{bb3d43e7-04ee-c47a-905f-d98699edfa32}.Release|Any CPU.Build.0 = Release|Any CPU
 		{e155acbc-526f-78b6-5733-7a9d1519bb48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{e155acbc-526f-78b6-5733-7a9d1519bb48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{e155acbc-526f-78b6-5733-7a9d1519bb48}.Release|Any CPU.ActiveCfg = Release|Any CPU

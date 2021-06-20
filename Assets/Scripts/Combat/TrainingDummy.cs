@@ -20,7 +20,7 @@ namespace RPG.Combat
 		{
 			if (_health.GetHealthPoints() <= 1)
 			{
-				_health.HealPercent(100);
+				_health.HealPercent(gameObject, 100);
 			}
 		}
 	}
