@@ -18,10 +18,7 @@
         /// <param name="initializer"> 
         /// The initialiser delegate to call when first used. 
         /// </param>
-        public LazyValue(InitializerDelegate initializer)
-        {
-            _initializer = initializer;
-        }
+        public LazyValue(InitializerDelegate initializer) => _initializer = initializer;
 
         /// <summary>
         /// Get or set the contents of this container.

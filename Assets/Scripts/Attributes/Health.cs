@@ -64,10 +64,13 @@ namespace RPG.Attributes
 		private void RestoreHealthOnLevelUp() => Heal(gameObject, _baseStats.GetStat(Stat.Health) * (regenerationPercentage / 100));
 
 		[ContextMenu("Take 30 damage")]
-		public void TakeTestDamage() => TakeDamage(null, 30);
+		private void TakeTestDamage() => TakeDamage(null, 30);
 
 		[ContextMenu("Heal 40 points")]
 		public void HealthTest() => Heal(gameObject, 40);
+		
+		[ContextMenu("Perish")]
+		private void TestDeath() => TakeDamage(null, _healthPoints.Value);
 
 		public void TakeDamage(GameObject instigator, float damage)
 		{
