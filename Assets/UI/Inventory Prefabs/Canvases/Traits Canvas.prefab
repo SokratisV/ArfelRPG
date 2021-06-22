@@ -150,6 +150,7 @@ MonoBehaviour:
   tweenTime: 0.2
   startState: 0
   disableRaycastingOnHide: 1
+  changeSortingOrder: 1
 --- !u!1001 &494978714635515150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -247,10 +248,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5532932097723352459, guid: 6d91708a6d0913e4a8c12d2c49155c89,
+        type: 3}
+      propertyPath: traitToShow
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5746740936362097376, guid: 6d91708a6d0913e4a8c12d2c49155c89,
         type: 3}
       propertyPath: m_Name
-      value: Trait Row (1)
+      value: Dexterity Row
       objectReference: {fileID: 0}
     - target: {fileID: 6004843593307706665, guid: 6d91708a6d0913e4a8c12d2c49155c89,
         type: 3}
@@ -619,7 +625,7 @@ PrefabInstance:
     - target: {fileID: 5746740936362097376, guid: 6d91708a6d0913e4a8c12d2c49155c89,
         type: 3}
       propertyPath: m_Name
-      value: Trait Row
+      value: Strength Row
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d91708a6d0913e4a8c12d2c49155c89, type: 3}
@@ -856,10 +862,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5532932097723352459, guid: 6d91708a6d0913e4a8c12d2c49155c89,
+        type: 3}
+      propertyPath: traitToShow
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5746740936362097376, guid: 6d91708a6d0913e4a8c12d2c49155c89,
         type: 3}
       propertyPath: m_Name
-      value: Trait Row (2)
+      value: Constitution Row
       objectReference: {fileID: 0}
     - target: {fileID: 6004843593307706665, guid: 6d91708a6d0913e4a8c12d2c49155c89,
         type: 3}
@@ -970,10 +981,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5532932097723352459, guid: 6d91708a6d0913e4a8c12d2c49155c89,
+        type: 3}
+      propertyPath: traitToShow
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5746740936362097376, guid: 6d91708a6d0913e4a8c12d2c49155c89,
         type: 3}
       propertyPath: m_Name
-      value: Trait Row (3)
+      value: Intelligence Row
       objectReference: {fileID: 0}
     - target: {fileID: 6004843593307706665, guid: 6d91708a6d0913e4a8c12d2c49155c89,
         type: 3}

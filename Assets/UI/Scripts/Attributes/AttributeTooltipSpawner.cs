@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace UI.Scripts.Attributes
 {
+	[RequireComponent(typeof(AttributeUi))]
 	public class AttributeTooltipSpawner : TooltipSpawner
 	{
 		private TraitStore _playerStats;

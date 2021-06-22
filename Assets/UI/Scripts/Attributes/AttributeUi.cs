@@ -9,7 +9,8 @@ namespace UI.Scripts.Attributes
 	{
 		[SerializeField] private Trait traitToShow;
 		[SerializeField] private TextMeshProUGUI attributeText, attributeValue;
-
+		[SerializeField] private bool excludeFromUpdating;
+		
 		public Trait Trait => traitToShow;
 
 		private TraitStore _baseStats;
@@ -19,7 +20,7 @@ namespace UI.Scripts.Attributes
 
 		private void Update()
 		{
-			if (_isUpdating)
+			if (_isUpdating && !excludeFromUpdating)
 			{
 				attributeValue.SetText(_baseStats.GetPoints(traitToShow).ToString());
 			}
