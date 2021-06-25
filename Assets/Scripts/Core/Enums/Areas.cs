@@ -3,12 +3,8 @@
 	public enum Areas
 	{
 		None,
-		TownEntrance,
-		TownInside,
-		ForestEntrance,
-		ForestExit,
-		HillClimbing,
-		HillTop,
-		Boss
+		Town,
+		Forest,
+		Village
 	}
 }

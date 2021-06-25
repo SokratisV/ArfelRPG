@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 7933464705415745816}
   - component: {fileID: 4159312418653268977}
   - component: {fileID: 6146120583199622595}
+  - component: {fileID: 2595718949120173930}
+  - component: {fileID: 6618438141039633833}
+  - component: {fileID: 5977530756412054537}
   m_Layer: 0
   m_Name: MusicPlayer
   m_TagString: Untagged
@@ -45,91 +48,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9220a9194726b7469773304718cd90a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaToMusicArea:
+  deathMusic: {fileID: 8300000, guid: 4b91b38d9e9a7d445ae7f172032d3c0a, type: 3}
+  combatMusic: {fileID: 8300000, guid: aba6ed4a8711f63478e87aea5c95fa29, type: 3}
+  areasToAudio:
     reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
+      canAdd: 0
+      canRemove: 0
+      draggable: 0
+      expandable: 0
+      multipleSelection: 0
       isExpanded: 0
       label:
-        m_Text: Keys
+        m_Text: 
         m_Image: {fileID: 0}
         m_Tooltip: 
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
+      headerHeight: 0
+      footerHeight: 0
+      slideEasing: 0
+      verticalSpacing: 0
+      showDefaultBackground: 0
       elementDisplayType: 0
       elementNameProperty: 
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
     isExpanded: 0
-    _keyValues: 01000000020000000000000003000000040000000500000006000000
-    _keys: 01000000020000000000000003000000040000000500000006000000
-    _values: 01000000010000000000000000000000000000000200000002000000
-  musicAreaToMusic:
-    reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
-      isExpanded: 0
-      label:
-        m_Text: Keys
-        m_Image: {fileID: 0}
-        m_Tooltip: 
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
-      elementDisplayType: 0
-      elementNameProperty: 
-      elementNameOverride: 
-      elementIcon: {fileID: 0}
-    reqReferences: {fileID: 0}
-    isExpanded: 0
-    _keyValues: 01000000000000000200000002000000
-    _keys: 01000000000000000200000003000000
+    _keyValues: 
+    _keys: 01000000020000000300000000000000
     _values:
-    - {fileID: 8300000, guid: 9283265aee105f746998debbc119dda2, type: 3}
-    - {fileID: 8300000, guid: ec93df37430b8744eafb13421c3e9050, type: 3}
+    - {fileID: 8300000, guid: ea0342d8e91a96140bb0da42e1372718, type: 3}
     - {fileID: 8300000, guid: cd0c023617516994da1b182910943018, type: 3}
-    - {fileID: 8300000, guid: 4b91b38d9e9a7d445ae7f172032d3c0a, type: 3}
-  areaToBossMusic:
-    reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
-      isExpanded: 1
-      label:
-        m_Text: Keys
-        m_Image: {fileID: 0}
-        m_Tooltip: 
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
-      elementDisplayType: 0
-      elementNameProperty: 
-      elementNameOverride: 
-      elementIcon: {fileID: 0}
-    reqReferences: {fileID: 0}
-    isExpanded: 1
-    _keyValues: 000000000100000002000000
-    _keys: 000000000100000002000000
-    _values:
-    - {fileID: 8300000, guid: aba6ed4a8711f63478e87aea5c95fa29, type: 3}
-    - {fileID: 8300000, guid: 66b315e37ecf3f942bc1cb0e59c775b7, type: 3}
-    - {fileID: 8300000, guid: aa9e963578505ee4784666f660e3fb6f, type: 3}
+    - {fileID: 8300000, guid: 27b9055f71f86184b9bd8c449c979e32, type: 3}
+    - {fileID: 8300000, guid: cd0c023617516994da1b182910943018, type: 3}
+  keeper: {fileID: 0}
 --- !u!82 &4159312418653268977
 AudioSource:
   m_ObjectHideFlags: 0
@@ -139,9 +90,10 @@ AudioSource:
   m_GameObject: {fileID: 1538710994139267849}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 9805ecc42bd2a6843985bc484a4b2182,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 9283265aee105f746998debbc119dda2, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.05
   m_Pitch: 1
   Loop: 1
@@ -243,12 +195,96 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7933464705415745816}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: RPG.Audio.MusicManager, Audio
+        m_MethodName: ToggleCombatMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2595718949120173930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538710994139267849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa4b7315f6f47b2ac07dd18d06a56e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8cac5261f9e478e48819d679a86fcbe9, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7933464705415745816}
+        m_TargetAssemblyTypeName: RPG.Core.MusicManager, Audio
+        m_MethodName: PlayDeathMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6618438141039633833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538710994139267849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa4b7315f6f47b2ac07dd18d06a56e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: ee75e6974984ac24cbb23c8b261f4acd, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7933464705415745816}
+        m_TargetAssemblyTypeName: RPG.Core.MusicManager, Audio
+        m_MethodName: ResetMusicPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5977530756412054537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538710994139267849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 731acf8ed88f44c48554fc6b8a7446a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 567e10a0ad7a86148a79ab9c55e6b1d8, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7933464705415745816}
+        m_TargetAssemblyTypeName: RPG.Audio.MusicManager, Audio
+        m_MethodName: PlayAreaMusic
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
