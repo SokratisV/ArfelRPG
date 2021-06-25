@@ -33,6 +33,8 @@ namespace RPG.Attributes
 		private bool _wasDeadLastFrame;
 		private static readonly int DieHash = Animator.StringToHash("die");
 
+		#region Unity
+
 		private void Awake()
 		{
 			_healthPoints = new LazyValue<float>(GetInitialHealth);
@@ -45,10 +47,13 @@ namespace RPG.Attributes
 
 		private void Start() => _healthPoints.ForceInit();
 
-		private float GetInitialHealth() => _baseStats.GetStat(Stat.Health);
+		#endregion
+
+		#region Public
 
 		public void Heal(GameObject instigator, float healthToRestore)
 		{
+			if (IsDead) return;
 			_healthPoints.Value = Mathf.Min(_healthPoints.Value + healthToRestore, GetMaxHealthPoints());
 			UpdateState();
 			OnHealthChange?.Invoke(instigator, healthToRestore);
@@ -61,20 +66,9 @@ namespace RPG.Attributes
 			Heal(instigator, healValue);
 		}
 
-		private void RestoreHealthOnLevelUp() => Heal(gameObject, _baseStats.GetStat(Stat.Health) * (regenerationPercentage / 100));
-
-		[ContextMenu("Take 30 damage")]
-		private void TakeTestDamage() => TakeDamage(null, 30);
-
-		[ContextMenu("Heal 40 points")]
-		public void HealthTest() => Heal(gameObject, 40);
-		
-		[ContextMenu("Perish")]
-		private void TestDeath() => TakeDamage(null, _healthPoints.Value);
-
 		public void TakeDamage(GameObject instigator, float damage)
 		{
-			if (IsInvulnerable) return;
+			if (IsInvulnerable || IsDead) return;
 			_healthPoints.Value = Mathf.Max(_healthPoints.Value - damage, LowestHealthValue);
 			takeDamage.Invoke(damage);
 			OnHealthChange?.Invoke(instigator, damage);
@@ -96,16 +90,40 @@ namespace RPG.Attributes
 
 		public float GetMaxHealthPoints() => _baseStats.GetStat(Stat.Health);
 
+		public float GetPercentage() => 100 * GetFraction();
+
+		public float GetFraction() => _healthPoints.Value / _baseStats.GetStat(Stat.Health);
+
+		public void RestoreState(object state)
+		{
+			_healthPoints.Value = (float) state;
+			UpdateState();
+		}
+
+		public object CaptureState() => _healthPoints.Value;
+
+		#endregion
+
+		#region Private
+
+		private float GetInitialHealth() => _baseStats.GetStat(Stat.Health);
+		private void RestoreHealthOnLevelUp() => Heal(gameObject, _baseStats.GetStat(Stat.Health) * (regenerationPercentage / 100));
+
+		[ContextMenu("Take 30 damage")]
+		private void TakeTestDamage() => TakeDamage(null, 30);
+
+		[ContextMenu("Heal 40 points")]
+		private void HealthTest() => Heal(gameObject, 40);
+
+		[ContextMenu("Perish")]
+		private void TestDeath() => TakeDamage(null, _healthPoints.Value);
+
 		private void AwardExperience(GameObject instigator)
 		{
 			if (instigator == null) return;
 			if (instigator.TryGetComponent(out Experience experience))
 				experience.GainExperience(_baseStats.GetStat(Stat.ExperienceReward));
 		}
-
-		public float GetPercentage() => 100 * GetFraction();
-
-		public float GetFraction() => _healthPoints.Value / _baseStats.GetStat(Stat.Health);
 
 		private void UpdateState()
 		{
@@ -123,12 +141,6 @@ namespace RPG.Attributes
 			_wasDeadLastFrame = IsDead;
 		}
 
-		public void RestoreState(object state)
-		{
-			_healthPoints.Value = (float) state;
-			UpdateState();
-		}
-
-		public object CaptureState() => _healthPoints.Value;
+		#endregion
 	}
 }

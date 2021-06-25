@@ -1,4 +1,5 @@
-﻿using RPG.Core;
+﻿using RPG.Attributes;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.Dialogue
@@ -8,6 +9,7 @@ namespace RPG.Dialogue
 		[SerializeField] private Dialogue dialogue;
 		[SerializeField] private string characterName;
 
+		private Health _health = null;
 		private OutlineableComponent _outlineableComponent;
 		private PlayerConversant _playerConversant = null;
 
@@ -17,7 +19,11 @@ namespace RPG.Dialogue
 
 		private void Awake() => _outlineableComponent = new OutlineableComponent(gameObject, GlobalValues.InteractColor);
 
-		private void Start() => _playerConversant = PlayerFinder.Player.GetComponent<PlayerConversant>();
+		private void Start()
+		{
+			_playerConversant = PlayerFinder.Player.GetComponent<PlayerConversant>();
+			_health = GetComponent<Health>();
+		}
 
 		#endregion
 
@@ -27,11 +33,12 @@ namespace RPG.Dialogue
 
 		public bool HandleRaycast(GameObject player)
 		{
-			if(dialogue == null) return false;
+			if (dialogue == null) return false;
+			if (_health != null && _health.IsDead) return false;
 			CheckPressedButtons(_playerConversant);
 			return true;
 		}
-		
+
 		public void ShowInteractivity() => _outlineableComponent.ShowOutline(this);
 
 		public Transform GetTransform() => transform;
@@ -46,16 +53,16 @@ namespace RPG.Dialogue
 
 		private void CheckPressedButtons(PlayerConversant playerConversant)
 		{
-			if(Input.GetKey(KeyCode.LeftControl))
+			if (Input.GetKey(KeyCode.LeftControl))
 			{
-				if(Input.GetMouseButtonDown(0))
+				if (Input.GetMouseButtonDown(0))
 				{
 					playerConversant.QueueAction(new InteractableActionData(playerConversant, transform));
 				}
 			}
 			else
 			{
-				if(Input.GetMouseButton(0))
+				if (Input.GetMouseButton(0))
 				{
 					playerConversant.StartInteractAction(this);
 				}

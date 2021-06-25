@@ -788,7 +788,7 @@ MonoBehaviour:
   aggroShoutInterval: 0.4
   patrolPath: {fileID: 0}
   patrolSpeedFraction: 0.2
-  combatMusic: 0
+  onPlayerAggro: {fileID: 11400000, guid: 1da5289e8218fcf46ace30d9f7da4b08, type: 2}
 --- !u!114 &4591860620110529912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,6 +815,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111da27aa14f04d908412e562618983e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6169769367991679244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3119285855356117504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa4b7315f6f47b2ac07dd18d06a56e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: ee75e6974984ac24cbb23c8b261f4acd, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3007229587625992750}
+        m_TargetAssemblyTypeName: RPG.Control.AIController, Control
+        m_MethodName: ResetEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1379612859330531891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -980,7 +1008,7 @@ PrefabInstance:
     - target: {fileID: 2051514496692203678, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2165176163035486376, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
@@ -1003,11 +1031,6 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2165176163035486379, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2165176163035486388, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1067,11 +1090,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4338436411007093361, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4339557145984695365, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: weapon
@@ -1104,16 +1122,6 @@ PrefabInstance:
       propertyPath: rightHandTransform
       value: 
       objectReference: {fileID: 1379612859330422077}
-    - target: {fileID: 5448673772567559303, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
-        type: 3}
-      propertyPath: health
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5448673772567559303, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
-        type: 3}
-      propertyPath: healthPoints
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 5540589571492298495, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: healthPoints
@@ -1227,7 +1235,7 @@ PrefabInstance:
     - target: {fileID: 7962337807538224116, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8602588964328835400, guid: c9fc1e5f9753845c2b3bdff05b8cb07f,
         type: 3}

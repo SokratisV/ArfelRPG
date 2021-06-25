@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using RPG.Core;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Audio
 {
 	public class AudioController : MonoBehaviour, IAudioPlayer
 	{

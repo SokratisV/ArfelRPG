@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using RotaryHeart.Lib.SerializableDictionary;
-using RPG.Control;
+﻿using RotaryHeart.Lib.SerializableDictionary;
+using RPG.Core;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Audio
 {
 	[RequireComponent(typeof(AudioSource))]
 	public class MusicManager : MonoBehaviour
@@ -27,85 +26,50 @@ namespace RPG.Core
 		[SerializeField] private MusicAreaToMusicDictionary musicAreaToMusic = new MusicAreaToMusicDictionary();
 		[SerializeField] private CombatMusicAreaToMusicDictionary areaToBossMusic = new CombatMusicAreaToMusicDictionary();
 
+		[SerializeField] private EnemyAggroKeeper keeper;
 		private AudioSource _audio;
 		private MusicAreas _currentMusicArea;
-		private Coroutine _combatMusicCoroutine;
-		private static int _enemiesInCombatWith = 0;
+		private bool _isCombatMusicPlaying;
 
 		private void Awake() => _audio = GetComponent<AudioSource>();
-
-		private void OnEnable()
-		{
-			AIController.OnPlayerAggro += ToggleCombatMusic;
-			AreaEventManager.OnEnterArea += PlayAreaMusic;
-		}
-
-		private void OnDisable()
-		{
-			AIController.OnPlayerAggro -= ToggleCombatMusic;
-			AreaEventManager.OnEnterArea -= PlayAreaMusic;
-		}
+		private void OnEnable() => AreaEventManager.OnEnterArea += PlayAreaMusic;
+		private void OnDisable() => AreaEventManager.OnEnterArea -= PlayAreaMusic;
 
 		public void PlayAreaMusic(Areas area)
 		{
-			if(_combatMusicCoroutine != null) return;
-
 			areaToMusicArea.TryGetValue(area, out var musicArea);
-			if(_currentMusicArea == musicArea) return;
-
+			if (_currentMusicArea == musicArea) return;
 			_currentMusicArea = musicArea;
 			musicAreaToMusic.TryGetValue(musicArea, out var music);
-			_audio.clip = music; // TODO: Fade out/in
+			_audio.clip = music;
 			_audio.Play();
 		}
 
-		private void ToggleCombatMusic(bool combat, CombatMusicAreas combatMusic = CombatMusicAreas.CombatNormal)
+		public void ToggleCombatMusic()
 		{
-			if(combat) PlayCombatMusic(combatMusic);
+			if (keeper.NumberOfEnemiesInCombatWith > 0) PlayCombatMusic(CombatMusicAreas.CombatNormal);
 			else EndCombatMusic();
 		}
 
 		private void PlayCombatMusic(CombatMusicAreas combatMusic)
 		{
-			_enemiesInCombatWith++;
-			if(_combatMusicCoroutine == null)
-				_combatMusicCoroutine = _combatMusicCoroutine.StartCoroutine(this, _PlayCombatMusic(combatMusic));
-			else
-			{
-				if(combatMusic != CombatMusicAreas.CombatNormal)
-				{
-					// StopCoroutine(combatMusicCoroutine);
-					// combatMusicCoroutine = null;
-					_combatMusicCoroutine = _combatMusicCoroutine.StartCoroutine(this, _PlayCombatMusic(combatMusic));
-				}
-			}
-		}
-
-		private IEnumerator _PlayCombatMusic(CombatMusicAreas area)
-		{
-			areaToBossMusic.TryGetValue(area, out var music);
-			_audio.clip = music; // TODO: Fade out/in
+			if (_isCombatMusicPlaying) return;
+			_isCombatMusicPlaying = true;
+			areaToBossMusic.TryGetValue(combatMusic, out var music);
+			_audio.clip = music;
 			_audio.Play();
-			yield return null;
 		}
 
 		public void EndCombatMusic()
 		{
-			_enemiesInCombatWith--;
-			if(_enemiesInCombatWith == 0)
-			{
-				musicAreaToMusic.TryGetValue(_currentMusicArea, out var music);
-				_audio.clip = music; // TODO: Fade out/in
-				_audio.Play();
-				_combatMusicCoroutine = null;
-			}
+			if (!_isCombatMusicPlaying) return;
+			musicAreaToMusic.TryGetValue(_currentMusicArea, out var music);
+			_audio.clip = music;
+			_audio.Play();
 		}
 
 		public void PlayDeathMusic()
 		{
-			_enemiesInCombatWith = 0;
-			_combatMusicCoroutine = null;
-
 			musicAreaToMusic.TryGetValue(MusicAreas.Death, out var music);
 			_audio.clip = music; // TODO: Fade out/in
 			_audio.Play();
@@ -113,9 +77,6 @@ namespace RPG.Core
 
 		public void ResetMusicPlayer()
 		{
-			_enemiesInCombatWith = 0;
-			_combatMusicCoroutine = null;
-
 			musicAreaToMusic.TryGetValue(MusicAreas.Town, out var music);
 			_audio.clip = music; // TODO: Fade out/in
 			_audio.Play();

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RPG.Attributes;
 using RPG.Core;
 using RPG.Core.SystemEvents;
 using UnityEngine;
@@ -13,6 +14,11 @@ namespace Control
 		[SerializeField] private Transform respawnLocation;
 		[SerializeField] [Min(0)] private float respawnDelay = 3f;
 		[SerializeField] [Min(0)] private float fadeTime = 3f;
+
+		private void Start()
+		{
+			if (GetComponent<Health>().IsDead) Respawn();
+		}
 
 		public Transform RespawnLocation
 		{

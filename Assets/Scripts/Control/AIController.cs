@@ -3,8 +3,9 @@ using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
-using System;
 using RPG.Attributes;
+using RPG.Core.SystemEvents;
+using UnityEngine.AI;
 
 namespace RPG.Control
 {
@@ -20,8 +21,7 @@ namespace RPG.Control
 
 		[SerializeField] private PatrolPath patrolPath;
 		[Range(0, 1)] [SerializeField] private float patrolSpeedFraction = 0.2f;
-
-		public static event Action<bool, CombatMusicAreas> OnPlayerAggro;
+		[SerializeField] private BooleanEvent onPlayerAggro;
 
 		private GameObject _player;
 		private Health _health;
@@ -36,7 +36,8 @@ namespace RPG.Control
 
 		private int _currentWayPointIndex = 0;
 		private bool _hasInformedPlayerOfAggro = false;
-		[SerializeField] private CombatMusicAreas combatMusic;
+
+		#region Unity
 
 		private void Awake()
 		{
@@ -45,28 +46,14 @@ namespace RPG.Control
 			_health = GetComponent<Health>();
 			_mover = GetComponent<Mover>();
 			_guardPosition = new LazyValue<Vector3>(GetGuardPosition);
+			_guardPosition.ForceInit();
 		}
-
-		private Vector3 GetGuardPosition() => transform.position;
 
 		private void OnEnable()
 		{
 			_health.OnHealthChange += AttackAttacker;
 			_health.OnDeath += MarkDead;
 		}
-
-		private void AttackAttacker(GameObject obj, float _)
-		{
-			if (_health.IsDead)
-			{
-				_health.OnHealthChange -= AttackAttacker;
-				return;
-			}
-
-			Aggrevate();
-		}
-
-		private void Start() => _guardPosition.ForceInit();
 
 		private void Update()
 		{
@@ -88,11 +75,51 @@ namespace RPG.Control
 			UpdateTimers();
 		}
 
+		private void OnDrawGizmosSelected()
+		{
+			Gizmos.color = Color.blue;
+			Gizmos.DrawWireSphere(transform.position, chaseDistance);
+		}
+
+		#endregion
+
+		#region Public
+
+		public void Aggrevate() => _timeSinceAggrevated = 0;
+
+		public void ResetEnemy()
+		{
+			GetComponent<NavMeshAgent>().Warp(_guardPosition.Value);
+			_timeSinceLastSawPlayer = Mathf.Infinity;
+			_timeSinceArrivedAtWaypoint = Mathf.Infinity;
+			_timeSinceAggrevated = Mathf.Infinity;
+			_timeSinceNotifiedOthers = 0;
+			_currentWayPointIndex = 0;
+			_hasInformedPlayerOfAggro = false;
+		}
+
+		#endregion
+
+		#region Private
+
+		private Vector3 GetGuardPosition() => transform.position;
+
+		private void AttackAttacker(GameObject obj, float _)
+		{
+			if (_health.IsDead)
+			{
+				_health.OnHealthChange -= AttackAttacker;
+				return;
+			}
+
+			Aggrevate();
+		}
+
 		private void MarkDead()
 		{
 			if (_hasInformedPlayerOfAggro)
 			{
-				OnPlayerAggro?.Invoke(false, combatMusic);
+				onPlayerAggro.Raise(false);
 				_hasInformedPlayerOfAggro = false;
 				GetComponent<Collider>().enabled = false;
 				_health.OnDeath -= MarkDead;
@@ -105,14 +132,12 @@ namespace RPG.Control
 
 			if (_hasInformedPlayerOfAggro)
 			{
-				OnPlayerAggro?.Invoke(false, combatMusic);
+				onPlayerAggro.Raise(false);
 				_hasInformedPlayerOfAggro = false;
 			}
 
 			return false;
 		}
-
-		public void Aggrevate() => _timeSinceAggrevated = 0;
 
 		private bool IsAggrevated() => Helper.IsWithinDistance(_player.transform, transform, chaseDistance) || _timeSinceAggrevated < aggroCooldownTime;
 
@@ -146,7 +171,6 @@ namespace RPG.Control
 		}
 
 		private Vector3 GetCurrentWaypoint() => patrolPath.GetWaypoint(_currentWayPointIndex);
-
 		private void CycleWaypoint() => _currentWayPointIndex = patrolPath.GetNextIndex(_currentWayPointIndex);
 
 		private bool AtWaypoint() => Helper.IsWithinDistance(transform.position, GetCurrentWaypoint(), wayPointTolerance);
@@ -158,7 +182,7 @@ namespace RPG.Control
 			if (!_hasInformedPlayerOfAggro)
 			{
 				_hasInformedPlayerOfAggro = true;
-				OnPlayerAggro?.Invoke(true, combatMusic);
+				onPlayerAggro.Raise(true);
 			}
 
 			_fighter.Execute(_player);
@@ -183,10 +207,6 @@ namespace RPG.Control
 			}
 		}
 
-		private void OnDrawGizmosSelected()
-		{
-			Gizmos.color = Color.blue;
-			Gizmos.DrawWireSphere(transform.position, chaseDistance);
-		}
+		#endregion
 	}
 }
