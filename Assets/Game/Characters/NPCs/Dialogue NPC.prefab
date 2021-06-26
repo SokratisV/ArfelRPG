@@ -30,6 +30,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 11400000, guid: 557edc688a3f040408b500a859586b1e, type: 2}
   characterName: 
+--- !u!114 &4513424787764470251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6203715967829831364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23eccf353c064860a3bb9b5cfbe4b012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest: {fileID: 11400000, guid: 35789faeb9a92a04fbe67e9b4718612e, type: 2}
+  objective: 1
 --- !u!114 &4977578421370326618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,20 +101,6 @@ MonoBehaviour:
   actionEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4513424787764470251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6203715967829831364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23eccf353c064860a3bb9b5cfbe4b012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 35789faeb9a92a04fbe67e9b4718612e, type: 2}
-  objective: 1
 --- !u!1001 &8065184773616054214
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -123,6 +123,11 @@ PrefabInstance:
     - target: {fileID: 1217483102, guid: 2b71f0dd25977094ead4740db3ffc669, type: 3}
       propertyPath: actionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: RPG.Quests.QuestCompletion, Quests
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176327929018204416, guid: 2b71f0dd25977094ead4740db3ffc669,
+        type: 3}
+      propertyPath: avoidancePriority
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4176327929018204418, guid: 2b71f0dd25977094ead4740db3ffc669,
         type: 3}

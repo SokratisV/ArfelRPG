@@ -29,9 +29,7 @@ namespace RPG.UI.Tooltips
 		/// Return true when the tooltip spawner should be allowed to create a tooltip.
 		/// </summary>
 		public abstract bool CanCreateTooltip();
-
 		private void OnDestroy() => ClearTooltip();
-
 		private void OnDisable() => ClearTooltip();
 
 		void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)

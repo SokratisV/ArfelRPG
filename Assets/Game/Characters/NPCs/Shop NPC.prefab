@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1f1a18bf877c04c9c907bd6ed5430a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopName: 
+  sellingPercent: 80
+  maximumBarterDiscount: 80
+  stockConfig: []
 --- !u!1001 &5900498474489761382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19,6 +23,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4176327929018204416, guid: 2b71f0dd25977094ead4740db3ffc669,
+        type: 3}
+      propertyPath: avoidancePriority
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4176327929018204418, guid: 2b71f0dd25977094ead4740db3ffc669,
         type: 3}
       propertyPath: m_Name

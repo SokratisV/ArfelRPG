@@ -9,18 +9,17 @@ namespace RPG.UI.Inventories
 	[RequireComponent(typeof(IItemHolder))]
 	public class ItemTooltipSpawner : TooltipSpawner
 	{
-		public override bool CanCreateTooltip()
-		{
-			var item = GetComponent<IItemHolder>().GetItem();
-			return item;
-		}
+		private IItemHolder _itemHolder;
+
+		private void Awake() => _itemHolder = GetComponent<IItemHolder>();
+
+		public override bool CanCreateTooltip() => _itemHolder?.GetItem();
 
 		public override void UpdateTooltip(GameObject tooltip)
 		{
 			var itemTooltip = tooltip.GetComponent<ItemTooltip>();
-			if(!itemTooltip) return;
-			var item = GetComponent<IItemHolder>().GetItem();
-			itemTooltip.Setup(item);
+			if (!itemTooltip) return;
+			itemTooltip.Setup(_itemHolder.GetItem());
 		}
 	}
 }
