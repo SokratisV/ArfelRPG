@@ -73,7 +73,7 @@ MonoBehaviour:
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
     isExpanded: 0
-    _keyValues: 
+    _keyValues: 00000000000000000000000000000000
     _keys: 01000000020000000300000000000000
     _values:
     - {fileID: 8300000, guid: ea0342d8e91a96140bb0da42e1372718, type: 3}
@@ -81,6 +81,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 27b9055f71f86184b9bd8c449c979e32, type: 3}
     - {fileID: 8300000, guid: cd0c023617516994da1b182910943018, type: 3}
   keeper: {fileID: 0}
+  musicMixer: {fileID: 24100000, guid: 9805ecc42bd2a6843985bc484a4b2182, type: 2}
 --- !u!82 &4159312418653268977
 AudioSource:
   m_ObjectHideFlags: 0

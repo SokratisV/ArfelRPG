@@ -9,11 +9,6 @@ namespace RPG.UI
 {
 	public class SettingsUi : MonoBehaviour
 	{
-		private const string Resolution = "resolution";
-		private const string MusicVolume = "musicVolume";
-		private const string CameraRotationSpeed = "cameraRotationSpeed";
-		private const string CameraZoomSpeed = "cameraZoomSpeed";
-
 		[SerializeField] private Button revertChanges, saveChanges;
 		[SerializeField] private TMP_Dropdown resolutionDropdown;
 		[SerializeField] private Slider musicVolume, cameraRotationSpeed, cameraZoomSpeed;
@@ -78,10 +73,10 @@ namespace RPG.UI
 
 		public void SaveSettings()
 		{
-			PlayerPrefs.SetInt(Resolution, resolutionDropdown.value);
-			PlayerPrefs.SetFloat(MusicVolume, _currentVolume);
-			PlayerPrefs.SetFloat(CameraRotationSpeed, cameraRotationSpeed.value);
-			PlayerPrefs.SetFloat(CameraZoomSpeed, cameraZoomSpeed.value);
+			PlayerPrefs.SetInt(GlobalValues.Resolution, resolutionDropdown.value);
+			PlayerPrefs.SetFloat(GlobalValues.MusicVolume, _currentVolume);
+			PlayerPrefs.SetFloat(GlobalValues.CameraRotationSpeed, cameraRotationSpeed.value);
+			PlayerPrefs.SetFloat(GlobalValues.CameraZoomSpeed, cameraZoomSpeed.value);
 			OnChangesMade(false);
 			// LogPlayerPrefs();
 		}
@@ -89,10 +84,10 @@ namespace RPG.UI
 		public void LoadSettings()
 		{
 			OnChangesMade(false);
-			resolutionDropdown.value = PlayerPrefs.HasKey(Resolution) ? PlayerPrefs.GetInt(Resolution) : 0;
-			musicVolume.value = PlayerPrefs.HasKey(MusicVolume) ? PlayerPrefs.GetFloat(MusicVolume) : 1;
-			cameraRotationSpeed.value = PlayerPrefs.HasKey(CameraRotationSpeed) ? PlayerPrefs.GetFloat(CameraRotationSpeed) : 15f;
-			cameraZoomSpeed.value = PlayerPrefs.HasKey(CameraZoomSpeed) ? PlayerPrefs.GetFloat(CameraZoomSpeed) : 5;
+			resolutionDropdown.value = PlayerPrefs.HasKey(GlobalValues.Resolution) ? PlayerPrefs.GetInt(GlobalValues.Resolution) : 0;
+			musicVolume.value = PlayerPrefs.HasKey(GlobalValues.MusicVolume) ? PlayerPrefs.GetFloat(GlobalValues.MusicVolume) : 1;
+			cameraRotationSpeed.value = PlayerPrefs.HasKey(GlobalValues.CameraRotationSpeed) ? PlayerPrefs.GetFloat(GlobalValues.CameraRotationSpeed) : 15f;
+			cameraZoomSpeed.value = PlayerPrefs.HasKey(GlobalValues.CameraZoomSpeed) ? PlayerPrefs.GetFloat(GlobalValues.CameraZoomSpeed) : 5;
 			// LogPlayerPrefs();
 		}
 
@@ -106,10 +101,10 @@ namespace RPG.UI
 
 		private void LogPlayerPrefs()
 		{
-			Debug.Log($"Resolution {PlayerPrefs.GetInt(Resolution)}" );
-			Debug.Log($"Music Volume {PlayerPrefs.GetFloat(MusicVolume)}" );
-			Debug.Log($"Camera Rotation Speed {PlayerPrefs.GetFloat(CameraRotationSpeed)}" );
-			Debug.Log($"Camera Zoom Speed {PlayerPrefs.GetFloat(CameraZoomSpeed)}" );
+			Debug.Log($"Resolution {PlayerPrefs.GetInt(GlobalValues.Resolution)}" );
+			Debug.Log($"Music Volume {PlayerPrefs.GetFloat(GlobalValues.MusicVolume)}" );
+			Debug.Log($"Camera Rotation Speed {PlayerPrefs.GetFloat(GlobalValues.CameraRotationSpeed)}" );
+			Debug.Log($"Camera Zoom Speed {PlayerPrefs.GetFloat(GlobalValues.CameraZoomSpeed)}" );
 		}
 
 		#endregion
