@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9220a9194726b7469773304718cd90a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathMusic: {fileID: 8300000, guid: 4b91b38d9e9a7d445ae7f172032d3c0a, type: 3}
+  deathMusic: {fileID: 8300000, guid: 656b9104341bb064d89f98e7b1e3b8a7, type: 3}
   combatMusic: {fileID: 8300000, guid: aba6ed4a8711f63478e87aea5c95fa29, type: 3}
   areasToAudio:
     reorderableList:
@@ -95,7 +95,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 9283265aee105f746998debbc119dda2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.05
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
