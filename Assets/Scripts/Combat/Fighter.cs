@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Core.Interfaces;
 using RPG.AnimatorBehaviors;
 using RPG.Utils;
@@ -24,6 +25,8 @@ namespace RPG.Combat
 		}
 
 		[SerializeField] private WeaponConfig defaultWeapon = null;
+		[SerializeField] private float autoAttackRange = 4f;
+
 
 		private bool CanAttack => _timeSinceLastAttack >= AttackSpeed;
 		private bool _attackAnimationDone = true;
@@ -38,6 +41,7 @@ namespace RPG.Combat
 		private ActionScheduler _actionScheduler;
 		private LazyValue<Weapon> _currentWeapon;
 		private WeaponConfig _currentWeaponConfig;
+		private RaycastHit[] _autoTargetResults = new RaycastHit[5];
 
 		private static readonly int StopAttackHash = Animator.StringToHash("stopAttack");
 		private static readonly int AttackHash = Animator.StringToHash("attack");
@@ -67,9 +71,12 @@ namespace RPG.Combat
 			if (_target == null) return;
 			if (_target.IsDead)
 			{
-				CompleteAction();
-				_target = null;
-				return;
+				_target = FindNewTargetInRange();
+				if (_target == null)
+				{
+					CompleteAction();
+					return;
+				}
 			}
 
 			_timeSinceLastAttack += Time.deltaTime;
@@ -115,8 +122,10 @@ namespace RPG.Combat
 
 			_actionScheduler.StartAction(this);
 		}
-		
-		public void QueueAction(IActionData data) {}
+
+		public void QueueAction(IActionData data)
+		{
+		}
 
 		public void QueueExecution(GameObject obj) => _actionScheduler.EnqueueAction(new FighterActionData(this, obj));
 
@@ -196,6 +205,35 @@ namespace RPG.Combat
 			_attackAnimationDone = false;
 			_animator.ResetTrigger(StopAttackHash);
 			_animator.SetTrigger(AttackHash);
+		}
+
+		private Health FindNewTargetInRange()
+		{
+			Health best = null;
+			var bestDistance = Mathf.Infinity;
+			foreach (var candidate in FindTargetsInRange())
+			{
+				float candidateDistance = Vector3.Distance(transform.position, candidate.transform.position);
+				if (candidateDistance < bestDistance)
+				{
+					best = candidate;
+					bestDistance = candidateDistance;
+				}
+			}
+
+			return best;
+		}
+
+		private IEnumerable<Health> FindTargetsInRange()
+		{
+			Physics.SphereCastNonAlloc(transform.position, autoAttackRange, Vector3.up, _autoTargetResults);
+			foreach (var hit in _autoTargetResults)
+			{
+				if (hit.transform == null) continue;
+				if (!hit.transform.TryGetComponent(out Health health)) continue;
+				if (health == null || health.IsDead || health.gameObject == gameObject) continue;
+				yield return health;
+			}
 		}
 
 		// Animation Event
