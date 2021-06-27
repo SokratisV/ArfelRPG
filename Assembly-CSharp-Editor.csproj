@@ -814,6 +814,14 @@
       <Project>{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="Tayx.Graphy.Editor.csproj">
+      <Project>{9ae5d107-b332-10d3-7ee5-77f6cf54c394}</Project>
+      <Name>Tayx.Graphy.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Tayx.Graphy.csproj">
+      <Project>{fd65f513-dc91-761a-9632-cf8ab80d36fa}</Project>
+      <Name>Tayx.Graphy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

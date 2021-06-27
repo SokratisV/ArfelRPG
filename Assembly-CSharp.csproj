@@ -74,6 +74,7 @@
      <None Include="Assets\Asset Packs\LeanTween\ReadMe.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\Asset Packs\SimpleFX\Materials\UnlitVertexColour_Alpha.shader" />
+     <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\Changelog.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\Projectors\Guidelines.txt" />
      <None Include="Assets\Asset Packs\LeanTween\License.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
@@ -82,8 +83,10 @@
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Asset Packs\HolyShift\Shaders\FXWaterLowpoly.shader" />
      <None Include="Assets\Asset Packs\Fantasy Chess RPG Character - Arthur\readme.txt" />
+     <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\Shaders\GraphMobile.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
+     <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\Font\Northwest-Bold\ERIC-TIRADO-NORTHWEST-LICENSE.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water (Basic)\DO_NOT_WORK_IN_VR.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\Asset Packs\A_piece_of_nature\Readme.txt" />
@@ -106,15 +109,18 @@
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Asset Packs\HolyShift\readme.txt" />
      <None Include="Assets\Game\Audio\Fantasy SFX for Particle Distort Texture effect library\readme_Fantasy SFX for Particle Distort Texture effect library.txt" />
+     <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\Font\Roboto\LICENSE.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Shaders\PriorityParticleAdd.shader" />
      <None Include="Assets\Asset Packs\HolyShift\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
+     <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\Shaders\GraphStandard.shader" />
      <None Include="Assets\Asset Packs\FXIFIED\common\Shaders\RimLight.shader" />
      <None Include="Assets\Asset Packs\JMO Assets\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
+     <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\package.json" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
@@ -834,6 +840,14 @@
     <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
       <Project>{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="Tayx.Graphy.Editor.csproj">
+      <Project>{9ae5d107-b332-10d3-7ee5-77f6cf54c394}</Project>
+      <Name>Tayx.Graphy.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Tayx.Graphy.csproj">
+      <Project>{fd65f513-dc91-761a-9632-cf8ab80d36fa}</Project>
+      <Name>Tayx.Graphy</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
