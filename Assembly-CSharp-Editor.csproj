@@ -786,6 +786,10 @@
       <Project>{3e64631f-bc48-1183-10b0-32032bb5a975}</Project>
       <Name>Outline</Name>
     </ProjectReference>
+    <ProjectReference Include="Tayx.Graphy.Editor.csproj">
+      <Project>{9ae5d107-b332-10d3-7ee5-77f6cf54c394}</Project>
+      <Name>Tayx.Graphy.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="UI.csproj">
       <Project>{1cd77628-a7a2-5c04-4ca5-20c16974f46c}</Project>
       <Name>UI</Name>
@@ -793,6 +797,10 @@
     <ProjectReference Include="Editor.csproj">
       <Project>{ba3e57c9-86db-f553-89b4-a1736e8cf987}</Project>
       <Name>Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Tayx.Graphy.csproj">
+      <Project>{fd65f513-dc91-761a-9632-cf8ab80d36fa}</Project>
+      <Name>Tayx.Graphy</Name>
     </ProjectReference>
     <ProjectReference Include="Cinematic.csproj">
       <Project>{63c322c9-af88-31a6-a296-dbb19f3a4b82}</Project>
@@ -813,14 +821,6 @@
     <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
       <Project>{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="Tayx.Graphy.Editor.csproj">
-      <Project>{9ae5d107-b332-10d3-7ee5-77f6cf54c394}</Project>
-      <Name>Tayx.Graphy.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Tayx.Graphy.csproj">
-      <Project>{fd65f513-dc91-761a-9632-cf8ab80d36fa}</Project>
-      <Name>Tayx.Graphy</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,7 +10,6 @@ namespace RPG.Core
 		public static Color32 InteractColor { get; } = new Color32(0, 255, 0, 255);
 		public static Color32 ShopInteractableColor { get; } = new Color32(0, 180, 180, 255);
 		public static float InteractableRange { get; } = 1f;
-		public static float DefaultAttackSpeed { get; } = 3f;
 		public static float MaxNavPathLength { get; } = 40f;
 		public static int ActionBarCount { get; } = 4;
 		public static float GlobalCooldown { get; } = 1f;

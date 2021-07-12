@@ -27,14 +27,23 @@ namespace RPG.Combat
 		[SerializeField] private WeaponConfig defaultWeapon = null;
 		[SerializeField] private float autoAttackRange = 4f;
 
-
-		private bool CanAttack => _timeSinceLastAttack >= AttackSpeed;
+		private bool CanAttack => TimeSinceLastAttack >= AttackSpeed;
 		private bool _attackAnimationDone = true;
-		private float _timeSinceLastAttack = GlobalValues.DefaultAttackSpeed;
+
+		public float TimeSinceLastAttack
+		{
+			get => _timeSinceLastAttack;
+			private set
+			{
+				_timeSinceLastAttack = value;
+				if (_timeSinceLastAttack > AttackSpeed) _timeSinceLastAttack = AttackSpeed;
+			}
+		}
+
 		private float _attackSpeed;
 		private BodyParts _bodyParts;
 		private Mover _mover;
-		private Health _target, _bufferedTarget;
+		private Health _target;
 		private BaseStats _stats;
 		private Animator _animator;
 		private Equipment _equipment;
@@ -42,6 +51,7 @@ namespace RPG.Combat
 		private LazyValue<Weapon> _currentWeapon;
 		private WeaponConfig _currentWeaponConfig;
 		private RaycastHit[] _autoTargetResults = new RaycastHit[5];
+		private float _timeSinceLastAttack;
 
 		private static readonly int StopAttackHash = Animator.StringToHash("stopAttack");
 		private static readonly int AttackHash = Animator.StringToHash("attack");
@@ -68,6 +78,7 @@ namespace RPG.Combat
 
 		private void Update()
 		{
+			TimeSinceLastAttack += Time.deltaTime;
 			if (_target == null) return;
 			if (_target.IsDead)
 			{
@@ -79,7 +90,6 @@ namespace RPG.Combat
 				}
 			}
 
-			_timeSinceLastAttack += Time.deltaTime;
 			if (_attackAnimationDone && _mover.IsInRange(_target.transform, _currentWeaponConfig.GetRange()))
 			{
 				_mover.CancelAction();
@@ -111,15 +121,8 @@ namespace RPG.Combat
 
 		public void Execute(GameObject combatTarget)
 		{
-			if (!_attackAnimationDone)
-			{
-				_bufferedTarget = combatTarget.GetComponent<Health>();
-			}
-			else
-			{
-				_target = combatTarget.GetComponent<Health>();
-			}
-
+			CancelAction();
+			_target = combatTarget.GetComponent<Health>();
 			_actionScheduler.StartAction(this);
 		}
 
@@ -134,7 +137,6 @@ namespace RPG.Combat
 			StopAttack();
 			_mover.CancelAction();
 			_target = null;
-			_bufferedTarget = null;
 		}
 
 		public object CaptureState() => _currentWeaponConfig.name;
@@ -188,12 +190,6 @@ namespace RPG.Combat
 
 		private void Attack()
 		{
-			if (_bufferedTarget != null)
-			{
-				_target = _bufferedTarget;
-				_bufferedTarget = null;
-			}
-
 			_mover.RotateOverTime(.2f, _target.transform.position);
 			if (!CanAttack) return;
 			AttackAnimation();
@@ -201,7 +197,7 @@ namespace RPG.Combat
 
 		private void AttackAnimation()
 		{
-			_timeSinceLastAttack = 0;
+			TimeSinceLastAttack = 0;
 			_attackAnimationDone = false;
 			_animator.ResetTrigger(StopAttackHash);
 			_animator.SetTrigger(AttackHash);
