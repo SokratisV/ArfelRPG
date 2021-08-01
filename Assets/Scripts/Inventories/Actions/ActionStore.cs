@@ -93,8 +93,8 @@ namespace RPG.Inventories
 		{
 			if(index > GlobalValues.ActionBarCount) return false;
 			if(!_dockedItems.ContainsKey(index)) return false;
-			_dockedItems[index].Item.Use(user);
-			if(_dockedItems[index].Item.IsConsumable)
+			var wasUsed = _dockedItems[index].Item.Use(user);
+			if(wasUsed && _dockedItems[index].Item.IsConsumable)
 			{
 				RemoveItems(index, 1);
 			}

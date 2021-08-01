@@ -9,6 +9,7 @@ namespace RPG.Stats
         Mana,
         ManaRegen,
         TraitPoints,
-        Bartering
+        Bartering,
+        Defence
     }
 }

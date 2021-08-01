@@ -29,12 +29,13 @@ namespace RPG.Inventories
 			return!health.IsDead && !(health.GetPercentage() >= 100.0f);
 		}
 
-		public override void Use(GameObject user)
+		public override bool Use(GameObject user)
 		{
 			base.Use(user);
-			if(!user.TryGetComponent(out Health health)) return;
-			if(health.IsDead) return;
+			if(!user.TryGetComponent(out Health health)) return false;
+			if(health.IsDead) return false;
 			health.Heal(user, isPercentage? health.GetMaxHealthPoints() * amountToHeal / 100.0f:amountToHeal);
+			return true;
 		}
 
 #if UNITY_EDITOR

@@ -69,6 +69,9 @@ namespace RPG.Attributes
 		public void TakeDamage(GameObject instigator, float damage)
 		{
 			if (IsInvulnerable || IsDead) return;
+			
+			damage = DamageReduction(damage);
+
 			_healthPoints.Value = Mathf.Max(_healthPoints.Value - damage, LowestHealthValue);
 			takeDamage.Invoke(damage);
 			OnHealthChange?.Invoke(instigator, damage);
@@ -84,6 +87,14 @@ namespace RPG.Attributes
 			}
 
 			UpdateState();
+		}
+
+		private float DamageReduction(float damage)
+		{
+			var defence = _baseStats.GetStat(Stat.Defence);
+			if (damage <= 0) return 0;
+			damage /= 1 + defence / damage;
+			return damage;
 		}
 
 		public float GetHealthPoints() => _healthPoints.Value;

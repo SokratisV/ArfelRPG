@@ -15,12 +15,14 @@ MonoBehaviour:
   itemID: 33a7ef0a-dca0-425a-aa9b-42b2da4dcc7b
   displayName: Fancy pants.
   description: Their color is black and blue. PERIOD.
-  icon: {fileID: 21300000, guid: 6fc27c9d7fc2d9448af6851bf935e6d2, type: 3}
-  pickup: {fileID: 0}
+  icon: {fileID: 21300000, guid: e420c5bc93cb2604695a893500c897e3, type: 3}
+  pickup: {fileID: 8540547188556865411, guid: cd02ee3ae4b491d4db7a784343940a44, type: 3}
   stackable: 0
-  price: 0
-  rarity: {fileID: 0}
+  price: 100
+  rarity: {fileID: 11400000, guid: 31a56d1b959c908498a4cc255e047371, type: 2}
   category: 1
-  allowedEquipLocation: 5
-  additiveModifiers: []
+  allowedEquipLocation: 3
+  additiveModifiers:
+  - stat: 8
+    value: 100
   percentageModifiers: []

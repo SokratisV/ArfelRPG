@@ -21,10 +21,11 @@ namespace RPG.Inventories
 		/// Trigger the use of this item. Override to provide functionality.
 		/// </summary>
 		/// <param name="user">The character that is using this action.</param>
-		public virtual void Use(GameObject user)
+		public virtual bool Use(GameObject user)
 		{
 			var newVfx = Instantiate(vfx, user.transform);
 			Destroy(newVfx, 3f);
+			return false;
 		}
 
 		public virtual bool CanUse(GameObject user) => true;

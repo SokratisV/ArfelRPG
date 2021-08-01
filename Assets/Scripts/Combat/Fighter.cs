@@ -7,13 +7,12 @@ using RPG.Attributes;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Inventories;
-using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
 
 namespace RPG.Combat
 {
-	public class Fighter : MonoBehaviour, IAction, ISaveable, ICombatActionable
+	public class Fighter : MonoBehaviour, IAction, ICombatActionable
 	{
 		public event Action OnActionComplete;
 		public event Action<WeaponConfig> OnWeaponChanged;
@@ -137,15 +136,6 @@ namespace RPG.Combat
 			StopAttack();
 			_mover.CancelAction();
 			_target = null;
-		}
-
-		public object CaptureState() => _currentWeaponConfig.name;
-
-		public void RestoreState(object state)
-		{
-			_currentWeaponConfig = Resources.Load<WeaponConfig>($"Equipables/{(string) state}");
-			EquipWeapon(_currentWeaponConfig);
-			AttackSpeed = _currentWeaponConfig.AttackSpeed;
 		}
 
 		public void CompleteAction()
