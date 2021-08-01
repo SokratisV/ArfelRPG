@@ -1,10 +1,12 @@
 ﻿namespace RPG.Core
 {
-	public enum DialoguePredicates
+	public enum Predicate
 	{
 		None,
 		HasQuest,
 		QuestComplete,
-		HasItem
+		HasItem,
+		MinimumLevel,
+		HasTraitScore
 	}
 }

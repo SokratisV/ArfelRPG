@@ -41,7 +41,7 @@ namespace RPG.Inventories
 		/// </summary>
 		public void AddItem(EquipLocation slot, EquipableItem item)
 		{
-			Debug.Assert(item.AllowedEquipLocation == slot);
+			Debug.Assert(item.CanEquip(slot, this));
 			_equippedItems[slot] = item;
 			EquipmentUpdated?.Invoke();
 		}
@@ -95,8 +95,11 @@ namespace RPG.Inventories
 			{
 				if (GetItemInSlot(equipableItem.AllowedEquipLocation) == null)
 				{
-					AddItem(equipableItem.AllowedEquipLocation, equipableItem);
-					return number;
+					if (equipableItem.CanEquip(equipableItem.AllowedEquipLocation, this))
+					{
+						AddItem(equipableItem.AllowedEquipLocation, equipableItem);
+						return number;
+					}
 				}
 			}
 

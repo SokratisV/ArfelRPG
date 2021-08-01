@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RPG.Core;
+using RPG.Core.Interfaces;
 using RPG.Saving;
 using UnityEngine;
 
 namespace RPG.Stats
 {
-	public class TraitStore : MonoBehaviour, IModifierProvider, ISaveable
+	public class TraitStore : MonoBehaviour, IModifierProvider, ISaveable, IPredicateEvaluator
 	{
 		public event Action<Trait, int> OnStagedPointsChanged;
 		[SerializeField] private TraitBonus[] bonusConfig;
@@ -118,6 +120,22 @@ namespace RPG.Stats
 		}
 
 		#endregion
+
+		public bool? Evaluate(Predicate predicate, string[] parameters)
+		{
+			switch (predicate)
+			{
+				case Predicate.HasTraitScore:
+					if (Enum.TryParse<Trait>(parameters[0], out var trait))
+					{
+						int.TryParse(parameters[1], out var amount);
+						return GetPoints(trait) >= amount;
+					}
+					break;
+			}
+
+			return false;
+		}
 	}
 
 	[Serializable]

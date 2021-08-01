@@ -19,7 +19,7 @@ namespace RPG.UI.Inventories
 
 		private void Awake()
 		{
-			var player = PlayerFinder.Player;;
+			var player = PlayerFinder.Player;
 			_playerEquipment = player.GetComponent<Equipment>();
 			_playerInventory = player.GetComponent<Inventory>();
 			_playerEquipment.EquipmentUpdated += RedrawUI;
@@ -30,16 +30,16 @@ namespace RPG.UI.Inventories
 		public int MaxAcceptable(InventoryItem item)
 		{
 			var equipableItem = item as EquipableItem;
-			if(equipableItem == null) return 0;
-			if(equipableItem.AllowedEquipLocation != equipLocation) return 0;
-			return GetItem() != null? 0:1;
+			if (equipableItem == null) return 0;
+			if (!equipableItem.CanEquip(equipLocation, _playerEquipment)) return 0;
+			return GetItem() != null ? 0 : 1;
 		}
 
-		public void AddItems(InventoryItem item, int _) => _playerEquipment.AddItem(equipLocation, (EquipableItem)item);
+		public void AddItems(InventoryItem item, int _) => _playerEquipment.AddItem(equipLocation, (EquipableItem) item);
 
 		public InventoryItem GetItem() => _playerEquipment.GetItemInSlot(equipLocation);
 
-		public int GetNumber() => GetItem() != null? 1:0;
+		public int GetNumber() => GetItem() != null ? 1 : 0;
 
 		public void RemoveItems(int _) => _playerEquipment.RemoveItem(equipLocation);
 
@@ -54,13 +54,13 @@ namespace RPG.UI.Inventories
 				_ => false
 			};
 
-			if(shouldAct)
+			if (shouldAct)
 			{
 				var item = GetItem();
-				if(item)
+				if (item)
 				{
 					_playerEquipment.RemoveItem(equipLocation);
-					_playerInventory.AddToFirstEmptySlot(item, 1);
+					_playerInventory.AddToFirstEmptySlot(item, 1, false);
 				}
 			}
 		}

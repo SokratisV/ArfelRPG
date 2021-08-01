@@ -23,7 +23,7 @@ namespace RPG.UI.Inventories
 			icon.SetItem(inventory.GetItemInSlot(index), inventory.GetNumberInSlot(index));
 		}
 
-		public int MaxAcceptable(InventoryItem item) => _playerInventory.HasSpaceFor(item)? int.MaxValue:0;
+		public int MaxAcceptable(InventoryItem item) => _playerInventory.HasSpaceFor(item) ? int.MaxValue : 0;
 
 		public void AddItems(InventoryItem item, int number) => _playerInventory.AddItemToSlot(_index, item, number);
 
@@ -42,7 +42,7 @@ namespace RPG.UI.Inventories
 				_ => false
 			};
 
-			if(shouldAct)
+			if (shouldAct)
 			{
 				var item = GetItem();
 				EquipItem(item);
@@ -53,6 +53,7 @@ namespace RPG.UI.Inventories
 		{
 			if (item is EquipableItem equipableItem)
 			{
+				if (!equipableItem.CanEquip(equipableItem.AllowedEquipLocation, _playerEquipment)) return;
 				RemoveItems(1);
 				var previousItem = _playerEquipment.GetItemInSlot(equipableItem.AllowedEquipLocation);
 				if (previousItem) AddItems(previousItem, 1);

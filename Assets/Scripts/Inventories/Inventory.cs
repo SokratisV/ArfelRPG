@@ -80,17 +80,14 @@ namespace RPG.Inventories
 		/// </summary>
 		/// <param name="item">The item to add.</param>
 		/// <param name="number">The number to add.</param>
+		/// <param name="autoEquip">Should the inventory attempt an auto equip to any available stores.</param>
 		/// <returns>Whether or not the item could be added.</returns>
-		public bool AddToFirstEmptySlot(InventoryItem item, int number)
+		public bool AddToFirstEmptySlot(InventoryItem item, int number, bool autoEquip = true)
 		{
-			foreach (var store in _stores)
-			{
-				number -= store.AddItems(item, number);
-			}
-
+			number = AutoEquip(item, number, autoEquip);
 			if (number <= 0) return true;
+			
 			var i = FindSlot(item);
-
 			if (i < 0) return false;
 
 			_slots[i].Item = item;
@@ -98,6 +95,19 @@ namespace RPG.Inventories
 			InventoryUpdated?.Invoke();
 
 			return true;
+		}
+
+		private int AutoEquip(InventoryItem item, int number, bool autoEquip)
+		{
+			if (autoEquip)
+			{
+				foreach (var store in _stores)
+				{
+					number -= store.AddItems(item, number);
+				}
+			}
+
+			return number;
 		}
 
 		/// <summary>
@@ -155,7 +165,7 @@ namespace RPG.Inventories
 		{
 			if (_slots[slot].Item != null)
 			{
-				return AddToFirstEmptySlot(item, number);
+				return AddToFirstEmptySlot(item, number, false);
 			}
 
 			var i = FindStack(item);
@@ -265,11 +275,11 @@ namespace RPG.Inventories
 			InventoryUpdated?.Invoke();
 		}
 
-		public bool? Evaluate(DialoguePredicates predicate, string[] parameters)
+		public bool? Evaluate(Predicate predicate, string[] parameters)
 		{
 			switch (predicate)
 			{
-				case DialoguePredicates.HasItem:
+				case Predicate.HasItem:
 					return HasItem(InventoryItem.GetFromID(parameters[0]));
 			}
 

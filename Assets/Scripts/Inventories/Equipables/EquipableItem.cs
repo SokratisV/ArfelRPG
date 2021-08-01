@@ -1,4 +1,6 @@
 using System;
+using RPG.Core;
+using RPG.Core.Interfaces;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,35 +13,43 @@ namespace RPG.Inventories
 	[CreateAssetMenu(fileName = "Equipable Item", menuName = "RPG/Inventory/New Equipable Item")]
 	public class EquipableItem : InventoryItem
 	{
+		[SerializeField] private Condition equipCondition;
+
 		[Tooltip("Where are we allowed to put this item.")] [SerializeField]
 		protected EquipLocation allowedEquipLocation = EquipLocation.Weapon;
 
 		public EquipLocation AllowedEquipLocation => allowedEquipLocation;
 
+		public bool CanEquip(EquipLocation equipLocation, Equipment equipment)
+		{
+			if (equipLocation != allowedEquipLocation) return false;
+			return equipCondition.Check(equipment.GetComponents<IPredicateEvaluator>());
+		}
+
 #if UNITY_EDITOR
 		protected virtual bool IsLocationSelectable(Enum location)
 		{
-			var candidate = (EquipLocation)location;
+			var candidate = (EquipLocation) location;
 			return candidate != EquipLocation.Weapon;
 		}
 
 		private void SetAllowedEquipLocation(EquipLocation newLocation)
 		{
-			if(allowedEquipLocation == newLocation) return;
+			if (allowedEquipLocation == newLocation) return;
 			SetUndo("Change Equip Location");
 			allowedEquipLocation = newLocation;
 			Dirty();
 		}
 
 		private bool _drawEquipableItem = true;
-		
+
 		public override void DrawCustomInspector()
 		{
 			base.DrawCustomInspector();
 			FoldoutStyle = new GUIStyle(EditorStyles.foldout) {fontStyle = FontStyle.Bold};
 			_drawEquipableItem = EditorGUILayout.Foldout(_drawEquipableItem, "Equipable Item Data", FoldoutStyle);
-			if(!_drawEquipableItem) return;
-			SetAllowedEquipLocation((EquipLocation)EditorGUILayout.EnumPopup(new GUIContent("Equip Location"), allowedEquipLocation, IsLocationSelectable, false));
+			if (!_drawEquipableItem) return;
+			SetAllowedEquipLocation((EquipLocation) EditorGUILayout.EnumPopup(new GUIContent("Equip Location"), allowedEquipLocation, IsLocationSelectable, false));
 		}
 #endif
 	}

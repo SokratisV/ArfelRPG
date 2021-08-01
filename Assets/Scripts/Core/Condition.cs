@@ -3,8 +3,9 @@ using System.Linq;
 using RPG.Core;
 using RPG.Core.Interfaces;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace RPG.Dialogue
+namespace RPG.Core
 {
 	[System.Serializable]
 	public class Condition
@@ -24,7 +25,7 @@ namespace RPG.Dialogue
 		[System.Serializable]
 		private class Predicate
 		{
-			[SerializeField] private DialoguePredicates predicate;
+			[FormerlySerializedAs("predicate")] [SerializeField] private Core.Predicate predicate;
 			[SerializeField] private string[] parameters;
 			[SerializeField] private bool negate;
 			
