@@ -20,6 +20,8 @@ namespace RPG.Inventories
 		private int inventorySize = 16;
 
 		private InventorySlot[] _slots;
+		private Equipment _equipment;
+		private IItemStore[] _stores;
 
 		public struct InventorySlot
 		{
@@ -81,12 +83,15 @@ namespace RPG.Inventories
 		/// <returns>Whether or not the item could be added.</returns>
 		public bool AddToFirstEmptySlot(InventoryItem item, int number)
 		{
+			foreach (var store in _stores)
+			{
+				number -= store.AddItems(item, number);
+			}
+
+			if (number <= 0) return true;
 			var i = FindSlot(item);
 
-			if (i < 0)
-			{
-				return false;
-			}
+			if (i < 0) return false;
 
 			_slots[i].Item = item;
 			_slots[i].Number += number;
@@ -165,7 +170,12 @@ namespace RPG.Inventories
 			return true;
 		}
 
-		private void Awake() => _slots = new InventorySlot[inventorySize];
+		private void Awake()
+		{
+			_slots = new InventorySlot[inventorySize];
+			_equipment = GetComponent<Equipment>();
+			_stores = GetComponents<IItemStore>();
+		}
 
 		/// <summary>
 		/// Find a slot that can accomodate the given item.

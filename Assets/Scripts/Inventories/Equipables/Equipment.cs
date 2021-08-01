@@ -12,7 +12,7 @@ namespace RPG.Inventories
 	/// 
 	/// This component should be placed on the GameObject tagged "Player".
 	/// </summary>
-	public class Equipment : MonoBehaviour, ISaveable
+	public class Equipment : MonoBehaviour, ISaveable, IItemStore
 	{
 		private Dictionary<EquipLocation, EquipableItem> _equippedItems = new Dictionary<EquipLocation, EquipableItem>();
 
@@ -87,6 +87,20 @@ namespace RPG.Inventories
 			}
 
 			EquipmentUpdated?.Invoke();
+		}
+
+		public int AddItems(InventoryItem item, int number)
+		{
+			if (item is EquipableItem equipableItem)
+			{
+				if (GetItemInSlot(equipableItem.AllowedEquipLocation) == null)
+				{
+					AddItem(equipableItem.AllowedEquipLocation, equipableItem);
+					return number;
+				}
+			}
+
+			return 0;
 		}
 	}
 }

@@ -4,25 +4,35 @@ using UnityEngine;
 
 namespace RPG.Inventories
 {
-	public class Purse : MonoBehaviour, ISaveable
+	public class Purse : MonoBehaviour, ISaveable, IItemStore
 	{
 		public event Action<float> OnChange;
 		[SerializeField] private float startingBalance = 400f;
 
-		private float _balance = 0;
-
-		public float Balance => _balance;
+		public float Balance { get; private set; } = 0;
 
 		public void UpdateBalance(float amount)
 		{
-			_balance += amount;
+			Balance += amount;
 			OnChange?.Invoke(amount);
 		}
+		
+		public int AddItems(InventoryItem item, int number)
+		{
+			if (item is CurrencyItem)
+			{
+				UpdateBalance(item.Price * number);
+				return number;
+			}
 
-		private void Awake() => _balance = startingBalance;
+			return 0;
+		}
 
-		public object CaptureState() => _balance;
+		private void Awake() => Balance = startingBalance;
 
-		public void RestoreState(object state) => _balance = (float) state;
+		public object CaptureState() => Balance;
+
+		public void RestoreState(object state) => Balance = (float) state;
+
 	}
 }

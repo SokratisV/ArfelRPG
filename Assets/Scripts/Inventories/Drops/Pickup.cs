@@ -12,17 +12,13 @@ namespace RPG.Inventories
 		private InventoryItem _item;
 		private int _number = 1;
 		private Inventory _inventory;
-		private Equipment _equipment;
 
 		private void Awake()
 		{
 			var player = PlayerFinder.Player;
 			_inventory = player.GetComponent<Inventory>();
-			_equipment = player.GetComponent<Equipment>();
 		}
-
-		// PUBLIC
-
+		
 		/// <summary>
 		/// Set the vital data after creating the prefab.
 		/// </summary>
@@ -45,16 +41,6 @@ namespace RPG.Inventories
 
 		public void PickupItem()
 		{
-			if (_item is EquipableItem equipableItem)
-			{
-				if (_equipment.GetItemInSlot(equipableItem.AllowedEquipLocation) == null)
-				{
-					_equipment.AddItem(equipableItem.AllowedEquipLocation, equipableItem);
-					Destroy(gameObject);
-					return;
-				}
-			}
-			
 			var foundSlot = _inventory.AddToFirstEmptySlot(_item, _number);
 			if(foundSlot)
 			{
