@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using RPG.Core;
 using RPG.Core.SystemEvents;
 using RPG.UI.Tooltips;

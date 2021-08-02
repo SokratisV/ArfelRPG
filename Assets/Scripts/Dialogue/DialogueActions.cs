@@ -1,4 +1,4 @@
-﻿namespace RPG.Core
+﻿namespace RPG.Dialogue
 {
 	public enum DialogueAction
 	{
