@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Core.Interfaces;
 using UnityEngine;
 
 namespace RPG.Core
@@ -6,18 +7,13 @@ namespace RPG.Core
 	public class OutlineableComponent
 	{
 		private Coroutine _outlineRoutine = null;
-		private Outline _outline = null;
+		private IOutlineable _outline = null;
 		private WaitForSeconds _waitForSeconds = new WaitForSeconds(GlobalValues.OutlineOffDelay);
 		private bool _isMouseHoveringOver;
 
 		public OutlineableComponent(GameObject obj, Color32 color)
 		{
-			var outline = obj.GetComponentInChildren<Outline>();
-			if(!outline) outline = obj.AddComponent<Outline>();
-
-			_outline = outline;
-			_outline.OutlineColor = color;
-			_outline.enabled = false;
+			_outline = new QuickOutlineable(obj) {OutlineColor = color, Enable = false};
 		}
 
 		public void ShowOutline(MonoBehaviour mono)
@@ -29,7 +25,7 @@ namespace RPG.Core
 		private IEnumerator TriggerOutline()
 		{
 			ToggleOutline(true);
-			while(_isMouseHoveringOver)
+			while (_isMouseHoveringOver)
 			{
 				_isMouseHoveringOver = false;
 				yield return _waitForSeconds;
@@ -40,8 +36,8 @@ namespace RPG.Core
 
 		private void ToggleOutline(bool toggle)
 		{
-			if(!toggle) _outlineRoutine = null;
-			_outline.enabled = toggle;
+			if (!toggle) _outlineRoutine = null;
+			_outline.Enable = toggle;
 		}
 	}
 }

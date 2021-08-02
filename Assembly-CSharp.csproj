@@ -849,6 +849,14 @@
       <Project>{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="PAC.csproj">
+      <Project>{df4814f1-9d05-83b6-165a-d1e0ae2ced62}</Project>
+      <Name>PAC</Name>
+    </ProjectReference>
+    <ProjectReference Include="Conversants.csproj">
+      <Project>{e0f24a12-598d-c82b-0142-4d842f71049a}</Project>
+      <Name>Conversants</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -1,4 +1,4 @@
-﻿namespace RPG.Core
+﻿namespace RPG.PAC
 {
 	public enum Predicate
 	{

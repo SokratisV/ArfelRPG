@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using RPG.Core;
-using RPG.Core.Interfaces;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace RPG.Core
+namespace RPG.PAC
 {
 	[System.Serializable]
 	public class Condition
@@ -23,9 +20,9 @@ namespace RPG.Core
 		}
 
 		[System.Serializable]
-		private class Predicate
+		public class Predicate
 		{
-			[FormerlySerializedAs("predicate")] [SerializeField] private Core.Predicate predicate;
+			[SerializeField] private RPG.PAC.Predicate predicate;
 			[SerializeField] private string[] parameters;
 			[SerializeField] private bool negate;
 			

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using RPG.Core;
-using RPG.Core.Interfaces;
+using RPG.PAC;
 using RPG.Saving;
 using UnityEngine;
 
