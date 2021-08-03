@@ -279,7 +279,7 @@ namespace RPG.Inventories
 		{
 			switch (predicate)
 			{
-				case Predicate.HasItem:
+				case Predicate.HasItemInInventory:
 					return HasItem(InventoryItem.GetFromID(parameters[0]));
 			}
 

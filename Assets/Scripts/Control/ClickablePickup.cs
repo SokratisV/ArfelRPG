@@ -38,7 +38,7 @@ namespace RPG.Control
 			}
 		}
 
-		public void ShowInteractivity() => _outlineableComponent.ShowOutline(this);
+		public void ShowInteractivity() => _outlineableComponent?.ShowOutline(this);
 
 		public float InteractionDistance() => GlobalValues.InteractableRange;
 

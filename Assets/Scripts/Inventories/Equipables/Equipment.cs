@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using RPG.Core;
+using RPG.PAC;
 using UnityEngine;
 using RPG.Saving;
 
@@ -12,7 +13,7 @@ namespace RPG.Inventories
 	/// 
 	/// This component should be placed on the GameObject tagged "Player".
 	/// </summary>
-	public class Equipment : MonoBehaviour, ISaveable, IItemStore
+	public class Equipment : MonoBehaviour, ISaveable, IItemStore, IPredicateEvaluator
 	{
 		private Dictionary<EquipLocation, EquipableItem> _equippedItems = new Dictionary<EquipLocation, EquipableItem>();
 
@@ -104,6 +105,27 @@ namespace RPG.Inventories
 			}
 
 			return 0;
+		}
+
+		public bool? Evaluate(Predicate predicate, string[] parameters)
+		{
+			switch (predicate)
+			{
+				case Predicate.HasItemEquipped:
+				{
+					foreach (var item in _equippedItems.Values)
+					{
+						if (item.ItemID == parameters[0])
+						{
+							return true;
+						}
+					}
+
+					return false;
+				}
+			}
+
+			return null;
 		}
 	}
 }

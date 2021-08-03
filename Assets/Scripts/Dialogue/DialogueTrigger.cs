@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Quests;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace RPG.Dialogue
@@ -7,10 +8,13 @@ namespace RPG.Dialogue
 	{
 		[SerializeField] private DialogueAction respondToAction;
 		[SerializeField] private UnityEvent actionEvent;
-
+		[SerializeField] private QuestEvent questEvent;
+		[SerializeField] private QuestData quest;
+		
 		public void Trigger(DialogueAction action)
 		{
 			if(action == respondToAction) actionEvent.Invoke();
+			questEvent.Raise(quest);
 		}
 	}
 }

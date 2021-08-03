@@ -1,0 +1,224 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8703422103867206995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 0662dfe2-6244-4d47-8bda-defc09aa75e7
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: Nah.
+  children:
+  - 662cc9bc-3729-44a7-9e24-f4e3ec84c075
+  rect:
+    serializedVersion: 2
+    x: 272
+    y: 224
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and:
+    - or:
+      - predicate: 6
+        parameters:
+        - 1b8b6ea3-3709-450c-8ccb-08f2b58fdd8c
+        negate: 1
+    - or:
+      - predicate: 1
+        parameters:
+        - Kill an enemy
+        negate: 0
+--- !u!114 &-7476536935865143624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 662cc9bc-3729-44a7-9e24-f4e3ec84c075
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Sad.
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 522
+    y: 224
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []
+--- !u!114 &-4590473438999868244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 803b3653-5c87-48e6-8166-91e26b0bfac3
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Do you have the sword equipped?
+  children:
+  - b7970a60-014d-4642-9ccf-22287a3b21af
+  - 0662dfe2-6244-4d47-8bda-defc09aa75e7
+  - bf140cde-a2e2-42e6-8b2f-79b4afd46bc9
+  rect:
+    serializedVersion: 2
+    x: 22
+    y: 119
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []
+--- !u!114 &-1767831640584318737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: b7970a60-014d-4642-9ccf-22287a3b21af
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: I do!
+  children:
+  - abfccad3-d4b3-4ac7-ad0c-e95f4d47bbd9
+  rect:
+    serializedVersion: 2
+    x: 272
+    y: 119
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and:
+    - or:
+      - predicate: 6
+        parameters:
+        - 1b8b6ea3-3709-450c-8ccb-08f2b58fdd8c
+        negate: 0
+    - or:
+      - predicate: 1
+        parameters:
+        - Kill an enemy
+        negate: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a805a3040deb4673b784488560465a44, type: 3}
+  m_Name: Test for equipped item
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: -4590473438999868244}
+  - {fileID: -1767831640584318737}
+  - {fileID: -8703422103867206995}
+  - {fileID: 5168158049753631764}
+  - {fileID: -7476536935865143624}
+  - {fileID: 3770199271402920889}
+  - {fileID: 4248203388559210118}
+  newNodeOffset: {x: 250, y: 0}
+--- !u!114 &3770199271402920889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: bf140cde-a2e2-42e6-8b2f-79b4afd46bc9
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: Equip your sword, please.
+  children:
+  - 72b89f1c-a3eb-4381-85ae-996db6719e03
+  rect:
+    serializedVersion: 2
+    x: 270
+    y: 13
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []
+--- !u!114 &4248203388559210118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: 72b89f1c-a3eb-4381-85ae-996db6719e03
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Right away!
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 521
+    y: 13
+    width: 200
+    height: 100
+  enterAction: 2
+  exitAction: 0
+  condition:
+    and: []
+--- !u!114 &5168158049753631764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
+  m_Name: abfccad3-d4b3-4ac7-ad0c-e95f4d47bbd9
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Nice!
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 522
+    y: 119
+    width: 200
+    height: 100
+  enterAction: 0
+  exitAction: 0
+  condition:
+    and: []

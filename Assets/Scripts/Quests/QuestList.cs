@@ -10,7 +10,7 @@ namespace RPG.Quests
 {
 	public class QuestList : MonoBehaviour, ISaveable, IPredicateEvaluator
 	{
-		public List<QuestStatus> Statuses {get;} = new List<QuestStatus>();
+		public List<QuestStatus> Statuses { get; } = new List<QuestStatus>();
 		public event Action OnListUpdated;
 
 		private Inventory _inventory;
@@ -22,9 +22,22 @@ namespace RPG.Quests
 			_dropper = GetComponent<ItemDropper>();
 		}
 
+		public void HandleQuestData(QuestData questData)
+		{
+			if (questData == null || questData.quest == null) return;
+			if (string.IsNullOrEmpty(questData.objective))
+			{
+				AddQuest(questData.quest);
+			}
+			else
+			{
+				if (HasQuest(questData.quest)) CompleteObjective(questData.quest, questData.objective);
+			}
+		}
+
 		public void AddQuest(Quest quest)
 		{
-			if(HasQuest(quest)) return;
+			if (HasQuest(quest)) return;
 			Statuses.Add(new QuestStatus(quest));
 			OnListUpdated?.Invoke();
 		}
@@ -32,9 +45,8 @@ namespace RPG.Quests
 		public void CompleteObjective(Quest quest, string objective)
 		{
 			var status = GetStatus(quest);
-			if (status == null) return; //TODO: It should not call complete on not-yet-pickedup quests
 			status.CompleteObjective(objective);
-			if(status.IsComplete)
+			if (status.IsComplete)
 			{
 				GiveReward(quest);
 			}
@@ -44,10 +56,10 @@ namespace RPG.Quests
 
 		private void GiveReward(Quest quest)
 		{
-			foreach(var reward in quest.GetRewards())
+			foreach (var reward in quest.GetRewards())
 			{
 				var success = _inventory.AddToFirstEmptySlot(reward.item, reward.number);
-				if(!success)
+				if (!success)
 				{
 					_dropper.DropItem(reward.item);
 				}
@@ -61,7 +73,7 @@ namespace RPG.Quests
 		public object CaptureState()
 		{
 			var state = new List<object>();
-			foreach(var status in Statuses)
+			foreach (var status in Statuses)
 			{
 				state.Add(status.CaptureState());
 			}
@@ -71,10 +83,10 @@ namespace RPG.Quests
 
 		public void RestoreState(object state)
 		{
-			if(state is List<object> stateList)
+			if (state is List<object> stateList)
 			{
 				Statuses.Clear();
-				foreach(var obj in stateList)
+				foreach (var obj in stateList)
 				{
 					Statuses.Add(new QuestStatus(obj));
 				}
@@ -83,13 +95,13 @@ namespace RPG.Quests
 
 		public bool? Evaluate(Predicate predicate, string[] parameters)
 		{
-			switch(predicate)
+			switch (predicate)
 			{
 				case Predicate.HasQuest:
 					return HasQuest(Quest.GetByName(parameters[0]));
 				case Predicate.QuestComplete:
 					var questStatus = GetStatus(Quest.GetByName(parameters[0]));
-					return questStatus != null && questStatus.IsComplete;
+					return questStatus is {IsComplete: true};
 			}
 
 			return null;

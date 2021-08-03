@@ -5,8 +5,9 @@
 		None,
 		HasQuest,
 		QuestComplete,
-		HasItem,
+		HasItemInInventory,
 		MinimumLevel,
-		HasTraitScore
+		HasTraitScore,
+		HasItemEquipped
 	}
 }

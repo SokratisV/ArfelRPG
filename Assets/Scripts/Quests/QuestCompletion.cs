@@ -1,18 +1,16 @@
-﻿using RPG.Core;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RPG.Quests
 {
 	public class QuestCompletion : MonoBehaviour
 	{
-		[SerializeField] private Quest quest;
-		[SerializeField] private string objective;
+		[SerializeField] private QuestData quest;
+		[SerializeField] private QuestEvent questEvent;
 
 		//Unity Event
 		public void CompleteObjective()
 		{
-			var questList = PlayerFinder.Player.GetComponent<QuestList>();
-			questList.CompleteObjective(quest, objective);
+			questEvent.Raise(quest);
 		}
 	}
 }

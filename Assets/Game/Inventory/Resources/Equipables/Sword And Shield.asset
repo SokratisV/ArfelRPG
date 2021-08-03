@@ -22,13 +22,7 @@ MonoBehaviour:
   rarity: {fileID: 11400000, guid: 53e1bb8804df4a34bba2ac3bbcb29d8d, type: 2}
   category: 2
   equipCondition:
-    and:
-    - or:
-      - predicate: 5
-        parameters:
-        - Strength
-        - 3
-        negate: 0
+    and: []
   allowedEquipLocation: 5
   additiveModifiers: []
   percentageModifiers: []

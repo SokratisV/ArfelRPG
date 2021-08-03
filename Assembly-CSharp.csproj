@@ -833,6 +833,10 @@
       <Project>{63c322c9-af88-31a6-a296-dbb19f3a4b82}</Project>
       <Name>Cinematic</Name>
     </ProjectReference>
+    <ProjectReference Include="Conversants.csproj">
+      <Project>{e0f24a12-598d-c82b-0142-4d842f71049a}</Project>
+      <Name>Conversants</Name>
+    </ProjectReference>
     <ProjectReference Include="RotaryHeart.csproj">
       <Project>{9a57197f-6bce-1fef-2b72-2c61b4333055}</Project>
       <Name>RotaryHeart</Name>
@@ -841,21 +845,17 @@
       <Project>{037e8168-b924-f7b2-c01f-671f18fd881b}</Project>
       <Name>Attributes</Name>
     </ProjectReference>
-    <ProjectReference Include="Control.csproj">
-      <Project>{62ba2814-d88d-74e0-0f77-67289fddf2da}</Project>
-      <Name>Control</Name>
+    <ProjectReference Include="PAC.csproj">
+      <Project>{df4814f1-9d05-83b6-165a-d1e0ae2ced62}</Project>
+      <Name>PAC</Name>
     </ProjectReference>
     <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
       <Project>{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="PAC.csproj">
-      <Project>{df4814f1-9d05-83b6-165a-d1e0ae2ced62}</Project>
-      <Name>PAC</Name>
-    </ProjectReference>
-    <ProjectReference Include="Conversants.csproj">
-      <Project>{e0f24a12-598d-c82b-0142-4d842f71049a}</Project>
-      <Name>Conversants</Name>
+    <ProjectReference Include="Control.csproj">
+      <Project>{62ba2814-d88d-74e0-0f77-67289fddf2da}</Project>
+      <Name>Control</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
