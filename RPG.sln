@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outline", "Outline.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventories", "Inventories.csproj", "{9bd45c65-5ef1-5218-e6a8-6d63c7c624c7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Attributes", "Attributes.csproj", "{037e8168-b924-f7b2-c01f-671f18fd881b}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audio", "Audio.csproj", "{878500fc-3137-686f-4779-1eeb77883f70}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shops", "Shops.csproj", "{e155acbc-526f-78b6-5733-7a9d1519bb48}"
@@ -31,9 +33,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stats", "Stats.csproj", "{0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{11e5e80b-06d5-d0a1-e67d-923a5ed26d39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RotaryHeart", "RotaryHeart.csproj", "{9a57197f-6bce-1fef-2b72-2c61b4333055}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quests", "Quests.csproj", "{125ed28f-22b6-70ae-77fb-d9cdfdd69752}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RotaryHeart", "RotaryHeart.csproj", "{9a57197f-6bce-1fef-2b72-2c61b4333055}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirenix.OdinInspector.CompatibilityLayer", "Sirenix.OdinInspector.CompatibilityLayer.csproj", "{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}"
 EndProject
@@ -44,8 +46,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Saving", "Saving.csproj", "{81044aed-9a49-5a6f-aab9-d3735042e71b}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PAC", "PAC.csproj", "{df4814f1-9d05-83b6-165a-d1e0ae2ced62}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Attributes", "Attributes.csproj", "{037e8168-b924-f7b2-c01f-671f18fd881b}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conversants", "Conversants.csproj", "{e0f24a12-598d-c82b-0142-4d842f71049a}"
 EndProject
@@ -80,6 +80,8 @@ Global
 		{3e64631f-bc48-1183-10b0-32032bb5a975}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9bd45c65-5ef1-5218-e6a8-6d63c7c624c7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9bd45c65-5ef1-5218-e6a8-6d63c7c624c7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{037e8168-b924-f7b2-c01f-671f18fd881b}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{037e8168-b924-f7b2-c01f-671f18fd881b}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{878500fc-3137-686f-4779-1eeb77883f70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{878500fc-3137-686f-4779-1eeb77883f70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{e155acbc-526f-78b6-5733-7a9d1519bb48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -100,10 +102,10 @@ Global
 		{0b9e375e-9a09-947a-9718-fcb7d4b95842}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11e5e80b-06d5-d0a1-e67d-923a5ed26d39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{11e5e80b-06d5-d0a1-e67d-923a5ed26d39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9a57197f-6bce-1fef-2b72-2c61b4333055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9a57197f-6bce-1fef-2b72-2c61b4333055}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{125ed28f-22b6-70ae-77fb-d9cdfdd69752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{125ed28f-22b6-70ae-77fb-d9cdfdd69752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9a57197f-6bce-1fef-2b72-2c61b4333055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9a57197f-6bce-1fef-2b72-2c61b4333055}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{969468c0-3ae0-0795-e700-d90d7a086cb7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -114,8 +116,6 @@ Global
 		{81044aed-9a49-5a6f-aab9-d3735042e71b}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{df4814f1-9d05-83b6-165a-d1e0ae2ced62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{df4814f1-9d05-83b6-165a-d1e0ae2ced62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{037e8168-b924-f7b2-c01f-671f18fd881b}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{037e8168-b924-f7b2-c01f-671f18fd881b}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{e0f24a12-598d-c82b-0142-4d842f71049a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{e0f24a12-598d-c82b-0142-4d842f71049a}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5d8b521d-28c4-ffb4-30b9-799df10af863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

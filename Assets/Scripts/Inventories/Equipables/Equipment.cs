@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using RPG.Core;
 using RPG.PAC;
 using UnityEngine;
@@ -113,15 +114,7 @@ namespace RPG.Inventories
 			{
 				case Predicate.HasItemEquipped:
 				{
-					foreach (var item in _equippedItems.Values)
-					{
-						if (item.ItemID == parameters[0])
-						{
-							return true;
-						}
-					}
-
-					return false;
+					return _equippedItems.Values.Any(item => item.ItemID == parameters[0]);
 				}
 			}
 

@@ -129,10 +129,11 @@ namespace RPG.Stats
 						int.TryParse(parameters[1], out var amount);
 						return GetPoints(trait) >= amount;
 					}
+
 					break;
 			}
 
-			return false;
+			return null;
 		}
 	}
 

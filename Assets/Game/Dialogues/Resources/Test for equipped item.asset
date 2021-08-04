@@ -18,8 +18,8 @@ MonoBehaviour:
   - 662cc9bc-3729-44a7-9e24-f4e3ec84c075
   rect:
     serializedVersion: 2
-    x: 272
-    y: 224
+    x: 385
+    y: 219
     width: 200
     height: 100
   enterAction: 0
@@ -31,11 +31,6 @@ MonoBehaviour:
         parameters:
         - 1b8b6ea3-3709-450c-8ccb-08f2b58fdd8c
         negate: 1
-    - or:
-      - predicate: 1
-        parameters:
-        - Kill an enemy
-        negate: 0
 --- !u!114 &-7476536935865143624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,8 +48,8 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 522
-    y: 224
+    x: 655
+    y: 217
     width: 200
     height: 100
   enterAction: 0
@@ -78,11 +73,10 @@ MonoBehaviour:
   children:
   - b7970a60-014d-4642-9ccf-22287a3b21af
   - 0662dfe2-6244-4d47-8bda-defc09aa75e7
-  - bf140cde-a2e2-42e6-8b2f-79b4afd46bc9
   rect:
     serializedVersion: 2
-    x: 22
-    y: 119
+    x: 127
+    y: 172
     width: 200
     height: 100
   enterAction: 0
@@ -107,8 +101,8 @@ MonoBehaviour:
   - abfccad3-d4b3-4ac7-ad0c-e95f4d47bbd9
   rect:
     serializedVersion: 2
-    x: 272
-    y: 119
+    x: 387
+    y: 117
     width: 200
     height: 100
   enterAction: 0
@@ -119,11 +113,6 @@ MonoBehaviour:
       - predicate: 6
         parameters:
         - 1b8b6ea3-3709-450c-8ccb-08f2b58fdd8c
-        negate: 0
-    - or:
-      - predicate: 1
-        parameters:
-        - Kill an enemy
         negate: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -143,60 +132,7 @@ MonoBehaviour:
   - {fileID: -8703422103867206995}
   - {fileID: 5168158049753631764}
   - {fileID: -7476536935865143624}
-  - {fileID: 3770199271402920889}
-  - {fileID: 4248203388559210118}
   newNodeOffset: {x: 250, y: 0}
---- !u!114 &3770199271402920889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
-  m_Name: bf140cde-a2e2-42e6-8b2f-79b4afd46bc9
-  m_EditorClassIdentifier: 
-  isPlayerSpeaking: 1
-  text: Equip your sword, please.
-  children:
-  - 72b89f1c-a3eb-4381-85ae-996db6719e03
-  rect:
-    serializedVersion: 2
-    x: 270
-    y: 13
-    width: 200
-    height: 100
-  enterAction: 0
-  exitAction: 0
-  condition:
-    and: []
---- !u!114 &4248203388559210118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dda433756d848ef9cf5d04da0c61ffe, type: 3}
-  m_Name: 72b89f1c-a3eb-4381-85ae-996db6719e03
-  m_EditorClassIdentifier: 
-  isPlayerSpeaking: 0
-  text: Right away!
-  children: []
-  rect:
-    serializedVersion: 2
-    x: 521
-    y: 13
-    width: 200
-    height: 100
-  enterAction: 2
-  exitAction: 0
-  condition:
-    and: []
 --- !u!114 &5168158049753631764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +150,7 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 522
+    x: 658
     y: 119
     width: 200
     height: 100
