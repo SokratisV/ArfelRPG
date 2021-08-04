@@ -77,9 +77,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f8cfa864f44cda903c45651886374f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonPrefab: {fileID: 4656407248599526435, guid: 39fcf945862a92d4ebeb327aba62bd4c,
+  buttonPrefab: {fileID: 6918876204044019099, guid: d340d0951d80aca4d9c26980a8978d5d,
     type: 3}
   contentRoot: {fileID: 6001376404169680895}
+  onSaveDeleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5380904776890299570}
+        m_TargetAssemblyTypeName: RPG.UI.MainMenuUi, UI
+        m_MethodName: ToggleContinueButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &50152931310897236
 GameObject:
   m_ObjectHideFlags: 0

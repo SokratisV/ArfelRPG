@@ -10,14 +10,17 @@ namespace RPG.UI
 	{
 		[SerializeField] private TMP_InputField newGameNameField;
 		[SerializeField] private Button continueButton;
-		
+
 		private LazyValue<SavingWrapper> _savingWrapper;
 
 		private void Awake() => _savingWrapper = new LazyValue<SavingWrapper>(GetSavingWrapper);
 
-		private void Start()
+		private void Start() => ToggleContinueButton();
+
+		public void ToggleContinueButton()
 		{
-			if (string.IsNullOrEmpty(PlayerPrefs.GetString(SavingWrapper.CurrentSaveKey)))
+			var value = SavingWrapper.GetCurrentSave();
+			if (string.IsNullOrEmpty(value))
 			{
 				continueButton.interactable = false;
 			}

@@ -99,7 +99,7 @@ namespace RPG.Quests
 			{
 				case Predicate.HasQuest:
 					return HasQuest(Quest.GetByName(parameters[0]));
-				case Predicate.QuestComplete:
+				case Predicate.HasCompletedQuest:
 					var questStatus = GetStatus(Quest.GetByName(parameters[0]));
 					return questStatus is {IsComplete: true};
 			}

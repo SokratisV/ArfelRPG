@@ -36,6 +36,15 @@ namespace RPG.SceneManagement
 			ContinueGame();
 		}
 
+		public void DeleteSave(string saveFile)
+		{
+			_saving.Delete(saveFile);
+			if (PlayerPrefs.GetString(CurrentSaveKey) == saveFile)
+			{
+				SetCurrentSave(string.Empty);
+			}
+		}
+
 		public void LoadMenu() => StartCoroutine(LoadMenuScene());
 
 		public void Save() => _saving.Save(GetCurrentSave());
@@ -49,18 +58,19 @@ namespace RPG.SceneManagement
 				_saving.Delete(save);
 			}
 
+			PlayerPrefs.DeleteKey(CurrentSaveKey);
 			SetCurrentSave(string.Empty);
-			PlayerPrefs.DeleteAll();
 		}
 
 		public IEnumerable<string> ListSaves() => _saving.ListSaves();
+
+		public static string GetCurrentSave() => PlayerPrefs.GetString(CurrentSaveKey);
 
 		#endregion
 
 		#region Private
 
-		private void SetCurrentSave(string saveFile) => PlayerPrefs.SetString(CurrentSaveKey, saveFile);
-		private string GetCurrentSave() => PlayerPrefs.GetString(CurrentSaveKey);
+		private static void SetCurrentSave(string saveFile) => PlayerPrefs.SetString(CurrentSaveKey, saveFile);
 
 		private IEnumerator LoadMenuScene()
 		{

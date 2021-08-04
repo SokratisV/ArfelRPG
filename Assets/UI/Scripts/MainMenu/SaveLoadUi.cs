@@ -1,6 +1,7 @@
 ﻿using RPG.SceneManagement;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace RPG.UI
@@ -9,6 +10,7 @@ namespace RPG.UI
 	{
 		[SerializeField] private GameObject buttonPrefab;
 		[SerializeField] private Transform contentRoot;
+		[SerializeField] private UnityEvent onSaveDeleted;
 
 		private void OnEnable()
 		{
@@ -24,7 +26,14 @@ namespace RPG.UI
 			{
 				var obj = Instantiate(buttonPrefab, contentRoot);
 				obj.GetComponentInChildren<TMP_Text>().SetText(save);
-				obj.GetComponentInChildren<Button>().onClick.AddListener(() => { savingWrapper.LoadGame(save); });
+				var buttons = obj.GetComponentsInChildren<Button>();
+				buttons[0].onClick.AddListener(() => { savingWrapper.LoadGame(save); });
+				buttons[1].onClick.AddListener(() =>
+				{
+					savingWrapper.DeleteSave(save);
+					onSaveDeleted?.Invoke();
+					Destroy(obj);
+				});
 			}
 		}
 	}

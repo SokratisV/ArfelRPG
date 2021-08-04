@@ -4,9 +4,9 @@
 	{
 		None,
 		HasQuest,
-		QuestComplete,
+		HasCompletedQuest,
 		HasItemInInventory,
-		MinimumLevel,
+		IsMinimumLevel,
 		HasTraitScore,
 		HasItemEquipped
 	}
