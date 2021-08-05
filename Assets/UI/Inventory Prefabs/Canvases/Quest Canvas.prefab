@@ -33,7 +33,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1230, y: 400}
+  m_AnchoredPosition: {x: 2473, y: 400}
   m_SizeDelta: {x: 1190.658, y: 733.5583}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1392109048871386599
@@ -469,15 +469,14 @@ MonoBehaviour:
   ActionOnToggle:
     m_PersistentCalls:
       m_Calls: []
-  toggleOnEnable: 0
   uiContainer: {fileID: 2845250952895357880}
   toggleKey: 108
   alternateToggle: 0
-  hiddenPosition: {x: 2470, y: 400}
+  visiblePosition: {x: 1270, y: 400}
   tweenTime: 0.2
-  startState: 0
   disableRaycastingOnHide: 0
   changeSortingOrder: 1
+  toggleOnStart: 0
 --- !u!1 &3952951007102308447
 GameObject:
   m_ObjectHideFlags: 0

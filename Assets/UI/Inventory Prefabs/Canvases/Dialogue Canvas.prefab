@@ -107,7 +107,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -40, y: 0}
+  m_AnchoredPosition: {x: -40, y: 645}
   m_SizeDelta: {x: 1400, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8699068168935134823
@@ -385,14 +385,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b6a7fac6e2d604a8e529f6dddf65b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleOnEnable: 1
+  ActionOnToggle:
+    m_PersistentCalls:
+      m_Calls: []
   uiContainer: {fileID: 3575344636419846034}
   toggleKey: 0
   alternateToggle: 0
-  hiddenPosition: {x: -40, y: 1685}
+  visiblePosition: {x: -40, y: 1022}
   tweenTime: 0.2
-  startState: 0
   disableRaycastingOnHide: 0
+  changeSortingOrder: 1
+  toggleOnStart: 0
 --- !u!114 &6927237296794212128
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -116,15 +116,14 @@ MonoBehaviour:
   ActionOnToggle:
     m_PersistentCalls:
       m_Calls: []
-  toggleOnEnable: 1
   uiContainer: {fileID: 3108091024839099474}
   toggleKey: 0
   alternateToggle: 0
-  hiddenPosition: {x: 0, y: -2155}
+  visiblePosition: {x: 0, y: 1000}
   tweenTime: 0.2
-  startState: 0
   disableRaycastingOnHide: 1
   changeSortingOrder: 1
+  toggleOnStart: 0
 --- !u!114 &8441956372665792820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,7 +760,7 @@ PrefabInstance:
     - target: {fileID: 1585544584442305994, guid: 24aaa7769fb3ba949a22a21f25056759,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: -2106
       objectReference: {fileID: 0}
     - target: {fileID: 1585544584442305994, guid: 24aaa7769fb3ba949a22a21f25056759,
         type: 3}

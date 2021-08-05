@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RPG.Core;
 using TMPro;
 using UnityEngine;
@@ -21,10 +22,15 @@ namespace RPG.UI
 
 		private Resolution[] _resolutions;
 		private float _currentVolume;
+		private bool _shouldApplyChanges;
 
-		private void Awake() => SetupResolutions();
+		private void Awake()
+		{
+			_shouldApplyChanges = GlobalGameState.GameState == GameState.InGame;
+			SetupResolutions();
+		}
 
-		private void OnEnable() => LoadSettings();
+		private void Start() => LoadSettings();
 
 		private void SetupResolutions()
 		{
@@ -55,12 +61,19 @@ namespace RPG.UI
 			saveChanges.interactable = toggle;
 		}
 
-		public void SetZoomSpeed(float value) => zoomController.ZoomSpeed = value;
+		public void SetZoomSpeed(float value)
+		{
+			if (_shouldApplyChanges) zoomController.ZoomSpeed = value;
+		}
 
-		public void SetRotationSpeed(float value) => cameraRotator.RotationAdjustedSpeed = value;
+		public void SetRotationSpeed(float value)
+		{
+			if (_shouldApplyChanges) cameraRotator.RotationAdjustedSpeed = value;
+		}
 
 		public void SetResolution(int resolutionIndex)
 		{
+			if (!_shouldApplyChanges) return; 
 			var resolution = _resolutions[resolutionIndex];
 			Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
 		}

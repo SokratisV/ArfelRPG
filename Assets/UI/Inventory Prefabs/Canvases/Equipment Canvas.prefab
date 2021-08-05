@@ -242,15 +242,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  toggleOnEnable: 0
   uiContainer: {fileID: 728153509246623545}
   toggleKey: 105
   alternateToggle: 98
-  hiddenPosition: {x: -500, y: -863}
+  visiblePosition: {x: 1490, y: 187}
   tweenTime: 0.2
-  startState: 0
   disableRaycastingOnHide: 0
   changeSortingOrder: 1
+  toggleOnStart: 0
 --- !u!114 &7800831611079942606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,7 +429,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 528, y: -863}
+  m_AnchoredPosition: {x: -371, y: -863}
   m_SizeDelta: {x: 1000, y: 1523.3999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &726807892901875887

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -8,17 +9,16 @@ namespace RPG.UI
 	{
 		public UnityEvent<bool> ActionOnToggle;
 
-		[SerializeField] private bool toggleOnEnable;
 		[SerializeField] private RectTransform uiContainer = null;
 		[SerializeField] private KeyCode toggleKey = KeyCode.Escape, alternateToggle = KeyCode.None;
-		[SerializeField] private Vector2 hiddenPosition;
+		[SerializeField] private Vector2 visiblePosition;
 		[SerializeField] private float tweenTime = .2f;
-		[SerializeField] private bool startState;
 		[SerializeField] private bool disableRaycastingOnHide = false;
 		[SerializeField] private bool changeSortingOrder = true;
+		[SerializeField] private bool toggleOnStart;
+
 
 		private static int _sortingOrder;
-		private bool _toggleOnEnable;
 		private Vector2 _initialPosition;
 		private Canvas _canvas;
 		private GraphicRaycaster _raycaster;
@@ -26,21 +26,10 @@ namespace RPG.UI
 		private void Awake()
 		{
 			_canvas = GetComponent<Canvas>();
+			_canvas.enabled = false;
 			_raycaster = GetComponent<GraphicRaycaster>();
 			_initialPosition = uiContainer.anchoredPosition;
-			Toggle(startState);
-		}
-
-		private void Start() => _toggleOnEnable = toggleOnEnable; //To avoid double callback on Awake/Enabled
-
-		private void OnEnable()
-		{
-			if (_toggleOnEnable) Toggle(true);
-		}
-
-		private void OnDisable()
-		{
-			if (_toggleOnEnable) Toggle(false);
+			if (toggleOnStart) Toggle(true);
 		}
 
 		private void Update()
@@ -51,7 +40,7 @@ namespace RPG.UI
 			}
 		}
 
-		[ContextMenu("Toggle")]
+		[Button(ButtonSizes.Large, ButtonStyle.Box, Name = "Toggle")]
 		public void Toggle() => Toggle(!_canvas.enabled);
 
 		public void Toggle(bool toggle)
@@ -61,14 +50,14 @@ namespace RPG.UI
 			if (!toggle)
 			{
 				LeanTween.cancel(uiContainer);
-				LeanTween.move(uiContainer, hiddenPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleCanvas).setIgnoreTimeScale(true);
 				ToggleRaycaster();
+				LeanTween.move(uiContainer, _initialPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleCanvas).setIgnoreTimeScale(true);
 			}
 			else
 			{
-				ToggleCanvas();
 				LeanTween.cancel(uiContainer);
-				LeanTween.move(uiContainer, _initialPosition, tweenTime).setEaseInOutExpo().setOnComplete(ToggleRaycaster).setIgnoreTimeScale(true);
+				ToggleCanvas();
+				LeanTween.move(uiContainer, visiblePosition, tweenTime).setEaseInOutExpo().setIgnoreTimeScale(true).setOnComplete(ToggleRaycaster);
 			}
 		}
 
@@ -85,5 +74,10 @@ namespace RPG.UI
 			if (!disableRaycastingOnHide) return;
 			_raycaster.enabled = _canvas.enabled;
 		}
+
+#if UNITY_EDITOR
+		[Button(ButtonSizes.Large)]
+		private void SaveVisiblePosition() => visiblePosition = uiContainer.anchoredPosition;
+#endif
 	}
 }

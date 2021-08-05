@@ -81,6 +81,7 @@ namespace RPG.Movement
 		{
 			if (!_navMeshAgent.enabled || _lockMovement) return;
 			_travelledStopDistance = (destination - transform.position).sqrMagnitude >= distanceBeforeStopAnimation * distanceBeforeStopAnimation;
+			_animator.SetBool(StopAnimation, _travelledStopDistance);
 			_navMeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
 			_navMeshAgent.speed = CurrentSpeed * Mathf.Clamp01(speedFraction);
@@ -210,7 +211,6 @@ namespace RPG.Movement
 			var localVelocity = transform.InverseTransformDirection(velocity);
 			var speed = localVelocity.z;
 			_animator.SetFloat(ForwardSpeed, speed);
-			_animator.SetBool(StopAnimation, _travelledStopDistance);
 			if (_idleTimer > timeBeforeIdle)
 			{
 				_animator.SetTrigger(IdleAnimations);
