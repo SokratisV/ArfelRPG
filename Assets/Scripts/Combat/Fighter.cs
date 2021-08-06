@@ -120,7 +120,7 @@ namespace RPG.Combat
 
 		public void Execute(GameObject combatTarget)
 		{
-			CancelAction();
+			_mover.CancelAction();
 			_target = combatTarget.GetComponent<Health>();
 			_actionScheduler.StartAction(this);
 		}

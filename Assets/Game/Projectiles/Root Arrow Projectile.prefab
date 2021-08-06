@@ -170,6 +170,7 @@ TrailRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -321,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e131082c7e66a48b314420c7d29db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 30
   maxLifeTime: 2
   lifeAfterImpact: 2
   isHoming: 0
