@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using RPG.Core;
 using RPG.Skills.Behaviors;
+using RPG.Skills.TargetFiltering;
 using UnityEngine;
 
 namespace RPG.Skills
@@ -12,7 +13,7 @@ namespace RPG.Skills
 		public readonly GameObject User;
 		public readonly GameObject InitialTarget;
 		public readonly List<GameObject> Targets;
-		public IEnumerator UpdateBehavior;
+		public readonly IEnumerator UpdateBehavior;
 		public Vector3? Point;
 
 		public SkillData(GameObject user, GameObject initialTarget, Vector3? point, List<GameObject> targets, IEnumerator updateBehavior)
@@ -43,6 +44,7 @@ namespace RPG.Skills
 		[SerializeField] private float cooldown;
 		[SerializeField] private bool canBeCancelled;
 		[SerializeField] private TargetBehavior targetBehavior;
+		[SerializeField] private FilterStrategy[] filterStrategy;
 		[SerializeField] private SkillBehavior skillBehavior;
 
 		[Header("On Start")] [Space(15)] [SerializeField]
@@ -95,6 +97,10 @@ namespace RPG.Skills
 			if (skillBehavior.Retarget)
 			{
 				targetBehavior.GetTargets(out var targets, data.User, data.InitialTarget, data.Point);
+				foreach (var filter in filterStrategy)
+				{
+					targets = filter.Filter(targets);
+				}
 				skillBehavior.BehaviorEnd(data.User, targets, data.Point);
 			}
 			else skillBehavior.BehaviorEnd(data.User, data.Targets, data.Point);
