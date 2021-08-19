@@ -11,7 +11,13 @@ namespace RPG.UI
 		
 		private void Start() => _savingWrapper = FindObjectOfType<SavingWrapper>();
 
-		private void OnEnable()
+		public void Toggle(bool toggle)
+		{
+			if (toggle) Pause();
+			else Resume();
+		}
+
+		private void Pause()
 		{
 			var playerController = PlayerFinder.Player.GetComponent<PlayerController>();
 			playerController.enabled = false;
@@ -19,7 +25,7 @@ namespace RPG.UI
 			Time.timeScale = 0;
 		}
 
-		private void OnDisable()
+		private void Resume()
 		{
 			Time.timeScale = 1;
 			PlayerFinder.Player.GetComponent<PlayerController>().enabled = true;

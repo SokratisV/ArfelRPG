@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 
-namespace RPG.Movement
+namespace RPG.Skills
 {
-	public class SkillIndicator : MonoBehaviour
+	public class ProjectorIndicator : ISkillIndicator
 	{
-		[SerializeField] private GameObject projectorPrefab;
+		private readonly Transform _parent;
+		private readonly Projector _projector;
 
-		private Transform _parent;
-		private Projector _projector;
-
-		private void Awake()
+		public ProjectorIndicator(GameObject parentObject)
 		{
-			_parent = Instantiate(projectorPrefab).transform;
+			_parent = parentObject.transform;
 			_projector = _parent.GetComponentInChildren<Projector>();
 			_projector.enabled = false;
 		}
@@ -23,10 +21,7 @@ namespace RPG.Movement
 			_projector.enabled = true;
 		}
 
-		public void UpdateIndicator(Vector3 position)
-		{
-			_parent.position = position;
-		}
+		public void UpdateIndicator(Vector3 position) => _parent.position = position;
 
 		public void HideIndicator() => _projector.enabled = false;
 	}

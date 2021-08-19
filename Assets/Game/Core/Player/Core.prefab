@@ -395,6 +395,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5857183086093753042, guid: c51614e0caef2456ca330cadd5c96f32,
+        type: 3}
+      propertyPath: skillIndicatorPrefab
+      value: 
+      objectReference: {fileID: 1782295188400502906, guid: 5bcf8e808d864aa4ebb0eb331b834959,
+        type: 3}
     - target: {fileID: 8471421742060907762, guid: c51614e0caef2456ca330cadd5c96f32,
         type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Target

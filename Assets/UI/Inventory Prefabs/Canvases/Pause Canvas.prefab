@@ -182,9 +182,9 @@ MonoBehaviour:
   ActionOnToggle:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5211208338852664217}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 2391775669202268699}
+        m_TargetAssemblyTypeName: RPG.UI.PauseMenuUi, UI
+        m_MethodName: Toggle
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -196,11 +196,11 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RPG.UI.ShowHideUIOnButtonPress, UI
-        m_MethodName: Toggle
-        m_Mode: 6
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1220,7 +1220,7 @@ PrefabInstance:
     - target: {fileID: 803267612849997312, guid: 24aaa7769fb3ba949a22a21f25056759,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1585544584442305994, guid: 24aaa7769fb3ba949a22a21f25056759,
         type: 3}

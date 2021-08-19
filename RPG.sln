@@ -39,13 +39,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RotaryHeart", "RotaryHeart.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirenix.OdinInspector.CompatibilityLayer", "Sirenix.OdinInspector.CompatibilityLayer.csproj", "{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movement", "Movement.csproj", "{969468c0-3ae0-0795-e700-d90d7a086cb7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneManagement", "SceneManagement.csproj", "{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Saving", "Saving.csproj", "{81044aed-9a49-5a6f-aab9-d3735042e71b}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PAC", "PAC.csproj", "{df4814f1-9d05-83b6-165a-d1e0ae2ced62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movement", "Movement.csproj", "{969468c0-3ae0-0795-e700-d90d7a086cb7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conversants", "Conversants.csproj", "{e0f24a12-598d-c82b-0142-4d842f71049a}"
 EndProject
@@ -108,14 +108,14 @@ Global
 		{9a57197f-6bce-1fef-2b72-2c61b4333055}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{bcf7a206-9ec8-3c51-63e5-cd9f77f8958f}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{969468c0-3ae0-0795-e700-d90d7a086cb7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{969468c0-3ae0-0795-e700-d90d7a086cb7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1615ee0d-0e62-a84c-3a96-6db5748e1ac0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81044aed-9a49-5a6f-aab9-d3735042e71b}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81044aed-9a49-5a6f-aab9-d3735042e71b}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{df4814f1-9d05-83b6-165a-d1e0ae2ced62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{df4814f1-9d05-83b6-165a-d1e0ae2ced62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{969468c0-3ae0-0795-e700-d90d7a086cb7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{969468c0-3ae0-0795-e700-d90d7a086cb7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{e0f24a12-598d-c82b-0142-4d842f71049a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{e0f24a12-598d-c82b-0142-4d842f71049a}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5d8b521d-28c4-ffb4-30b9-799df10af863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

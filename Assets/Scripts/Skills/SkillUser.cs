@@ -11,6 +11,7 @@ namespace RPG.Skills
 {
 	public partial class SkillUser : MonoBehaviour, IAction, ISaveable, ISpellActionable
 	{
+		[SerializeField] private GameObject skillIndicatorPrefab; 
 		public event Action SkillsUpdated;
 		public event Action OnActionComplete, OnActionCancelled;
 		public event Action<Skill> OnSkillCast, OnSkillEnd, OnSkillSelected;
@@ -35,7 +36,7 @@ namespace RPG.Skills
 		private Animator _animator;
 		private Fighter _fighter;
 		private ActionScheduler _actionScheduler;
-		private SkillIndicator _skillIndicator;
+		private ISkillIndicator _skillIndicator;
 		private CastingSkill _currentCastingSkill;
 		private List<CooldownSkill> _skillsOnCooldown = new List<CooldownSkill>();
 		private List<ActivatedSkill> _activatedSkills = new List<ActivatedSkill>();
@@ -58,7 +59,7 @@ namespace RPG.Skills
 			}
 
 			_mover = GetComponent<Mover>();
-			_skillIndicator = GetComponent<SkillIndicator>();
+			_skillIndicator = new SkillIndicatorQuad(Instantiate(skillIndicatorPrefab));
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_animator = GetComponent<Animator>();
 			_fighter = GetComponent<Fighter>();
