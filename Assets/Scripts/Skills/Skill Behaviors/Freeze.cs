@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using RPG.Attributes;
 using RPG.Movement;
 using UnityEngine;
