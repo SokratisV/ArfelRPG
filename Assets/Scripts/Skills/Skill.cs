@@ -27,24 +27,8 @@ namespace RPG.Skills
 		[SerializeField] private TargetBehavior targetBehavior;
 		[SerializeField] private FilterStrategy[] filterStrategy;
 		[SerializeField] private SkillBehavior skillBehavior;
-		[SerializeField] private EffectsStrategy[] userStartFx;
-		[SerializeField] private EffectsStrategy[] userEndFx;
-		[SerializeField] private EffectsStrategy[] targetsStartFx;
-		[SerializeField] private EffectsStrategy[] targetsEndFx;
-		[SerializeField] private EffectsStrategy[] areaStartFx;
-		[SerializeField] private EffectsStrategy[] areaEndFx;
-		
-		[Header("On Start")] [Space(15)] [SerializeField]
-		private GameObject[] vfxOnUserStart;
-
-		[SerializeField] private GameObject[] vfxOnTargetStart, vfxOnAreaStart;
-		[SerializeField] private AudioClip[] sfxOnUserStart, sfxOnTargetStart, sfxOnAreaStart;
-
-		[Header("On End")] [Space(15)] [SerializeField]
-		private GameObject[] vfxOnUserEnd;
-
-		[SerializeField] private GameObject[] vfxOnTargetEnd, vfxOnAreaEnd;
-		[SerializeField] private AudioClip[] sfxOnUserEnd, sfxOnTargetEnd, sfxOnAreaEnd;
+		[SerializeField] private EffectsStrategy[] startFx;
+		[SerializeField] private EffectsStrategy[] endFx;
 
 		public Sprite Icon => icon;
 		public string SkillID => skillID;
@@ -72,13 +56,13 @@ namespace RPG.Skills
 			if (targetBehavior.GetTargets(out var targets, user, initialTarget, point))
 				if (targets == null)
 					return null;
-			
+
 			targets = FilterTargets(targets);
 			var skillData = new SkillData(user, initialTarget, point, targets);
 			skillBehavior.OnStart += StartFX;
 			skillBehavior.OnEnd += EndFX;
 			skillBehavior.BehaviorStart(skillData);
-			
+
 			return (skillData, skillBehavior.BehaviorUpdate(skillData));
 		}
 
@@ -96,15 +80,7 @@ namespace RPG.Skills
 
 		private void StartFX(SkillData data)
 		{
-			foreach (var effect in userStartFx)
-			{
-				effect.ExecuteStrategy(data);
-			}
-			foreach (var effect in targetsStartFx)
-			{
-				effect.ExecuteStrategy(data);
-			}
-			foreach (var effect in areaStartFx)
+			foreach (var effect in startFx)
 			{
 				effect.ExecuteStrategy(data);
 			}
@@ -112,15 +88,7 @@ namespace RPG.Skills
 
 		private void EndFX(SkillData data)
 		{
-			foreach (var effect in userEndFx)
-			{
-				effect.ExecuteStrategy(data);
-			}
-			foreach (var effect in targetsEndFx)
-			{
-				effect.ExecuteStrategy(data);
-			}
-			foreach (var effect in areaEndFx)
+			foreach (var effect in endFx)
 			{
 				effect.ExecuteStrategy(data);
 			}

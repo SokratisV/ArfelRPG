@@ -19,7 +19,11 @@ MonoBehaviour:
   cooldown: 5
   canBeCancelled: 1
   targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
+  filterStrategy: []
   skillBehavior: {fileID: 11400000, guid: d5ea3d00d631b1043aefb292bf671752, type: 2}
+  startFx: []
+  endFx:
+  - {fileID: 11400000, guid: f764ed5b959a63a4bb0221aef41cb2a9, type: 2}
   vfxOnUserStart: []
   vfxOnTargetStart: []
   vfxOnAreaStart: []

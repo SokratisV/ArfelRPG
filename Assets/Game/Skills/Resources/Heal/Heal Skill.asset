@@ -17,15 +17,25 @@ MonoBehaviour:
   description: I need healing.
   icon: {fileID: 21300000, guid: 8d9e1742881918846a64509bd1f30202, type: 3}
   cooldown: 2
+  canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
+  filterStrategy: []
   skillBehavior: {fileID: 11400000, guid: 0bac9b76b049edc4382aa0d524b05a8d, type: 2}
+  startFx:
+  - {fileID: 11400000, guid: 2c7915ea3d4cda1498a155eb5d457381, type: 2}
+  - {fileID: 11400000, guid: 4a240b8d29e6640418fa9b1bd654abab, type: 2}
+  endFx: []
   vfxOnUserStart: []
   vfxOnTargetStart:
   - {fileID: 6809944706259094419, guid: 0a3972e964dcd2b47b2a3bc58d35d554, type: 3}
+  vfxOnAreaStart: []
   sfxOnUserStart: []
   sfxOnTargetStart:
   - {fileID: 8300000, guid: 136a21330c4e00a4a89a64b01e15607f, type: 3}
+  sfxOnAreaStart: []
   vfxOnUserEnd: []
   vfxOnTargetEnd: []
+  vfxOnAreaEnd: []
   sfxOnUserEnd: []
   sfxOnTargetEnd: []
+  sfxOnAreaEnd: []
