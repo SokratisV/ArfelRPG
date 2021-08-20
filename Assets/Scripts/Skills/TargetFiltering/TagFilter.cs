@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace RPG.Skills.TargetFiltering
@@ -10,13 +11,7 @@ namespace RPG.Skills.TargetFiltering
 
 		public override List<GameObject> Filter(List<GameObject> unfiltered)
 		{
-			var filteredObjects = new List<GameObject>();
-			foreach (var gameObject in unfiltered)
-			{
-				if (gameObject.CompareTag(tag)) filteredObjects.Add(gameObject);
-			}
-
-			return filteredObjects.Count > 0 ? filteredObjects : unfiltered;
+			return unfiltered.Where(gameObject => gameObject.CompareTag(tag)).ToList();
 		}
 	}
 }

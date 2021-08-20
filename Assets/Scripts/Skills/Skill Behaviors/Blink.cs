@@ -20,43 +20,43 @@ namespace RPG.Skills.Behaviors
 
 		public override float GetCastingRange() => distance;
 
-		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorStart(SkillData data)
 		{
-			if(!point.HasValue) return;
+			if(!data.Point.HasValue) return;
 			var path = new NavMeshPath();
-			if(NavMesh.CalculatePath(user.transform.position, point.Value, NavMesh.AllAreas, path))
+			if(NavMesh.CalculatePath(data.User.transform.position, data.Point.Value, NavMesh.AllAreas, path))
 			{
-				user.GetComponent<Health>().IsInvulnerable = true;
-				if(Helper.IsWithinDistance(point.Value, user.transform.position, distance))
+				data.User.GetComponent<Health>().IsInvulnerable = true;
+				if(Helper.IsWithinDistance(data.Point.Value, data.User.transform.position, distance))
 				{
-					user.GetComponent<Mover>().Blink(point.Value);
-					base.BehaviorStart(user, targets, point);
+					data.User.GetComponent<Mover>().Blink(data.Point.Value);
+					base.BehaviorStart(data);
 					return;
 				}
 
 				var finalPoint = Helper.CalculateMaximumDistanceNavMeshPoint(path, distance);
 				if(finalPoint == default)
 				{
-					finalPoint = point.Value;
+					finalPoint = data.Point.Value;
 				}
 
-				user.GetComponent<Mover>().Blink(finalPoint);
+				data.User.GetComponent<Mover>().Blink(finalPoint);
 			}
 
 			else return;
 
-			base.BehaviorStart(user, targets, point);
+			base.BehaviorStart(data);
 		}
 
-		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			yield break;
 		}
 
-		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorEnd(SkillData data)
 		{
-			user.GetComponent<Health>().IsInvulnerable = false;
-			base.BehaviorEnd(user, targets, point);
+			data.User.GetComponent<Health>().IsInvulnerable = false;
+			base.BehaviorEnd(data);
 		}
 	}
 }

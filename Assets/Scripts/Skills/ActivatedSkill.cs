@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace RPG.Skills
 {
@@ -8,16 +9,18 @@ namespace RPG.Skills
 		{
 			public bool HasEnded;
 			public Skill Skill {get;}
+			public readonly IEnumerator UpdateBehavior;
 			public readonly SkillData Data;
 			private float _timer;
 			private readonly float _duration;
 
-			public ActivatedSkill(Skill skill, SkillData data)
+			public ActivatedSkill(Skill skill, (SkillData, IEnumerator) data)
 			{
 				Skill = skill;
-				Data = data;
+				Data = data.Item1;
 				_duration = skill.Duration;
 				_timer = 0;
+				UpdateBehavior = data.Item2;
 			}
 
 			internal bool Update()

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 530737f8503545a192728a8cf16324fa, type: 3}
-  m_Name: Earth Explosion Skill
+  m_Name: Explosion Skill
   m_EditorClassIdentifier: 
   skillID: 9b2b4864-267b-45b6-8b2e-0955fff095a5
   displayName: Earth Explosion
@@ -19,7 +19,18 @@ MonoBehaviour:
   cooldown: 2
   canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 72b066b3bab1e044582492674d565224, type: 2}
+  filterStrategy:
+  - {fileID: 11400000, guid: 0ea09a6bd6d583d429d11484b6769e19, type: 2}
   skillBehavior: {fileID: 11400000, guid: 9fdde4feed1773843a88a40af1b2943c, type: 2}
+  userStartFx: []
+  userEndFx: []
+  targetsStartFx: []
+  targetsEndFx:
+  - {fileID: 11400000, guid: 29ae497c95777e347bc3f715f5bec288, type: 2}
+  areaStartFx: []
+  areaEndFx:
+  - {fileID: 11400000, guid: de499456e5f93164a864ea7033243f4b, type: 2}
+  - {fileID: 11400000, guid: e0487668a3d9b354681dc4251dbebc89, type: 2}
   vfxOnUserStart: []
   vfxOnTargetStart: []
   vfxOnAreaStart: []

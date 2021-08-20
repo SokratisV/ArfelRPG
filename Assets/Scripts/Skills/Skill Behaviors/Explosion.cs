@@ -15,44 +15,43 @@ namespace RPG.Skills.Behaviors
 		public override bool HasCastTime() => true;
 		public override bool UseExtraAnimation() => true;
 		public override int SkillAnimationNumber() => 2;
-		protected override bool RequiresRetarget => true;
 
-		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorStart(SkillData data)
 		{
-			if (point != null)
+			if (data.Point != null)
 			{
-				user.GetComponent<Mover>().RotateOverTime(.2f, point.Value);
+				data.User.GetComponent<Mover>().RotateOverTime(.2f, data.Point.Value);
 			}
 
-			base.BehaviorStart(user, targets, point);
+			base.BehaviorStart(data);
 		}
 
-		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			yield break;
 		}
 
-		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorEnd(SkillData data)
 		{
-			if (targets != null)
+			if (data.Targets != null)
 			{
-				for (var i = targets.Count - 1; i >= 0; i--)
+				for (var i = data.Targets.Count - 1; i >= 0; i--)
 				{
-					var target = targets[i];
-					if (target == user)
+					var target = data.Targets[i];
+					if (target == data.User)
 					{
-						targets[i] = null;
+						data.Targets[i] = null;
 						continue;
 					}
 					if (target.TryGetComponent(out Health health))
 					{
-						RemoveHealthFromList(health, targets);
-						health.TakeDamage(user, damage);
+						RemoveHealthFromList(health, data.Targets);
+						health.TakeDamage(data.User, damage);
 					}
 				}
 			}
 
-			base.BehaviorEnd(user, targets, point);
+			base.BehaviorEnd(data);
 		}
 	}
 }

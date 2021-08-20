@@ -262,7 +262,7 @@ namespace RPG.Skills
 				if (_currentCastingSkill.Update())
 				{
 					OnSkillEnd?.Invoke(_currentCastingSkill.Skill);
-					StopCoroutine(_currentCastingSkill.Data.UpdateBehavior);
+					StopCoroutine(_currentCastingSkill.UpdateBehavior);
 					if (_currentCastingSkill.Skill.RequiresTarget == true)
 						_actionScheduler.EnqueueAction(new FighterActionData(_fighter, _currentCastingSkill.Data.InitialTarget));
 					CompleteAction();
@@ -286,7 +286,7 @@ namespace RPG.Skills
 				{
 					_activeListCleanup = true;
 					OnSkillEnd?.Invoke(activeSkill.Skill);
-					StopCoroutine(activeSkill.Data.UpdateBehavior);
+					StopCoroutine(activeSkill.UpdateBehavior);
 				}
 			}
 		}
@@ -344,15 +344,15 @@ namespace RPG.Skills
 
 			OnSkillCast?.Invoke(_selectedSkill);
 			_animator.ResetTrigger(CancelAnimation);
-			StartCoroutine(data.UpdateBehavior);
+			StartCoroutine(data.Value.Item2);
 			_skillsOnCooldown.Add(new CooldownSkill(_selectedSkill));
 			if (_selectedSkill.HasCastTime)
 			{
-				_currentCastingSkill = new CastingSkill(_selectedSkill, data);
+				_currentCastingSkill = new CastingSkill(_selectedSkill, data.Value);
 			}
 			else
 			{
-				_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data));
+				_activatedSkills.Add(new ActivatedSkill(_selectedSkill, data.Value));
 				if (target != null) _actionScheduler.EnqueueAction(new FighterActionData(_fighter, target));
 				CompleteAction();
 				_selectedSkill = null;

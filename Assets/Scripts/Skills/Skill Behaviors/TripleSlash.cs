@@ -16,16 +16,16 @@ namespace RPG.Skills.Behaviors
 		public override float GetCastingRange() => attackRange;
 		public override int SkillAnimationNumber() => 1;
 
-		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			while (true)
 			{
 				if (_trigger.Value)
 				{
-					if (targets[0] != null)
+					if (data.Targets[0] != null)
 					{
-						var health = targets[0].GetComponent<Health>();
-						health.TakeDamage(user, damage);
+						var health = data.Targets[0].GetComponent<Health>();
+						health.TakeDamage(data.User, damage);
 						yield return null;
 					}
 				}

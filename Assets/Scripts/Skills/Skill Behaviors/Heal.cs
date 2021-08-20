@@ -16,20 +16,20 @@ namespace RPG.Skills.Behaviors
 
 		public override float GetCastingRange() => castRange;
 
-		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorStart(SkillData data)
 		{
-			if(targets[0].TryGetComponent(out Health health))
+			if(data.Targets[0].TryGetComponent(out Health health))
 			{
 				if(!health.IsDead && !(health.GetPercentage() >= 100.0f))
 				{
-					health.Heal(user, amountToHeal);
+					health.Heal(data.User, amountToHeal);
 				}
 			}
 
-			base.BehaviorStart(user, targets, point);
+			base.BehaviorStart(data);
 		}
 
-		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			yield break;
 		}

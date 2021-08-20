@@ -8,24 +8,6 @@ using UnityEngine;
 
 namespace RPG.Skills
 {
-	public class SkillData
-	{
-		public readonly GameObject User;
-		public readonly GameObject InitialTarget;
-		public readonly List<GameObject> Targets;
-		public readonly IEnumerator UpdateBehavior;
-		public Vector3? Point;
-
-		public SkillData(GameObject user, GameObject initialTarget, Vector3? point, List<GameObject> targets, IEnumerator updateBehavior)
-		{
-			User = user;
-			InitialTarget = initialTarget;
-			Point = point;
-			Targets = targets;
-			UpdateBehavior = updateBehavior;
-		}
-	}
-
 	[CreateAssetMenu(fileName = "Skill", menuName = "RPG/Skills/New Skill", order = 0)]
 	public class Skill : ScriptableObject, ISerializationCallbackReceiver
 	{
@@ -46,7 +28,13 @@ namespace RPG.Skills
 		[SerializeField] private TargetBehavior targetBehavior;
 		[SerializeField] private FilterStrategy[] filterStrategy;
 		[SerializeField] private SkillBehavior skillBehavior;
-
+		[SerializeField] private EffectsStrategy[] userStartFx;
+		[SerializeField] private EffectsStrategy[] userEndFx;
+		[SerializeField] private EffectsStrategy[] targetsStartFx;
+		[SerializeField] private EffectsStrategy[] targetsEndFx;
+		[SerializeField] private EffectsStrategy[] areaStartFx;
+		[SerializeField] private EffectsStrategy[] areaEndFx;
+		
 		[Header("On Start")] [Space(15)] [SerializeField]
 		private GameObject[] vfxOnUserStart;
 
@@ -77,114 +65,88 @@ namespace RPG.Skills
 		public bool AdjustAnimationSpeed => skillBehavior.AdjustAnimationSpeed;
 		public int AnimationHash => skillBehavior.SkillAnimationNumber();
 
-		private static Dictionary<string, Skill> ItemLookupCache;
+		private static Dictionary<string, Skill> SkillLookupCache;
 
-		public SkillData OnStart(GameObject user, GameObject initialTarget = null, Vector3? point = null)
+		public (SkillData, IEnumerator)? OnStart(GameObject user, GameObject initialTarget = null, Vector3? point = null)
 		{
 			//if interested in targets, but targets are null, return
 			if (targetBehavior.GetTargets(out var targets, user, initialTarget, point))
 				if (targets == null)
 					return null;
-
-			skillBehavior.OnStart += PlayFX;
+			
+			targets = FilterTargets(targets);
+			var skillData = new SkillData(user, initialTarget, point, targets);
+			skillBehavior.OnStart += StartFX;
 			skillBehavior.OnEnd += EndFX;
-			skillBehavior.BehaviorStart(user, targets, point);
-			return new SkillData(user, initialTarget, point, targets, skillBehavior.BehaviorUpdate(user, targets, point));
+			skillBehavior.BehaviorStart(skillData);
+			
+			return (skillData, skillBehavior.BehaviorUpdate(skillData));
 		}
 
-		public void OnEnd(SkillData data)
+		private List<GameObject> FilterTargets(List<GameObject> targets)
 		{
-			if (skillBehavior.Retarget)
+			foreach (var filter in filterStrategy)
 			{
-				targetBehavior.GetTargets(out var targets, data.User, data.InitialTarget, data.Point);
-				foreach (var filter in filterStrategy)
-				{
-					targets = filter.Filter(targets);
-				}
-				skillBehavior.BehaviorEnd(data.User, targets, data.Point);
-			}
-			else skillBehavior.BehaviorEnd(data.User, data.Targets, data.Point);
-		}
-
-		private void PlayFX(GameObject user, List<GameObject> targets, Vector3? point)
-		{
-			FxOnUser(user, vfxOnUserStart, sfxOnUserStart);
-			FxOnArea(point, vfxOnAreaStart, sfxOnAreaStart);
-			FxOnTargets(targets, vfxOnTargetStart, sfxOnTargetStart);
-		}
-
-		private void EndFX(GameObject user, List<GameObject> targets, Vector3? point)
-		{
-			FxOnUser(user, vfxOnUserEnd, sfxOnUserEnd);
-			FxOnArea(point, vfxOnAreaEnd, sfxOnAreaEnd);
-			FxOnTargets(targets, vfxOnTargetEnd, sfxOnTargetEnd);
-		}
-
-		private static void FxOnUser(GameObject user, IEnumerable<GameObject> vfxOnUser, IEnumerable<AudioClip> sfxOnUser)
-		{
-			foreach (var vfx in vfxOnUser)
-			{
-				Destroy(Instantiate(vfx, user.transform), 2f);
+				targets = filter.Filter(targets);
 			}
 
-			if (user.TryGetComponent(out IAudioPlayer audioPlayer))
+			return targets;
+		}
+
+		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data);
+
+		private void StartFX(SkillData data)
+		{
+			foreach (var effect in userStartFx)
 			{
-				audioPlayer.PlaySound(sfxOnUser);
+				effect.ExecuteStrategy(data);
+			}
+			foreach (var effect in targetsStartFx)
+			{
+				effect.ExecuteStrategy(data);
+			}
+			foreach (var effect in areaStartFx)
+			{
+				effect.ExecuteStrategy(data);
 			}
 		}
 
-		private static void FxOnArea(Vector3? point, IEnumerable<GameObject> vfxOnArea, IEnumerable<AudioClip> sfxOnArea)
+		private void EndFX(SkillData data)
 		{
-			if (point == null) return;
-			foreach (var vfx in vfxOnArea)
+			foreach (var effect in userEndFx)
 			{
-				Destroy(Instantiate(vfx, point.Value + Vector3.up * 2, Quaternion.identity), 2f);
+				effect.ExecuteStrategy(data);
 			}
-
-			foreach (var sfx in sfxOnArea)
+			foreach (var effect in targetsEndFx)
 			{
-				AudioSource.PlayClipAtPoint(sfx, point.Value);
+				effect.ExecuteStrategy(data);
 			}
-		}
-
-		private static void FxOnTargets(IReadOnlyCollection<GameObject> targets, IReadOnlyCollection<GameObject> vfxOnTarget, AudioClip[] sfxOnTarget)
-		{
-			if (targets == null) return;
-			foreach (var target in targets)
+			foreach (var effect in areaEndFx)
 			{
-				if (target == null) continue;
-				foreach (var vfx in vfxOnTarget)
-				{
-					Destroy(Instantiate(vfx, target.transform), 2f);
-				}
-
-				if (target.TryGetComponent(out IAudioPlayer audioPlayer))
-				{
-					audioPlayer.PlaySound(sfxOnTarget);
-				}
+				effect.ExecuteStrategy(data);
 			}
 		}
 
 		public static Skill GetFromID(string skillID)
 		{
-			if (ItemLookupCache == null)
+			if (SkillLookupCache == null)
 			{
-				ItemLookupCache = new Dictionary<string, Skill>();
+				SkillLookupCache = new Dictionary<string, Skill>();
 				var itemList = Resources.LoadAll<Skill>("");
 				foreach (var item in itemList)
 				{
-					if (ItemLookupCache.ContainsKey(item.skillID))
+					if (SkillLookupCache.ContainsKey(item.skillID))
 					{
-						Debug.LogError($"Looks like there's a duplicate RPG.UI.InventorySystem ID for objects: {ItemLookupCache[item.skillID]} and {item}");
+						Debug.LogError($"Looks like there's a duplicate RPG.UI.InventorySystem ID for objects: {SkillLookupCache[item.skillID]} and {item}");
 						continue;
 					}
 
-					ItemLookupCache[item.skillID] = item;
+					SkillLookupCache[item.skillID] = item;
 				}
 			}
 
-			if (skillID == null || !ItemLookupCache.ContainsKey(skillID)) return null;
-			return ItemLookupCache[skillID];
+			if (skillID == null || !SkillLookupCache.ContainsKey(skillID)) return null;
+			return SkillLookupCache[skillID];
 		}
 
 		public void OnBeforeSerialize()

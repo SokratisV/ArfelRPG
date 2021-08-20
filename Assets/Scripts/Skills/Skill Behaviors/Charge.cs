@@ -19,35 +19,35 @@ namespace RPG.Skills.Behaviors
 		
 		public override float GetCastingRange() => distance;
 
-		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorStart(SkillData data)
 		{
-			if(!point.HasValue) return;
+			if(!data.Point.HasValue) return;
 			var path = new NavMeshPath();
-			if(NavMesh.CalculatePath(user.transform.position, point.Value, NavMesh.AllAreas, path))
+			if(NavMesh.CalculatePath(data.User.transform.position, data.Point.Value, NavMesh.AllAreas, path))
 			{
 				var finalPoint = Helper.CalculateMaximumDistanceNavMeshPoint(path, distance);
 				if(finalPoint == default)
 				{
-					finalPoint = point.Value;
+					finalPoint = data.Point.Value;
 				}
 
-				user.GetComponent<Mover>().Dash(finalPoint, dashDuration);
-				user.GetComponent<Health>().IsInvulnerable = true;
+				data.User.GetComponent<Mover>().Dash(finalPoint, dashDuration);
+				data.User.GetComponent<Health>().IsInvulnerable = true;
 			}
 			else return;
 
-			base.BehaviorStart(user, targets, point);
+			base.BehaviorStart(data);
 		}
 
-		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			yield break;
 		}
 
-		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorEnd(SkillData data)
 		{
-			user.GetComponent<Health>().IsInvulnerable = false;
-			base.BehaviorEnd(user, targets, point);
+			data.User.GetComponent<Health>().IsInvulnerable = false;
+			base.BehaviorEnd(data);
 		}
 	}
 }

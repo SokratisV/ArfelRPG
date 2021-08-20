@@ -17,21 +17,19 @@ namespace RPG.Skills.Behaviors
 		public virtual bool UseExtraAnimation() => false;
 		public abstract int SkillAnimationNumber();
 		public virtual float GetCastingRange() => 0;
-		public bool Retarget => RequiresRetarget;
 		public bool CanTargetSelf => canTargetSelf;
 		public bool MoveInRangeBefore => moveInRangeBeforeCasting;
 		public float Duration => duration;
-		public Action<GameObject, List<GameObject>, Vector3?> OnStart, OnEnd;
+		public Action<SkillData> OnStart, OnEnd;
 		public virtual bool AdjustAnimationSpeed => true;
-		protected virtual bool RequiresRetarget => false;
 
-		public virtual void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null) => OnStart?.Invoke(user, targets, point);
+		public virtual void BehaviorStart(SkillData data) => OnStart?.Invoke(data);
 
-		public abstract IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null);
+		public abstract IEnumerator BehaviorUpdate(SkillData data);
 
-		public virtual void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public virtual void BehaviorEnd(SkillData data)
 		{
-			OnEnd?.Invoke(user, targets, point);
+			OnEnd?.Invoke(data);
 			OnEnd = null;
 			OnStart = null;
 		}

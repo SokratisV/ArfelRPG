@@ -14,40 +14,40 @@ namespace RPG.Skills.Behaviors
 		public override bool HasCastTime() => false;
 		public override int SkillAnimationNumber() => 1;
 
-		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorStart(SkillData data)
 		{
-			if(targets != null)
+			if(data.Targets != null)
 			{
-				for(var i = targets.Count - 1;i >= 0;i--)
+				for(var i = data.Targets.Count - 1;i >= 0;i--)
 				{
-					var target = targets[i];
+					var target = data.Targets[i];
 					var mover = target.GetComponent<Mover>();
 					mover.CurrentSpeed = mover.CurrentSpeed * slowPercent * 0.01f;
 					var health = target.GetComponent<Health>();
-					RemoveHealthFromList(health, targets);
-					health.TakeDamage(user, damage);
+					RemoveHealthFromList(health, data.Targets);
+					health.TakeDamage(data.User, damage);
 				}
 			}
 
-			base.BehaviorStart(user, targets, point);
+			base.BehaviorStart(data);
 		}
 		
-		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			yield break;
 		}
 
-		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorEnd(SkillData data)
 		{
-			if(targets != null)
+			if(data.Targets != null)
 			{
-				foreach(var target in targets)
+				foreach(var target in data.Targets)
 				{
 					target.GetComponent<Mover>().RevertToOriginalSpeed();
 				}
 			}
 
-			base.BehaviorEnd(user, targets, point);
+			base.BehaviorEnd(data);
 		}
 	}
 }

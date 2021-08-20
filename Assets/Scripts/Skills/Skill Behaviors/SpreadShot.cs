@@ -18,20 +18,20 @@ namespace RPG.Skills.Behaviors
 		public override bool HasCastTime() => true;
 		public override int SkillAnimationNumber() => 2;
 
-		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorStart(SkillData data)
 		{
-			if (point != null)
+			if (data.Point != null)
 			{
-				user.GetComponent<Mover>().RotateOverTime(.1f, point.Value);
+				data.User.GetComponent<Mover>().RotateOverTime(.1f, data.Point.Value);
 			}
 
-			base.BehaviorStart(user, targets, point);
+			base.BehaviorStart(data);
 		}
 
-		public override void BehaviorEnd(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorEnd(SkillData data)
 		{
-			ExecuteBehavior(user, point.Value);
-			base.BehaviorEnd(user, targets, point);
+			ExecuteBehavior(data.User, data.Point.Value);
+			base.BehaviorEnd(data);
 		}
 
 		private void ExecuteBehavior(GameObject user, Vector3 point)
@@ -77,7 +77,7 @@ namespace RPG.Skills.Behaviors
 			}
 		}
 
-		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			yield break;
 		}

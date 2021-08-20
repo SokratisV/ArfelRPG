@@ -15,17 +15,17 @@ namespace RPG.Skills.Behaviors
 		public override bool HasCastTime() => false;
 		public override int SkillAnimationNumber() => 2;
 
-		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorStart(SkillData data)
 		{
-			if(targets != null)
+			if(data.Targets != null)
 			{
-				ExecuteBehavior(user, targets);
+				ExecuteBehavior(data.User, data.Targets);
 			}
 
-			base.BehaviorStart(user, targets, point);
+			base.BehaviorStart(data);
 		}
 
-		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			yield break;
 		}

@@ -19,14 +19,24 @@ MonoBehaviour:
   cooldown: 2
   canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 57b94b5a2bd2daf40bc6cb8afc96b76b, type: 2}
+  filterStrategy: []
   skillBehavior: {fileID: 11400000, guid: aa898cf868e6fdb47ae0e14df4f72f65, type: 2}
-  vfxOnUserStart:
-  - {fileID: 100018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
+  userStartFx:
+  - {fileID: 11400000, guid: 10caedd3311501344861770af6f8c4ba, type: 2}
+  - {fileID: 11400000, guid: e38d91879d837a84eb4d0f96c2f57cfc, type: 2}
+  userEndFx: []
+  targetsStartFx: []
+  targetsEndFx: []
+  areaFx: []
+  vfxOnUserStart: []
   vfxOnTargetStart: []
-  sfxOnUserStart:
-  - {fileID: 8300000, guid: 1ab0fdc0a98f42243b6934a55ebb3c4f, type: 3}
+  vfxOnAreaStart: []
+  sfxOnUserStart: []
   sfxOnTargetStart: []
+  sfxOnAreaStart: []
   vfxOnUserEnd: []
   vfxOnTargetEnd: []
+  vfxOnAreaEnd: []
   sfxOnUserEnd: []
   sfxOnTargetEnd: []
+  sfxOnAreaEnd: []

@@ -13,23 +13,23 @@ namespace RPG.Skills.Behaviors
 		public override int SkillAnimationNumber() => 2;
 		public override bool AdjustAnimationSpeed => false;
 
-		public override void BehaviorStart(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override void BehaviorStart(SkillData data)
 		{
-			if (targets != null)
+			if (data.Targets != null)
 			{
-				for (var i = targets.Count - 1; i >= 0; i--)
+				for (var i = data.Targets.Count - 1; i >= 0; i--)
 				{
-					var target = targets[i];
+					var target = data.Targets[i];
 					var health = target.GetComponent<Health>();
-					RemoveHealthFromList(health, targets);
-					health.TakeDamage(user, damage);
+					RemoveHealthFromList(health, data.Targets);
+					health.TakeDamage(data.User, damage);
 				}
 			}
 
-			base.BehaviorStart(user, targets, point);
+			base.BehaviorStart(data);
 		}
 
-		public override IEnumerator BehaviorUpdate(GameObject user, List<GameObject> targets, Vector3? point = null)
+		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			yield break;
 		}
