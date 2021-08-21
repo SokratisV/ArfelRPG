@@ -15,28 +15,13 @@ MonoBehaviour:
   skillID: 5231d976-a9d9-4917-95fe-1e870c11bb3c
   displayName: Blink
   description: Teleport to the point you choose.
-  icon: {fileID: 21300000, guid: a35b151eea1c2de43a63764c264c1d01, type: 3}
+  icon: {fileID: 21300000, guid: cdec13907ffc75749ab2ed436bec6b14, type: 3}
   cooldown: 2
   canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 57b94b5a2bd2daf40bc6cb8afc96b76b, type: 2}
   filterStrategy: []
   skillBehavior: {fileID: 11400000, guid: aa898cf868e6fdb47ae0e14df4f72f65, type: 2}
-  userStartFx:
-  - {fileID: 11400000, guid: 10caedd3311501344861770af6f8c4ba, type: 2}
+  startFx:
   - {fileID: 11400000, guid: e38d91879d837a84eb4d0f96c2f57cfc, type: 2}
-  userEndFx: []
-  targetsStartFx: []
-  targetsEndFx: []
-  areaFx: []
-  vfxOnUserStart: []
-  vfxOnTargetStart: []
-  vfxOnAreaStart: []
-  sfxOnUserStart: []
-  sfxOnTargetStart: []
-  sfxOnAreaStart: []
-  vfxOnUserEnd: []
-  vfxOnTargetEnd: []
-  vfxOnAreaEnd: []
-  sfxOnUserEnd: []
-  sfxOnTargetEnd: []
-  sfxOnAreaEnd: []
+  - {fileID: 11400000, guid: 10caedd3311501344861770af6f8c4ba, type: 2}
+  endFx: []

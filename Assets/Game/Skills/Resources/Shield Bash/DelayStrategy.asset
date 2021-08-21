@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc7580b04e9248fb9551fbda3d07f1e5, type: 3}
   m_Name: DelayStrategy
   m_EditorClassIdentifier: 
-  delay: 0
-  effects: []
+  delay: 0.3
+  effects:
+  - {fileID: 11400000, guid: f764ed5b959a63a4bb0221aef41cb2a9, type: 2}

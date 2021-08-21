@@ -15,26 +15,11 @@ MonoBehaviour:
   skillID: 802f7ca5-a4e9-44ab-a889-78063207154b
   displayName: Triple Slash
   description: Slash your enemies. Three times.
-  icon: {fileID: 21300000, guid: 5fd50594014b70e48bd6993443d46b32, type: 3}
+  icon: {fileID: 21300000, guid: 3925691c2a021aa429c1dc89712a1253, type: 3}
   cooldown: 5
   canBeCancelled: 1
   targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
   filterStrategy: []
   skillBehavior: {fileID: 11400000, guid: 4a2f524bcaec2584c8918bbdedc9a5d4, type: 2}
-  startFx:
-  - {fileID: 11400000, guid: 0ab66ca16f37bf143b495984ceb6313d, type: 2}
-  - {fileID: 11400000, guid: c50310751a595304a8d933212f658022, type: 2}
-  - {fileID: 11400000, guid: 51c01590529a91848a012ae5e418bfd2, type: 2}
+  startFx: []
   endFx: []
-  vfxOnUserStart: []
-  vfxOnTargetStart: []
-  vfxOnAreaStart: []
-  sfxOnUserStart: []
-  sfxOnTargetStart: []
-  sfxOnAreaStart: []
-  vfxOnUserEnd: []
-  vfxOnTargetEnd: []
-  vfxOnAreaEnd: []
-  sfxOnUserEnd: []
-  sfxOnTargetEnd: []
-  sfxOnAreaEnd: []

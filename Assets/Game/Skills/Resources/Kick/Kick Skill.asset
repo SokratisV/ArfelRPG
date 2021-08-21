@@ -15,24 +15,12 @@ MonoBehaviour:
   skillID: 71ce1e4a-ecaf-491e-b7d6-162ca664e35d
   displayName: Kick
   description: Kick your enemy to deal a moderate amount of damage.
-  icon: {fileID: 21300000, guid: e420c5bc93cb2604695a893500c897e3, type: 3}
+  icon: {fileID: 21300000, guid: d473e35d9c998d443a00d04000f893e5, type: 3}
   cooldown: 3
   canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
   filterStrategy: []
   skillBehavior: {fileID: 11400000, guid: eaf1998f4fcfe514cb36259c58d412c7, type: 2}
-  startFx: []
-  endFx:
-  - {fileID: 11400000, guid: 0f6475c796a37544285a00a50ffe08bc, type: 2}
-  vfxOnUserStart: []
-  vfxOnTargetStart: []
-  vfxOnAreaStart: []
-  sfxOnUserStart: []
-  sfxOnTargetStart: []
-  sfxOnAreaStart: []
-  vfxOnUserEnd: []
-  vfxOnTargetEnd: []
-  vfxOnAreaEnd: []
-  sfxOnUserEnd: []
-  sfxOnTargetEnd: []
-  sfxOnAreaEnd: []
+  startFx:
+  - {fileID: 11400000, guid: 0d54ac1eb585aed49bc8f06ee3f90377, type: 2}
+  endFx: []

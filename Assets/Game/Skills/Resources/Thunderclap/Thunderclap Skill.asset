@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Thunderclap
   description: Hit the ground with tremendous power, dealing damage to enemies around
     you.
-  icon: {fileID: 21300000, guid: 9415af11d73bb804c8d24343e1351132, type: 3}
+  icon: {fileID: 21300000, guid: 63b30c77b2de31d4398b65d935f4713c, type: 3}
   cooldown: 5
   canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: dc790a0acf94bcb4bb09b784efce693b, type: 2}
@@ -24,17 +24,7 @@ MonoBehaviour:
   skillBehavior: {fileID: 11400000, guid: 41ee324bb9f2e0a43b31ecc8985d339b, type: 2}
   startFx:
   - {fileID: 11400000, guid: c13561bb664625249915538d39a890f2, type: 2}
-  endFx:
-  - {fileID: 11400000, guid: 6180df0376355be489fde18f15500cb4, type: 2}
-  vfxOnUserStart: []
-  vfxOnTargetStart: []
-  vfxOnAreaStart: []
-  sfxOnUserStart: []
-  sfxOnTargetStart: []
-  sfxOnAreaStart: []
-  vfxOnUserEnd: []
-  vfxOnTargetEnd: []
-  vfxOnAreaEnd: []
-  sfxOnUserEnd: []
-  sfxOnTargetEnd: []
-  sfxOnAreaEnd: []
+  - {fileID: 11400000, guid: 89d6375eddbf134438af62ca32d4714f, type: 2}
+  - {fileID: 11400000, guid: 48008303124a9e640bce4b35fdce1c7b, type: 2}
+  - {fileID: 11400000, guid: 5912dde8ecebed44ca600752501ae90b, type: 2}
+  endFx: []

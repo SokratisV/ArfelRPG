@@ -15,7 +15,7 @@ MonoBehaviour:
   skillID: 6930596c-dcae-4113-b63d-40a2002fa58a
   displayName: Freeze
   description: Deal damage and slow everyone around you.
-  icon: {fileID: 21300000, guid: f743ae65363a58b4bb63d471b4978b1a, type: 3}
+  icon: {fileID: 21300000, guid: 2bccd332882fcd14b9e4c377e432c587, type: 3}
   cooldown: 2
   canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: dc790a0acf94bcb4bb09b784efce693b, type: 2}
@@ -25,17 +25,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dadae2ea97380dd40abf7b3571b74d13, type: 2}
   - {fileID: 11400000, guid: 8ae98ff4a42f6c34fb4f4acb9086b78c, type: 2}
   endFx: []
-  vfxOnUserStart:
-  - {fileID: 132290, guid: e49403f034d74ee44aa8a41b0ee4abfd, type: 3}
-  vfxOnTargetStart: []
-  vfxOnAreaStart: []
-  sfxOnUserStart:
-  - {fileID: 8300000, guid: c7865fd595be8a046a018f3e24771dd6, type: 3}
-  sfxOnTargetStart: []
-  sfxOnAreaStart: []
-  vfxOnUserEnd: []
-  vfxOnTargetEnd: []
-  vfxOnAreaEnd: []
-  sfxOnUserEnd: []
-  sfxOnTargetEnd: []
-  sfxOnAreaEnd: []

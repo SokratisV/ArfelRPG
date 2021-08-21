@@ -15,7 +15,7 @@ MonoBehaviour:
   skillID: 9b2b4864-267b-45b6-8b2e-0955fff095a5
   displayName: Earth Explosion
   description: Deal damage to enemies around your selected area.
-  icon: {fileID: 21300000, guid: 4a39cb4b272639541b7bd5ac0649acf7, type: 3}
+  icon: {fileID: 21300000, guid: 14a0f66a7be165c4ba476e3d7c40e390, type: 3}
   cooldown: 2
   canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 72b066b3bab1e044582492674d565224, type: 2}
@@ -27,18 +27,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 29ae497c95777e347bc3f715f5bec288, type: 2}
   - {fileID: 11400000, guid: de499456e5f93164a864ea7033243f4b, type: 2}
   - {fileID: 11400000, guid: e0487668a3d9b354681dc4251dbebc89, type: 2}
-  vfxOnUserStart: []
-  vfxOnTargetStart: []
-  vfxOnAreaStart: []
-  sfxOnUserStart: []
-  sfxOnTargetStart: []
-  sfxOnAreaStart: []
-  vfxOnUserEnd: []
-  vfxOnTargetEnd:
-  - {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
-  vfxOnAreaEnd:
-  - {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
-  sfxOnUserEnd: []
-  sfxOnTargetEnd: []
-  sfxOnAreaEnd:
-  - {fileID: 8300000, guid: 89e0f69e3ad999a4aa99111f0765d6b7, type: 3}
