@@ -11,6 +11,7 @@ namespace RPG.Skills
 		[SerializeField, ValueDropdown(nameof(_positionChoice))]
 		private int targetChoice;
 
+		[SerializeField] private bool parent;
 		[SerializeField] private GameObject[] vfx;
 		[SerializeField, Range(0, 15)] private float destroyAfter;
 
@@ -20,44 +21,54 @@ namespace RPG.Skills
 			{
 				case 0:
 				{
-					SpawnVfx(data.User.transform.position, vfx, destroyAfter);
+					SpawnVfx(data.User);
 					break;
 				}
 				case 1:
 				{
-					SpawnVfx(data.InitialTarget.transform.position, vfx, destroyAfter);
+					SpawnVfx(data.InitialTarget);
 					break;
 				}
 				case 2:
 				{
-					SpawnVfx(data.Point, vfx, destroyAfter);
+					SpawnVfx(data.Point);
 					break;
 				}
 				case 3:
 				{
-					SpawnVfx(data.Targets, vfx, destroyAfter);
+					SpawnVfx(data.Targets);
 					break;
 				}
 			}
 		}
 
-		private static void SpawnVfx(IEnumerable<GameObject> targets, GameObject[] vfx, float destroyAfter)
+		private void SpawnVfx(GameObject target)
 		{
-			foreach (var target in targets)
+			foreach (var fx in vfx)
 			{
-				foreach (var gameObject in vfx)
-				{
-					Destroy(Instantiate(gameObject, target.transform.position, Quaternion.identity), destroyAfter);
-				}
+				var instance = Instantiate(fx);
+				instance.transform.position = target.transform.position;
+				if (parent) instance.transform.SetParent(target.transform);
+				Destroy(instance, destroyAfter);
 			}
 		}
 
-		private static void SpawnVfx(Vector3? position, GameObject[] vfx, float destroyAfter)
+		private void SpawnVfx(IEnumerable<GameObject> targets)
+		{
+			foreach (var target in targets)
+			{
+				SpawnVfx(target);
+			}
+		}
+
+		private void SpawnVfx(Vector3? position)
 		{
 			if (!position.HasValue) return;
-			foreach (var gameObject in vfx)
+			foreach (var fx in vfx)
 			{
-				Destroy(Instantiate(gameObject, position.Value, Quaternion.identity), destroyAfter);
+				var instance = Instantiate(fx);
+				instance.transform.position = position.Value;
+				Destroy(instance, destroyAfter);
 			}
 		}
 

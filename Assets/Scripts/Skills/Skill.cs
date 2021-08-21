@@ -25,8 +25,8 @@ namespace RPG.Skills
 		[SerializeField] private float cooldown;
 		[SerializeField] private bool canBeCancelled;
 		[SerializeField] private TargetBehavior targetBehavior;
-		[SerializeField] private FilterStrategy[] filterStrategy;
 		[SerializeField] private SkillBehavior skillBehavior;
+		[SerializeField] private FilterStrategy[] filterStrategy;
 		[SerializeField] private EffectsStrategy[] startFx;
 		[SerializeField] private EffectsStrategy[] endFx;
 

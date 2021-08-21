@@ -1,0 +1,181 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4954357873010778341
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 482374719650667711, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: TrailModule.colorOverTrail.maxGradient.key1.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 482374719650667711, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: TrailModule.colorOverTrail.maxGradient.key1.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 482374719650667711, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: TrailModule.colorOverTrail.maxGradient.key1.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 482374719650667711, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: TrailModule.colorOverTrail.maxGradient.ctime0
+      value: 26021
+      objectReference: {fileID: 0}
+    - target: {fileID: 482374719650667711, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: TrailModule.colorOverTrail.maxGradient.ctime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 482374719650667711, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: TrailModule.colorOverTrail.maxGradient.m_NumColorKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 482374719650667711, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: TrailModule.colorOverLifetime.maxColor.g
+      value: 0.5199262
+      objectReference: {fileID: 0}
+    - target: {fileID: 482374719650667711, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: TrailModule.colorOverLifetime.minColor.g
+      value: 0.2627541
+      objectReference: {fileID: 0}
+    - target: {fileID: 482374719650667711, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: TrailModule.colorOverLifetime.minColor.b
+      value: 0.23137254
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685381839345, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.98039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685381839345, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.65288204
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685381839345, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.5686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685381839345, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0.29469448
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685381839345, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0.23137254
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212160, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212162, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.98039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212162, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.52156866
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212162, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.5834049
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212167, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_Name
+      value: Spell_Light_2_Red Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006685481212167, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006686556845019, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.50977993
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006686556845019, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0.760345
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737006686556845019, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0.7122642
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150137555222012480, guid: 44cc181682f31bf408c76340d76b0819,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.5828587
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 44cc181682f31bf408c76340d76b0819, type: 3}

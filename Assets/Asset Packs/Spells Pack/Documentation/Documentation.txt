@@ -1,0 +1,69 @@
+﻿Thanks for purchasing!
+
+● This Package Supports: 
+
+•Standard Render Pipeline Support.
+•LWRP Materials and Prefabs. (Only for 2019.2.18f1 or higher)
+•URP (Universal Render Pipeline) Support (Only for 2019.3.15f1 or higher)
+•HDRP(High Definition Render Pipeline) Support. (2019.3.15f1 or Higher)
+
+● How to use Render Pipelines: 
+
+	●LWRP (Lightweight Render Pipeline) (Only for 2019.2.18f1 or higher):
+	
+	-First you have to import the package with the optimized LWRP materials, you can find this package in:
+		Spells Pack\Packages\LWRP (2019.2.18+) and double click it.
+	-Go to Window > Package Manager > Lightweight Render Pipeline And Install it.
+	-When is done all materials look with magenta color, to solve this you need to create a Render Settings. 
+	You can use the settings created for this package or create your own settings.
+	-If you wanna use the settings for this package:
+		go to Spells Pack\LWRP\Demo_LWRP\Settings\LightweightRenderPipelineAsset.
+	-If you wanna create your own settings: 
+		go to the project window and right click and Create > Rendering > Lightweight Pipeline Asset.
+	-Now you need to put this on Graphics Settings:
+		go to Edit in the Unity window > Project Settings > Graphics and drag the Lightweight Pipeline Asset in the Scriptable Render Pipeline Settings.
+	-Open the Demo Scene include in LWRP folder and you are ready to go. 
+
+	//------------------------//
+
+	●URP (Universal Render Pipeline) (Only for 2019.3.15f1 or higher):
+	
+	-First you have to import the package with the optimized URP materials, you can find this package in:
+		Spells Pack\Packages\URP (2019.3.15+) and double click it.
+	-Go to Window > Package Manager > Universal Render Pipeline And Install it.
+	-When is done all materials look with magenta color, to solve this you need to create a Render Settings. 
+	You can use the settings created for this package or create your own settings.
+	-If you wanna use the settings for this package:
+		go to Spells Pack\LWRP(URP)\Demo_LWRP\Settings\UniversalRenderPipelineAsset.
+	-If you wanna create your own settings: 
+		go to the project window and right click and Create > Rendering > Universal Render Pipeline Asset.
+	-Now you need to put this on Graphics Settings:
+		go to Edit in the Unity window > Project Settings > Graphics and drag the UniversalRenderPipelineAsset in the Scriptable Render Pipeline Settings.
+	-Open the Demo Scene include in LWRP(URP) folder and you are ready to go. 
+
+	//------------------------//
+
+	●HDRP(High Definition Render Pipeline) (2019.3.15f1 or Higher):
+	
+	-First you have to import the package with the optimized HDRP materials, you can find this package in:
+		Spells Pack\Packages\HDRP (2019.3.15+) and double click it.
+	-Go to Window > Package Manager > High Definition Render Pipeline And Install it.
+	-When is done all materials look with magenta color, to solve this you need to create a Render Settings. 
+	You can use the settings created for this package or create your own settings.
+	-If you wanna use the settings for this package:
+		go to Spells Pack\HDRP\Demo_HDRP\Settings\HDRenderPipelineAsset.
+	-If you wanna create your own settings: 
+		go to the project window and right click and Create > Rendering > High Definition Render Pipeline Asset.
+	-Now you need to put this on Graphics Settings:
+		go to Edit in the Unity window > Project Settings > Graphics and drag the HDRenderPipelineAsset in the Scriptable Render Pipeline Settings.
+	-Open the Demo Scene include in Demo_HDRP folder and you are ready to go. 
+
+●Linear Color Space:
+
+	-Is not necessary to do this, but everything looks great with this.
+	-Go to Edit in the Unity window > Project Settings > Player > In the inspector go to Other Settings > Rendering > Color Space and choose Linear.
+
+● If you need Help: 
+	-Send an email to Zakhanfx@hotmail.com.
+
+● Get more Projectiles with the same Esthetic of Spells Pack with Archer Pack here: https://assetstore.unity.com/packages/vfx/particles/spells/archer-pack-194309

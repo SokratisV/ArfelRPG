@@ -19,11 +19,11 @@ MonoBehaviour:
   cooldown: 2
   canBeCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 72b066b3bab1e044582492674d565224, type: 2}
+  skillBehavior: {fileID: 11400000, guid: 9fdde4feed1773843a88a40af1b2943c, type: 2}
   filterStrategy:
   - {fileID: 11400000, guid: 0ea09a6bd6d583d429d11484b6769e19, type: 2}
-  skillBehavior: {fileID: 11400000, guid: 9fdde4feed1773843a88a40af1b2943c, type: 2}
-  startFx: []
+  startFx:
+  - {fileID: 11400000, guid: de499456e5f93164a864ea7033243f4b, type: 2}
   endFx:
   - {fileID: 11400000, guid: 29ae497c95777e347bc3f715f5bec288, type: 2}
-  - {fileID: 11400000, guid: de499456e5f93164a864ea7033243f4b, type: 2}
   - {fileID: 11400000, guid: e0487668a3d9b354681dc4251dbebc89, type: 2}

@@ -66,6 +66,9 @@
      <Compile Include="Assets\Asset Packs\Standard Assets\ParticleSystems\Scripts\Hose.cs" />
      <Compile Include="Assets\Asset Packs\Kevin Iglesias\Melee Warrior Animations\Scripts\MeleeWarriorShieldRotator.cs" />
      <Compile Include="Assets\Asset Packs\Kevin Iglesias\Melee Warrior Animations\Scripts\MeleeWarriorLeftHandIK.cs" />
+     <Compile Include="Assets\Asset Packs\Spells Pack\Demo\Scripts\Projectile.cs" />
+     <Compile Include="Assets\Asset Packs\Spells Pack\Demo\Scripts\CreateProjectile.cs" />
+     <Compile Include="Assets\Asset Packs\Spells Pack\Demo\Scripts\Demo.cs" />
      <None Include="Assets\Asset Packs\Synty - Polygon Student Sample\README - Usage Rights for these assets.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -78,18 +81,22 @@
      <None Include="Assets\Asset Packs\SimpleFX\Materials\UnlitVertexColour_Alpha.shader" />
      <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\Changelog.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\Projectors\Guidelines.txt" />
+     <None Include="Assets\Asset Packs\Spells Pack\Demo\Environment\Shaders\Rock.shader" />
      <None Include="Assets\Asset Packs\LeanTween\License.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
+     <None Include="Assets\Asset Packs\Spells Pack\Demo\Environment\Shaders\Vegetation.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\Asset Packs\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Asset Packs\HolyShift\Shaders\FXWaterLowpoly.shader" />
      <None Include="Assets\Asset Packs\Fantasy Chess RPG Character - Arthur\readme.txt" />
      <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\Shaders\GraphMobile.shader" />
+     <None Include="Assets\Asset Packs\Spells Pack\Demo\Environment\Shaders\GroundCover.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
      <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\Font\Northwest-Bold\ERIC-TIRADO-NORTHWEST-LICENSE.txt" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water (Basic)\DO_NOT_WORK_IN_VR.txt" />
+     <None Include="Assets\Asset Packs\Spells Pack\Demo\Environment\Shaders\Terrain.shader" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\Asset Packs\A_piece_of_nature\Readme.txt" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -109,6 +116,7 @@
      <None Include="Assets\Asset Packs\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularDisplacement.shader" />
      <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\Asset Packs\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\Asset Packs\Spells Pack\Documentation\Documentation.txt" />
      <None Include="Assets\Asset Packs\HolyShift\readme.txt" />
      <None Include="Assets\Game\Audio\Fantasy SFX for Particle Distort Texture effect library\readme_Fantasy SFX for Particle Distort Texture effect library.txt" />
      <None Include="Assets\Asset Packs\Graphy - Ultimate Stats Monitor\Font\Roboto\LICENSE.txt" />
@@ -204,6 +212,9 @@
      <Reference Include="UnityEngine.PhysicsModule">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll</HintPath>
      </Reference>
+     <Reference Include="UnityEngine.Physics2DModule">
+     <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEngine.ProfilerModule">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.ProfilerModule.dll</HintPath>
      </Reference>
@@ -228,6 +239,9 @@
      <Reference Include="UnityEngine.SubstanceModule">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll</HintPath>
      </Reference>
+     <Reference Include="UnityEngine.SubsystemsModule">
+     <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubsystemsModule.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEngine.TLSModule">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll</HintPath>
      </Reference>
@@ -242,6 +256,9 @@
      </Reference>
      <Reference Include="UnityEngine.TextRenderingModule">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.TilemapModule">
+     <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UIModule">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
@@ -288,6 +305,12 @@
      <Reference Include="UnityEngine.VFXModule">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll</HintPath>
      </Reference>
+     <Reference Include="UnityEngine.VRModule">
+     <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.VehiclesModule">
+     <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEngine.VideoModule">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
      </Reference>
@@ -296,6 +319,9 @@
      </Reference>
      <Reference Include="UnityEngine.WindModule">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.XRModule">
+     <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor">
      <HintPath>C:/Program Files/Unity/Editor/2021.1.12f1/Editor/Data/Managed/UnityEngine/UnityEditor.dll</HintPath>
