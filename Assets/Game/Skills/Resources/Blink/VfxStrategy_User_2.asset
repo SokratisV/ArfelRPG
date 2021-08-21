@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: VfxStrategy_User_2
   m_EditorClassIdentifier: 
   targetChoice: 0
+  parent: 1
   vfx:
   - {fileID: 2623578689131902494, guid: c3769bd4acde34e4fb2cd514e11b03d2, type: 3}
-  destroyAfter: 0.7
+  destroyAfter: 0.85

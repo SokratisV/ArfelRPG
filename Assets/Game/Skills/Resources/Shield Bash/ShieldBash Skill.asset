@@ -15,12 +15,12 @@ MonoBehaviour:
   skillID: 0c98239f-7632-4970-9ee1-e579aa7cf02a
   displayName: ShieldBash
   description: Bash your enemies with your shield!
-  icon: {fileID: 21300000, guid: 8a96b38c76be79946a150249547b07bc, type: 3}
+  icon: {fileID: 21300000, guid: a42b3b2bb82524b4c9e97aca1cb294fe, type: 3}
   cooldown: 5
   canBeCancelled: 1
   targetBehavior: {fileID: 11400000, guid: 9a7d5ec803faa1048ba29e7c25dafc69, type: 2}
-  filterStrategy: []
   skillBehavior: {fileID: 11400000, guid: d5ea3d00d631b1043aefb292bf671752, type: 2}
+  filterStrategy: []
   startFx:
   - {fileID: 11400000, guid: e31af9ead1b4bac4297a979c600bbcee, type: 2}
   endFx: []
