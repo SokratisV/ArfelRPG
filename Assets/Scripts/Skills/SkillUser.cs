@@ -171,7 +171,6 @@ namespace RPG.Skills
 		public void CancelAction()
 		{
 			OnActionCancelled?.Invoke();
-			_animator.SetTrigger(CancelAnimation);
 			if (HasTarget) _mover.CancelAction();
 			_skillIndicator.HideIndicator();
 			_currentCastingSkill = null;

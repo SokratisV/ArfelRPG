@@ -11,7 +11,7 @@ namespace RPG.Control
 		private Vector3 _inputValue;
 		private Vector3 _newPosition;
 		private readonly Transform _cameraTransform;
-		private const float Speed = 150;
+		private const float Speed = 200;
 
 		public ManualInputController(Mover mover, Camera mainCam)
 		{

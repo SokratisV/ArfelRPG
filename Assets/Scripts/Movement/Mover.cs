@@ -17,16 +17,16 @@ namespace RPG.Movement
 		public float CurrentSpeed { get; set; }
 		public NavMeshAgent MeshAgent { get; private set; }
 		
-		[SerializeField] private float maxSpeed = 6f, distanceBeforeStopAnimation = 5f, timeBeforeIdle = 10f;
+		[SerializeField] private float maxSpeed = 6f, timeBeforeIdle = 10f;
 
-		private bool _lockMovement, _travelledStopDistance;
-		private float _distanceBeforeReachingDestination, _idleTimer = 5f;
+		private bool _lockMovement;
+		private float _distanceBeforeReachingDestination, _idleTimer = 5f, _timeMoved;
 		private Health _health;
 		private Animator _animator;
 		private Coroutine _selfUpdateRoutine;
 		private ActionScheduler _actionScheduler;
 		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
-		private static readonly int StopAnimation = Animator.StringToHash("stopAnimation");
+		private static readonly int SuddenStop = Animator.StringToHash("suddenStop");
 		private static readonly int IdleAnimations = Animator.StringToHash("idleAnimations");
 		private static readonly int DodgeHash = Animator.StringToHash("dodge");
 
@@ -80,12 +80,11 @@ namespace RPG.Movement
 		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
 			if (!MeshAgent.enabled || _lockMovement) return;
-			_travelledStopDistance = (destination - transform.position).sqrMagnitude >= distanceBeforeStopAnimation * distanceBeforeStopAnimation;
-			_animator.SetBool(StopAnimation, _travelledStopDistance);
 			MeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
 			MeshAgent.speed = CurrentSpeed * Mathf.Clamp01(speedFraction);
 			MeshAgent.isStopped = false;
+			_idleTimer = 0;
 		}
 
 		public void Dash(Vector3 destination, float duration)
@@ -122,6 +121,8 @@ namespace RPG.Movement
 			if (!MeshAgent.enabled) return;
 			MeshAgent.isStopped = true;
 			_idleTimer = 0;
+			_timeMoved = 0;
+			_animator.ResetTrigger(SuddenStop);
 		}
 
 		public void CompleteAction()
@@ -129,6 +130,8 @@ namespace RPG.Movement
 			MeshAgent.isStopped = true;
 			_actionScheduler.CompleteAction();
 			_idleTimer = 0;
+			_timeMoved = 0;
+			_animator.ResetTrigger(SuddenStop);
 			OnActionComplete?.Invoke();
 		}
 
@@ -179,6 +182,7 @@ namespace RPG.Movement
 
 		private void DisableMover()
 		{
+			MeshAgent.velocity = Vector3.zero;
 			MeshAgent.enabled = false;
 			_selfUpdateRoutine.StopCoroutine(this);
 		}
@@ -198,6 +202,8 @@ namespace RPG.Movement
 		{
 			if (!MeshAgent.isStopped)
 			{
+				_timeMoved += Time.deltaTime;
+				if (_timeMoved > 2) _animator.SetTrigger(SuddenStop);
 				if (Helper.IsWithinDistance(transform.position, MeshAgent.destination, _distanceBeforeReachingDestination))
 				{
 					CompleteAction();
