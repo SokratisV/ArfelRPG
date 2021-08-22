@@ -13,16 +13,16 @@ namespace RPG.Movement
 	public class Mover : MonoBehaviour, IAction, ISaveable
 	{
 		public event Action OnActionComplete;
-		public bool IsMoving => !_navMeshAgent.isStopped;
+		public bool IsMoving => !MeshAgent.isStopped;
 		public float CurrentSpeed { get; set; }
-
+		public NavMeshAgent MeshAgent { get; private set; }
+		
 		[SerializeField] private float maxSpeed = 6f, distanceBeforeStopAnimation = 5f, timeBeforeIdle = 10f;
 
 		private bool _lockMovement, _travelledStopDistance;
 		private float _distanceBeforeReachingDestination, _idleTimer = 5f;
 		private Health _health;
 		private Animator _animator;
-		private NavMeshAgent _navMeshAgent;
 		private Coroutine _selfUpdateRoutine;
 		private ActionScheduler _actionScheduler;
 		private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
@@ -34,7 +34,7 @@ namespace RPG.Movement
 
 		private void Awake()
 		{
-			_navMeshAgent = GetComponent<NavMeshAgent>();
+			MeshAgent = GetComponent<NavMeshAgent>();
 			_animator = GetComponent<Animator>();
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_health = GetComponent<Health>();
@@ -79,30 +79,30 @@ namespace RPG.Movement
 
 		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
-			if (!_navMeshAgent.enabled || _lockMovement) return;
+			if (!MeshAgent.enabled || _lockMovement) return;
 			_travelledStopDistance = (destination - transform.position).sqrMagnitude >= distanceBeforeStopAnimation * distanceBeforeStopAnimation;
 			_animator.SetBool(StopAnimation, _travelledStopDistance);
-			_navMeshAgent.destination = destination;
+			MeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
-			_navMeshAgent.speed = CurrentSpeed * Mathf.Clamp01(speedFraction);
-			_navMeshAgent.isStopped = false;
+			MeshAgent.speed = CurrentSpeed * Mathf.Clamp01(speedFraction);
+			MeshAgent.isStopped = false;
 		}
 
 		public void Dash(Vector3 destination, float duration)
 		{
 			_lockMovement = true;
-			var initialAcceleration = _navMeshAgent.acceleration;
+			var initialAcceleration = MeshAgent.acceleration;
 			var currentPosition = transform.position;
 			var speedRequired = Vector3.Distance(currentPosition, destination) / duration;
 			Helper.DoAfterSeconds(() =>
 			{
-				_navMeshAgent.acceleration = initialAcceleration;
+				MeshAgent.acceleration = initialAcceleration;
 				_lockMovement = false;
 			}, duration, this);
-			_navMeshAgent.acceleration *= 2;
-			_navMeshAgent.destination = destination;
-			_navMeshAgent.speed = speedRequired;
-			_navMeshAgent.isStopped = false;
+			MeshAgent.acceleration *= 2;
+			MeshAgent.destination = destination;
+			MeshAgent.speed = speedRequired;
+			MeshAgent.isStopped = false;
 		}
 
 		public void Dodge(Vector3 destination)
@@ -113,20 +113,20 @@ namespace RPG.Movement
 
 		public void Blink(Vector3 point)
 		{
-			DisableMoverFor(.4f, () => _navMeshAgent.Warp(point));
+			DisableMoverFor(.4f, () => MeshAgent.Warp(point));
 			RotateOverTime(0.2f, point);
 		}
 
 		public void CancelAction()
 		{
-			if (!_navMeshAgent.enabled) return;
-			_navMeshAgent.isStopped = true;
+			if (!MeshAgent.enabled) return;
+			MeshAgent.isStopped = true;
 			_idleTimer = 0;
 		}
 
 		public void CompleteAction()
 		{
-			_navMeshAgent.isStopped = true;
+			MeshAgent.isStopped = true;
 			_actionScheduler.CompleteAction();
 			_idleTimer = 0;
 			OnActionComplete?.Invoke();
@@ -146,7 +146,7 @@ namespace RPG.Movement
 
 		public void EnableMover()
 		{
-			_navMeshAgent.enabled = true;
+			MeshAgent.enabled = true;
 			_selfUpdateRoutine = _selfUpdateRoutine.StartCoroutine(this, UpdateMover());
 		}
 
@@ -179,7 +179,7 @@ namespace RPG.Movement
 
 		private void DisableMover()
 		{
-			_navMeshAgent.enabled = false;
+			MeshAgent.enabled = false;
 			_selfUpdateRoutine.StopCoroutine(this);
 		}
 
@@ -196,9 +196,9 @@ namespace RPG.Movement
 
 		private void CheckIfDestinationIsReached()
 		{
-			if (!_navMeshAgent.isStopped)
+			if (!MeshAgent.isStopped)
 			{
-				if (Helper.IsWithinDistance(transform.position, _navMeshAgent.destination, _distanceBeforeReachingDestination))
+				if (Helper.IsWithinDistance(transform.position, MeshAgent.destination, _distanceBeforeReachingDestination))
 				{
 					CompleteAction();
 				}
@@ -207,7 +207,7 @@ namespace RPG.Movement
 
 		private void UpdateAnimator()
 		{
-			var velocity = _navMeshAgent.velocity;
+			var velocity = MeshAgent.velocity;
 			var localVelocity = transform.InverseTransformDirection(velocity);
 			var speed = localVelocity.z;
 			_animator.SetFloat(ForwardSpeed, speed);
@@ -225,9 +225,9 @@ namespace RPG.Movement
 		public void RestoreState(object state)
 		{
 			var position = (SerializableVector3) state;
-			_navMeshAgent.enabled = false;
+			MeshAgent.enabled = false;
 			transform.position = position.ToVector();
-			_navMeshAgent.enabled = true;
+			MeshAgent.enabled = true;
 		}
 
 		public object CaptureState() => new SerializableVector3(transform.position);

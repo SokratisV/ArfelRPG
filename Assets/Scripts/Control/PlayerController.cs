@@ -22,6 +22,7 @@ namespace RPG.Control
 		private Mover _mover;
 		private SkillUser _skillUser;
 		private Camera _mainCamera;
+		private ManualInputController _manualInput;
 		private float _dodgeTimer;
 		private bool _isDraggingUI = false;
 		private bool _hasInputBeenReset = true;
@@ -37,6 +38,8 @@ namespace RPG.Control
 			_mainCamera = Camera.main;
 		}
 
+		private void Start() => _manualInput = new ManualInputController(_mover);
+
 		private void Update()
 		{
 			if (HandleDodge()) return;
@@ -48,6 +51,7 @@ namespace RPG.Control
 			}
 
 			ResetInput();
+			_manualInput.Update();
 			if (HandleSkillUsage()) return;
 			if (InteractWithComponent()) return;
 			if (InteractWithMovement()) return;
@@ -255,7 +259,6 @@ namespace RPG.Control
 		private Ray GetMouseRay() => _mainCamera.ScreenPointToRay(Input.mousePosition);
 
 		#endregion
-		
 		[Serializable]
 		private struct CursorMapping
 		{

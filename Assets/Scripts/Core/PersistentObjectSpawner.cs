@@ -5,6 +5,7 @@ namespace RPG.Core
 	public class PersistentObjectSpawner : MonoBehaviour
 	{
 		[SerializeField] private GameObject persistentObjectPrefab;
+		[SerializeField] private GameObject profilingTool;
 		private static bool _hasSpawned;
 
 		private void Awake()
@@ -16,8 +17,11 @@ namespace RPG.Core
 
 		private void SpawnPersistentObjects()
 		{
-			var persistentObject = Instantiate(persistentObjectPrefab);
-			DontDestroyOnLoad(persistentObject);
+			DontDestroyOnLoad(Instantiate(persistentObjectPrefab));
+			if (Debug.isDebugBuild)
+			{
+				DontDestroyOnLoad(Instantiate(profilingTool));
+			}
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RPG.Utils;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace RPG.Stats
 		public event Action OnLevelUp;
 		private Experience _experience;
 		private LazyValue<int> _currentLevel;
+		private List<IModifierProvider> _modifierProviders = new List<IModifierProvider>();
 
 		private void Awake()
 		{
@@ -23,7 +25,11 @@ namespace RPG.Stats
 			_currentLevel = new LazyValue<int>(CalculateLevel);
 		}
 
-		private void Start() => _currentLevel.ForceInit();
+		private void Start()
+		{
+			_currentLevel.ForceInit();
+			_modifierProviders = GetComponents<IModifierProvider>().ToList();
+		}
 
 		private void OnEnable()
 		{
@@ -61,13 +67,31 @@ namespace RPG.Stats
 		private float GetAdditiveModifier(Stat stat)
 		{
 			if (!shouldUseModifiers) return 0;
-			return GetComponents<IModifierProvider>().SelectMany(provider => provider.GetAdditiveModifiers(stat)).Sum();
+			float sum = 0;
+			foreach (var provider in _modifierProviders)
+			{
+				foreach (var modifier in provider.GetAdditiveModifiers(stat))
+				{
+					sum += modifier;
+				}
+			}
+
+			return sum;
 		}
 
 		private float GetPercentageModifier(Stat stat)
 		{
 			if (!shouldUseModifiers) return 0;
-			return GetComponents<IModifierProvider>().SelectMany(provider => provider.GetPercentageModifiers(stat)).Sum();
+			float sum = 0;
+			foreach (var provider in _modifierProviders)
+			{
+				foreach (var modifier in provider.GetPercentageModifiers(stat))
+				{
+					sum += modifier;
+				}
+			}
+
+			return sum;
 		}
 
 		public int GetLevel() => _currentLevel.Value;

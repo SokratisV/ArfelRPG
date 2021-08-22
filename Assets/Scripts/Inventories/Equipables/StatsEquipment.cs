@@ -6,10 +6,32 @@ namespace RPG.Inventories
 {
 	public class StatsEquipment : Equipment, IModifierProvider
 	{
-		public IEnumerable<float> GetAdditiveModifiers(Stat stat) =>
-			GetAllPopulatedSlots().Select(GetItemInSlot).OfType<IModifierProvider>().SelectMany(item => item.GetAdditiveModifiers(stat));
+		public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+		{
+			foreach (var slot in GetAllPopulatedSlots())
+			{
+				var item = GetItemInSlot(slot) as IModifierProvider;
+				if (item == null) continue;
 
-		public IEnumerable<float> GetPercentageModifiers(Stat stat) =>
-			GetAllPopulatedSlots().Select(GetItemInSlot).OfType<IModifierProvider>().SelectMany(item => item.GetPercentageModifiers(stat));
+				foreach (var modifier in item.GetAdditiveModifiers(stat))
+				{
+					yield return modifier;
+				}
+			}
+		}
+
+		public IEnumerable<float> GetPercentageModifiers(Stat stat)
+		{
+			foreach (var slot in GetAllPopulatedSlots())
+			{
+				var item = GetItemInSlot(slot) as IModifierProvider;
+				if (item == null) continue;
+
+				foreach (var modifier in item.GetPercentageModifiers(stat))
+				{
+					yield return modifier;
+				}
+			}
+		}
 	}
 }
