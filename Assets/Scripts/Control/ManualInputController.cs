@@ -7,17 +7,17 @@ namespace RPG.Control
 	public class ManualInputController
 	{
 		private readonly Transform _character;
-		private readonly NavMeshAgent _agent;
 		private readonly Mover _mover;
 		private Vector3 _inputValue;
 		private Vector3 _newPosition;
+		private readonly Transform _cameraTransform;
 		private const float Speed = 150;
 
-		public ManualInputController(Mover mover)
+		public ManualInputController(Mover mover, Camera mainCam)
 		{
 			_mover = mover;
-			_agent = mover.MeshAgent;
-			_character = _agent.transform;
+			_character = mover.MeshAgent.transform;
+			_cameraTransform = mainCam.transform;
 		}
 
 		public void Update()
@@ -34,7 +34,8 @@ namespace RPG.Control
 
 		private void Move()
 		{
-			_newPosition = _character.position + _inputValue * (Time.deltaTime * Speed);
+			if (_inputValue.magnitude < .01f) return;
+			_newPosition = _character.position + MoveDirection() * (Time.deltaTime * Speed);
 			if (NavMesh.SamplePosition(_newPosition, out var hit, .3f, NavMesh.AllAreas))
 			{
 				if ((_character.position - hit.position).magnitude >= .2f)
@@ -42,6 +43,16 @@ namespace RPG.Control
 					_mover.Move(_newPosition);
 				}
 			}
+		}
+
+		private Vector3 MoveDirection()
+		{
+			var camF = _cameraTransform.forward;
+			var camR = _cameraTransform.right;
+			camF.y = 0;
+			camR.y = 0;
+			var moveDirection = camF * _inputValue.z + camR * _inputValue.x;
+			return moveDirection;
 		}
 	}
 }

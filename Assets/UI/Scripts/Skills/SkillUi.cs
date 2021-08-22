@@ -25,7 +25,7 @@ namespace RPG.UI.Skills
 		private void Awake()
 		{
 			_skillUser = SkillUser.GetPlayerSkills();
-			keyBindText.SetText(keyBind.ToString());
+			keyBindText.SetText(Helper.KeyCodeName(keyBind));
 		}
 
 		private void Update()

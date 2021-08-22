@@ -53,7 +53,7 @@ namespace RPG.Core
 			{KeyCode.Alpha4, "4"}
 		};
 
-		public static string KeyCodeName(KeyCode keyCode) => NiceKeyCodeNames.TryGetValue(keyCode, out var name) ? name : "";
+		public static string KeyCodeName(KeyCode keyCode) => NiceKeyCodeNames.TryGetValue(keyCode, out var name) ? name : keyCode.ToString();
 
 		public static float GetPathLength(NavMeshPath path)
 		{

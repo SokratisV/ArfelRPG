@@ -12,6 +12,7 @@ namespace RPG.Skills
 		private int targetChoice;
 
 		[SerializeField] private bool parent;
+		[SerializeField] private Vector3 offset;
 		[SerializeField] private GameObject[] vfx;
 		[SerializeField, Range(0, 15)] private float destroyAfter;
 
@@ -47,7 +48,7 @@ namespace RPG.Skills
 			foreach (var fx in vfx)
 			{
 				var instance = Instantiate(fx);
-				instance.transform.position = target.transform.position;
+				instance.transform.position = target.transform.position + offset;
 				if (parent) instance.transform.SetParent(target.transform);
 				Destroy(instance, destroyAfter);
 			}
@@ -67,7 +68,7 @@ namespace RPG.Skills
 			foreach (var fx in vfx)
 			{
 				var instance = Instantiate(fx);
-				instance.transform.position = position.Value;
+				instance.transform.position = position.Value + offset;
 				Destroy(instance, destroyAfter);
 			}
 		}

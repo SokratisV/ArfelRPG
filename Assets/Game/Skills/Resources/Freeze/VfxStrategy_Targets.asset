@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetChoice: 3
   parent: 0
+  offset: {x: 0, y: 0.05, z: 0}
   vfx:
   - {fileID: 7579983198049091657, guid: 07b5929724d24004bb91688e2a7a7174, type: 3}
-  destroyAfter: 3
+  destroyAfter: 5

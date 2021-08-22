@@ -38,7 +38,7 @@ namespace RPG.Control
 			_mainCamera = Camera.main;
 		}
 
-		private void Start() => _manualInput = new ManualInputController(_mover);
+		private void Start() => _manualInput = new ManualInputController(_mover, _mainCamera);
 
 		private void Update()
 		{
