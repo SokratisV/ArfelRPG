@@ -15,6 +15,7 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorStart(SkillData data)
 		{
+			data.User.GetComponent<Mover>().LockMovementFor(.5f);
 			if(data.Targets != null)
 			{
 				for(var i = data.Targets.Count - 1;i >= 0;i--)

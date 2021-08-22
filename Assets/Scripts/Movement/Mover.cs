@@ -16,7 +16,7 @@ namespace RPG.Movement
 		public bool IsMoving => !MeshAgent.isStopped;
 		public float CurrentSpeed { get; set; }
 		public NavMeshAgent MeshAgent { get; private set; }
-		
+
 		[SerializeField] private float maxSpeed = 6f, timeBeforeIdle = 10f;
 
 		private bool _lockMovement;
@@ -72,19 +72,24 @@ namespace RPG.Movement
 
 		public IAction Move(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
-			_actionScheduler.StartAction(this);
-			MoveWithoutAction(destination, speedFraction, withinDistance);
-			return this;
+			if (MoveWithoutAction(destination, speedFraction, withinDistance))
+			{
+				_actionScheduler.StartAction(this);
+				return this;
+			}
+
+			return null;
 		}
 
-		public void MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
+		public bool MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
-			if (!MeshAgent.enabled || _lockMovement) return;
+			if (!MeshAgent.enabled || _lockMovement) return false;
 			MeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
 			MeshAgent.speed = CurrentSpeed * Mathf.Clamp01(speedFraction);
 			MeshAgent.isStopped = false;
 			_idleTimer = 0;
+			return true;
 		}
 
 		public void Dash(Vector3 destination, float duration)
@@ -110,10 +115,17 @@ namespace RPG.Movement
 			Dash(destination, GlobalValues.DodgeDuration);
 		}
 
-		public void Blink(Vector3 point)
+		public void Blink(Vector3 point, float delay = .4f)
 		{
-			DisableMoverFor(.4f, () => MeshAgent.Warp(point));
 			RotateOverTime(0.2f, point);
+			LockMovementFor(delay + .2f);
+			Helper.DoAfterSeconds(() => { MeshAgent.Warp(point); }, delay, this);
+		}
+
+		public void LockMovementFor(float duration)
+		{
+			_lockMovement = true;
+			Helper.DoAfterSeconds(() => { _lockMovement = false; }, duration, this);
 		}
 
 		public void CancelAction()
@@ -168,16 +180,6 @@ namespace RPG.Movement
 				progress += Time.deltaTime / time;
 				yield return null;
 			}
-		}
-
-		private void DisableMoverFor(float duration, Action extraActionOnEnd = null)
-		{
-			DisableMover();
-			Helper.DoAfterSeconds(() =>
-			{
-				extraActionOnEnd?.Invoke();
-				EnableMover();
-			}, duration, this);
 		}
 
 		private void DisableMover()
