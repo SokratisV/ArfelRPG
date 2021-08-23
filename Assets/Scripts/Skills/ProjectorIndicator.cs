@@ -2,26 +2,24 @@
 
 namespace RPG.Skills
 {
-	public class ProjectorIndicator : ISkillIndicator
+	public class ProjectorIndicator : SkillIndicatorBase, ISkillIndicator
 	{
-		private readonly Transform _parent;
-		private readonly Projector _projector;
-
-		public ProjectorIndicator(GameObject parentObject)
+		private Projector _projector;
+		
+		private void Awake()
 		{
-			_parent = parentObject.transform;
-			_projector = _parent.GetComponentInChildren<Projector>();
+			_projector = GetComponentInChildren<Projector>();
 			_projector.enabled = false;
 		}
 
-		public void ShowIndicator(float radius)
+		public void ShowIndicator(Skill skill, GameObject _)
 		{
-			var sizeAdjustment = radius * 3 / 100;
-			_projector.orthographicSize = radius + sizeAdjustment;
+			var sizeAdjustment = skill.Radius * 3 / 100;
+			_projector.orthographicSize = skill.Radius + sizeAdjustment;
 			_projector.enabled = true;
 		}
 
-		public void UpdateIndicator(Vector3 position) => _parent.position = position;
+		public void UpdateIndicator(Vector3 position) => transform.position = position;
 
 		public void HideIndicator() => _projector.enabled = false;
 	}

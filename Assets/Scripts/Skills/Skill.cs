@@ -47,6 +47,7 @@ namespace RPG.Skills
 		public bool HasCastTime => skillBehavior.HasCastTime();
 		public bool AdjustAnimationSpeed => skillBehavior.AdjustAnimationSpeed;
 		public int AnimationHash => skillBehavior.SkillAnimationNumber();
+		public IndicatorType IndicatorType => targetBehavior.IndicatorType;
 
 		private static Dictionary<string, Skill> SkillLookupCache;
 

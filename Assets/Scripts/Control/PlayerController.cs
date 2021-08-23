@@ -104,7 +104,7 @@ namespace RPG.Control
 			if (!_skillUser.IsPreparingSkill && !_skillUser.CanCurrentSkillBeUsed) return false;
 			if (_skillUser.SkillRequiresTarget == null)
 			{
-				_skillUser.Execute(gameObject);
+				_skillUser.Execute(null);
 				return true;
 			}
 
@@ -123,6 +123,10 @@ namespace RPG.Control
 		private bool RaycastForSkillTarget()
 		{
 			_hits = RaycastAllSorted();
+			if (RaycastNavMesh(out var target, _mover.CanMoveTo))
+			{
+				_skillUser.UpdateIndicatorTarget(target);
+			}
 			foreach (var hit in _hits)
 			{
 				var skillcastables = hit.transform.GetComponents<ISkillcastable>();
@@ -259,6 +263,7 @@ namespace RPG.Control
 		private Ray GetMouseRay() => _mainCamera.ScreenPointToRay(Input.mousePosition);
 
 		#endregion
+
 		[Serializable]
 		private struct CursorMapping
 		{

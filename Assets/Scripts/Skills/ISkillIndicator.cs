@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using RPG.Skills.Behaviors;
+using UnityEngine;
 
 namespace RPG.Skills
 {
 	public interface ISkillIndicator
 	{
-		void ShowIndicator(float radius);
+		IndicatorType IndicatorType();
+		void ShowIndicator(Skill skill, GameObject user);
 		void UpdateIndicator(Vector3 position);
 		void HideIndicator();
 	}

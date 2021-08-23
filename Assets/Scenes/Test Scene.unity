@@ -3094,7 +3094,7 @@ PrefabInstance:
     - target: {fileID: 1376737078588745215, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -478.29785
+      value: -644.8
       objectReference: {fileID: 0}
     - target: {fileID: 1376742326987431053, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
@@ -4581,6 +4581,23 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6279167316776978824, guid: e610e50c6c909474aa62aa5de44d61f6,
+        type: 3}
+      propertyPath: skillIndicatorPrefab.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279167316776978824, guid: e610e50c6c909474aa62aa5de44d61f6,
+        type: 3}
+      propertyPath: skillIndicatorPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 1353609108206151828, guid: 5bcf8e808d864aa4ebb0eb331b834959,
+        type: 3}
+    - target: {fileID: 6279167316776978824, guid: e610e50c6c909474aa62aa5de44d61f6,
+        type: 3}
+      propertyPath: skillIndicatorPrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 1957582523943945294, guid: 9f252d2f983fde341a5e374ac8776290,
+        type: 3}
     - target: {fileID: 6287225435300916833, guid: e610e50c6c909474aa62aa5de44d61f6,
         type: 3}
       propertyPath: m_AnchorMax.y

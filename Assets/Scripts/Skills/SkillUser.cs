@@ -11,7 +11,7 @@ namespace RPG.Skills
 {
 	public partial class SkillUser : MonoBehaviour, IAction, ISaveable, ISpellActionable
 	{
-		[SerializeField] private GameObject skillIndicatorPrefab; 
+		[SerializeField] private SkillIndicatorBase[] skillIndicatorPrefab;
 		public event Action SkillsUpdated;
 		public event Action OnActionComplete, OnActionCancelled;
 		public event Action<Skill> OnSkillCast, OnSkillEnd, OnSkillSelected;
@@ -30,13 +30,15 @@ namespace RPG.Skills
 		private bool _activeListCleanup, _cooldownListCleanup;
 		private float _globalCooldownTimer;
 		private Vector3? _targetPoint;
+		private Vector3 _mousePosition;
 		private GameObject _target;
 		private Mover _mover;
 		private Skill _selectedSkill;
 		private Animator _animator;
 		private Fighter _fighter;
 		private ActionScheduler _actionScheduler;
-		private ISkillIndicator _skillIndicator;
+		private List<ISkillIndicator> _skillIndicators;
+		private ISkillIndicator _currentIndicator;
 		private CastingSkill _currentCastingSkill;
 		private List<CooldownSkill> _skillsOnCooldown = new List<CooldownSkill>();
 		private List<ActivatedSkill> _activatedSkills = new List<ActivatedSkill>();
@@ -59,10 +61,10 @@ namespace RPG.Skills
 			}
 
 			_mover = GetComponent<Mover>();
-			_skillIndicator = new SkillIndicatorQuad(Instantiate(skillIndicatorPrefab));
 			_actionScheduler = GetComponent<ActionScheduler>();
 			_animator = GetComponent<Animator>();
 			_fighter = GetComponent<Fighter>();
+			SetupIndicators();
 		}
 
 		private void OnEnable()
@@ -84,6 +86,7 @@ namespace RPG.Skills
 			UpdateActiveSkills();
 			if (UpdateCastingSkill()) return;
 			MoveToCast();
+			_currentIndicator?.UpdateIndicator(_mousePosition);
 		}
 
 		// Animation event
@@ -107,7 +110,7 @@ namespace RPG.Skills
 				if (!CanSkillBeUsed(skill)) return;
 				_selectedSkill = skill;
 				OnSkillSelected?.Invoke(_selectedSkill);
-				_skillIndicator.ShowIndicator(_selectedSkill.Radius);
+				SelectIndicator();
 			}
 		}
 
@@ -172,7 +175,7 @@ namespace RPG.Skills
 		{
 			OnActionCancelled?.Invoke();
 			if (HasTarget) _mover.CancelAction();
-			_skillIndicator.HideIndicator();
+			_currentIndicator?.HideIndicator();
 			_currentCastingSkill = null;
 			_selectedSkill = null;
 			_target = null;
@@ -195,7 +198,7 @@ namespace RPG.Skills
 				return false;
 			}
 
-			_skillIndicator.UpdateIndicator(target);
+			UpdateIndicatorTarget(target);
 			return _mover.CanMoveTo(target);
 		}
 
@@ -215,6 +218,8 @@ namespace RPG.Skills
 				SkillsUpdated?.Invoke();
 			}
 		}
+		
+		public void UpdateIndicatorTarget(Vector3 target) => _mousePosition = target;
 
 		#endregion
 
@@ -359,7 +364,7 @@ namespace RPG.Skills
 				_targetPoint = null;
 			}
 
-			_skillIndicator.HideIndicator();
+			_currentIndicator?.HideIndicator();
 			_globalCooldownTimer = GlobalValues.GlobalCooldown;
 		}
 
@@ -385,6 +390,30 @@ namespace RPG.Skills
 			if (selectedSkill.HasExtraAnimation) _animator.SetBool(ExtraSkillAnimation, true);
 			_animator.SetTrigger(UseSkill);
 			_animator.SetInteger(SkillAnimationIndex, selectedSkill.AnimationHash);
+		}
+
+		private void SetupIndicators()
+		{
+			_skillIndicators = new List<ISkillIndicator>();
+			foreach (var prefab in skillIndicatorPrefab)
+			{
+				var skillIndicator = Instantiate(prefab);
+				skillIndicator.gameObject.SetActive(false);
+				_skillIndicators.Add(skillIndicator.GetComponent<ISkillIndicator>());
+			}
+		}
+
+		private void SelectIndicator()
+		{
+			foreach (var skillIndicator in _skillIndicators)
+			{
+				if (skillIndicator.IndicatorType() == _selectedSkill.IndicatorType)
+				{
+					_currentIndicator = skillIndicator;
+					_currentIndicator.ShowIndicator(_selectedSkill, gameObject);
+					return;
+				}
+			}
 		}
 
 		private void SwapSkills(WeaponConfig config)

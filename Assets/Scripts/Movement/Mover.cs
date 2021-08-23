@@ -20,7 +20,7 @@ namespace RPG.Movement
 		[SerializeField] private float maxSpeed = 6f, timeBeforeIdle = 10f;
 
 		private bool _lockMovement;
-		private float _distanceBeforeReachingDestination, _idleTimer = 5f, _timeMoved;
+		private float _distanceBeforeReachingDestination, _idleTimer = 5f, _timeMoved, _distanceTravelled;
 		private Health _health;
 		private Animator _animator;
 		private Coroutine _selfUpdateRoutine;
