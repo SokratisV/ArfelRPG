@@ -353,6 +353,10 @@ namespace RPG.Skills
 			if (_selectedSkill.HasCastTime)
 			{
 				_currentCastingSkill = new CastingSkill(_selectedSkill, data.Value);
+				if (!CanCurrentSkillBeCancelled)
+				{
+					_mover.LockMovementFor(_currentCastingSkill.Skill.Duration + .1f);
+				}
 			}
 			else
 			{

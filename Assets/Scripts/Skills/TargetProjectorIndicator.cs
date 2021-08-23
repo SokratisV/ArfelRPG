@@ -2,7 +2,7 @@
 
 namespace RPG.Skills
 {
-	public class ProjectorIndicator : SkillIndicatorBase, ISkillIndicator
+	public class TargetProjectorIndicator : SkillIndicatorBase, ISkillIndicator
 	{
 		private Projector _projector;
 		

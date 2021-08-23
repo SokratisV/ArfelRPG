@@ -467,6 +467,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1782295188400502906, guid: 5bcf8e808d864aa4ebb0eb331b834959,
         type: 3}
+    - target: {fileID: 5857183086093753042, guid: c51614e0caef2456ca330cadd5c96f32,
+        type: 3}
+      propertyPath: skillIndicatorPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 1353609108206151828, guid: 5bcf8e808d864aa4ebb0eb331b834959,
+        type: 3}
+    - target: {fileID: 5857183086093753042, guid: c51614e0caef2456ca330cadd5c96f32,
+        type: 3}
+      propertyPath: skillIndicatorPrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 1957582523943945294, guid: 9f252d2f983fde341a5e374ac8776290,
+        type: 3}
+    - target: {fileID: 5857183086093753042, guid: c51614e0caef2456ca330cadd5c96f32,
+        type: 3}
+      propertyPath: skillIndicatorPrefab.Array.data[2]
+      value: 
+      objectReference: {fileID: 5166731959955376441, guid: 226b3909f74d723418574f7d96179918,
+        type: 3}
     - target: {fileID: 8471421742060907762, guid: c51614e0caef2456ca330cadd5c96f32,
         type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[1].m_Target

@@ -2,6 +2,6 @@
 {
 	public enum IndicatorType
 	{
-		None, Line, Cone, Circle
+		None, Line, Cone, TargetCircle, PlayerCircle 
 	}
 }

@@ -5,7 +5,6 @@ namespace RPG.Skills.Behaviors
 {
 	public abstract class TargetBehavior : ScriptableObject
 	{
-		[SerializeField] private IndicatorType indicatorType;
 		//-1 is unlimited range
 		[Range(-1, 20)] [SerializeField] protected float minimumClickRange;
 		public virtual float GetRadius() => 0;
@@ -15,7 +14,6 @@ namespace RPG.Skills.Behaviors
 		/// </summary>
 		public abstract bool? RequireTarget();
 		public virtual float GetMinRange() => minimumClickRange;
-		public IndicatorType IndicatorType => indicatorType;
 
 		//Return false when it only cares about the point
 		public abstract bool GetTargets(out List<GameObject> targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null);

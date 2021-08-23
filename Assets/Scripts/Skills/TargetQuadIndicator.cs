@@ -2,7 +2,7 @@
 
 namespace RPG.Skills
 {
-	public class QuadIndicator : SkillIndicatorBase, ISkillIndicator
+	public class TargetQuadIndicator : SkillIndicatorBase, ISkillIndicator
 	{
 		public void ShowIndicator(Skill skill, GameObject _)
 		{
