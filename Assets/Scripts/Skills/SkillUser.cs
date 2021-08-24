@@ -176,6 +176,7 @@ namespace RPG.Skills
 			OnActionCancelled?.Invoke();
 			if (HasTarget) _mover.CancelAction();
 			_currentIndicator?.HideIndicator();
+			_currentIndicator = null;
 			_currentCastingSkill = null;
 			_selectedSkill = null;
 			_target = null;
@@ -369,6 +370,7 @@ namespace RPG.Skills
 			}
 
 			_currentIndicator?.HideIndicator();
+			_currentIndicator = null;
 			_globalCooldownTimer = GlobalValues.GlobalCooldown;
 		}
 
@@ -409,6 +411,8 @@ namespace RPG.Skills
 
 		private void SelectIndicator()
 		{
+			_currentIndicator?.HideIndicator();
+			_currentIndicator = null;
 			foreach (var skillIndicator in _skillIndicators)
 			{
 				if (skillIndicator.IndicatorType() == _selectedSkill.IndicatorType)

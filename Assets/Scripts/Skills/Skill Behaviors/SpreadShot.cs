@@ -8,14 +8,27 @@ namespace RPG.Skills.Behaviors
 	public class SpreadShot : SkillBehavior
 	{
 		[SerializeField] private Projectile projectile;
-		[Min(0)] [SerializeField] private float projectileSpeed;
-		[Min(0)] [SerializeField] private float damage;
-		[Range(1, 90)] [SerializeField] private float angleBetweenEachProjectile;
-		[Range(0, 90)] [SerializeField] private float dynamicAngle;
-		[Min(1)] [SerializeField] private int numberOfProjectiles;
+		[SerializeField, Min(1)] private float distanceBeforeDestroy;
+		[SerializeField, Min(0)] private float projectileSpeed;
+		[SerializeField, Min(0)] private float damage;
+		[SerializeField, Range(1, 90)] private float angleBetweenEachProjectile;
+		[SerializeField, Range(0, 90)] private float dynamicAngle;
+		[SerializeField, Min(1)] private int numberOfProjectiles;
 
 		public override bool HasCastTime() => true;
 		public override int SkillAnimationNumber() => 2;
+
+		public override float SpecialFloat1()
+		{
+			if (numberOfProjectiles % 2 == 0)
+			{
+				return numberOfProjectiles * angleBetweenEachProjectile;
+			}
+
+			return (numberOfProjectiles - 1) * angleBetweenEachProjectile;
+		}
+
+		public override float SpecialFloat2() => distanceBeforeDestroy;
 
 		public override void BehaviorStart(SkillData data)
 		{
@@ -56,13 +69,13 @@ namespace RPG.Skills.Behaviors
 			for (var i = 1; i <= (numberOfProjectiles - 1) / 2; i++)
 			{
 				projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
-				projectileInstance.Setup(user, damage, projectileSpeed);
+				projectileInstance.Setup(user, damage, projectileSpeed, distanceBeforeDestroy);
 			}
 
 			for (var i = -1; i >= -(numberOfProjectiles - 1) / 2; i--)
 			{
 				projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
-				projectileInstance.Setup(user, damage, projectileSpeed);
+				projectileInstance.Setup(user, damage, projectileSpeed, distanceBeforeDestroy);
 			}
 		}
 
@@ -72,7 +85,7 @@ namespace RPG.Skills.Behaviors
 			{
 				if (i == 0) continue;
 				var projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
-				projectileInstance.Setup(user, damage, projectileSpeed);
+				projectileInstance.Setup(user, damage, projectileSpeed, distanceBeforeDestroy);
 			}
 		}
 

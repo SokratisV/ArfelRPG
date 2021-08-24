@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d785fb9540714a7fa4b23f81116ada61, type: 3}
   m_Name: ShakeStrategy
   m_EditorClassIdentifier: 
-  shakeEvent: {fileID: 0}
+  shakeEvent: {fileID: 11400000, guid: 8c4e3c83273163e42a296a53baa2a6dd, type: 2}
   shakeData:
-    intensity: 0
-    duration: 0
+    intensity: 0.75
+    duration: 1

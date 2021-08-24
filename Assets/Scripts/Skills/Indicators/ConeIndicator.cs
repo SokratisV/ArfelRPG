@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace RPG.Skills
 {
-	public class LineIndicator : SkillIndicatorBase, ISkillIndicator
+	public class ConeIndicator : SkillIndicatorBase, ISkillIndicator
 	{
-		[SerializeField] private Transform lineTransform;
+		[SerializeField] private Image coneImage;
 		private Transform _user;
-		
+
 		public void ShowIndicator(Skill skill, GameObject user)
 		{
 			_user = user.transform;
-			lineTransform.localScale = new Vector3(1, skill.CastingRange, 1);
-			lineTransform.localPosition = new Vector3(0, .01f, 0.5f * skill.CastingRange);
+			coneImage.fillAmount = skill.SpecialFloat1 / 360;
+			coneImage.rectTransform.rotation = Quaternion.Euler(90, skill.SpecialFloat1 / 2, 0);
+			var indicatorRange = skill.SpecialFloat2 > 0 ? skill.SpecialFloat2 : 15;
+			coneImage.transform.localScale = Vector3.one * indicatorRange;
 			gameObject.SetActive(true);
 		}
 

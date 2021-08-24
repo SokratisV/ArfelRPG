@@ -232,8 +232,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc8a9acb0c34b2eb2d559243ab52435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIndicatorPrefab: {fileID: 1782295188400502906, guid: 5bcf8e808d864aa4ebb0eb331b834959,
-    type: 3}
+  skillIndicatorPrefab:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: -2667835669673816029, guid: cde363b68ddaa6d4785a6f8018beeb14, type: 3}
 --- !u!114 &6623706442341413652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,10 +346,6 @@ MonoBehaviour:
       hotspot: {x: 0, y: 0}
     - texture: {fileID: 2800000, guid: 13b47201502803547bf2c87d10639cb9, type: 3}
       hotspot: {x: 0, y: 0}
-  _manualInput:
-    _inputValue: {x: 0, y: 0, z: 0}
-    newPosition: {x: 0, y: 0, z: 0}
-    speed: 0
 --- !u!114 &8946927131169397361
 MonoBehaviour:
   m_ObjectHideFlags: 0

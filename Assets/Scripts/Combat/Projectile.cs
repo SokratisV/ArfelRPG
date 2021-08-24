@@ -33,7 +33,7 @@ namespace RPG.Combat
 			transform.Translate(Vector3.forward * (speed * Time.deltaTime));
 		}
 
-		private void Setup(GameObject instigator, float damage, Health target = null, Vector3? targetPoint = null, float newSpeed = 0)
+		private void Setup(GameObject instigator, float damage, Health target = null, Vector3? targetPoint = null, float newSpeed = 0, float lifeTime = -1)
 		{
 			_damage = damage;
 			_target = target;
@@ -41,12 +41,12 @@ namespace RPG.Combat
 			_instigator = instigator;
 			_targetPoint = targetPoint;
 			if (newSpeed > 0) speed = newSpeed;
-			Destroy(gameObject, maxLifeTime);
+			Destroy(gameObject, lifeTime > 0 ? lifeTime : maxLifeTime);
 		}
 
-		public void Setup(Vector3 targetPoint, GameObject instigator, float damage, float newSpeed = 0) => Setup(instigator, damage, null, targetPoint, newSpeed);
-		public void Setup(Health target, GameObject instigator, float damage, float newSpeed = 0) => Setup(instigator, damage, target, newSpeed: newSpeed);
-		public void Setup(GameObject instigator, float damage, float newSpeed = 0) => Setup(instigator, damage, null, null, newSpeed);
+		public void Setup(Vector3 targetPoint, GameObject instigator, float damage, float newSpeed = 0, float lifeTime = -1) => Setup(instigator, damage, null, targetPoint, newSpeed, lifeTime);
+		public void Setup(Health target, GameObject instigator, float damage, float newSpeed = 0, float lifeTime = -1) => Setup(instigator, damage, target, newSpeed: newSpeed, lifeTime:lifeTime);
+		public void Setup(GameObject instigator, float damage, float newSpeed = 0, float lifeTime = -1) => Setup(instigator, damage, null, null, newSpeed, lifeTime);
 
 		private Vector3? GetAimLocation()
 		{
