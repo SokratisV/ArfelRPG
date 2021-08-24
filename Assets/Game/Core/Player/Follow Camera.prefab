@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1663378247792120652}
   - component: {fileID: 1397810677323393355}
   - component: {fileID: 7246480071776354612}
+  - component: {fileID: 1401865529052433163}
+  - component: {fileID: 6045941254587907068}
   m_Layer: 3
   m_Name: Follow Camera
   m_TagString: Untagged
@@ -61,7 +63,10 @@ MonoBehaviour:
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
+    ModeOverride: 0
     LensShift: {x: 0, y: 0}
+    GateFit: 2
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -82,7 +87,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e575b81482b3084faf6f5e7f12feeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 2
 --- !u!114 &1397810677323393355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ab667a09094a6b9581ee8985b13500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 10
   target: {fileID: 0}
 --- !u!114 &7246480071776354612
 MonoBehaviour:
@@ -127,6 +130,47 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0.02
   m_OptimalTargetDistance: 0
+--- !u!114 &1401865529052433163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4274947371637543657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e53ccf7eaa363449dcd2da7c078609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 4274947371637543671}
+--- !u!114 &6045941254587907068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4274947371637543657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc4e55ef9dc4c9fa5167938f6bfdd45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8c4e3c83273163e42a296a53baa2a6dd, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1401865529052433163}
+        m_TargetAssemblyTypeName: CameraShakeController, Core
+        m_MethodName: Shake
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4274947372079205871
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +182,7 @@ GameObject:
   - component: {fileID: 4274947372079205868}
   - component: {fileID: 4274947372079205867}
   - component: {fileID: 4274947372079205869}
+  - component: {fileID: 2665797923443122919}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -214,3 +259,20 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!114 &2665797923443122919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4274947372079205871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 1, y: 1, z: 1}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 3.5
+  mNoiseOffsets: {x: -333.2528, y: -798.4424, z: 131.1532}

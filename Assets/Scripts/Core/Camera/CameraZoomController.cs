@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RPG.Core
 {
-	public class CameraZoomControl : MonoBehaviour
+	public class CameraZoomController : MonoBehaviour
 	{
 		private float _zoom = 18f;
 		private CinemachineFramingTransposer _cmCam;

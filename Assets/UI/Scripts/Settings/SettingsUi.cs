@@ -17,7 +17,7 @@ namespace RPG.UI
 		[Header("References")] [SerializeField]
 		private AudioMixer musicMixer;
 
-		[SerializeField] private CameraZoomControl zoomController;
+		[SerializeField] private CameraZoomController zoomController;
 		[SerializeField] private CameraController cameraRotator;
 
 		private Resolution[] _resolutions;
