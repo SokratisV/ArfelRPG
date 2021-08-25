@@ -48,8 +48,7 @@ namespace RPG.Skills
 		public bool AdjustAnimationSpeed => skillBehavior.AdjustAnimationSpeed;
 		public int AnimationHash => skillBehavior.SkillAnimationNumber();
 		public IndicatorType IndicatorType => skillBehavior.IndicatorType;
-		public float SpecialFloat1 => skillBehavior.SpecialFloat1();
-		public float SpecialFloat2 => skillBehavior.SpecialFloat2();
+		public float[] SpecialFloats => skillBehavior.SpecialFloats();
 
 		private static Dictionary<string, Skill> SkillLookupCache;
 

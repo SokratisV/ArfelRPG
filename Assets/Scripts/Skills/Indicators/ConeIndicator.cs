@@ -11,10 +11,12 @@ namespace RPG.Skills
 		public void ShowIndicator(Skill skill, GameObject user)
 		{
 			_user = user.transform;
-			coneImage.fillAmount = skill.SpecialFloat1 / 360;
-			coneImage.rectTransform.rotation = Quaternion.Euler(90, skill.SpecialFloat1 / 2, 0);
-			var indicatorRange = skill.SpecialFloat2 > 0 ? skill.SpecialFloat2 : 15;
-			coneImage.transform.localScale = Vector3.one * indicatorRange;
+			var specialFloat1 = skill.SpecialFloats[0];
+			var specialFloat2 = skill.SpecialFloats[1];
+			coneImage.fillAmount = specialFloat1 / 360;
+			coneImage.transform.localRotation = Quaternion.Euler(0, 0, -specialFloat1 / 2);
+			var indicatorRange = specialFloat2 > 0 ? specialFloat2 : 15;
+			coneImage.transform.localScale = Vector3.one * (indicatorRange * 2);
 			gameObject.SetActive(true);
 		}
 

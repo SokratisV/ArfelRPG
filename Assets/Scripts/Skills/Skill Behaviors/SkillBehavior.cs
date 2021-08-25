@@ -13,8 +13,7 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] private bool moveInRangeBeforeCasting = true;
 		[SerializeField] private IndicatorType indicatorType;
 
-		public virtual float SpecialFloat1() => 0;
-		public virtual float SpecialFloat2() => 0;
+		public virtual float[] SpecialFloats() => new float[0];
 		public IndicatorType IndicatorType => indicatorType;
 		//If true, duration means casting time
 		public abstract bool HasCastTime();

@@ -18,17 +18,21 @@ namespace RPG.Skills.Behaviors
 		public override bool HasCastTime() => true;
 		public override int SkillAnimationNumber() => 2;
 
-		public override float SpecialFloat1()
+		public override float[] SpecialFloats()
 		{
+			var floats = new float[2];
 			if (numberOfProjectiles % 2 == 0)
 			{
-				return numberOfProjectiles * angleBetweenEachProjectile;
+				floats[0] = numberOfProjectiles * angleBetweenEachProjectile;
+			}
+			else
+			{
+				floats[0] = (numberOfProjectiles - 1) * angleBetweenEachProjectile;
 			}
 
-			return (numberOfProjectiles - 1) * angleBetweenEachProjectile;
+			floats[1] = distanceBeforeDestroy;
+			return floats;
 		}
-
-		public override float SpecialFloat2() => distanceBeforeDestroy;
 
 		public override void BehaviorStart(SkillData data)
 		{
@@ -65,27 +69,29 @@ namespace RPG.Skills.Behaviors
 		private void OddNumberOfProjectiles(GameObject user, BodyParts bodyParts, Vector3 direction, float angle)
 		{
 			var projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(direction));
-			projectileInstance.Setup(user, damage, projectileSpeed);
+			var lifeTime = distanceBeforeDestroy / projectileSpeed;
+			projectileInstance.Setup(user, damage, projectileSpeed, lifeTime);
 			for (var i = 1; i <= (numberOfProjectiles - 1) / 2; i++)
 			{
 				projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
-				projectileInstance.Setup(user, damage, projectileSpeed, distanceBeforeDestroy);
+				projectileInstance.Setup(user, damage, projectileSpeed, lifeTime);
 			}
 
 			for (var i = -1; i >= -(numberOfProjectiles - 1) / 2; i--)
 			{
 				projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
-				projectileInstance.Setup(user, damage, projectileSpeed, distanceBeforeDestroy);
+				projectileInstance.Setup(user, damage, projectileSpeed, lifeTime);
 			}
 		}
 
 		private void EvenNumberOfProjectiles(GameObject user, BodyParts bodyParts, Vector3 direction, float angle)
 		{
+			var lifeTime = distanceBeforeDestroy / projectileSpeed;
 			for (var i = -numberOfProjectiles / 2; i <= numberOfProjectiles / 2; i++)
 			{
 				if (i == 0) continue;
 				var projectileInstance = Instantiate(projectile, bodyParts.ProjectileLocation.position, Quaternion.LookRotation(Quaternion.Euler(0, angle * i, 0) * direction));
-				projectileInstance.Setup(user, damage, projectileSpeed, distanceBeforeDestroy);
+				projectileInstance.Setup(user, damage, projectileSpeed, lifeTime);
 			}
 		}
 
