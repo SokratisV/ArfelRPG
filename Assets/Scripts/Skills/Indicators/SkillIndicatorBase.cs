@@ -5,8 +5,8 @@ namespace RPG.Skills
 {
 	public abstract class SkillIndicatorBase : MonoBehaviour
 	{
-		[SerializeField] private IndicatorType type;
+		protected IndicatorType Type;
 		
-		public IndicatorType IndicatorType() => type;
+		public IndicatorType IndicatorType() => Type;
 	}
 }

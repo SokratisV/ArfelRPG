@@ -4,12 +4,16 @@ namespace RPG.Skills
 {
 	public class PlayerQuadIndicator : SkillIndicatorBase, ISkillIndicator
 	{
+		[SerializeField] private Transform quadTransform;
 		private Transform _userTransform;
+		
+		private void Awake() => Type = Behaviors.IndicatorType.PlayerCircle;
+
 		public void ShowIndicator(Skill skill, GameObject user)
 		{
 			_userTransform = user.transform;
-			transform.localScale = new Vector3(skill.CastingRange * 2, 1, skill.CastingRange * 2);
-			transform.position = _userTransform.position;
+			var indicatorRadius = skill.CastingRange * 2;
+			quadTransform.localScale = new Vector3(indicatorRadius, indicatorRadius, indicatorRadius);
 			gameObject.SetActive(true);
 		}
 

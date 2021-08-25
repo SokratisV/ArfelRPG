@@ -7,6 +7,8 @@ namespace RPG.Skills
 		[SerializeField] private Transform lineTransform;
 		private Transform _user;
 
+		private void Awake() => Type = Behaviors.IndicatorType.Line;
+
 		public void ShowIndicator(Skill skill, GameObject user)
 		{
 			_user = user.transform;

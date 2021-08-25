@@ -5,11 +5,12 @@ namespace RPG.Skills
 	public class TargetProjectorIndicator : SkillIndicatorBase, ISkillIndicator
 	{
 		private Projector _projector;
-		
+
 		private void Awake()
 		{
 			_projector = GetComponentInChildren<Projector>();
 			_projector.enabled = false;
+			Type = Behaviors.IndicatorType.TargetCircle;
 		}
 
 		public void ShowIndicator(Skill skill, GameObject _)

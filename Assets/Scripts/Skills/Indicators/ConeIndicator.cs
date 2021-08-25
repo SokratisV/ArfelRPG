@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace RPG.Skills
@@ -7,6 +8,8 @@ namespace RPG.Skills
 	{
 		[SerializeField] private Image coneImage;
 		private Transform _user;
+
+		private void Awake() => Type = Behaviors.IndicatorType.Cone;
 
 		public void ShowIndicator(Skill skill, GameObject user)
 		{
