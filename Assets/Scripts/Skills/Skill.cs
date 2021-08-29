@@ -39,7 +39,7 @@ namespace RPG.Skills
 		public float Radius => targetBehavior.GetRadius();
 		public float CastingRange => skillBehavior.GetCastingRange();
 		public float MinClickDistance => targetBehavior.GetMinRange();
-		public bool? RequiresTarget => targetBehavior.RequireTarget();
+		public TargetType TargetType => targetBehavior.TargetType();
 		public bool CanTargetSelf => skillBehavior.CanTargetSelf;
 		public bool MoveInRangeBeforeCasting => skillBehavior.MoveInRangeBefore;
 		public bool HasExtraAnimation => skillBehavior.UseExtraAnimation();

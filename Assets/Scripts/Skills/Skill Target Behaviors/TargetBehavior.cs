@@ -8,11 +8,8 @@ namespace RPG.Skills.Behaviors
 		//-1 is unlimited range
 		[Range(-1, 20)] [SerializeField] protected float minimumClickRange;
 		public virtual float GetRadius() => 0;
-
-		/// <summary>
-		/// true = requires target, false = requires point, null = self cast
-		/// </summary>
-		public abstract bool? RequireTarget();
+		
+		public abstract TargetType TargetType();
 		public virtual float GetMinRange() => minimumClickRange;
 
 		//Return false when it only cares about the point

@@ -7,7 +7,7 @@ namespace RPG.Skills.Behaviors
 	public class SelfAoeTarget : TargetBehavior
 	{
 		[Min(0)] [SerializeField] private float radius;
-		public override bool? RequireTarget() => null;
+		public override TargetType TargetType() => Behaviors.TargetType.None;
 
 		public override bool GetTargets(out List<GameObject> targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null)
 		{

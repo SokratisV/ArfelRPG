@@ -5,6 +5,7 @@ using RotaryHeart.Lib.SerializableDictionary;
 using RPG.Attributes;
 using RPG.Core;
 using RPG.Skills;
+using RPG.Skills.Behaviors;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
 
@@ -102,22 +103,26 @@ namespace RPG.Control
 		private bool HandleSkillUsage()
 		{
 			if (!_skillUser.IsPreparingSkill && !_skillUser.CanCurrentSkillBeUsed) return false;
-			if (_skillUser.SkillRequiresTarget == null)
+			switch (_skillUser.TargetType)
 			{
-				_skillUser.Execute(null);
-				return true;
+				case TargetType.None:
+					_skillUser.Execute(null);
+					return true;
+				case TargetType.Single when RaycastForSkillTarget():
+					return true;
+				case TargetType.Single:
+					SetCursor(CursorType.None);
+					return true;
+				case TargetType.Point when HasHitNavMesh(CursorType.Skill, _skillUser.CanExecute):
+					return true;
+				case TargetType.Direction:
+					break;
+				default:
+					SetCursor(CursorType.None);
+					return true;
 			}
 
-			if (_skillUser.SkillRequiresTarget.Value)
-			{
-				if (RaycastForSkillTarget()) return true;
-				SetCursor(CursorType.None);
-				return true;
-			}
-
-			if (HasHitNavMesh(CursorType.Skill, _skillUser.CanExecute)) return true;
-			SetCursor(CursorType.None);
-			return true;
+			return false;
 		}
 
 		private bool RaycastForSkillTarget()

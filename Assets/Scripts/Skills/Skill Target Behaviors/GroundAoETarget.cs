@@ -9,7 +9,7 @@ namespace RPG.Skills.Behaviors
 		[Min(0)] [SerializeField] private float radius;
 
 		public override float GetRadius() => radius;
-		public override bool? RequireTarget() => false;
+		public override TargetType TargetType() => Behaviors.TargetType.Point;
 
 		public override bool GetTargets(out List<GameObject> targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null)
 		{

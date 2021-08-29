@@ -5,6 +5,7 @@ using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Saving;
+using RPG.Skills.Behaviors;
 using UnityEngine;
 
 namespace RPG.Skills
@@ -16,11 +17,7 @@ namespace RPG.Skills
 		public event Action OnActionComplete, OnActionCancelled;
 		public event Action<Skill> OnSkillCast, OnSkillEnd, OnSkillSelected;
 
-		/// <summary>
-		/// true = requires target, false = requires point, null = self cast
-		/// </summary>
-		public bool? SkillRequiresTarget => _selectedSkill.RequiresTarget;
-
+		public TargetType TargetType => _selectedSkill.TargetType;
 		public bool IsPreparingSkill => _selectedSkill != null;
 		public bool HasTarget => _target || _targetPoint != null;
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
@@ -268,7 +265,7 @@ namespace RPG.Skills
 				{
 					OnSkillEnd?.Invoke(_currentCastingSkill.Skill);
 					StopCoroutine(_currentCastingSkill.UpdateBehavior);
-					if (_currentCastingSkill.Skill.RequiresTarget == true)
+					if (_currentCastingSkill.Skill.TargetType == TargetType.Single)
 						_actionScheduler.EnqueueAction(new FighterActionData(_fighter, _currentCastingSkill.Data.InitialTarget));
 					CompleteAction();
 					_currentCastingSkill = null;
