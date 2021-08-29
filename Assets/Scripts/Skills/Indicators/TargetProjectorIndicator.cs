@@ -6,7 +6,7 @@ namespace RPG.Skills
 	{
 		private Projector _projector;
 
-		private void Awake()
+		protected override void Init()
 		{
 			_projector = GetComponentInChildren<Projector>();
 			_projector.enabled = false;

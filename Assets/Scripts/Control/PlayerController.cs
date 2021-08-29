@@ -107,17 +107,23 @@ namespace RPG.Control
 			{
 				case TargetType.None:
 					_skillUser.Execute(null);
+					_skillUser.ToggleIndicatorState(true);
 					return true;
 				case TargetType.Single when RaycastForSkillTarget():
+					_skillUser.ToggleIndicatorState(true);
 					return true;
 				case TargetType.Single:
+					_skillUser.ToggleIndicatorState(false);
 					SetCursor(CursorType.None);
 					return true;
 				case TargetType.Point when HasHitNavMesh(CursorType.Skill, _skillUser.CanExecute):
+					_skillUser.ToggleIndicatorState(true);
 					return true;
 				case TargetType.Direction:
+					_skillUser.ToggleIndicatorState(true);
 					break;
 				default:
+					_skillUser.ToggleIndicatorState(false);
 					SetCursor(CursorType.None);
 					return true;
 			}
@@ -215,9 +221,9 @@ namespace RPG.Control
 				else
 				{
 					_mover.QueueAction(new MoverActionData(_mover, target, 1, 0));
+					MovementFeedback(target);
 				}
 
-				MovementFeedback(target);
 			}
 			else
 			{
@@ -228,14 +234,15 @@ namespace RPG.Control
 				{
 					_hasInputBeenReset = false;
 					_skillUser.Execute(target);
+					
 				}
 				else
 				{
 					_skillUser.CancelAction();
 					_mover.Move(target);
+					MovementFeedback(target);
 				}
 
-				MovementFeedback(target);
 			}
 		}
 

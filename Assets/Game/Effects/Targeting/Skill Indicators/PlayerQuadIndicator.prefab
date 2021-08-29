@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f833cfef7095482399a95089100ce6ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  indicatorMaterial: {fileID: 2100000, guid: 3702a1554b00f384c9c4fef79d17a855, type: 2}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
   quadTransform: {fileID: 4689979983418749026}
 --- !u!1 &4689979983418749025
 GameObject:

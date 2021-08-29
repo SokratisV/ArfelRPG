@@ -9,6 +9,8 @@ namespace RPG.Core
 {
 	public static class Helper
 	{
+		public static bool RaycastIndicator(out RaycastHit hit) => Physics.Raycast(PlayerFinder.PlayerCamera.ScreenPointToRay(Input.mousePosition), out hit, 50, LayerMask.GetMask("Indicator"));
+
 		public static bool IsWithinDistance(Vector3 position1, Vector3 position2, float distance) => (position1 - position2).sqrMagnitude <= distance * distance;
 
 		public static bool IsWithinDistance(Transform transform1, Transform transform2, float distance) => IsWithinDistance(transform1.position, transform2.position, distance);
@@ -101,14 +103,6 @@ namespace RPG.Core
 		{
 			var rotation = Quaternion.LookRotation(direction);
 			transform.rotation = rotation;
-		}
-
-		public static void RotateFromScreenSpaceDirection(Transform target)
-		{
-			var targetScreenPosition = PlayerFinder.PlayerCamera.WorldToScreenPoint(target.position);
-			var direction = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0) - new Vector3(targetScreenPosition.x, targetScreenPosition.y, 0);
-			direction = PlayerFinder.PlayerCamera.transform.TransformDirection(direction);
-			RotateBasedOnDirection(target, direction);
 		}
 	}
 }

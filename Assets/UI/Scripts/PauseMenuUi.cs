@@ -1,5 +1,6 @@
 ﻿using RPG.Control;
 using RPG.Core;
+using RPG.Core.SystemEvents;
 using RPG.SceneManagement;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace RPG.UI
 {
 	public class PauseMenuUi : MonoBehaviour
 	{
+		[SerializeField] private BooleanEvent onGamePaused;
+		
 		private SavingWrapper _savingWrapper;
 		
 		private void Start() => _savingWrapper = FindObjectOfType<SavingWrapper>();
@@ -23,12 +26,14 @@ namespace RPG.UI
 			playerController.enabled = false;
 			playerController.SetCursor(CursorType.UI);
 			Time.timeScale = 0;
+			onGamePaused.Raise(false);
 		}
 
 		private void Resume()
 		{
 			Time.timeScale = 1;
 			PlayerFinder.Player.GetComponent<PlayerController>().enabled = true;
+			onGamePaused.Raise(true);
 		}
 
 		public void Save() => _savingWrapper.Save();

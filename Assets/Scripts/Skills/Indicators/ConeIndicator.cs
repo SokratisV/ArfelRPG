@@ -11,10 +11,11 @@ namespace RPG.Skills
 		private Transform _thisTransform;
 		private Transform _user;
 
-		private void Awake()
+		protected override void Init()
 		{
 			Type = Behaviors.IndicatorType.Cone;
 			_thisTransform = transform;
+			coneImage.material = InstancedMaterial;
 		}
 
 		public void ShowIndicator(Skill skill, GameObject user)
@@ -29,10 +30,13 @@ namespace RPG.Skills
 			gameObject.SetActive(true);
 		}
 
-		public void UpdateIndicator(Vector3 position)
+		public void UpdateIndicator(Vector3 _)
 		{
 			_thisTransform.position = _user.position;
-			Helper.RotateFromScreenSpaceDirection(_thisTransform);
+			if (Helper.RaycastIndicator(out var hit))
+			{
+				Helper.RotateToLocation(_thisTransform, hit.point);
+			}
 		}
 
 		public void HideIndicator() => gameObject.SetActive(false);

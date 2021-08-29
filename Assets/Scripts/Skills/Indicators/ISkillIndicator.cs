@@ -9,5 +9,6 @@ namespace RPG.Skills
 		void ShowIndicator(Skill skill, GameObject user);
 		void UpdateIndicator(Vector3 position);
 		void HideIndicator();
+		void ToggleColorState(bool toggle);
 	}
 }

@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dfe2f9a699434a8f52ead3b13266a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  indicatorMaterial: {fileID: 2100000, guid: 3702a1554b00f384c9c4fef79d17a855, type: 2}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &7947214891247089565
 GameObject:
   m_ObjectHideFlags: 0

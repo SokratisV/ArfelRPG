@@ -1,19 +1,25 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace RPG.Skills
 {
 	public class PlayerQuadIndicator : SkillIndicatorBase, ISkillIndicator
 	{
-		[SerializeField] private Transform quadTransform;
+		[SerializeField] private Image quadImage;
+		
 		private Transform _userTransform;
 		
-		private void Awake() => Type = Behaviors.IndicatorType.PlayerCircle;
+		protected override void Init()
+		{
+			Type = Behaviors.IndicatorType.PlayerCircle;
+			quadImage.material = InstancedMaterial;
+		}
 
 		public void ShowIndicator(Skill skill, GameObject user)
 		{
 			_userTransform = user.transform;
 			var indicatorRadius = skill.CastingRange * 2;
-			quadTransform.localScale = new Vector3(indicatorRadius, indicatorRadius, indicatorRadius);
+			quadImage.transform.localScale = new Vector3(indicatorRadius, indicatorRadius, indicatorRadius);
 			gameObject.SetActive(true);
 		}
 
