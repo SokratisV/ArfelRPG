@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Core;
+using UnityEngine;
 
 namespace RPG.Skills
 {
@@ -6,8 +7,13 @@ namespace RPG.Skills
 	{
 		[SerializeField] private Transform lineTransform;
 		private Transform _user;
+		private Transform _thisTransform;
 
-		private void Awake() => Type = Behaviors.IndicatorType.Line;
+		private void Awake()
+		{
+			Type = Behaviors.IndicatorType.Line;
+			_thisTransform = transform;
+		}
 
 		public void ShowIndicator(Skill skill, GameObject user)
 		{
@@ -19,11 +25,8 @@ namespace RPG.Skills
 
 		public void UpdateIndicator(Vector3 position)
 		{
-			transform.position = _user.position;
-			var lookPos = position - transform.position;
-			lookPos.y = 0;
-			var rotation = Quaternion.LookRotation(lookPos);
-			transform.rotation = rotation;
+			_thisTransform.position = _user.position;
+			Helper.RotateFromScreenSpaceDirection(_thisTransform);
 		}
 
 		public void HideIndicator() => gameObject.SetActive(false);

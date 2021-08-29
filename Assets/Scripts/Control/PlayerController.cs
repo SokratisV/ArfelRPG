@@ -35,7 +35,7 @@ namespace RPG.Control
 			_movementFeedbackPrefab = GetComponent<SpawnFeedback>();
 			_mover = GetComponent<Mover>();
 			_skillUser = GetComponent<SkillUser>();
-			_mainCamera = Camera.main;
+			_mainCamera = PlayerFinder.PlayerCamera;
 		}
 
 		private void Start() => _manualInput = new ManualInputController(_mover, _mainCamera);

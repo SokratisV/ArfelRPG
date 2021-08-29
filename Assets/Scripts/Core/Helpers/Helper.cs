@@ -89,5 +89,26 @@ namespace RPG.Core
 
 			return fromPosition;
 		}
+
+		public static void RotateToLocation(Transform transform, Vector3 position)
+		{
+			var lookPos = position - transform.position;
+			lookPos.y = 0;
+			RotateBasedOnDirection(transform, lookPos);
+		}
+
+		public static void RotateBasedOnDirection(Transform transform, Vector3 direction)
+		{
+			var rotation = Quaternion.LookRotation(direction);
+			transform.rotation = rotation;
+		}
+
+		public static void RotateFromScreenSpaceDirection(Transform target)
+		{
+			var targetScreenPosition = PlayerFinder.PlayerCamera.WorldToScreenPoint(target.position);
+			var direction = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0) - new Vector3(targetScreenPosition.x, targetScreenPosition.y, 0);
+			direction = PlayerFinder.PlayerCamera.transform.TransformDirection(direction);
+			RotateBasedOnDirection(target, direction);
+		}
 	}
 }

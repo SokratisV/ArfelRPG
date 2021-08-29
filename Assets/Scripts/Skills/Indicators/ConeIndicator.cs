@@ -1,4 +1,4 @@
-﻿using System;
+﻿using RPG.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +7,15 @@ namespace RPG.Skills
 	public class ConeIndicator : SkillIndicatorBase, ISkillIndicator
 	{
 		[SerializeField] private Image coneImage;
+
+		private Transform _thisTransform;
 		private Transform _user;
 
-		private void Awake() => Type = Behaviors.IndicatorType.Cone;
+		private void Awake()
+		{
+			Type = Behaviors.IndicatorType.Cone;
+			_thisTransform = transform;
+		}
 
 		public void ShowIndicator(Skill skill, GameObject user)
 		{
@@ -25,11 +31,8 @@ namespace RPG.Skills
 
 		public void UpdateIndicator(Vector3 position)
 		{
-			transform.position = _user.position;
-			var lookPos = position - transform.position;
-			lookPos.y = 0;
-			var rotation = Quaternion.LookRotation(lookPos);
-			transform.rotation = rotation;
+			_thisTransform.position = _user.position;
+			Helper.RotateFromScreenSpaceDirection(_thisTransform);
 		}
 
 		public void HideIndicator() => gameObject.SetActive(false);

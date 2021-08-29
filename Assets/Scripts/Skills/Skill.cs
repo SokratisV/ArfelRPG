@@ -68,6 +68,8 @@ namespace RPG.Skills
 			return (skillData, skillBehavior.BehaviorUpdate(skillData));
 		}
 
+		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data);
+
 		private List<GameObject> FilterTargets(List<GameObject> targets)
 		{
 			foreach (var filter in filterStrategy)
@@ -77,8 +79,6 @@ namespace RPG.Skills
 
 			return targets;
 		}
-
-		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data);
 
 		private void StartFX(SkillData data)
 		{
