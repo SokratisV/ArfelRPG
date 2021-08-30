@@ -7,16 +7,18 @@ namespace RPG.Skills
 	public class LineIndicator : SkillIndicatorBase, ISkillIndicator
 	{
 		[SerializeField] private Image lineImage;
-		
+
 		private Transform _user;
 		private Transform _thisTransform;
+		protected override Color32 SkillIndicatorDisabled { get; } = new Color32(200, 10, 10, 150);
 
 		protected override void Init()
 		{
 			Type = Behaviors.IndicatorType.Line;
 			_thisTransform = transform;
-			lineImage.material = InstancedMaterial;
 		}
+
+		protected override void ChangeColor(Color32 color) => lineImage.color = color;
 
 		public void ShowIndicator(Skill skill, GameObject user)
 		{

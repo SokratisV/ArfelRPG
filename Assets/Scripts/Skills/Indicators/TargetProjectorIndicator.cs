@@ -13,6 +13,8 @@ namespace RPG.Skills
 			Type = Behaviors.IndicatorType.TargetCircle;
 		}
 
+		protected override void ChangeColor(Color32 color) => _projector.material.color = color;
+
 		public void ShowIndicator(Skill skill, GameObject _)
 		{
 			var sizeAdjustment = skill.Radius * 3 / 100;

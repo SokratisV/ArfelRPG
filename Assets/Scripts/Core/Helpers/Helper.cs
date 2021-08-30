@@ -104,5 +104,7 @@ namespace RPG.Core
 			var rotation = Quaternion.LookRotation(direction);
 			transform.rotation = rotation;
 		}
+
+		public static Color FromColor32(Color32 from) => new Color(from.r, from.g, from.b, from.a);
 	}
 }

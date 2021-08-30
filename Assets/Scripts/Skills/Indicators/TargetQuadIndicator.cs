@@ -7,11 +7,8 @@ namespace RPG.Skills
 	{
 		[SerializeField] private Image quadImage;
 
-		protected override void Init()
-		{
-			Type = Behaviors.IndicatorType.TargetCircle;
-			quadImage.material = InstancedMaterial;
-		}
+		protected override void Init() => Type = Behaviors.IndicatorType.TargetCircle;
+		protected override void ChangeColor(Color32 color) => quadImage.color = color;
 
 		public void ShowIndicator(Skill skill, GameObject _)
 		{

@@ -107,10 +107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f833cfef7095482399a95089100ce6ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorMaterial: {fileID: 2100000, guid: 3702a1554b00f384c9c4fef79d17a855, type: 2}
-  disabledColor:
-    serializedVersion: 2
-    rgba: 3355443200
   quadImage: {fileID: 7968640182892856788}
 --- !u!1 &7968640182892856790
 GameObject:
@@ -178,7 +174,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fd09c098ba3b8224d9f5de2aa95c12b9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff53dbaf48a59bd469379228ca319bc3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

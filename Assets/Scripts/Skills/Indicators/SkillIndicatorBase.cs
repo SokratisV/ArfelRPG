@@ -5,45 +5,27 @@ namespace RPG.Skills
 {
 	public abstract class SkillIndicatorBase : MonoBehaviour
 	{
-		[SerializeField] private Material indicatorMaterial;
-
-		[SerializeField, ColorUsage(true, true)]
-		private Color32 disabledColor;
+		public IndicatorType IndicatorType() => Type;
 
 		protected IndicatorType Type;
-		private Color32 _initialColor;
-		private static Material _instancedMaterial = null;
+		protected virtual Color32 SkillIndicatorEnabled { get; } = new Color32(0, 150, 190, 150);
+		protected virtual Color32 SkillIndicatorDisabled { get; } = new Color32(200, 10, 10, 15);
 		private bool _indicatorState;
-
-		protected static Material InstancedMaterial
-		{
-			get => _instancedMaterial;
-			private set
-			{
-				if (_instancedMaterial) return;
-				_instancedMaterial = value;
-			}
-		}
-
-		public IndicatorType IndicatorType() => Type;
 
 		public void Awake()
 		{
-			_initialColor = indicatorMaterial.color;
-			InstancedMaterial = new Material(indicatorMaterial);
 			Init();
+			ToggleColorState(true);
 		}
 
 		protected abstract void Init();
+		protected abstract void ChangeColor(Color32 color);
 
 		public void ToggleColorState(bool toggle)
 		{
-			// if (_indicatorState == toggle) return;
-			// _instancedMaterial.color = new Color32(0, 0, 0, 255);
-			if (!toggle) _instancedMaterial.color = new Color32(disabledColor.r, disabledColor.g, disabledColor.b, disabledColor.a);
-			else _instancedMaterial.color = new Color32(_initialColor.r, _initialColor.g, _initialColor.b, _initialColor.a);
-			// else _instancedMaterial.color = new Color32(disabledColor.r, disabledColor.g, disabledColor.b, disabledColor.a);
-			// _indicatorState = toggle;
-		}	
+			if (_indicatorState == toggle) return;
+			ChangeColor(toggle ? SkillIndicatorEnabled : SkillIndicatorDisabled);
+			_indicatorState = toggle;
+		}
 	}
 }

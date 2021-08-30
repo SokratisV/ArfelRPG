@@ -6,14 +6,11 @@ namespace RPG.Skills
 	public class PlayerQuadIndicator : SkillIndicatorBase, ISkillIndicator
 	{
 		[SerializeField] private Image quadImage;
-		
+
 		private Transform _userTransform;
-		
-		protected override void Init()
-		{
-			Type = Behaviors.IndicatorType.PlayerCircle;
-			quadImage.material = InstancedMaterial;
-		}
+
+		protected override void Init() => Type = Behaviors.IndicatorType.PlayerCircle;
+		protected override void ChangeColor(Color32 color) => quadImage.color = color;
 
 		public void ShowIndicator(Skill skill, GameObject user)
 		{

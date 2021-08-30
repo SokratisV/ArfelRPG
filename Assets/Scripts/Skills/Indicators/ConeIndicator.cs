@@ -15,8 +15,9 @@ namespace RPG.Skills
 		{
 			Type = Behaviors.IndicatorType.Cone;
 			_thisTransform = transform;
-			coneImage.material = InstancedMaterial;
 		}
+
+		protected override void ChangeColor(Color32 color) => coneImage.color = color;
 
 		public void ShowIndicator(Skill skill, GameObject user)
 		{
