@@ -20,8 +20,19 @@ namespace RPG.Skills
 
 		protected override void ChangeColor(Color32 color) => lineImage.color = color;
 
-		public void ShowIndicator(Skill skill, GameObject user)
+		protected override void ChangeColor(byte customAlpha = default)
 		{
+			if (customAlpha > 0)
+			{
+				Color32 newColor = lineImage.color;
+				newColor.a = customAlpha;
+				lineImage.color = newColor;
+			}
+		}
+
+		public override void ShowIndicator(Skill skill, GameObject user)
+		{
+			base.ShowIndicator(skill, user);
 			_user = user.transform;
 			lineImage.transform.localScale = new Vector3(1, skill.CastingRange, 1);
 			lineImage.transform.localPosition = new Vector3(0, .01f, 0.5f * skill.CastingRange);

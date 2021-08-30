@@ -10,5 +10,6 @@ namespace RPG.Skills
 		void UpdateIndicator(Vector3 position);
 		void HideIndicator();
 		void ToggleColorState(bool toggle);
+		void ChangeIndicatorAlpha(byte customAlpha);
 	}
 }

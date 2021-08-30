@@ -15,8 +15,19 @@ namespace RPG.Skills
 
 		protected override void ChangeColor(Color32 color) => _projector.material.color = color;
 
-		public void ShowIndicator(Skill skill, GameObject _)
+		protected override void ChangeColor(byte customAlpha = default)
 		{
+			if (customAlpha > 0)
+			{
+				var newColor = _projector.material.color;
+				newColor.a = customAlpha;
+				_projector.material.color = newColor;
+			}
+		}
+
+		public override void ShowIndicator(Skill skill, GameObject _)
+		{
+			base.ShowIndicator(skill, _);
 			var sizeAdjustment = skill.Radius * 3 / 100;
 			_projector.orthographicSize = skill.Radius + sizeAdjustment;
 			_projector.enabled = true;

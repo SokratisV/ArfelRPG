@@ -123,7 +123,7 @@ namespace RPG.Control
 					_skillUser.ToggleIndicatorState(true);
 					break;
 				default:
-					_skillUser.ToggleIndicatorState(false);
+					_skillUser.ChangeIndicatorAlpha(40);
 					SetCursor(CursorType.None);
 					return true;
 			}

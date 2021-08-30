@@ -19,8 +19,19 @@ namespace RPG.Skills
 
 		protected override void ChangeColor(Color32 color) => coneImage.color = color;
 
-		public void ShowIndicator(Skill skill, GameObject user)
+		protected override void ChangeColor(byte customAlpha = default)
 		{
+			if (customAlpha > 0)
+			{
+				Color32 newColor = coneImage.color;
+				newColor.a = customAlpha;
+				coneImage.color = newColor;
+			}
+		}
+
+		public override void ShowIndicator(Skill skill, GameObject user)
+		{
+			base.ShowIndicator(skill, user);
 			_user = user.transform;
 			var specialFloat1 = skill.SpecialFloats[0];
 			var specialFloat2 = skill.SpecialFloats[1];

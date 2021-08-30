@@ -219,6 +219,7 @@ namespace RPG.Skills
 		
 		public void UpdateIndicatorTarget(Vector3 target) => _mousePosition = target;
 		public void ToggleIndicatorState(bool toggle) => _currentIndicator?.ToggleColorState(toggle);
+		public void ChangeIndicatorAlpha(byte customAlpha) => _currentIndicator?.ChangeIndicatorAlpha(customAlpha);
 
 		#endregion
 
