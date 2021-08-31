@@ -11,26 +11,26 @@ namespace RPG.Skills.Behaviors
 		public override float GetRadius() => radius;
 		public override TargetType TargetType() => Behaviors.TargetType.Direction;
 
-		public override bool GetTargets(out List<GameObject> targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null)
+		public override List<GameObject> GetTargets(GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null, Vector3? direction = null)
 		{
-			targets = new List<GameObject>();
-			if(raycastPoint != null)
+			var targets = new List<GameObject> {user};
+			if (initialTarget) targets.Add(initialTarget);
+			if (raycastPoint == null) return targets;
+			
+			var userPosition = user.transform.position;
+			var dir = (raycastPoint.Value - userPosition).normalized;
+			var colliders = Physics.OverlapSphere(userPosition, radius, Helper.CharactersMask);
+			foreach (var collider in colliders)
 			{
-				var userPosition = user.transform.position;
-				var direction = (raycastPoint.Value - userPosition).normalized;
-				var colliders = Physics.OverlapSphere(userPosition, radius, Helper.CharactersMask);
-				foreach(var collider in colliders)
+				var directionToCollider = (collider.transform.position - userPosition).normalized;
+				var dotProduct = Vector3.Dot(directionToCollider, dir);
+				if (dotProduct >= Mathf.Cos(angle))
 				{
-					var directionToCollider = (collider.transform.position - userPosition).normalized;
-					var dotProduct = Vector3.Dot(directionToCollider, direction);
-					if(dotProduct >= Mathf.Cos(angle))
-					{
-						targets.Add(collider.gameObject);
-					}
+					targets.Add(collider.gameObject);
 				}
 			}
 
-			return false;
+			return targets;
 		}
 	}
 }

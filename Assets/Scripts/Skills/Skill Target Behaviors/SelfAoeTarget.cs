@@ -9,19 +9,19 @@ namespace RPG.Skills.Behaviors
 		[Min(0)] [SerializeField] private float radius;
 		public override TargetType TargetType() => Behaviors.TargetType.None;
 
-		public override bool GetTargets(out List<GameObject> targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null)
+		public override List<GameObject> GetTargets(GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null, Vector3? direction = null)
 		{
-			targets = new List<GameObject>();
+			var targets = new List<GameObject> {user};
 			var colliders = Physics.OverlapSphere(user.transform.position, radius);
-			foreach(var collider in colliders)
+			foreach (var collider in colliders)
 			{
-				if(collider.TryGetComponent(out CombatTarget ai))
+				if (collider.TryGetComponent(out CombatTarget ai))
 				{
 					targets.Add(ai.gameObject);
 				}
 			}
-			
-			return false;
+
+			return targets;
 		}
 	}
 }

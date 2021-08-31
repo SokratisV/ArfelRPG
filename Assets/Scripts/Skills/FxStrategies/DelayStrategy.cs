@@ -11,7 +11,7 @@ namespace RPG.Skills
 
 		public override void ExecuteStrategy(SkillData data)
 		{
-			data.User.GetComponent<SkillUser>().StartCoroutine(DelayedExecution(data));
+			data.Targets[0].GetComponent<SkillUser>().StartCoroutine(DelayedExecution(data));
 		}
 
 		private IEnumerator DelayedExecution(SkillData data)

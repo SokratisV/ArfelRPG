@@ -19,7 +19,7 @@ namespace RPG.Skills.Behaviors
 		{
 			if(data.Targets != null)
 			{
-				ExecuteBehavior(data.User, data.Targets);
+				ExecuteBehavior(data.Targets[0], data.Targets);
 			}
 
 			base.BehaviorStart(data);

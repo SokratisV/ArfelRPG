@@ -52,15 +52,11 @@ namespace RPG.Skills
 
 		private static Dictionary<string, Skill> SkillLookupCache;
 
-		public (SkillData, IEnumerator)? OnStart(GameObject user, GameObject initialTarget = null, Vector3? point = null)
+		public (SkillData, IEnumerator)? OnStart(GameObject user, GameObject target = null, Vector3? point = null, Vector3? direction = null)
 		{
-			//if interested in targets, but targets are null, return
-			if (targetBehavior.GetTargets(out var targets, user, initialTarget, point))
-				if (targets == null)
-					return null;
-
+			var targets = targetBehavior.GetTargets(user, target, point, direction);
 			targets = FilterTargets(targets);
-			var skillData = new SkillData(user, initialTarget, point, targets);
+			var skillData = new SkillData(point, direction, targets);
 			skillBehavior.OnStart += StartFX;
 			skillBehavior.OnEnd += EndFX;
 			skillBehavior.BehaviorStart(skillData);

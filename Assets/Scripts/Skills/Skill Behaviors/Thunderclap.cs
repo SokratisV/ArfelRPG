@@ -16,12 +16,12 @@ namespace RPG.Skills.Behaviors
 		{
 			if (data.Targets != null)
 			{
-				for (var i = data.Targets.Count - 1; i >= 0; i--)
+				for (var i = data.Targets.Count - 1; i >= 1; i--)
 				{
 					var target = data.Targets[i];
 					var health = target.GetComponent<Health>();
 					RemoveHealthFromList(health, data.Targets);
-					health.TakeDamage(data.User, damage);
+					health.TakeDamage(data.Targets[0], damage);
 				}
 			}
 

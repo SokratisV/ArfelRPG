@@ -17,11 +17,11 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorStart(SkillData data)
 		{
-			if(data.Targets[0].TryGetComponent(out Health health))
+			if(data.Targets[1].TryGetComponent(out Health health))
 			{
 				if(!health.IsDead && !(health.GetPercentage() >= 100.0f))
 				{
-					health.Heal(data.User, amountToHeal);
+					health.Heal(data.Targets[0], amountToHeal);
 				}
 			}
 

@@ -180,7 +180,7 @@ namespace RPG.Combat
 
 		private void Attack()
 		{
-			_mover.RotateOverTime(.2f, _target.transform.position);
+			_mover.RotateToTarget(.2f, _target.transform.position);
 			if (!CanAttack) return;
 			AttackAnimation();
 		}

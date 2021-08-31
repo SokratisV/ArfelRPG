@@ -46,7 +46,7 @@ namespace RPG.Skills
 
 		private void UserSfx(SkillData data)
 		{
-			if (!data.User.TryGetComponent(out IAudioPlayer audioPlayer)) return;
+			if (!data.Targets[0].TryGetComponent(out IAudioPlayer audioPlayer)) return;
 			foreach (var clip in clips)
 			{
 				audioPlayer.PlaySound(clip);
@@ -55,7 +55,7 @@ namespace RPG.Skills
 		
 		private void TargetSfx(SkillData data)
 		{
-			if (!data.InitialTarget.TryGetComponent(out IAudioPlayer audioPlayer)) return;
+			if (!data.Targets[1].TryGetComponent(out IAudioPlayer audioPlayer)) return;
 			foreach (var clip in clips)
 			{
 				audioPlayer.PlaySound(clip);

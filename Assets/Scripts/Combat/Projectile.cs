@@ -12,7 +12,7 @@ namespace RPG.Combat
 		[SerializeField] private GameObject[] destroyOnHit = null;
 		[SerializeField] private UnityEvent onHit;
 		private Health _target = null;
-		private Vector3? _targetPoint;
+		private Vector3? _direction;
 		private Collider _targetCollider = null;
 		private GameObject _instigator = null;
 		private float _damage = 0f;
@@ -20,7 +20,9 @@ namespace RPG.Combat
 		private void Start()
 		{
 			var aimLocation = GetAimLocation();
-			if (aimLocation != null) transform.LookAt(aimLocation.Value);
+			if (aimLocation.HasValue) transform.LookAt(aimLocation.Value);
+			var aimDirection = GetAimDirection();
+			if (aimDirection.HasValue) transform.rotation = Quaternion.LookRotation(aimDirection.Value);
 		}
 
 		private void Update()
@@ -29,38 +31,33 @@ namespace RPG.Combat
 			{
 				transform.LookAt(GetAimLocation().Value);
 			}
-			
+
 			transform.Translate(Vector3.forward * (speed * Time.deltaTime));
 		}
 
-		private void Setup(GameObject instigator, float damage, Health target = null, Vector3? targetPoint = null, float newSpeed = 0, float lifeTime = -1)
+		private void Setup(GameObject instigator, float damage, Health target = null, Vector3? direction = null, float newSpeed = 0, float lifeTime = -1)
 		{
 			_damage = damage;
 			_target = target;
 			if (_target != null) _targetCollider = _target.GetComponent<Collider>();
 			_instigator = instigator;
-			_targetPoint = targetPoint;
+			_direction = direction;
 			if (newSpeed > 0) speed = newSpeed;
 			Destroy(gameObject, lifeTime > 0 ? lifeTime : maxLifeTime);
 		}
 
-		public void Setup(Vector3 targetPoint, GameObject instigator, float damage, float newSpeed = 0, float lifeTime = -1) => Setup(instigator, damage, null, targetPoint, newSpeed, lifeTime);
-		public void Setup(Health target, GameObject instigator, float damage, float newSpeed = 0, float lifeTime = -1) => Setup(instigator, damage, target, newSpeed: newSpeed, lifeTime:lifeTime);
+		public void Setup(Vector3 direction, GameObject instigator, float damage, float newSpeed = 0, float lifeTime = -1) => Setup(instigator, damage, null, direction, newSpeed, lifeTime);
+		public void Setup(Health target, GameObject instigator, float damage, float newSpeed = 0, float lifeTime = -1) => Setup(instigator, damage, target, newSpeed: newSpeed, lifeTime: lifeTime);
 		public void Setup(GameObject instigator, float damage, float newSpeed = 0, float lifeTime = -1) => Setup(instigator, damage, null, null, newSpeed, lifeTime);
 
 		private Vector3? GetAimLocation()
 		{
-			if (_target != null)
-			{
-				if (_targetCollider == null)
-				{
-					return _target.transform.position;
-				}
-				return _target.transform.position + Vector3.up * (_targetCollider.bounds.size.y / 2);
-			}
-
-			return _targetPoint;
+			if (_target == null) return null;
+			if (_targetCollider == null) return _target.transform.position;
+			return _target.transform.position + Vector3.up * (_targetCollider.bounds.size.y / 2);
 		}
+
+		private Vector3? GetAimDirection() => _direction;
 
 		private void OnTriggerEnter(Collider other)
 		{

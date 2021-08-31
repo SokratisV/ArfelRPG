@@ -7,10 +7,11 @@ namespace RPG.Skills.Behaviors
 	{
 		public override TargetType TargetType() => Behaviors.TargetType.Single;
 
-		public override bool GetTargets(out List<GameObject> targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null)
+		public override List<GameObject> GetTargets(GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null, Vector3? direction = null)
 		{
-			targets = initialTarget == null? null:targets = new List<GameObject> {initialTarget};
-			return true;
+			var targets = new List<GameObject> {user};
+			if (initialTarget) targets.Add(initialTarget);
+			return targets;
 		}
 	}
 }

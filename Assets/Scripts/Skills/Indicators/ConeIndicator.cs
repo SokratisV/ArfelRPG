@@ -42,13 +42,10 @@ namespace RPG.Skills
 			gameObject.SetActive(true);
 		}
 
-		public void UpdateIndicator(Vector3 _)
+		public void UpdateIndicator(Vector3 target)
 		{
 			_thisTransform.position = _user.position;
-			if (Helper.RaycastIndicator(out var hit))
-			{
-				Helper.RotateToLocation(_thisTransform, hit.point);
-			}
+			Helper.RotateToLocation(_thisTransform, target);
 		}
 
 		public void HideIndicator() => gameObject.SetActive(false);

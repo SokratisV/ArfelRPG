@@ -117,7 +117,7 @@ namespace RPG.Movement
 
 		public void Blink(Vector3 point, float delay = .4f)
 		{
-			RotateOverTime(0.2f, point);
+			RotateToTarget(0.2f, point);
 			LockMovementFor(delay + .2f);
 			Helper.DoAfterSeconds(() => { MeshAgent.Warp(point); }, delay, this);
 		}
@@ -155,7 +155,8 @@ namespace RPG.Movement
 
 		public void QueueAction(IActionData data) => _actionScheduler.EnqueueAction(data);
 
-		public void RotateOverTime(float time, Vector3 targetPosition) => StartCoroutine(_RotateOverTime(time, targetPosition));
+		public void RotateToTarget(float time, Vector3 targetPosition) => StartCoroutine(_RotateOverTime(time, targetPosition));
+		public void RotateToDirection(float time, Vector3 direction) => StartCoroutine(_RotateOverTime(time, direction));
 
 		public void RevertToOriginalSpeed() => CurrentSpeed = maxSpeed;
 
@@ -169,10 +170,13 @@ namespace RPG.Movement
 
 		#region Private
 
-		private IEnumerator _RotateOverTime(float time, Vector3 targetPosition)
+		private IEnumerator _RotateOverTime(float time, Vector3 vector, bool isPassingDirection = false)
 		{
 			var currentRotation = transform.rotation;
-			var lookRotation = Quaternion.LookRotation(targetPosition - transform.position);
+			var lookRotation = !isPassingDirection 
+				? Quaternion.LookRotation(vector - transform.position) 
+				: Quaternion.LookRotation(vector, Vector3.up);
+
 			var progress = 0f;
 			while (progress < 1)
 			{

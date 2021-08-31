@@ -27,6 +27,7 @@ namespace RPG.Control
 		private float _dodgeTimer;
 		private bool _isDraggingUI = false;
 		private bool _hasInputBeenReset = true;
+		private CursorType _currentCursorType;
 
 		#region Unity
 
@@ -66,6 +67,8 @@ namespace RPG.Control
 
 		public void SetCursor(CursorType type)
 		{
+			if (_currentCursorType == type) return;
+			_currentCursorType = type;
 			var mapping = GetCursorMapping(type);
 			Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
 		}
@@ -120,15 +123,24 @@ namespace RPG.Control
 					_skillUser.ToggleIndicatorState(true);
 					return true;
 				case TargetType.Direction:
+					var hit = IsOverIndicatorCollider();
+					if (!hit.HasValue) return false;
+					SetCursor(CursorType.Skill);
+					CheckPressedButtons(hit.Value.point);
+					_skillUser.UpdateIndicatorTarget(hit.Value.point);
 					_skillUser.ToggleIndicatorState(true);
-					break;
+					return true;
 				default:
 					_skillUser.ChangeIndicatorAlpha(40);
 					SetCursor(CursorType.None);
 					return true;
 			}
+		}
 
-			return false;
+		private static RaycastHit? IsOverIndicatorCollider()
+		{
+			Helper.RaycastIndicator(out var hit);
+			return hit;
 		}
 
 		private bool RaycastForSkillTarget()
@@ -138,6 +150,7 @@ namespace RPG.Control
 			{
 				_skillUser.UpdateIndicatorTarget(target);
 			}
+
 			foreach (var hit in _hits)
 			{
 				var skillcastables = hit.transform.GetComponents<ISkillcastable>();
@@ -223,7 +236,6 @@ namespace RPG.Control
 					_mover.QueueAction(new MoverActionData(_mover, target, 1, 0));
 					MovementFeedback(target);
 				}
-
 			}
 			else
 			{
@@ -234,7 +246,6 @@ namespace RPG.Control
 				{
 					_hasInputBeenReset = false;
 					_skillUser.Execute(target);
-					
 				}
 				else
 				{
@@ -242,7 +253,6 @@ namespace RPG.Control
 					_mover.Move(target);
 					MovementFeedback(target);
 				}
-
 			}
 		}
 

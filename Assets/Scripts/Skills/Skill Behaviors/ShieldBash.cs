@@ -21,14 +21,12 @@ namespace RPG.Skills.Behaviors
 			{
 				if (_trigger.Value)
 				{
-					if (data.Targets[0] != null)
-					{
-						var health = data.Targets[0].GetComponent<Health>();
-						health.TakeDamage(data.User, damage);
-						yield break;
-					}
+					var health = data.Targets[1].GetComponent<Health>();
+					health.TakeDamage(data.Targets[0], damage);
+					yield break;
 				}
-				else yield return null;
+
+				yield return null;
 			}
 		}
 

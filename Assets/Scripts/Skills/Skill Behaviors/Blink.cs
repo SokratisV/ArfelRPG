@@ -23,12 +23,12 @@ namespace RPG.Skills.Behaviors
 		{
 			if(!data.Point.HasValue) return;
 			var path = new NavMeshPath();
-			if(NavMesh.CalculatePath(data.User.transform.position, data.Point.Value, NavMesh.AllAreas, path))
+			if(NavMesh.CalculatePath(data.Targets[0].transform.position, data.Point.Value, NavMesh.AllAreas, path))
 			{
-				data.User.GetComponent<Health>().IsInvulnerable = true;
-				if(Helper.IsWithinDistance(data.Point.Value, data.User.transform.position, distance))
+				data.Targets[0].GetComponent<Health>().IsInvulnerable = true;
+				if(Helper.IsWithinDistance(data.Point.Value, data.Targets[0].transform.position, distance))
 				{
-					data.User.GetComponent<Mover>().Blink(data.Point.Value);
+					data.Targets[0].GetComponent<Mover>().Blink(data.Point.Value);
 					base.BehaviorStart(data);
 					return;
 				}
@@ -39,7 +39,7 @@ namespace RPG.Skills.Behaviors
 					finalPoint = data.Point.Value;
 				}
 
-				data.User.GetComponent<Mover>().Blink(finalPoint);
+				data.Targets[0].GetComponent<Mover>().Blink(finalPoint);
 			}
 
 			else return;
@@ -54,7 +54,7 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorEnd(SkillData data)
 		{
-			data.User.GetComponent<Health>().IsInvulnerable = false;
+			data.Targets[0].GetComponent<Health>().IsInvulnerable = false;
 			base.BehaviorEnd(data);
 		}
 	}

@@ -15,23 +15,23 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorStart(SkillData data)
 		{
-			data.User.GetComponent<Mover>().LockMovementFor(.5f);
-			if(data.Targets != null)
+			data.Targets[0].GetComponent<Mover>().LockMovementFor(.5f);
+			if (data.Targets != null)
 			{
-				for(var i = data.Targets.Count - 1;i >= 0;i--)
+				for (var i = data.Targets.Count - 1; i >= 1; i--)
 				{
 					var target = data.Targets[i];
 					var mover = target.GetComponent<Mover>();
 					mover.CurrentSpeed = mover.CurrentSpeed * slowPercent * 0.01f;
 					var health = target.GetComponent<Health>();
 					RemoveHealthFromList(health, data.Targets);
-					health.TakeDamage(data.User, damage);
+					health.TakeDamage(data.Targets[0], damage);
 				}
 			}
 
 			base.BehaviorStart(data);
 		}
-		
+
 		public override IEnumerator BehaviorUpdate(SkillData data)
 		{
 			yield break;
@@ -39,10 +39,11 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorEnd(SkillData data)
 		{
-			if(data.Targets != null)
+			if (data.Targets != null)
 			{
-				foreach(var target in data.Targets)
+				foreach (var target in data.Targets)
 				{
+					if (target == data.Targets[0]) continue;
 					target.GetComponent<Mover>().RevertToOriginalSpeed();
 				}
 			}

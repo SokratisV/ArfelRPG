@@ -11,7 +11,13 @@ namespace RPG.Skills.TargetFiltering
 
 		public override List<GameObject> Filter(List<GameObject> unfiltered)
 		{
-			return unfiltered.Where(gameObject => gameObject.CompareTag(tag)).ToList();
+			var filtered = new List<GameObject> {unfiltered[0]};
+			foreach (var gameObject in unfiltered)
+			{
+				if (gameObject.CompareTag(tag)) filtered.Add(gameObject);
+			}
+
+			return filtered;
 		}
 	}
 }

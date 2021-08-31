@@ -216,7 +216,7 @@ namespace RPG.Skills
 				SkillsUpdated?.Invoke();
 			}
 		}
-		
+
 		public void UpdateIndicatorTarget(Vector3 target) => _mousePosition = target;
 		public void ToggleIndicatorState(bool toggle) => _currentIndicator?.ToggleColorState(toggle);
 		public void ChangeIndicatorAlpha(byte customAlpha) => _currentIndicator?.ChangeIndicatorAlpha(customAlpha);
@@ -268,7 +268,7 @@ namespace RPG.Skills
 					OnSkillEnd?.Invoke(_currentCastingSkill.Skill);
 					StopCoroutine(_currentCastingSkill.UpdateBehavior);
 					if (_currentCastingSkill.Skill.TargetType == TargetType.Single)
-						_actionScheduler.EnqueueAction(new FighterActionData(_fighter, _currentCastingSkill.Data.InitialTarget));
+						_actionScheduler.EnqueueAction(new FighterActionData(_fighter, _currentCastingSkill.Data.Targets[1]));
 					CompleteAction();
 					_currentCastingSkill = null;
 					_selectedSkill = null;
@@ -334,12 +334,12 @@ namespace RPG.Skills
 
 		private void AddToKnownIndex(Skill skill, int index) => _learnedSkills[index] = skill;
 
-		private void UseSelectedSkill(GameObject target, Vector3? hitPoint)
+		private void UseSelectedSkill(GameObject target, Vector3? hitPoint = null, Vector3? direction = null)
 		{
 			if (IsSkillOnCooldown(_selectedSkill)) return;
 
 			_actionScheduler.StartAction(this);
-			var data = _selectedSkill.OnStart(gameObject, target, hitPoint);
+			var data = _selectedSkill.OnStart(gameObject, target, hitPoint, direction);
 			if (data == null)
 			{
 				_selectedSkill = null;

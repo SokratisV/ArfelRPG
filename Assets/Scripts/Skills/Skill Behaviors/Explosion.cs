@@ -19,7 +19,7 @@ namespace RPG.Skills.Behaviors
 		{
 			if (data.Point != null)
 			{
-				data.User.GetComponent<Mover>().RotateOverTime(.2f, data.Point.Value);
+				data.Targets[0].GetComponent<Mover>().RotateToTarget(.2f, data.Point.Value);
 			}
 
 			base.BehaviorStart(data);
@@ -34,18 +34,14 @@ namespace RPG.Skills.Behaviors
 		{
 			if (data.Targets != null)
 			{
-				for (var i = data.Targets.Count - 1; i >= 0; i--)
+				for (var i = data.Targets.Count - 1; i >= 1; i--)
 				{
 					var target = data.Targets[i];
-					if (target == data.User)
-					{
-						data.Targets[i] = null;
-						continue;
-					}
+					if (target == data.Targets[0]) continue;
 					if (target.TryGetComponent(out Health health))
 					{
 						RemoveHealthFromList(health, data.Targets);
-						health.TakeDamage(data.User, damage);
+						health.TakeDamage(data.Targets[0], damage);
 					}
 				}
 			}

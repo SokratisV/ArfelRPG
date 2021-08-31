@@ -5,15 +5,12 @@ namespace RPG.Skills
 {
 	public class SkillData
 	{
-		public readonly GameObject User;
-		public readonly GameObject InitialTarget;
 		public readonly List<GameObject> Targets;
-		public Vector3? Point;
+		public Vector3? Point, Direction;
 
-		public SkillData(GameObject user, GameObject initialTarget, Vector3? point, List<GameObject> targets)
+		public SkillData(Vector3? point, Vector3? direction, List<GameObject> targets)
 		{
-			User = user;
-			InitialTarget = initialTarget;
+			Direction = direction;
 			Point = point;
 			Targets = targets;
 		}

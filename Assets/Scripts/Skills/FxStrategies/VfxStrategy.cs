@@ -22,12 +22,12 @@ namespace RPG.Skills
 			{
 				case 0:
 				{
-					SpawnVfx(data.User);
+					SpawnVfx(data.Targets[0]);
 					break;
 				}
 				case 1:
 				{
-					SpawnVfx(data.InitialTarget);
+					SpawnVfx(data.Targets[1]);
 					break;
 				}
 				case 2:

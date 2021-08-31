@@ -20,7 +20,7 @@ namespace RPG.Skills.Behaviors
 		{
 			if(!data.Point.HasValue) return;
 			var path = new NavMeshPath();
-			if(NavMesh.CalculatePath(data.User.transform.position, data.Point.Value, NavMesh.AllAreas, path))
+			if(NavMesh.CalculatePath(data.Targets[0].transform.position, data.Point.Value, NavMesh.AllAreas, path))
 			{
 				var finalPoint = Helper.CalculateMaximumDistanceNavMeshPoint(path, distance);
 				if(finalPoint == default)
@@ -28,8 +28,8 @@ namespace RPG.Skills.Behaviors
 					finalPoint = data.Point.Value;
 				}
 
-				data.User.GetComponent<Mover>().Dash(finalPoint, dashDuration);
-				data.User.GetComponent<Health>().IsInvulnerable = true;
+				data.Targets[0].GetComponent<Mover>().Dash(finalPoint, dashDuration);
+				data.Targets[0].GetComponent<Health>().IsInvulnerable = true;
 			}
 			else return;
 
@@ -43,7 +43,7 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorEnd(SkillData data)
 		{
-			data.User.GetComponent<Health>().IsInvulnerable = false;
+			data.Targets[0].GetComponent<Health>().IsInvulnerable = false;
 			base.BehaviorEnd(data);
 		}
 	}

@@ -38,7 +38,7 @@ namespace RPG.Skills.Behaviors
 		{
 			if (data.Point != null)
 			{
-				data.User.GetComponent<Mover>().RotateOverTime(.1f, data.Point.Value);
+				data.Targets[0].GetComponent<Mover>().RotateToTarget(.1f, data.Point.Value);
 			}
 
 			base.BehaviorStart(data);
@@ -46,7 +46,7 @@ namespace RPG.Skills.Behaviors
 
 		public override void BehaviorEnd(SkillData data)
 		{
-			ExecuteBehavior(data.User, data.Point.Value);
+			ExecuteBehavior(data.Targets[0], data.Point.Value);
 			base.BehaviorEnd(data);
 		}
 

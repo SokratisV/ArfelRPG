@@ -13,6 +13,6 @@ namespace RPG.Skills.Behaviors
 		public virtual float GetMinRange() => minimumClickRange;
 
 		//Return false when it only cares about the point
-		public abstract bool GetTargets(out List<GameObject> targets, GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null);
+		public abstract List<GameObject> GetTargets(GameObject user, GameObject initialTarget = null, Vector3? raycastPoint = null, Vector3? direction = null);
 	}
 }
