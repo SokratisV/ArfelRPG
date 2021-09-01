@@ -6,9 +6,14 @@ namespace RPG.Skills
 	public class TargetQuadIndicator : SkillIndicatorBase, ISkillIndicator
 	{
 		[SerializeField] private Image quadImage;
+		[SerializeField] private Image centerDot;
 
 		protected override void Init() => Type = Behaviors.IndicatorType.TargetCircle;
-		protected override void ChangeColor(Color32 color) => quadImage.color = color;
+		protected override void ChangeColor(Color32 color)
+		{
+			quadImage.color = color;
+			centerDot.color = color;
+		}
 
 		protected override void ChangeColor(byte customAlpha = default)
 		{
@@ -17,14 +22,16 @@ namespace RPG.Skills
 				Color32 newColor = quadImage.color;
 				newColor.a = customAlpha;
 				quadImage.color = newColor;
+				centerDot.color = newColor;
 			}
 		}
 
 		public override void ShowIndicator(Skill skill, GameObject _)
 		{
 			base.ShowIndicator(skill, _);
-			var indicatorRadius = skill.Radius * 2;
-			quadImage.transform.localScale = new Vector3(indicatorRadius, indicatorRadius, indicatorRadius);
+			var transformLocalScale = new Vector3(skill.Radius * 2, skill.Radius * 2, skill.Radius * 2);
+			quadImage.transform.localScale = transformLocalScale;
+			centerDot.transform.localScale = transformLocalScale;
 			gameObject.SetActive(true);
 		}
 

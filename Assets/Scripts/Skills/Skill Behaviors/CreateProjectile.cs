@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using RPG.Attributes;
 using RPG.Combat;
 using RPG.Movement;
@@ -56,13 +55,13 @@ namespace RPG.Skills.Behaviors
 			}
 			else if (data.Direction.HasValue)
 			{
-				projectileInstance.Setup(data.Direction.Value, user, damage);
+				projectileInstance.Setup(data.Direction.Value, user, damage, lifeTime: castRange / projectile.Speed);
 			}
 			else if (data.Point.HasValue)
 			{
 				var direction = data.Point.Value - data.Targets[0].transform.position;
 				direction.y = 0;
-				projectileInstance.Setup(direction.normalized, user, damage);
+				projectileInstance.Setup(direction.normalized, user, damage, lifeTime: castRange / projectile.Speed);
 			}
 		}
 	}

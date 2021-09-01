@@ -54,10 +54,11 @@ namespace RPG.Skills
 			}
 		}
 
-		private void SpawnVfx(IEnumerable<GameObject> targets)
+		private void SpawnVfx(IList<GameObject> targets)
 		{
 			foreach (var target in targets)
 			{
+				if (target == targets[0]) continue;
 				SpawnVfx(target);
 			}
 		}
@@ -75,10 +76,10 @@ namespace RPG.Skills
 
 		private static IEnumerable _positionChoice = new ValueDropdownList<int>
 		{
-			{"User", 0},
-			{"Target", 1},
-			{"Point", 2},
-			{"Targets", 3}
+			{ "User", 0 },
+			{ "Target", 1 },
+			{ "Point", 2 },
+			{ "Targets", 3 }
 		};
 	}
 }

@@ -21,10 +21,19 @@ namespace RPG.Skills
 		public bool IsPreparingSkill => _selectedSkill != null;
 		public bool HasTarget => _target || _targetPoint != null;
 		public bool CanCurrentSkillBeUsed => _selectedSkill != null && !IsSkillOnCooldown(_selectedSkill);
-		public bool CanCurrentSkillBeCancelled => _currentCastingSkill == null || _selectedSkill != null && _selectedSkill.CanBeCancelled;
+		public bool CanCurrentSkillBeCancelled => _currentCastingSkill == null || _selectedSkill != null && _selectedSkill.CanBeCancelled && _selectedSkill.CanBeForceCancelled;
+		public bool IsWithinCastingRange(Vector3 point) => _mover.IsInRange(point, _selectedSkill.CastingRange);
+		public bool IsWithinCastingRange(Transform target) => _mover.IsInRange(target, _selectedSkill.CastingRange);
+
+		public bool IsWithinCastingRange()
+		{
+			if (_target) return IsWithinCastingRange(_target.transform);
+			return _targetPoint.HasValue && IsWithinCastingRange(_targetPoint.Value);
+		}
+
 		public float SelectedSkillDuration => _selectedSkill.Duration;
 		public bool ShouldChangeAnimationSpeed => _selectedSkill != null && _selectedSkill.HasCastTime && _selectedSkill.AdjustAnimationSpeed;
-		private bool _activeListCleanup, _cooldownListCleanup;
+		private bool _activeListCleanup, _cooldownListCleanup, _moveCommandGiven;
 		private float _globalCooldownTimer;
 		private Vector3? _targetPoint;
 		private Vector3 _mousePosition;
@@ -35,7 +44,7 @@ namespace RPG.Skills
 		private Fighter _fighter;
 		private ActionScheduler _actionScheduler;
 		private List<ISkillIndicator> _skillIndicators;
-		private ISkillIndicator _currentIndicator;
+		private List<ISkillIndicator> _activeIndicators;
 		private CastingSkill _currentCastingSkill;
 		private List<CooldownSkill> _skillsOnCooldown = new List<CooldownSkill>();
 		private List<ActivatedSkill> _activatedSkills = new List<ActivatedSkill>();
@@ -83,7 +92,8 @@ namespace RPG.Skills
 			UpdateActiveSkills();
 			if (UpdateCastingSkill()) return;
 			MoveToCast();
-			_currentIndicator?.UpdateIndicator(_mousePosition);
+			UpdateIndicators();
+			CancelSkillUserOnInput();
 		}
 
 		// Animation event
@@ -121,6 +131,8 @@ namespace RPG.Skills
 			{
 				UseSelectedSkill(target, null);
 			}
+
+			_moveCommandGiven = false;
 		}
 
 		public void Execute(Vector3 hitPoint)
@@ -150,7 +162,7 @@ namespace RPG.Skills
 			var state = new Dictionary<int, DockedItemRecord>();
 			foreach (var pair in _learnedSkills)
 			{
-				var record = new DockedItemRecord {skillID = pair.Value.SkillID};
+				var record = new DockedItemRecord { skillID = pair.Value.SkillID };
 				state[pair.Key] = record;
 			}
 
@@ -159,7 +171,7 @@ namespace RPG.Skills
 
 		public void RestoreState(object state)
 		{
-			var stateDict = (Dictionary<int, DockedItemRecord>) state;
+			var stateDict = (Dictionary<int, DockedItemRecord>)state;
 			foreach (var pair in stateDict)
 			{
 				AddSkill(Skill.GetFromID(pair.Value.skillID), pair.Key);
@@ -167,23 +179,26 @@ namespace RPG.Skills
 		}
 
 		public Skill GetSkill(int index) => _learnedSkills.TryGetValue(index, out var skill) ? skill : null;
+		public void ForceCancelSkill() => CancelAction();
 
 		public void CancelAction()
 		{
 			OnActionCancelled?.Invoke();
 			if (HasTarget) _mover.CancelAction();
-			_currentIndicator?.HideIndicator();
-			_currentIndicator = null;
+			HideIndicators();
+			_currentCastingSkill?.Skill.OnCancel(_currentCastingSkill.Data);
 			_currentCastingSkill = null;
 			_selectedSkill = null;
 			_target = null;
 			_targetPoint = null;
+			_moveCommandGiven = false;
 		}
 
 		public void CompleteAction()
 		{
 			OnActionComplete?.Invoke();
 			_actionScheduler.CompleteAction();
+			_moveCommandGiven = false;
 		}
 
 		public void ExecuteQueuedAction(IActionData data) => throw new NotImplementedException();
@@ -218,8 +233,8 @@ namespace RPG.Skills
 		}
 
 		public void UpdateIndicatorTarget(Vector3 target) => _mousePosition = target;
-		public void ToggleIndicatorState(bool toggle) => _currentIndicator?.ToggleColorState(toggle);
-		public void ChangeIndicatorAlpha(byte customAlpha) => _currentIndicator?.ChangeIndicatorAlpha(customAlpha);
+		public void ToggleIndicatorState(bool toggle) => ToggleIndicatorsState(toggle);
+		public void ChangeIndicatorAlpha(byte customAlpha) => ChangeIndicatorsAlpha(customAlpha);
 
 		#endregion
 
@@ -233,28 +248,30 @@ namespace RPG.Skills
 
 		private void MoveToCast()
 		{
-			if (_targetPoint != null)
+			if (_targetPoint.HasValue)
 			{
-				if (_mover.IsInRange(_targetPoint.Value, _selectedSkill.CastingRange))
+				if (IsWithinCastingRange(_targetPoint.Value))
 				{
 					_mover.CancelAction();
 					UseSelectedSkill(null, _targetPoint);
 				}
 				else
 				{
-					_mover.MoveWithoutAction(_targetPoint.Value);
+					if (_moveCommandGiven) return;
+					_moveCommandGiven = _mover.MoveWithoutAction(_targetPoint.Value);
 				}
 			}
 			else if (_target != null)
 			{
-				if (_mover.IsInRange(_target.transform, _selectedSkill.CastingRange))
+				if (IsWithinCastingRange(_target.transform))
 				{
 					_mover.CancelAction();
-					UseSelectedSkill(_target, null);
+					UseSelectedSkill(_target);
 				}
 				else
 				{
-					_mover.MoveWithoutAction(_target.transform.position);
+					if (_moveCommandGiven) return;
+					_moveCommandGiven = _mover.MoveWithoutAction(_target.transform.position);
 				}
 			}
 		}
@@ -336,8 +353,7 @@ namespace RPG.Skills
 
 		private void UseSelectedSkill(GameObject target, Vector3? hitPoint = null, Vector3? direction = null)
 		{
-			if (IsSkillOnCooldown(_selectedSkill)) return;
-
+			if (!CanSkillBeUsed(_selectedSkill)) return;
 			_actionScheduler.StartAction(this);
 			var data = _selectedSkill.OnStart(gameObject, target, hitPoint, direction);
 			if (data == null)
@@ -355,7 +371,7 @@ namespace RPG.Skills
 				_currentCastingSkill = new CastingSkill(_selectedSkill, data.Value);
 				if (!CanCurrentSkillBeCancelled)
 				{
-					_mover.LockMovementFor(_currentCastingSkill.Skill.Duration + .1f);
+					_mover.LockMovementFor(_currentCastingSkill.Skill.Duration + .1f, !_currentCastingSkill.Skill.CanBeForceCancelled);
 				}
 			}
 			else
@@ -368,8 +384,7 @@ namespace RPG.Skills
 				_targetPoint = null;
 			}
 
-			_currentIndicator?.HideIndicator();
-			_currentIndicator = null;
+			HideIndicators();
 			_globalCooldownTimer = GlobalValues.GlobalCooldown;
 		}
 
@@ -397,32 +412,6 @@ namespace RPG.Skills
 			_animator.SetInteger(SkillAnimationIndex, selectedSkill.AnimationHash);
 		}
 
-		private void SetupIndicators()
-		{
-			_skillIndicators = new List<ISkillIndicator>();
-			foreach (var prefab in skillIndicatorPrefab)
-			{
-				var skillIndicator = Instantiate(prefab);
-				skillIndicator.gameObject.SetActive(false);
-				_skillIndicators.Add(skillIndicator.GetComponent<ISkillIndicator>());
-			}
-		}
-
-		private void SelectIndicator()
-		{
-			_currentIndicator?.HideIndicator();
-			_currentIndicator = null;
-			foreach (var skillIndicator in _skillIndicators)
-			{
-				if (skillIndicator.IndicatorType() == _selectedSkill.IndicatorType)
-				{
-					_currentIndicator = skillIndicator;
-					_currentIndicator.ShowIndicator(_selectedSkill, gameObject);
-					return;
-				}
-			}
-		}
-
 		private void SwapSkills(WeaponConfig config)
 		{
 			RemoveAllSkills();
@@ -436,6 +425,77 @@ namespace RPG.Skills
 				AddSkill(Skill.GetFromID(SkillsDatabase.GetSkillId(config.SkillIds[index])), index);
 			}
 		}
+
+		private void CancelSkillUserOnInput()
+		{
+			if (HasTarget || IsPreparingSkill)
+			{
+				if (Input.GetMouseButtonDown(1) && CanCurrentSkillBeCancelled) CancelAction();
+			}
+		}
+
+		#region Indicators
+
+		private void SetupIndicators()
+		{
+			_skillIndicators = new List<ISkillIndicator>();
+			_activeIndicators = new List<ISkillIndicator>();
+			foreach (var prefab in skillIndicatorPrefab)
+			{
+				var skillIndicator = Instantiate(prefab);
+				skillIndicator.gameObject.SetActive(false);
+				_skillIndicators.Add(skillIndicator.GetComponent<ISkillIndicator>());
+			}
+		}
+
+		private void SelectIndicator()
+		{
+			HideIndicators();
+			foreach (var skillIndicator in _skillIndicators)
+			{
+				if (_selectedSkill.RequiresIndicator(skillIndicator.IndicatorType()))
+				{
+					_activeIndicators.Add(skillIndicator);
+					skillIndicator.ShowIndicator(_selectedSkill, gameObject);
+				}
+			}
+		}
+
+		private void UpdateIndicators()
+		{
+			foreach (var activeIndicator in _activeIndicators)
+			{
+				activeIndicator?.UpdateIndicator(_mousePosition);
+			}
+		}
+
+		private void HideIndicators()
+		{
+			foreach (var activeIndicator in _activeIndicators)
+			{
+				activeIndicator.HideIndicator();
+			}
+
+			_activeIndicators.Clear();
+		}
+
+		private void ToggleIndicatorsState(bool toggle)
+		{
+			foreach (var activeIndicator in _activeIndicators)
+			{
+				activeIndicator.ToggleColorState(toggle);
+			}
+		}
+
+		private void ChangeIndicatorsAlpha(byte customAlpha)
+		{
+			foreach (var activeIndicator in _activeIndicators)
+			{
+				activeIndicator.ChangeIndicatorAlpha(customAlpha);
+			}
+		}
+
+		#endregion
 
 		//Add more of its state, e.g cooldown
 		[Serializable]

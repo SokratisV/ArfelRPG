@@ -18,6 +18,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: cdec13907ffc75749ab2ed436bec6b14, type: 3}
   cooldown: 2
   canBeCancelled: 0
+  canBeForceCancelled: 0
   targetBehavior: {fileID: 11400000, guid: 57b94b5a2bd2daf40bc6cb8afc96b76b, type: 2}
   skillBehavior: {fileID: 11400000, guid: aa898cf868e6fdb47ae0e14df4f72f65, type: 2}
   filterStrategy: []

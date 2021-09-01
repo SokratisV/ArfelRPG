@@ -1,4 +1,5 @@
 ﻿using RPG.Movement;
+using RPG.Skills;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,11 +12,13 @@ namespace RPG.Control
 		private Vector3 _inputValue;
 		private Vector3 _newPosition;
 		private readonly Transform _cameraTransform;
+		private SkillUser _skillUser;
 		private const float Speed = 200;
 
 		public ManualInputController(Mover mover, Camera mainCam)
 		{
 			_mover = mover;
+			_skillUser = mover.GetComponent<SkillUser>();
 			_character = mover.MeshAgent.transform;
 			_cameraTransform = mainCam.transform;
 		}
@@ -41,6 +44,10 @@ namespace RPG.Control
 				if ((_character.position - hit.position).magnitude >= .2f)
 				{
 					_mover.Move(_newPosition);
+					if (_skillUser.HasTarget)
+					{
+						_skillUser.CancelAction();
+					}
 				}
 			}
 		}

@@ -17,6 +17,8 @@ namespace RPG.Combat
 		private GameObject _instigator = null;
 		private float _damage = 0f;
 
+		public float Speed => speed;
+
 		private void Start()
 		{
 			var aimLocation = GetAimLocation();

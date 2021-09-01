@@ -242,7 +242,7 @@ namespace RPG.Shops
 			}
 			else
 			{
-				if (Input.GetMouseButton(0))
+				if (Input.GetMouseButtonDown(0))
 				{
 					shopper.StartInteractAction(this);
 				}

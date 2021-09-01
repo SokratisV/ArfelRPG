@@ -19,7 +19,18 @@ namespace RPG.Movement
 
 		[SerializeField] private float maxSpeed = 6f, timeBeforeIdle = 10f;
 
-		private bool _lockMovement;
+		private bool _softLockMovement, _hardLockMovement;
+
+		private bool HardLockMovement
+		{
+			get => _hardLockMovement;
+			set
+			{
+				_hardLockMovement = value;
+				_softLockMovement = value;
+			}
+		}
+
 		private float _distanceBeforeReachingDestination, _idleTimer = 5f, _timeMoved, _distanceTravelled;
 		private Health _health;
 		private Animator _animator;
@@ -83,7 +94,7 @@ namespace RPG.Movement
 
 		public bool MoveWithoutAction(Vector3 destination, float speedFraction = 1f, float withinDistance = 0f)
 		{
-			if (!MeshAgent.enabled || _lockMovement) return false;
+			if (!MeshAgent.enabled || _softLockMovement || HardLockMovement) return false;
 			MeshAgent.destination = destination;
 			_distanceBeforeReachingDestination = withinDistance;
 			MeshAgent.speed = CurrentSpeed * Mathf.Clamp01(speedFraction);
@@ -92,40 +103,48 @@ namespace RPG.Movement
 			return true;
 		}
 
-		public void Dash(Vector3 destination, float duration)
+		public bool Dash(Vector3 destination, float duration)
 		{
-			_lockMovement = true;
+			if (HardLockMovement) return false;
+			HardLockMovement = true;
 			var initialAcceleration = MeshAgent.acceleration;
 			var currentPosition = transform.position;
 			var speedRequired = Vector3.Distance(currentPosition, destination) / duration;
 			Helper.DoAfterSeconds(() =>
 			{
 				MeshAgent.acceleration = initialAcceleration;
-				_lockMovement = false;
+				HardLockMovement = false;
 			}, duration, this);
 			MeshAgent.acceleration *= 2;
 			MeshAgent.destination = destination;
 			MeshAgent.speed = speedRequired;
 			MeshAgent.isStopped = false;
+			return true;
 		}
 
-		public void Dodge(Vector3 destination)
+		public bool Dodge(Vector3 destination)
 		{
-			_animator.SetTrigger(DodgeHash);
-			Dash(destination, GlobalValues.DodgeDuration);
+			if (Dash(destination, GlobalValues.DodgeDuration))
+			{
+				_animator.SetTrigger(DodgeHash);
+				return true;
+			}
+
+			return false;
 		}
 
-		public void Blink(Vector3 point, float delay = .4f)
+		public void Blink(Vector3 point, float delay = .4f, bool hardLock = false)
 		{
 			RotateToTarget(0.2f, point);
-			LockMovementFor(delay + .2f);
+			LockMovementFor(delay + .2f, hardLock);
 			Helper.DoAfterSeconds(() => { MeshAgent.Warp(point); }, delay, this);
 		}
 
-		public void LockMovementFor(float duration)
+		public void LockMovementFor(float duration, bool hardLock = false)
 		{
-			_lockMovement = true;
-			Helper.DoAfterSeconds(() => { _lockMovement = false; }, duration, this);
+			_softLockMovement = true;
+			_hardLockMovement = hardLock;
+			Helper.DoAfterSeconds(() => { HardLockMovement = false; }, duration, this);
 		}
 
 		public void CancelAction()
@@ -149,7 +168,7 @@ namespace RPG.Movement
 
 		public void ExecuteQueuedAction(IActionData data)
 		{
-			var moveData = (MoverActionData) data;
+			var moveData = (MoverActionData)data;
 			MoveWithoutAction(moveData.Destination, moveData.SpeedFraction, moveData.StopDistance);
 		}
 
@@ -173,8 +192,8 @@ namespace RPG.Movement
 		private IEnumerator _RotateOverTime(float time, Vector3 vector, bool isPassingDirection = false)
 		{
 			var currentRotation = transform.rotation;
-			var lookRotation = !isPassingDirection 
-				? Quaternion.LookRotation(vector - transform.position) 
+			var lookRotation = !isPassingDirection
+				? Quaternion.LookRotation(vector - transform.position)
 				: Quaternion.LookRotation(vector, Vector3.up);
 
 			var progress = 0f;
@@ -236,7 +255,7 @@ namespace RPG.Movement
 
 		public void RestoreState(object state)
 		{
-			var position = (SerializableVector3) state;
+			var position = (SerializableVector3)state;
 			MeshAgent.enabled = false;
 			transform.position = position.ToVector();
 			MeshAgent.enabled = true;

@@ -23,7 +23,7 @@ namespace RPG.Skills
 		private Sprite icon = null;
 
 		[SerializeField] private float cooldown;
-		[SerializeField] private bool canBeCancelled;
+		[SerializeField] private bool canBeCancelled, canBeForceCancelled;
 		[SerializeField] private TargetBehavior targetBehavior;
 		[SerializeField] private SkillBehavior skillBehavior;
 		[SerializeField] private FilterStrategy[] filterStrategy;
@@ -44,10 +44,11 @@ namespace RPG.Skills
 		public bool MoveInRangeBeforeCasting => skillBehavior.MoveInRangeBefore;
 		public bool HasExtraAnimation => skillBehavior.UseExtraAnimation();
 		public bool CanBeCancelled => canBeCancelled;
+		public bool CanBeForceCancelled => canBeForceCancelled;
 		public bool HasCastTime => skillBehavior.HasCastTime();
 		public bool AdjustAnimationSpeed => skillBehavior.AdjustAnimationSpeed;
 		public int AnimationHash => skillBehavior.SkillAnimationNumber();
-		public IndicatorType IndicatorType => skillBehavior.IndicatorType;
+
 		public float[] SpecialFloats => skillBehavior.SpecialFloats();
 
 		private static Dictionary<string, Skill> SkillLookupCache;
@@ -56,7 +57,7 @@ namespace RPG.Skills
 		{
 			var targets = targetBehavior.GetTargets(user, target, point, direction);
 			targets = FilterTargets(targets);
-			var skillData = new SkillData(point, direction, targets);
+			var skillData = new SkillData(point, direction, targets, CanBeForceCancelled);
 			skillBehavior.OnStart += StartFX;
 			skillBehavior.OnEnd += EndFX;
 			skillBehavior.BehaviorStart(skillData);
@@ -65,6 +66,7 @@ namespace RPG.Skills
 		}
 
 		public void OnEnd(SkillData data) => skillBehavior.BehaviorEnd(data);
+		public void OnCancel(SkillData data) => skillBehavior.BehaviorCancelled(data);
 
 		private List<GameObject> FilterTargets(List<GameObject> targets)
 		{
@@ -112,6 +114,16 @@ namespace RPG.Skills
 
 			if (skillID == null || !SkillLookupCache.ContainsKey(skillID)) return null;
 			return SkillLookupCache[skillID];
+		}
+
+		public bool RequiresIndicator(IndicatorType type)
+		{
+			foreach (var indicatorType in skillBehavior.IndicatorType)
+			{
+				if (indicatorType == type) return true;
+			}
+
+			return false;
 		}
 
 		public void OnBeforeSerialize()

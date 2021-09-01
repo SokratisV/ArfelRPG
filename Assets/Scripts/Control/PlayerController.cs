@@ -1,6 +1,7 @@
 using UnityEngine;
 using RPG.Movement;
 using System;
+using System.Collections;
 using RotaryHeart.Lib.SerializableDictionary;
 using RPG.Attributes;
 using RPG.Core;
@@ -26,7 +27,6 @@ namespace RPG.Control
 		private ManualInputController _manualInput;
 		private float _dodgeTimer;
 		private bool _isDraggingUI = false;
-		private bool _hasInputBeenReset = true;
 		private CursorType _currentCursorType;
 
 		#region Unity
@@ -44,7 +44,6 @@ namespace RPG.Control
 
 		private void Update()
 		{
-			if (HandleDodge()) return;
 			if (InteractWithUI()) return;
 			if (_health.IsDead)
 			{
@@ -52,12 +51,11 @@ namespace RPG.Control
 				return;
 			}
 
-			ResetInput();
 			_manualInput.Update();
+			if (HandleDodge()) return;
 			if (HandleSkillUsage()) return;
 			if (InteractWithComponent()) return;
 			if (InteractWithMovement()) return;
-
 			SetCursor(CursorType.None);
 		}
 
@@ -93,10 +91,17 @@ namespace RPG.Control
 				var targetPosition = currentPosition + direction * 3;
 				if (Helper.RandomPointAroundNavMesh(out var outcome, targetPosition, .1f))
 				{
-					_mover.Dodge(outcome);
-					_dodgeTimer = dodgeCooldown;
+					if (_mover.Dodge(outcome))
+					{
+						_dodgeTimer = dodgeCooldown;
+					}
+					else
+					{
+						return false;
+					}
 				}
 
+				_skillUser.CancelAction();
 				return true;
 			}
 
@@ -239,12 +244,9 @@ namespace RPG.Control
 			}
 			else
 			{
-				if (!Input.GetMouseButton(0)) return;
-				if (!_hasInputBeenReset) return;
-
+				if (!Input.GetMouseButtonDown(0)) return;
 				if (_skillUser.IsPreparingSkill)
 				{
-					_hasInputBeenReset = false;
 					_skillUser.Execute(target);
 				}
 				else
@@ -254,12 +256,6 @@ namespace RPG.Control
 					MovementFeedback(target);
 				}
 			}
-		}
-
-		private void ResetInput()
-		{
-			if (Input.GetMouseButtonUp(0)) _hasInputBeenReset = true;
-			if (Input.GetMouseButtonUp(1) && _skillUser.CanCurrentSkillBeCancelled) _skillUser.CancelAction();
 		}
 
 		private bool RaycastNavMesh(out Vector3 target, Func<Vector3, bool> extraCheck)

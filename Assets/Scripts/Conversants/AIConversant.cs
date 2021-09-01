@@ -62,7 +62,7 @@ namespace RPG.Dialogue
 			}
 			else
 			{
-				if (Input.GetMouseButton(0))
+				if (Input.GetMouseButtonDown(0))
 				{
 					playerConversant.StartInteractAction(this);
 				}

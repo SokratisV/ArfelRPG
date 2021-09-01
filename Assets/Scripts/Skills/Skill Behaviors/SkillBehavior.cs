@@ -11,10 +11,10 @@ namespace RPG.Skills.Behaviors
 		[SerializeField] private float duration;
 		[SerializeField] private bool canTargetSelf;
 		[SerializeField] private bool moveInRangeBeforeCasting = true;
-		[SerializeField] private IndicatorType indicatorType;
+		[SerializeField] private IndicatorType[] indicatorType;
 
 		public virtual float[] SpecialFloats() => new float[0];
-		public IndicatorType IndicatorType => indicatorType;
+		public IndicatorType[] IndicatorType => indicatorType;
 		//If true, duration means casting time
 		public abstract bool HasCastTime();
 		public virtual bool UseExtraAnimation() => false;
@@ -33,6 +33,12 @@ namespace RPG.Skills.Behaviors
 		public virtual void BehaviorEnd(SkillData data)
 		{
 			OnEnd?.Invoke(data);
+			OnEnd = null;
+			OnStart = null;
+		}
+
+		public virtual void BehaviorCancelled(SkillData data)
+		{
 			OnEnd = null;
 			OnStart = null;
 		}

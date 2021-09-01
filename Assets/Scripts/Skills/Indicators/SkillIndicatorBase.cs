@@ -33,11 +33,13 @@ namespace RPG.Skills
 			if (_indicatorState == toggle) return;
 			ChangeColor(toggle ? SkillIndicatorEnabled : SkillIndicatorDisabled);
 			_indicatorState = toggle;
+			_alphaState = false;
 		}
 
 		public void ChangeIndicatorAlpha(byte customAlpha)
 		{
 			if (_alphaState) return;
+			_indicatorState = false;
 			_alphaState = true;
 			ChangeColor(customAlpha);
 		}
