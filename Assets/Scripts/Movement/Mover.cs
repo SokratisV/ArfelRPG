@@ -124,7 +124,7 @@ namespace RPG.Movement
 
 		public bool Dodge(Vector3 destination)
 		{
-			if (Dash(destination, GlobalValues.DodgeDuration))
+			if (CanMoveTo(destination) && Dash(destination, GlobalValues.DodgeDuration))
 			{
 				_animator.SetTrigger(DodgeHash);
 				return true;

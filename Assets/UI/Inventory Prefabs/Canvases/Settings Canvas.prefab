@@ -1292,7 +1292,7 @@ PrefabInstance:
     - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
         type: 3}
@@ -1301,12 +1301,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8441956372665792820}
     - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3191196974429592186}
+    - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
@@ -1316,18 +1331,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Toggle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: RPG.UI.SettingsUi, UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: RPG.UI.ShowHideUIOnButtonPress, UI
       objectReference: {fileID: 0}
     - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3364349109318101240, guid: 45f1fdfe0f171844dbd906d9d0430413,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 9144513147365978454, guid: 45f1fdfe0f171844dbd906d9d0430413,
         type: 3}
       propertyPath: m_text
-      value: Save Settings
+      value: Save And Close
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45f1fdfe0f171844dbd906d9d0430413, type: 3}
