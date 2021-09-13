@@ -11,16 +11,19 @@ namespace RPG.Skills
 
 		protected override void Init() => Type = Behaviors.IndicatorType.PlayerCircle;
 
-		protected override void ChangeColor(Color32 color) => quadImage.color = color;
+		protected override void ChangeColor(Color32 color)
+		{
+			// quadImage.color = color;
+		}
 
 		protected override void ChangeColor(byte customAlpha = default)
 		{
-			if (customAlpha > 0)
-			{
-				var newColor = quadImage.color;
-				newColor.a = customAlpha;
-				quadImage.color = newColor;
-			}
+			// if (customAlpha > 0)
+			// {
+			// 	var newColor = quadImage.color;
+			// 	newColor.a = customAlpha;
+			// 	quadImage.color = newColor;
+			// }
 		}
 
 		public override void ShowIndicator(Skill skill, GameObject user)

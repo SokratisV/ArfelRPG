@@ -1,4 +1,6 @@
-﻿using RPG.Attributes;
+﻿using System.Collections;
+using RPG.Attributes;
+using RPG.Core;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,6 +8,7 @@ namespace RPG.Combat
 {
 	public class Projectile : MonoBehaviour
 	{
+		[SerializeField] private bool stopOnContact = true;
 		[SerializeField] private float speed = 1f, maxLifeTime = 5f, lifeAfterImpact = 2f;
 		[SerializeField] private bool isHoming = false;
 		[SerializeField] private GameObject hitEffect = null;
@@ -16,6 +19,7 @@ namespace RPG.Combat
 		private Collider _targetCollider = null;
 		private GameObject _instigator = null;
 		private float _damage = 0f;
+		private Coroutine _selfDestructTimer;
 
 		public float Speed => speed;
 
@@ -45,7 +49,7 @@ namespace RPG.Combat
 			_instigator = instigator;
 			_direction = direction;
 			if (newSpeed > 0) speed = newSpeed;
-			Destroy(gameObject, lifeTime > 0 ? lifeTime : maxLifeTime);
+			_selfDestructTimer = _selfDestructTimer.StartCoroutine(this, DestroyAfterTime(lifeTime > 0 ? lifeTime : maxLifeTime));
 		}
 
 		public void Setup(Vector3 direction, GameObject instigator, float damage, float newSpeed = 0, float lifeTime = -1) => Setup(instigator, damage, null, direction, newSpeed, lifeTime);
@@ -70,6 +74,27 @@ namespace RPG.Combat
 			}
 		}
 
+		private IEnumerator DestroyAfterTime(float time)
+		{
+			var timer = 0f;
+			while (timer < time)
+			{
+				timer += Time.deltaTime;
+				yield return null;
+			}
+
+			SpawnHitEffects();
+			SelfDestruct();
+		}
+
+		private void SpawnHitEffects()
+		{
+			if (hitEffect != null)
+			{
+				Destroy(Instantiate(hitEffect, transform.position, transform.rotation), 3f);
+			}
+		}
+
 		private void DirectedProjectile(Health health)
 		{
 			if (health.IsDead) return;
@@ -88,20 +113,24 @@ namespace RPG.Combat
 		private void TriggerProjectile(Health health)
 		{
 			health.TakeDamage(_instigator, _damage);
-			speed = 0;
-			onHit.Invoke();
-			health.TakeDamage(_instigator, _damage);
-			if (hitEffect != null)
+			SpawnHitEffects();
+			if (stopOnContact)
 			{
-				Instantiate(hitEffect, transform.position, transform.rotation);
+				speed = 0;
+				onHit.Invoke();
+				SelfDestruct();
 			}
+		}
 
+		private void SelfDestruct()
+		{
 			foreach (var toDestroy in destroyOnHit)
 			{
 				Destroy(toDestroy);
 			}
 
 			Destroy(gameObject, lifeAfterImpact);
+			_selfDestructTimer.StopCoroutine(this);
 		}
 	}
 }
