@@ -93,13 +93,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ac9580f51964d08afc4d6df8d2f5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: {fileID: 0}
-  sceneIndexToLoad: -1
+  sceneToLoad:
+    Scene: {fileID: 0}
+    SceneName: 
+    sceneIndex: -1
+    sceneEnabled: 0
   spawnPoint: {fileID: 1403155600486037229}
   destination: 0
   fadeInTime: 0.5
   fadeOutTime: 1
   fadeWaitTime: 0.5
+  controlRemoveRequest: {fileID: 11400000, guid: c795f5bda00743b4e91e3d64e289091f,
+    type: 2}
+  teleportRequest: {fileID: 11400000, guid: 3faae41060d59394aa9f3625609e8619, type: 2}
 --- !u!135 &945054141503206868
 SphereCollider:
   m_ObjectHideFlags: 0

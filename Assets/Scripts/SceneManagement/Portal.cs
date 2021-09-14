@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Linq;
 using RoboRyanTron.SceneReference;
-using RPG.Control;
 using RPG.Core;
+using RPG.Core.SystemEvents;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 namespace RPG.SceneManagement
@@ -25,6 +24,8 @@ namespace RPG.SceneManagement
 		[SerializeField] private Transform spawnPoint;
 		[SerializeField] private DestinationIdentifier destination;
 		[SerializeField] private float fadeInTime = 2f, fadeOutTime = 2f, fadeWaitTime = 2f;
+		[SerializeField] private BooleanEvent controlRemoveRequest;
+		[SerializeField] private PlayerTeleportRequestEvent teleportRequest;
 
 		private void OnTriggerEnter(Collider other)
 		{
@@ -48,37 +49,27 @@ namespace RPG.SceneManagement
 			
 			wrapper.Save();
 			
-			var player = PlayerFinder.Player;
-			var playerController = player.GetComponent<PlayerController>();
-			playerController.enabled = false;
-
+			controlRemoveRequest.Raise(false);
 			yield return fader.FadeOutRoutine(fadeOutTime);
 			yield return SceneManager.LoadSceneAsync(sceneToLoad.SceneName);
 
 			PlayerFinder.ResetPlayer();
-			var newPlayerController = PlayerFinder.Player.GetComponent<PlayerController>();
-			newPlayerController.enabled = false;
+			controlRemoveRequest.Raise(false);
 
 			wrapper.Load();
 
 			var otherPortal = GetOtherPortal();
-			UpdatePlayer(otherPortal, newPlayerController.transform);
+			teleportRequest.Raise(new TeleportData(otherPortal.spawnPoint.position, otherPortal.spawnPoint.rotation));
 
 			wrapper.Save();
 
 			yield return new WaitForSeconds(fadeWaitTime);
 			fader.FadeInRoutine(fadeInTime);
 
-			newPlayerController.enabled = true;
+			controlRemoveRequest.Raise(true);
 			Destroy(gameObject);
 		}
 
 		private Portal GetOtherPortal() => FindObjectsOfType<Portal>().Where(portal => portal != this).FirstOrDefault(portal => portal.destination == destination);
-
-		private void UpdatePlayer(Portal otherPortal, Transform player)
-		{
-			player.GetComponent<NavMeshAgent>().Warp(otherPortal.spawnPoint.position);
-			player.rotation = otherPortal.spawnPoint.rotation;
-		}
 	}
 }

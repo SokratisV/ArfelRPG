@@ -2,6 +2,7 @@
 using System.Collections;
 using RPG.Attributes;
 using RPG.Core;
+using RPG.Core.SystemEvents;
 using UnityEngine;
 using UnityEngine.AI;
 using RPG.Saving;
@@ -138,6 +139,12 @@ namespace RPG.Movement
 			RotateToTarget(0.2f, point);
 			LockMovementFor(delay + .2f, hardLock);
 			Helper.DoAfterSeconds(() => { MeshAgent.Warp(point); }, delay, this);
+		}
+
+		public void Teleport(TeleportData data)
+		{
+			MeshAgent.Warp(data.position);
+			transform.rotation = data.rotation;
 		}
 
 		public void LockMovementFor(float duration, bool hardLock = false)
